@@ -1,0 +1,239 @@
+class Cadenza::Parser
+	prechigh
+		left '*' '/'
+		left '+' '-'
+
+	preclow
+
+rule
+
+  target
+  	: document
+    | /* none */ { result = nil }
+	;
+
+  primary_expression
+  	: IDENTIFIER                    { result = make_node(VariableNode, val[0]) }
+  	| INTEGER                       { result = make_node(ConstantNode, val[0]) }
+  	| REAL                          { result = make_node(ConstantNode, val[0]) }
+  	| STRING                        { result = make_node(ConstantNode, val[0]) }
+  	| '(' additive_expression ')'	{ result = val[1] }
+	;
+	
+  multiplicative_expression
+  	: primary_expression
+  	| multiplicative_expression '*' primary_expression { result = make_node(ArithmeticNode,val[0],val[2],'*')}
+  	| multiplicative_expression '/' primary_expression { result = make_node(ArithmeticNode,val[0],val[2],'/')}
+	;
+	
+  additive_expression
+  	: multiplicative_expression
+  	| additive_expression '+' multiplicative_expression { result = make_node(ArithmeticNode,val[0],val[2],'+')}
+  	| additive_expression '-' multiplicative_expression { result = make_node(ArithmeticNode,val[0],val[2],'-')}
+  	;
+  	
+  boolean_expression
+  	: additive_expression
+  	| additive_expression OP_EQ  additive_expression	{ result = make_node(BooleanNode,val[0],val[2],'==')}
+  	| additive_expression OP_NEQ additive_expression	{ result = make_node(BooleanNode,val[0],val[2],'!=')}
+  	| additive_expression OP_GEQ additive_expression	{ result = make_node(BooleanNode,val[0],val[2],'>=')}
+  	| additive_expression OP_LEQ additive_expression	{ result = make_node(BooleanNode,val[0],val[2],'<=')}
+  	| additive_expression  '>'   additive_expression	{ result = make_node(BooleanNode,val[0],val[2],'>') }
+  	| additive_expression  '<'   additive_expression	{ result = make_node(BooleanNode,val[0],val[2],'<') }
+  	;
+  	
+  param_list
+  	: additive_expression					{ result = [val[0]] }
+  	| param_list ',' additive_expression	{ result = val[0].push(val[2]) }
+  	;
+  	
+  filter
+  	: IDENTIFIER			{ result = [val[0], []    ] }
+  	| IDENTIFIER param_list { result = [val[0], val[1]] }
+  	;
+  
+  filter_list
+  	: filter				 { result = [val[0]] }
+  	| filter_list '|' filter { result = val[0].push(val[2]) }
+  	;
+  	
+  inject_statement
+  	: VAR_OPEN additive_expression VAR_CLOSE       			 { result = make_node(InjectNode,val[1],[])     }
+  	| VAR_OPEN additive_expression '|' filter_list VAR_CLOSE { result = make_node(InjectNode,val[1],val[3]) }
+  	;
+
+  if_statement
+  	: STMT_OPEN IF boolean_expression STMT_CLOSE 
+  		{
+  			@document_stack.push(DocumentNode.new)
+  			result = val[2]
+  		}
+	;
+	
+  if_block
+   	: if_statement document STMT_OPEN ENDIF STMT_CLOSE
+   		{ result = make_node(IfNode, val[0], @document_stack.pop.children, nil) }
+   	| if_statement document STMT_OPEN ELSE
+   		{ @document_stack.push(DocumentNode.new) }
+   	  STMT_CLOSE document STMT_OPEN ENDIF STMT_CLOSE
+   	  	{
+   	  		else_body, body = @document_stack.pop, @document_stack.pop
+   	  		result = make_node(IfNode, val[0], body.children, else_body.children)
+   	  	}
+   	;
+   	
+  for_block
+  	: STMT_OPEN FOR IDENTIFIER IN IDENTIFIER STMT_CLOSE
+  		{ @document_stack.push(DocumentNode.new) } 
+  	  document
+  	  STMT_OPEN ENDFOR STMT_CLOSE
+  		{
+  			result = make_node(ForNode, val[2], val[4])
+  			result.children = @document_stack.pop.children
+  		}
+  	;
+  	
+  block_block
+  	: STMT_OPEN BLOCK STRING STMT_CLOSE
+  		{ @document_stack.push( make_node(BlockNode, val[2]) ) }
+  	  document
+  	  STMT_OPEN ENDBLOCK STMT_CLOSE
+  	  	{
+  	  		result = @document_stack.pop
+  	  		result.children = @document_stack.pop.children
+  	  	}
+  	;
+  	
+  extends_statement
+  	: STMT_OPEN EXTENDS STRING STMT_CLOSE     { result = val[2] }
+  	| STMT_OPEN EXTENDS IDENTIFIER STMT_CLOSE { result = val[2] }
+  	;
+  	
+  document
+  	: TEXT_BLOCK
+  		{
+  			@document_stack.last.children.push( make_node(TextNode,val[0]) )
+  		}
+  	| inject_statement
+  		{
+  			@document_stack.last.children.push( val[0] )
+  		}
+  	| if_block
+  		{	
+  			@document_stack.last.children.push( val[0] )
+  		}
+  	| for_block
+  		{
+  			@document_stack.last.children.push( val[0] )
+  		}
+  	| block_block
+  		{
+  			@document_stack.last.children.push( val[0] )
+  			@document_stack.each { |doc| doc.blocks.store(val[0].name, val[0]) }
+  		}
+  	| extends_statement
+  		{
+  			@document_stack.first.extends = val[0]
+  		}
+  	| document TEXT_BLOCK
+  		{
+  			@document_stack.last.children.push( make_node(TextNode,val[1]) )
+  		}
+  	| document inject_statement
+  		{
+  			@document_stack.last.children.push( val[1] )
+  		}
+  	| document if_block
+  		{
+  			@document_stack.last.children.push( val[1] )
+  		}
+  	| document for_block
+  		{
+  			@document_stack.last.children.push( val[1] )
+  		}
+  	| document block_block
+  		{
+  			@document_stack.last.children.push( val[1] )
+  		}
+  	| document extends_statement
+  		{
+  			@document_stack.first.extends = val[0]
+  		}
+  	;
+  	
+end
+
+---- header ----
+
+# cadenza.rb : generated by racc
+
+require File.join(File.dirname(__FILE__), 'cadenza_node')
+require File.join(File.dirname(__FILE__), 'cadenza_lexer')
+
+---- inner ----
+attr_accessor :loader, :filters
+attr_accessor :log_lexer, :log_parser
+
+def initialize(loader=nil, *args)
+	super(*args)
+	@loader = loader
+	@filters = {}
+	@lexer = Cadenza::Lexer.new
+end
+
+def make_node(klass,*args)
+	args.push(@lexer.line)
+	args.push(@lexer.column)
+	return klass.new(*args)
+end
+
+def push_token(token)
+	@q.push(token)
+	puts "Lexer: Token found #{token[0].to_s}(#{token[1].to_s})" if self.log_lexer
+end
+ 
+  def parse( str )
+	@lexer.source = str
+	@document_stack = [DocumentNode.new]
+    do_parse
+    return @document_stack.first
+  end
+
+  def next_token
+    @lexer.next_token
+  end
+
+  def on_error(error_token_id, error_value, value_stack)
+	msg = "parse error on #{token_to_str(error_token_id)} #{error_value}"
+	raise ParseError, msg
+  end
+
+---- footer ----
+if __FILE__ == $0
+	parser = CadenzaParser.new
+	count = 0
+	scnt  = 0
+	
+	puts
+	puts 'type "Q" to quit.'
+	puts
+	
+	while true do
+	  puts
+	  print '? '
+	  str = gets.chop!
+	  break if /q/i === str
+	
+	  begin
+	    val = parser.parse( str )
+	    print '= ', val, "\n"
+	    puts "type of value: #{val.class}"
+	  rescue ParseError
+	    puts $!
+	  rescue
+	    puts 'unexpected error ?!'
+	    raise
+	  end
+	
+	end
+end

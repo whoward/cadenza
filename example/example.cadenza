@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+	</head>
+	<body>
+		<div>This is a sample page to be parsed by Cadenza</div>
+		
+		<h1>Filters!</h1>
+		<div>{{ "this was all lower case" | upper }}</div>
+		
+		<h1>IF Conditions!</h1>
+		{% if test_variable %}
+		<div>The test variable is true!</div>
+		{% else %}
+		<div>The test variable is false!</div>
+		{% endif %}
+		
+		<h1>FOR blocks!</h1>
+		<div>All the index/values of the 'values' variable</div>
+		<ul>
+		{% for i in values %}
+		<li>{{forloop.counter}}: {{i}}</li>
+		{% endfor %}
+		</ul>
+		
+		<h1>Arithmetic!</h1>
+		<div>Can't do this with Django!</div>
+		<div>13 + 5 * 4 - 7 / 2 = {{ 13 + 5 * 4 - 7 / 2 }}</div>
+	</body>
+</html>
