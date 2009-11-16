@@ -10,10 +10,10 @@ module Cadenza
   class Node
     attr_accessor :line, :column
     
-    def initialize(line,col)
+    def initialize(pos_token)
       super()
-      self.line = line
-      self.column = col 
+      self.line = pos_token.line
+      self.column = pos_token.column
     end
   
     def render(context,stream)
@@ -21,7 +21,7 @@ module Cadenza
     end
    
   protected
-    # this is used for each node's to_s method 
+    # this is used for each node's to_s method, to keep the indentation consistent
     TAB_SPACES = 3
     TAB = "\n" << " " * TAB_SPACES
     

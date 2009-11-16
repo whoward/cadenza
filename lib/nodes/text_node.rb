@@ -2,9 +2,9 @@ module Cadenza
   class TextNode < Cadenza::Node
     attr_accessor :text
     
-    def initialize(text,line,col)
-      super(line,col)
-      self.text = text
+    def initialize(text,pos)
+      super(pos)
+      self.text = text.value
     end
     
     def render(context,stream)

@@ -2,15 +2,15 @@ module Cadenza
   class IfNode < Cadenza::Node
     attr_accessor :expression, :true_children, :false_children
     
-    def initialize(expression,true_children,false_children,line,col)
-      super(line,col)
+    def initialize(expression,true_children,false_children,pos)
+      super(pos)
       self.expression = expression
       self.true_children  = true_children
       self.false_children = false_children
     end
     
     def render(context,stream)
-      evaluation = value_of(self.expression,context)
+      evaluation = self.expression.eval(context)
       
       if evaluation
         self.true_children.each  {|child| child.render(context,stream)}

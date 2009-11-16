@@ -2,20 +2,20 @@ module Cadenza
   class ForNode < Cadenza::Node
     attr_accessor :iterator, :iterable, :children
     
-    def initialize(iterator, iterable, line, col)
-      super(line,col)
+    def initialize(iterator, iterable, pos)
+      super(pos)
       self.iterator = iterator
       self.iterable = iterable
       self.children = Array.new
     end
     
     def render(context, stream)
-      current_iterator = variable_for_identifier(self.iterable, context)
+      current_iterator = self.iterable.eval(context)
       
       counter = 0
       current_iterator.each do | value |
         inner_context = context.clone
-        inner_context.store(self.iterator, value)
+        inner_context.store(self.iterator.identifier, value)
         
         #TODO: store forloop variables in inner_context
         first = (counter == 0)

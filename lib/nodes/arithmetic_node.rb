@@ -2,8 +2,8 @@ module Cadenza
   class ArithmeticNode < Cadenza::Node
     attr_accessor :left, :right, :op
     
-    def initialize(left,right,op,line,col)
-      super(line,col)
+    def initialize(left,right,op,pos)
+      super(pos)
       
       self.left = left
       self.right = right

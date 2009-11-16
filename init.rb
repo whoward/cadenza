@@ -1,1 +1,5 @@
-require File.join(File.dirname(__FILE__), 'lib/cadenza')
+require File.join(File.dirname(__FILE__), 'lib/filter')
+require File.join(File.dirname(__FILE__), 'lib/lexer')
+require File.join(File.dirname(__FILE__), 'lib/parser')
+require File.join(File.dirname(__FILE__), 'lib/loader')
+require File.join(File.dirname(__FILE__), 'lib/node')

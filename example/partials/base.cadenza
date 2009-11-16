@@ -1,0 +1,13 @@
+<html>
+	<head>
+		<title>Cadenza: {% block title %}Untitled Page{% endblock %}</title>
+		<link type='text/css' rel='stylesheet' href='resources/style.css'/> 
+	</head>
+	<body>
+		<div id='body'>
+		{% block content %}
+		No Content!
+		{% endblock %}
+		</div>
+	</body>
+</html>

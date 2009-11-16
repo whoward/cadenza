@@ -2,9 +2,9 @@ module Cadenza
   class ConstantNode < Cadenza::Node
      attr_accessor :value
      
-     def initialize(value,line,col)
-       super(line,col)
-       self.value = value
+     def initialize(value,pos)
+       super(pos)
+       self.value = value.value
      end
           
      def render(context, stream)
