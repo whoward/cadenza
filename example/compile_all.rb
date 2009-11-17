@@ -15,6 +15,10 @@ end
 # This will be the context passed to EVERY example
 context = {
   'alphabet' => ('A'..'Z').to_a,
+  'now' => Time.now,
+  'nil' => nil,
+  'empty_list' => [],
+  
   # old stuff
   'title'=>'This is a Cadenza Page!',
   'test_variable'=>true,

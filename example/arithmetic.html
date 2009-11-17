@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>Cadenza: Arithmetic Example</title>
+		<link type='text/css' rel='stylesheet' href='resources/style.css'/> 
+	</head>
+	<body>
+		<div id='body'>
+		
+<h1>Arithmetic in Cadenza</h1>
+<p>For any argument that can use numbers you can always substitute arithmetic expressions in.</p>
+
+<h2>Example: inject statements</h2>
+<pre>
+&#123;&#123; 123 + 456 &#125;&#125; produces 579
+&#123;&#123; 1 + 2 * 3 - 4 / 5 &#125;&#125; produces 7
+&#123;&#123; (1 + 2) * ((3 - 4) / 5) &#125;&#125; produces -3
+&#123;&#123; "a" * 3 &#125;&#125; produces aaa
+&#123;&#123; alphabet.length - 1 &#125;&#125; produces 25 
+</pre>
+
+<h2>Example: filter arguments</h2>
+<pre>
+&#123;&#123; "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 20 + 5 &#125;&#125;
+
+produces
+
+Lorem ipsum dolor sit ame<br/>t, consectetur adipisicin<br/>g elit<br/>
+</pre>
+
+		</div>
+	</body>
+</html>

@@ -22,16 +22,6 @@ h3 {
 	margin: 20px 0px;
 }
 
-table {
-	border-collapse: collapse;
-}
-
-table td {
-	border: 1px solid black;
-	text-align: center;
-	padding: 3px 5px;
-}
-
 div#body {
 	width: 800px;
 	padding: 20px;
@@ -41,9 +31,4 @@ div#body {
 	-moz-border-radius: 20px;
 	-webkit-border-radius: 20px;
 	text-align: left;
-}
-
-div.example {
-	padding: 20px 3px;
-	font-family: courier;
 }
