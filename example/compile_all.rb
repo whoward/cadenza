@@ -5,7 +5,7 @@ begin
   require "rubygems"
   require "launchy"
   
-#  use_launchy = true
+  use_launchy = true
   puts "Launch gem is installed, examples will automatically be opened in a web browser"
 rescue LoadError
   use_launchy = false
@@ -39,11 +39,11 @@ Cadenza::Loader.loaded_templates.each do | key, template |
   
   filename.gsub!(".cadenza",".html")
   
-  ofstream = File.open(filename, 'w') rescue next
+  ofstream = File.open(File.join('..','doc',filename), 'w') rescue next
   
   template.render(context, ofstream)
   
   ofstream.close
   
-  Launchy::Browser.run(filename) if use_launchy
+  Launchy::Browser.run(File.join('..','doc',filename)) if use_launchy
 end
