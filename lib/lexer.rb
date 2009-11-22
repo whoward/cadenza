@@ -30,12 +30,18 @@ module Cadenza
     def scan_text
       case
         when m = @scanner.scan(/\{\{/)
-          @context = :inject_statement
+          @context = :statement
           return make_token(:VAR_OPEN, m)
         
         when m = @scanner.scan(/\{%/)
-          @context = :general_statement
+          @context = :statement
           return make_token(:STMT_OPEN, m)
+          
+        # comments, skip the entire content
+        when m = @scanner.scan(/\{#/)
+          m = @scanner.scan_until(/#\}/)
+          #TODO: count the number of lines
+          return scan_text
           
         else
           # scan ahead until we find a variable opening tag or a block opening tag
@@ -70,11 +76,36 @@ module Cadenza
       end
     end
     
-    def scan_statement_common
+    def scan_statement
+      scan_whitespace
+      
       case
+        when m = @scanner.scan(/\}\}/)
+          @context = :body
+          return make_token(:VAR_CLOSE, m)
+          
+        when m = @scanner.scan(/%\}/)
+          @context = :body
+          return make_token(:STMT_CLOSE, m)
+          
+        when m = @scanner.scan(/==/)
+          return make_token(:OP_EQ, m)
+        
+        when m = @scanner.scan(/!=/)
+          return make_token(:OP_NEQ, m)
+          
+        when m = @scanner.scan(/>=/)
+          return make_token(:OP_GEQ, m)
+        
+        when m = @scanner.scan(/<=/)
+          return make_token(:OP_LEQ, m)
+          
+        when m = @scanner.scan(/=>/)
+          return make_token(:OP_MAP, m)
+          
         # Keywords, require space afterwards so that identifiers can begin with keywords (but not match them)
         #TODO: this requires space after a keyword, really i just want some non-keyword thing
-        when m = @scanner.scan(/(if|else|endif|for|in|endfor|block|endblock|extends)\s+/)
+        when m = @scanner.scan(/(if|else|endif|for|in|endfor|block|endblock|extends|render)\s+/)
           return make_token(m.chop.upcase.to_sym, m.chop, m.length)
   
         when m = @scanner.scan(/[A-Za-z_][A-Za-z0-9_\.]*/)
@@ -107,44 +138,7 @@ module Cadenza
         @column += m.length
       end
     end
-    
-    def scan_inject_statement        
-      # Scan ahead until the next non-whitespace character
-      scan_whitespace
-          
-      case          
-        when m = @scanner.scan(/\}\}/)
-          @context = :body
-          return make_token(:VAR_CLOSE, m)
-      end
-      
-      return scan_statement_common
-    end
-    
-    def scan_general_statement
-      # Scan ahead until the next non-whitespace character
-      scan_whitespace
-      
-      case        
-        when m = @scanner.scan(/%\}/)
-          @context = :body
-          return make_token(:STMT_CLOSE, m)
-        
-        when m = @scanner.scan(/==/)
-          return make_token(:OP_EQ, m)
-        
-        when m = @scanner.scan(/!=/)
-          return make_token(:OP_NEQ, m)
-          
-        when m = @scanner.scan(/>=/)
-          return make_token(:OP_GEQ, m)
-        
-        when m = @scanner.scan(/<=/)
-          return make_token(:OP_LEQ, m)
-      end
-      
-      return scan_statement_common
-    end
+
     
     def next_token
       return [false, false] if @scanner.empty?
@@ -152,10 +146,8 @@ module Cadenza
       case @context
         when :body
           return scan_text
-        when :inject_statement
-          return scan_inject_statement
-        when :general_statement
-          return scan_general_statement
+        when :statement
+          return scan_statement
         else
           raise "Unknown token"
       end

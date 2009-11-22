@@ -20,6 +20,11 @@ rule
   	| '(' additive_expression ')'	{ result = val[1] }
 	;
 	
+  filename
+    : IDENTIFIER  { result = VariableNode.new(val[0], val[0]) }
+    | STRING      { result = ConstantNode.new(val[0], val[0]) }
+    ;
+	
   multiplicative_expression
   	: primary_expression
   	| multiplicative_expression '*' primary_expression { result = ArithmeticNode.new(val[0],val[2],'*',val[0]) }
@@ -47,6 +52,22 @@ rule
   	| param_list ',' additive_expression	{ result = val[0].push(val[2]) }
   	;
   	
+  mapped_param_list
+  	: STRING OP_MAP boolean_expression
+  		{
+  			result = Hash.new
+  			key = ConstantNode.new(val[0], val[0])
+  			value = val[2]
+  			result.store(key, value)
+  		}
+  	| mapped_param_list ',' STRING OP_MAP boolean_expression
+  		{
+  			key = ConstantNode.new(val[2], val[2])
+  			value = val[4]
+  			val[0].store(key, value)
+  		}
+  	;
+  	
   filter
   	: IDENTIFIER			{ result = FilterReference.new(val[0], [])    }
   	| IDENTIFIER param_list { result = FilterReference.new(val[0], val[1]) }
@@ -58,8 +79,8 @@ rule
   	;
   	
   inject_statement
-  	: VAR_OPEN additive_expression VAR_CLOSE       			 { result = InjectNode.new(val[1], [],     val[0]) }
-  	| VAR_OPEN additive_expression '|' filter_list VAR_CLOSE { result = InjectNode.new(val[1], val[3], val[0]) }
+  	: VAR_OPEN boolean_expression VAR_CLOSE       			 { result = InjectNode.new(val[1], [],     val[0]) }
+  	| VAR_OPEN boolean_expression '|' filter_list VAR_CLOSE { result = InjectNode.new(val[1], val[3], val[0]) }
   	;
 
   if_statement
@@ -109,61 +130,37 @@ rule
   	;
   	
   extends_statement
-  	: STMT_OPEN EXTENDS STRING STMT_CLOSE     { result = ConstantNode.new(val[2], val[2]) }
-  	| STMT_OPEN EXTENDS IDENTIFIER STMT_CLOSE { result = VariableNode.new(val[2], val[2]) }
+  	: STMT_OPEN EXTENDS filename STMT_CLOSE { result = val[2] }
+  	;
+ 
+  render_statement
+  	: STMT_OPEN RENDER filename mapped_param_list STMT_CLOSE { result = RenderNode.new(val[2], val[3], val[0]) }
+  	| STMT_OPEN RENDER filename STMT_CLOSE                   { result = RenderNode.new(val[2], Hash.new, val[0]) }
   	;
   	
   document
-  	: TEXT_BLOCK
-  		{
-  			@document_stack.last.children.push( TextNode.new(val[0], val[0]) )
-  		}
-  	| inject_statement
-  		{
-  			@document_stack.last.children.push( val[0] )
-  		}
-  	| if_block
-  		{	
-  			@document_stack.last.children.push( val[0] )
-  		}
-  	| for_block
-  		{
-  			@document_stack.last.children.push( val[0] )
-  		}
+  	: TEXT_BLOCK       { @document_stack.last.children.push( TextNode.new(val[0], val[0]) ) }
+  	| inject_statement { @document_stack.last.children.push( val[0] ) }
+  	| if_block         { @document_stack.last.children.push( val[0] ) }
+  	| for_block        { @document_stack.last.children.push( val[0] ) }
   	| block_block
   		{
   			@document_stack.last.children.push( val[0] )
   			@document_stack.first.blocks.store( val[0].name, val[0] )
   		}
-  	| extends_statement
-  		{
-  			@document_stack.first.extends = val[0]
-  		}
-  	| document TEXT_BLOCK
-  		{
-  			@document_stack.last.children.push( TextNode.new(val[1], val[1]) )
-  		}
-  	| document inject_statement
-  		{
-  			@document_stack.last.children.push( val[1] )
-  		}
-  	| document if_block
-  		{
-  			@document_stack.last.children.push( val[1] )
-  		}
-  	| document for_block
-  		{
-  			@document_stack.last.children.push( val[1] )
-  		}
+  	| extends_statement         { @document_stack.first.extends = val[0] }
+  	| render_statement          { @document_stack.last.children.push( val[0] ) }
+  	| document TEXT_BLOCK       { @document_stack.last.children.push( TextNode.new(val[1], val[1]) ) }
+  	| document inject_statement { @document_stack.last.children.push( val[1] ) }
+  	| document if_block         { @document_stack.last.children.push( val[1] ) }
+  	| document for_block        { @document_stack.last.children.push( val[1] ) }
   	| document block_block
   		{
   			@document_stack.last.children.push( val[1] )
   			@document_stack.first.blocks.store( val[1].name, val[1] )
   		}
-  	| document extends_statement
-  		{
-  			@document_stack.first.extends = val[0]
-  		}
+  	| document extends_statement { @document_stack.first.extends = val[0] }
+  	| document render_statement  { @document_stack.last.children.push( val[1]) }
   	;
   	
 end
