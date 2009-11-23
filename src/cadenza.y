@@ -138,6 +138,10 @@ rule
   	| STMT_OPEN RENDER filename STMT_CLOSE                   { result = RenderNode.new(val[2], Hash.new, val[0]) }
   	;
   	
+  generic_statement
+  	: STMT_OPEN IDENTIFIER param_list STMT_CLOSE { result = GenericStatementNode.new(val[1], val[2], val[0]) }
+  	;
+  	
   document
   	: TEXT_BLOCK       { @document_stack.last.children.push( TextNode.new(val[0], val[0]) ) }
   	| inject_statement { @document_stack.last.children.push( val[0] ) }
@@ -150,6 +154,7 @@ rule
   		}
   	| extends_statement         { @document_stack.first.extends = val[0] }
   	| render_statement          { @document_stack.last.children.push( val[0] ) }
+  	| generic_statement         { @document_stack.last.children.push( val[0] ) }
   	| document TEXT_BLOCK       { @document_stack.last.children.push( TextNode.new(val[1], val[1]) ) }
   	| document inject_statement { @document_stack.last.children.push( val[1] ) }
   	| document if_block         { @document_stack.last.children.push( val[1] ) }
@@ -160,7 +165,8 @@ rule
   			@document_stack.first.blocks.store( val[1].name, val[1] )
   		}
   	| document extends_statement { @document_stack.first.extends = val[0] }
-  	| document render_statement  { @document_stack.last.children.push( val[1]) }
+  	| document render_statement  { @document_stack.last.children.push( val[1] ) }
+  	| document generic_statement { @document_stack.last.children.push( val[1] ) }
   	;
   	
 end

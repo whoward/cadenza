@@ -14,10 +14,11 @@ module Cadenza
       
       self.filters.each do | ref |
         name = ref.identifier.value
-        params = Array.new
-        ref.params.each { |param| params.push( param.eval(context) ) }
         
         raise TemplateError.new("Filter '%s' is not defined" % name, self) unless Filters.respond_to?(name)
+        
+        params = Array.new
+        ref.params.each { |param| params.push( param.eval(context) ) }
         
         # push the value onto the front of the parameters
         params.unshift(value)

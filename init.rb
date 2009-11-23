@@ -1,6 +1,7 @@
 CADENZA_ROOT = File.join(File.dirname(__FILE__), 'lib') 
 
 require "#{CADENZA_ROOT}/filters/standard"
+require "#{CADENZA_ROOT}/statements/standard"
 require "#{CADENZA_ROOT}/lexer"
 require "#{CADENZA_ROOT}/parser"
 require "#{CADENZA_ROOT}/loader"
@@ -15,10 +16,15 @@ def lib_exists(lib)
   end    
 end
 
-# If certain gems are installed then 
+# If certain gems are installed then we want to implement some integration 
 if lib_exists("rubygems")
   # ActiveSupport provides some nice capitalizing and humanizing string filter support
-  require "#{CADENZA_ROOT}/filters/activesupport" if lib_exists("activesupport")
+  require "#{CADENZA_ROOT}/filters/active_support" if lib_exists("activesupport")
+  
+  if lib_exists('action_view') and lib_exists('action_controller')
+    require "#{CADENZA_ROOT}/statements/action_view/asset_tag_helper"
+  end
+  
   
 end
 
