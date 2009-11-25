@@ -135,11 +135,12 @@ rule
  
   render_statement
   	: STMT_OPEN RENDER filename mapped_param_list STMT_CLOSE { result = RenderNode.new(val[2], val[3], val[0]) }
-  	| STMT_OPEN RENDER filename STMT_CLOSE                   { result = RenderNode.new(val[2], Hash.new, val[0]) }
+  	| STMT_OPEN RENDER filename STMT_CLOSE                   { result = RenderNode.new(val[2], nil,    val[0]) }
   	;
   	
   generic_statement
-  	: STMT_OPEN IDENTIFIER param_list STMT_CLOSE { result = GenericStatementNode.new(val[1], val[2], val[0]) }
+  	: STMT_OPEN IDENTIFIER STMT_CLOSE            { result = GenericStatementNode.new(val[1], [], val[0]) }
+  	| STMT_OPEN IDENTIFIER param_list STMT_CLOSE { result = GenericStatementNode.new(val[1], val[2], val[0]) }
   	;
   	
   document

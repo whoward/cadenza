@@ -45,7 +45,7 @@ module Cadenza
           
         else
           # scan ahead until we find a variable opening tag or a block opening tag
-          m = @scanner.scan_until(/\{[\{%]/)
+          m = @scanner.scan_until(/\{[\{%#]/)
           
           # if there was no instance of an opening block then just take what remains 
           # in the scanner otherwise return the pointer to before the block

@@ -58,6 +58,13 @@ module Cadenza
           next
         end
         
+        # It could also respond to method_missing
+        if prev.respond_to?(:method_missing)
+          prev = prev.send(:method_missing, name)
+          prev_name = name
+          next
+        end
+        
         raise TemplateError.new("#{name} is not defined for #{prev_name}", self)
       end
       

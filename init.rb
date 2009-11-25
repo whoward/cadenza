@@ -22,7 +22,7 @@ if lib_exists("rubygems")
   require "#{CADENZA_ROOT}/filters/active_support" if lib_exists("activesupport")
   
   if lib_exists('action_view') and lib_exists('action_controller')
-    require "#{CADENZA_ROOT}/statements/action_view/asset_tag_helper"
+    require "#{CADENZA_ROOT}/statements/action_view"
   end
   
   

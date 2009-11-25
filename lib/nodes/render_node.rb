@@ -11,9 +11,11 @@ module Cadenza
     def render(context, stream)
       template = Loader.get_template('Filesystem', self.filename.eval(context))
       
-      new_context = Hash.new
-      self.locals.each do | key, value |
-        new_context.store(key.eval(context), value.eval(context))
+      if self.locals.nil?
+        new_context = context.clone
+      else
+        new_context = Hash.new
+        self.locals.each { |k,v| new_context.store(k.eval(context), v.eval(context)) }
       end
       
       return template.render(new_context, stream)
