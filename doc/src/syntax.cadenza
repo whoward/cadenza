@@ -1,0 +1,5 @@
+{% extends "partials/base.cadenza" %}
+{% block title %}Syntax{% endblock %}
+{% block content %}
+  <h1>Syntax of Cadenza</h1>
+{% endblock %}

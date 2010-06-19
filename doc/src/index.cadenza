@@ -1,0 +1,5 @@
+{% extends "partials/base.cadenza" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+  <h1>Cadenza Templating Language for Ruby</h1>
+{% endblock %}

@@ -10,7 +10,7 @@
 	See above
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; "active_support_filters" | lower_camelize &#125;&#125; produces {{ "active_support_filters" | lower_camelize }}<br/>
+    {{ '{{"active_support_filters" | lower_camelize}}' }} produces {{ "active_support_filters" | lower_camelize }}
 	</pre>
 
 	<h2>upper_camelize</h2>
@@ -18,7 +18,7 @@
 	See above
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; "active_support_filters" | upper_camelize &#125;&#125; produces {{ "active_support_filters" | upper_camelize }}<br/>
+    {{ '{{"active_support_filters" | upper_camelize}}' }} produces {{ "active_support_filters" | upper_camelize }}
 	</pre>
 
 {% endblock %}

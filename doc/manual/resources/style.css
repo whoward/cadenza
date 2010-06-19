@@ -1,11 +1,17 @@
+
+/**
+ *   Basic HTML styling
+ **/
+ 
 body {
 	text-align: center;
-	padding-top: 120px;
 	
 	font-family: sans-serif;
 	font-size:   14px;
 	
-	background: url(resources/logo.png) no-repeat 10px 10px;
+	background: url("logo.png") no-repeat 10px 10px;
+	
+	overflow: scroll;
 }
 
 h2 {
@@ -22,13 +28,48 @@ h3 {
 	margin: 20px 0px;
 }
 
+/**
+ *   Named HTML elements
+ **/
+ 
 div#body {
 	width: 800px;
 	padding: 20px;
-	margin:  auto;
+	margin: 120px auto;
 	background-color: #EDEFF4;
 	opacity: 50;
-	-moz-border-radius: 20px;
-	-webkit-border-radius: 20px;
+	border-radius: 20px;
 	text-align: left;
+}
+
+div#forkme {
+  background-image: url("forkme.png");
+  width: 149px;
+  height: 149px;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  cursor: pointer;
+}
+
+div#navigation {
+  padding: 10px;
+  
+  background-color: #EDEFF4;
+  
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+   
+  position: fixed;
+  left: 0;
+  top: 120px;
+  
+  max-height: 90%;
+  
+  text-align: left;
+}
+
+div#navigation h3 {
+  margin: 0;
+  padding: 0;
 }

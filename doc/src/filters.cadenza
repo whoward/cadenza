@@ -18,9 +18,9 @@
 	be added.  <b>padding string</b> specifies which string shall be used to center the string.
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; "hello" | center 4 &#125;&#125; produces "{{ "hello" | center 4 }}"
-&#123;&#123; "hello" | center 20 &#125;&#125; produces "{{ "hello" | center 20 }}"
-&#123;&#123; "hello" | center 20, "-" &#125;&#125; produces "{{ "hello" | center 20, "-" }}"
+{{ '{{ "hello" | center 4 }}'}} produces "{{ "hello" | center 4 }}"
+{{ '{{ "hello" | center 20 }}'}} produces "{{ "hello" | center 20 }}"
+{{ '{{ "hello" | center 20, "-" }}'}} produces "{{ "hello" | center 20, "-" }}"
 	</pre>
 	
 	<h2>cut "value"</h2>
@@ -28,7 +28,7 @@
 	Removes all <b>values</b> from the string
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; "string with spaces" | cut " " &#125;&#125; produces "{{ "string with spaces" | cut " " }}"
+{{ '{{ "string with spaces" | cut " " }}' }} produces {{ "string with spaces" | cut " " }}
 	</pre>
 	
 	<h2>date ["format"="%F"]</h2>
@@ -38,8 +38,8 @@
 	for specifics on the format. 
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; now | date &#125;&#125; produces "{{ now | date }}"
-&#123;&#123; now | date "%A %B %e %Y %r" &#125;&#125; produces "{{ now | date "%A %B %e %Y %r" }}"
+{{ '{{ now | date }}' }} produces {{ now | date }}
+{{ '{{ now | date "%A %B %e %Y %r" }}' }} produces {{ now | date "%A %B %e %Y %r" }}
 	</pre>
 	
 	<h2>default "default_value"</h2>
@@ -47,10 +47,10 @@
 	Uses the <b>default_value</b> passed instead of the value is nil, empty or evaluates to false. 
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; nil | default "Not defined" &#125;&#125; produces "{{ nil | default "Not defined" }}"
-&#123;&#123; "" | default "Not defined" &#125;&#125; produces "{{ "" | default "Not defined" }}"
-&#123;&#123; empty_list | default "Not defined" &#125;&#125; produces "{{ empty_list | default "Not defined" }}"
-&#123;&#123; "abc" | default "Not defined" &#125;&#125; produces "{{ "abc" | default "Not defined" }}"
+{{ '{{ nil | default "Not defined" }}' }} produces {{ nil | default "Not defined" }}
+{{ '{{ "" | default "Not defined" }}' }} produces {{ "" | default "Not defined" }}
+{{ '{{ empty_list | default "Not defined" }}' }} produces {{ empty_list | default "Not defined" }}
+{{ '{{ "abc" | default "Not defined" }}' }} produces {{ "abc" | default "Not defined" }}
 	</pre>
 	
 	<h2>escape</h2>
@@ -58,7 +58,7 @@
 	Performs HTML escaping on the value.  Specifically replaces &, ", <, and > with their HTML special character equivalents.
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; 'foo "bar" &lt;baz&gt;' | date &#125;&#125; produces "{{ 'foo "bar" <baz>' | escape | escape }}"
+&#123;&#123; 'foo "bar" &lt;baz&gt;' | date &#125;&#125; produces {{ 'foo "bar" <baz>' | escape | escape }}
 	</pre>
 	
 	<h2>first</h2>
@@ -66,7 +66,7 @@
 	Returns the first element of a list
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; alphabet | first &#125;&#125; produces "{{ alphabet | first }}"
+{{ '{{ alphabet | first }}' }}  produces {{ alphabet | first }}
 	</pre>
 	
 	<h2>join "glue"</h2>
@@ -74,7 +74,7 @@
 	Joins together every element of a list with a <b>glue</b> string.
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; alphabet | join " " &#125;&#125; produces "{{ alphabet | join " " }}"
+{{ '{{ alphabet | join "" }}' }} produces "{{ alphabet | join " " }}"
 	</pre>
 
 	<h2>last</h2>
@@ -82,7 +82,7 @@
 	Returns the last element of a list
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; alphabet | last &#125;&#125; produces "{{ alphabet | last }}"
+{{ '{{ alphabet | last }}' }}  produces {{ alphabet | last }}
 	</pre>
 	
 	<h2>length</h2>
@@ -90,8 +90,8 @@
 	Returns the length of a value
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; "abc" | length &#125;&#125; produces "{{ "abc" | length }}"
-&#123;&#123; alphabet | length &#125;&#125; produces "{{ alphabet | length }}"
+{{ '{{ "abc" | length }}' }}  produces {{ "abc" | length }}
+{{ '{{ alphabet | length }}' }}  produces {{ alphabet | length }}
 	</pre>
 	
 	<h2>upper</h2>
@@ -99,7 +99,7 @@
 	Converts the entire string to uppercase.
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; "this was all lower case" | upper &#125;&#125; produces {{ "this was all lower case" | upper }}
+{{ '{{ "this was all lower case" | upper }}' }}  produces {{ "this was all lower case" | upper }}
 	</pre>
 	
 	<h2>wordwrap "number" ["separator"="&lt;br/&gt;"]</h2>
@@ -108,7 +108,7 @@
 	by the optional <b>separator</b>.  Gives a nice column effect, very useful on courier fonts.
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 25 &#125;&#125;
+{{ '{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 25 }}' }}
 
 produces
 
