@@ -10,14 +10,15 @@ module Cadenza
       "Filesystem"
     end
     
-    def self.get_template(address)
-      # Make sure the address can be found on the load path first, raise an error if it can't
-      path = @@template_paths.detect(raise_error(NOT_FOUND_MESSAGE, address, template_paths.inspect)) do | x |
-        path_includes_template?(x, address)
-      end
+    def self.get_template(template)
+      # Make sure the template can be found on the load path first, raise an error if it can't
+      path = @@template_paths.detect {|path| path_includes_template?(path, template) }
       
-      # Join the path and the address to get the real filesystem filename
-      filename = File.join(path, address)
+      # if the template wasn't on the load path then raise an error
+      raise NOT_FOUND_MESSAGE % [template, template_paths.inspect] if path.nil?
+      
+      # Join the path and the template to get the real filesystem filename
+      filename = File.join(path, template)
       
       # Check the cache to see if the file has already been loaded and parsed, if not then
       # load and parse.  Finally return the parsed template.
@@ -36,10 +37,6 @@ module Cadenza
       return true
       #TODO: check if the filename is UNDER the current path
     end
-    
-  private
-    def self.raise_error(message, *args)
-      Proc.new { raise LoadingError.new(message % args) }
-    end
+
   end
 end

@@ -3,6 +3,7 @@ namespace :doc do
 
   desc "compile the user manual for cadenza"
   task :manual => :environment do
+    # get some useful directories before we get started
     root_directory = File.join(File.dirname(__FILE__), '..')
     source_directory = File.join(root_directory, 'doc', 'src')
     output_directory = File.join(root_directory, 'doc', 'manual')
@@ -17,7 +18,9 @@ namespace :doc do
     
     # Ask the loader to compile every file ending in *.cadenza
     Dir.glob(File.join(source_directory, '*.cadenza')).each do | cadenza_file |
-      Cadenza::Loader.get_template(Cadenza::FilesystemLoader.protocol_name, cadenza_file)  
+      file = File.basename(cadenza_file)
+      protocol = Cadenza::FilesystemLoader.protocol_name
+      Cadenza::Loader.get_template(protocol, file)  
     end
     
     # Now render every loaded template to a file

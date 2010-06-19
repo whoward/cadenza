@@ -1,10 +1,10 @@
 
 namespace :compile do
   
-  desc "Compile everything"
+  desc "compile everything"
   task :all => [:parser]
   
-  desc "Compile the grammar file (cadenza.y) to a racc parser"
+  desc "compile the grammar file (cadenza.y) to a racc parser"
   task :parser do
     basedir = File.dirname(__FILE__)
     srcfile = File.join(basedir, '..', 'src', 'cadenza.y')
