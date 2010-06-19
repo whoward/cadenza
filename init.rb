@@ -19,7 +19,7 @@ end
 # If certain gems are installed then we want to implement some integration 
 if lib_exists("rubygems")
   # ActiveSupport provides some nice capitalizing and humanizing string filter support
-  require "#{CADENZA_ROOT}/filters/active_support" if lib_exists("activesupport")
+  require "#{CADENZA_ROOT}/filters/active_support" if lib_exists("active_support")
   
   if lib_exists('action_view') and lib_exists('action_controller')
     require "#{CADENZA_ROOT}/statements/action_view"

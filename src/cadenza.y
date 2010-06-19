@@ -69,17 +69,17 @@ rule
   	;
   	
   filter
-  	: IDENTIFIER			{ result = FilterReference.new(val[0], [])    }
+  	: IDENTIFIER			      { result = FilterReference.new(val[0], [])     }
   	| IDENTIFIER param_list { result = FilterReference.new(val[0], val[1]) }
   	;
   
   filter_list
-  	: filter				 { result = [val[0]] }
+  	: filter				         { result = [val[0]]            }
   	| filter_list '|' filter { result = val[0].push(val[2]) }
   	;
   	
   inject_statement
-  	: VAR_OPEN boolean_expression VAR_CLOSE       			 { result = InjectNode.new(val[1], [],     val[0]) }
+  	: VAR_OPEN boolean_expression VAR_CLOSE       			    { result = InjectNode.new(val[1], [],     val[0]) }
   	| VAR_OPEN boolean_expression '|' filter_list VAR_CLOSE { result = InjectNode.new(val[1], val[3], val[0]) }
   	;
 
@@ -182,18 +182,18 @@ end
 ---- inner ----
 
   def initialize(*args)
-	super(*args)
-	@lexer = Cadenza::Lexer.new
+	  super(*args)
+	  @lexer = Cadenza::Lexer.new
   end
 
   def push_token(token)
-	@q.push(token)
-	puts "Lexer: Token found #{token[0].to_s}(#{token[1].to_s})" if self.log_lexer
+	  @q.push(token)
+	  puts "Lexer: Token found #{token[0].to_s}(#{token[1].to_s})" if self.log_lexer
   end
  
   def parse( str )
-	@lexer.source = str
-	@document_stack = [DocumentNode.new]
+	  @lexer.source = str
+	  @document_stack = [DocumentNode.new]
     do_parse
     return @document_stack.first
   end
@@ -203,6 +203,6 @@ end
   end
 
   def on_error(error_token_id, error_value, value_stack)
-	msg = "parse error on #{token_to_str(error_token_id)} #{error_value}\n#{value_stack.inspect}"
-	raise ParseError, msg
+	  msg = "parse error on #{token_to_str(error_token_id)} #{error_value}\n#{value_stack.inspect}"
+	  raise ParseError, msg
   end
