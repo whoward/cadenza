@@ -11,20 +11,20 @@
   
   <h2>Example: inject statements</h2>
   <pre>
-    {{ 123 + 456 }} produces 579
-    {{ 1 + 2 * 3 - 4 / 5 }} produces 7
-    {{ (1 + 2) * ((3 - 4) / 5) }} produces -3
-    {{ "a" * 3 }} produces aaa
-    {{ alphabet.length - 1 }} produces 25 
+{{ 123 + 456 }} produces 579
+{{ 1 + 2 * 3 - 4 / 5 }} produces 7
+{{ (1 + 2) * ((3 - 4) / 5) }} produces -3
+{{ "a" * 3 }} produces aaa
+{{ alphabet.length - 1 }} produces 25 
   </pre>
   
   <h2>Example: filter arguments</h2>
   <pre>
-    {{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 20 + 5 }}
+{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 20 + 5 }}
     
-    produces
+produces
     
-    Lorem ipsum dolor sit ame<br/>t, consectetur adipisicin<br/>g elit<br/>
+Lorem ipsum dolor sit ame<br/>t, consectetur adipisicin<br/>g elit<br/>
   </pre>
 
 		</div>
