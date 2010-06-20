@@ -11,6 +11,10 @@ module Cadenza
       stream << self.text
     end
     
+    def ==(rhs)
+      super(rhs) and self.text == rhs.text
+    end
+    
     def to_s
       "TextNode(text: #{self.text})"
     end

@@ -26,6 +26,14 @@ module Cadenza
       self.children.each { |child| child.render(inner_context,stream) }
     end
     
+    # overrides and overriden_by are not attributes of the "node" but the document hierarchy, so
+    # they wont be counted for equality of two BlockNodes
+    def ==(rhs)
+      super(rhs) and
+      self.name == rhs.name and
+      self.children == rhs.children
+    end
+    
     def to_s
       value = "BlockNode(name: #{self.name})" << TAB
       self.children.each { |child| value << child.to_s.gsub(/\n/,TAB) << TAB }

@@ -33,5 +33,11 @@ module Cadenza
       stream << value.to_s
       return value.to_s
     end
+    
+    def ==(rhs)
+      super(rhs) and
+      self.statement_name == rhs.statement_name and
+      self.paramters == rhs.parameters
+    end
   end
 end

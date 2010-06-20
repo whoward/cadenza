@@ -30,6 +30,13 @@ module Cadenza
       return stream
     end
     
+    def ==(rhs)
+      super(rhs) and
+      self.expression == rhs.expression and
+      self.true_children == rhs.true_children and
+      self.false_children == rhs.false_children
+    end
+    
     def to_s
       value = "IfNode" << TAB
       

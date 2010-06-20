@@ -24,6 +24,10 @@ module Cadenza
       end
     end
     
+    def ==(rhs)
+      super(rhs) and self.identifier == rhs.identifier
+    end
+    
     def to_s
       "VariableNode(identifier:#{self.identifier})"
     end

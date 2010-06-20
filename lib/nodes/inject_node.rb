@@ -41,6 +41,12 @@ module Cadenza
       stream << value.to_s
     end
     
+    def ==(rhs)
+      super(rhs) and
+      self.identifier == rhs.identifier and 
+      self.filters == rhs.filters
+    end
+    
     def to_s
       value = "InjectNode" << TAB << self.identifier.to_s.gsub(/\n/,TAB)
       

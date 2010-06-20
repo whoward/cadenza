@@ -30,6 +30,13 @@ module Cadenza
       return stream
     end
     
+    def ==(rhs)
+      super(rhs) and
+      self.iterator == rhs.iterator and
+      self.iterable == rhs.iterable and
+      self.children == rhs.children
+    end
+    
     def to_s
       value = "ForNode(iterator: #{self.iterator}, iterable: #{self.iterable})" << TAB
       self.children.each { |child| value << child.to_s.gsub(/\n/,TAB) << TAB }

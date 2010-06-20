@@ -2,6 +2,9 @@ require 'strscan'
 module Cadenza
 
   class Token < Struct.new(:value, :line, :column)
+    def ==(rhs)
+      self.value == rhs.value
+    end
   end
   
   class Lexer
@@ -152,6 +155,16 @@ module Cadenza
           raise "Unknown token"
       end
   
+    end
+    
+    def remaining_tokens
+      result = Array.new
+      
+      while (token = next_token) != [false, false]
+        result << token
+      end
+      
+      return result + [[false, false]]
     end
     
   end

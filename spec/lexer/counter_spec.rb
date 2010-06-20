@@ -1,14 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Cadenza::Lexer do
+describe Cadenza::Lexer, 'line and column counter' do
   
   before(:all) do
     @lexer = Cadenza::Lexer.new
-  end
-  
-  after(:each) do
-    # At the end of each run we should not have any more tokens in the stream
-    @lexer.next_token.should eql([false, false])
   end
   
   it "should start on column one, line one" do

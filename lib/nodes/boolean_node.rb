@@ -39,6 +39,13 @@ module Cadenza
       end
     end
     
+    def ==(rhs)
+      super(rhs) and
+      self.left == rhs.left and
+      self.right == rhs.right and
+      self.op == rhs.op
+    end
+    
     def to_s
       "BooleanNode" << TAB << self.left.to_s.gsub(/\n/,TAB) << TAB << self.op << TAB << self.right.to_s.gsub(/\n/,TAB)
     end

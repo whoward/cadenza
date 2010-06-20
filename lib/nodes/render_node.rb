@@ -21,6 +21,12 @@ module Cadenza
       return template.render(new_context, stream)
     end
     
+    def ==(rhs)
+      super(rhs) and
+      self.filename == rhs.filename and
+      self.locals == rhs.locals
+    end
+    
     def to_s
       "RenderNode" << TAB << "Filename: #{self.filename}" << TAB << "Locals: #{self.locals.inspect}"
     end

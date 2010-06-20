@@ -27,6 +27,13 @@ module Cadenza
       end
     end
     
+    def ==(rhs)
+      super(rhs) and
+      self.extends == rhs.extends and
+      self.children == rhs.children and
+      self.blocks == rhs.blocks
+    end
+    
     def to_s
       value = "DocumentNode" << TAB
       self.children.each { |child| value << child.to_s.gsub(/\n/,TAB) << TAB }

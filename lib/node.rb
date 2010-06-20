@@ -19,6 +19,11 @@ module Cadenza
     def render(context,stream)
        raise 'Unimplemented evaluation'
     end
+    
+    # tests for equality of the two nodes, we dont count the line and column attributes for equality
+    def ==(rhs)
+      self.class == rhs.class
+    end
    
   protected
     # this is used for each node's to_s method, to keep the indentation consistent
