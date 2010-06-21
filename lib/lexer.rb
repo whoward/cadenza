@@ -152,7 +152,7 @@ module Cadenza
         when :statement
           return scan_statement
         else
-          raise "Unknown token"
+          raise "Unknown lexing context: #{@context}"
       end
   
     end
