@@ -9,7 +9,7 @@ module Cadenza
       self.false_children = false_children
     end
     
-    def render(context,stream)
+    def render(context, stream='')
       #TODO: i want to raise legitimate exceptions here, but if a method was undefined i want to
       # evaluate to false instead of raising an exception.  Example:
       # {% if address.city %}

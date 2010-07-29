@@ -7,7 +7,7 @@ module Cadenza
       self.text = text.value
     end
     
-    def render(context, stream)
+    def render(context, stream='')
       stream << self.text
     end
     

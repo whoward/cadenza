@@ -8,7 +8,7 @@ module Cadenza
       self.filters = filters
     end
     
-    def render(context,stream)
+    def render(context, stream='')
       
       value = self.identifier.eval(context)
       

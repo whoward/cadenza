@@ -7,7 +7,7 @@ module Cadenza
       self.value = value.value
     end
           
-    def render(context, stream)
+    def render(context, stream='')
       stream << self.value.to_s
     end
     

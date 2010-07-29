@@ -8,7 +8,7 @@ module Cadenza
       self.parameters = parameters
     end
     
-    def render(context,stream)
+    def render(context, stream='')
       name = self.statement_name.value
       
       params = Array.new

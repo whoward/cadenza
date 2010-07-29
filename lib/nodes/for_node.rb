@@ -9,7 +9,7 @@ module Cadenza
       self.children = Array.new
     end
     
-    def render(context, stream)
+    def render(context, stream='')
       current_iterator = self.iterable.eval(context)
       
       counter = 0

@@ -10,7 +10,7 @@ module Cadenza
       self.op = op
     end
     
-    def render(context,stream)
+    def render(context, stream='')
       stream << self.eval(context).to_s
     end
     
