@@ -43,8 +43,8 @@
 	for specifics on the format. 
 	<h3>Example:</h3>
 	<pre>
-{{ now | date }} produces 2010-06-19
-{{ now | date "%A %B %e %Y %r" }} produces Saturday June 19 2010 08:45:01 PM
+{{ now | date }} produces 2010-07-29
+{{ now | date "%A %B %e %Y %r" }} produces Thursday July 29 2010 01:49:39 AM
 	</pre>
 	
 	<h2>default "default_value"</h2>
@@ -63,7 +63,7 @@
 	Performs HTML escaping on the value.  Specifically replaces &, ", <, and > with their HTML special character equivalents.
 	<h3>Example:</h3>
 	<pre>
-&#123;&#123; 'foo "bar" &lt;baz&gt;' | date &#125;&#125; produces foo &amp;quot;bar&amp;quot; &amp;lt;baz&amp;gt;
+&#123;&#123; 'foo "bar" &lt;baz&gt;' | escape &#125;&#125; produces foo &amp;quot;bar&amp;quot; &amp;lt;baz&amp;gt;
 	</pre>
 	
 	<h2>first</h2>
@@ -127,8 +127,7 @@ Lorem ipsum dolor sit ame<br/>t, consectetur adipisicin<br/>g elit<br/>
   <ul>
     <li><a href='index.html'>Home</a></li>
     <li><a href='syntax.html'>Syntax</a></li>
-    <li><a href='arithmetic.html'>Arithmetic</a></li>
-    <li><a href='filters.html'>Filters</a></li>
+    <li><a href='filters.html'>Filter reference</a></li>
     <li><a href='activesupport_filters.html'>ActiveSupport Filters</a></li>
   </ul>
 </div>

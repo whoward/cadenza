@@ -15,7 +15,7 @@ module Cadenza
       self.children = Array.new
     end
     
-    def render(context, stream='', is_super_call=false)
+    def render(context={}, stream='', is_super_call=false)
       unless is_super_call or self.overridden_by.nil?
         return self.overridden_by.render(context,stream)
       end

@@ -9,7 +9,7 @@ module Cadenza
       self.blocks = Hash.new
     end
     
-    def render(context, stream='', overriding_blocks=Hash.new)
+    def render(context={}, stream='', overriding_blocks=Hash.new)
       
       overriding_blocks.each do | name, block |
         local = self.blocks.fetch(name) rescue next

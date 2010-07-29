@@ -1,5 +1,122 @@
 {% extends "partials/base.cadenza" %}
 {% block title %}Syntax{% endblock %}
 {% block content %}
-  <h1>Syntax of Cadenza</h1>
+  <h1 id="syntax">Syntax of Cadenza</h1>
+  <p>Cadenza is a text templating language.  This means you can use it to make 
+    templates for HTML, emails, source code, text documents and so on - Cadenza
+    doesn't care what it's sandwiched between.</p>
+    
+  <p>That said, Cadenza has <b>two</b> basic structures it uses for syntax: 
+    <a href='#general'>general statements</a> and 
+    <a href='#inject'>inject statements</a>.</p>
+    
+  <h2 id="inject">Inject statements</h2>
+  <p>Inject statements allow you to insert variables into your template and 
+    optionally apply some filters to them before they are injected.  Here's what
+    it looks like:</p>
+    
+  <pre>
+    {{ "{{ name | upper }}" }}
+  </pre>
+  
+  <p>In this example the variable named "name" is injected into the text but is 
+    first converted to upper case by using the "upper" filter.</p>
+    
+  <p>Inject statements start with a double left curly brace "&#123;&#123;" and end in a 
+    double right curly brace "&#125;&#125;".  The first thing inside the braces should
+    be a <a href='#variables'>variable name</a>.  At the bare minimum an inject
+    statement can look like this:</p>
+    
+  <pre>
+    {{ "{{ name }}" }}
+  </pre>
+  
+  <p>Filters are optional and are separated by pipe "|" characters.  Some filters
+    take arguments which can be <a href='#constants'>constants</a> or 
+    <a href='#variables'>variables</a>.  Arguments go right after the filter
+    name and are separated by commas ",".  Here's some examples:</p>
+    
+  <pre>
+    {{ "{{ name | upper }}" }}
+    {{ "{{ name | upper | escape }}" }}
+    {{ "{{ name | center 10 }}" }}
+    {{ '{{ name | center 10, "-" }}' }}
+  </pre>
+    
+  <p>For a list of all the basic filters that are included with Cadenza see the
+    <a href='filters.html'>filter reference</a>.  For information about writing
+    your own filters in Ruby see <a href='todo.html'>TODO</a>.</p>
+  
+  <p>And thats it for inject statements!</p>
+  
+  <h2 id="general">General statements</h2>
+  
+  <p>"General statements" really encompasses a whole family of statements that
+    all use the same syntax but each work differently.  Here's what they look
+    like in general:</p>
+    
+  <pre>
+    {{ "{% foo bar 'baz' %}" }}
+  </pre>
+  
+  <p>You'll notice it looks very similar to inject statements except that
+    there are no filters and the braces start with '&#123;%' and '%&#125;'</p>
+  
+  <p>Many types of general statements (not all of them though) form blocks of 
+    text which are used to give you control of how those blocks appear in the
+    output.  Statements which form blocks generally look like this:</p>
+    
+  <pre>
+    {{ "{% if errors %}" }}
+    You have {{ "{{ errors | length }}" }} errors in your code.
+    {{ "{% endif %}"}}
+  </pre>
+  
+  <p>That covers the basic syntax - now lets look at the specifics of each
+    kind of general statement:</p>
+  <ol>
+    <li><a href='#if_statement'>if statements</a></li>
+    <li><a href='#for_statement'>for statements</a></li>
+    <li><a href='#render_statement'>render statements</a></li>
+    <li><a href='#extends_statement'>extends statement</a></li>
+    <li><a href='#block_statement'>block statements</a></li>
+  </ol>
+  
+  <h2 id="comments">Comments</h2>  
+  
+  <p>You can insert comments into your templates by placing them between
+    a left curly brace followed by a number sign '&#123;#' and a number
+    sign followed by a right curly brace '#&#125;'.  The comment doesn't show 
+    up in the output at all!  Here's what it looks like:</p>
+    
+    <pre>
+      {{ "{# This is a comment in my template #}" }}
+    </pre>
+  
+  <h2 id="variables">Variables (Identifiers)</h2>
+  
+  <h2 id="constants">Constants</h2>
+  
+  <h2 id="arithmetic">Arithmetic</h2>
+  <p>For any argument that can use numbers you can always substitute arithmetic 
+    expressions in.</p>
+    
+  <h3>Example: inject statements</h3>
+  <pre>
+{{ "{{ 123 + 456 }}" }} produces {{ 123 + 456 }}
+{{ "{{ 1 + 2 * 3 - 4 / 5 }}" }} produces {{ 1 + 2 * 3 - 4 / 5 }}
+{{ "{{ (1 + 2) * ((3 - 4) / 5) }}" }} produces {{ (1 + 2) * ((3 - 4) / 5) }}
+{{ '{{ "a" * 3 }}' }} produces {{ "a" * 3 }}
+{{ "{{ alphabet.length - 1 }}" }} produces {{ alphabet.length - 1 }} 
+  </pre>
+  
+  <h3>Example: filter arguments</h3>
+  <pre>
+{{ '{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 20 + 5 }}' }}
+    
+produces
+    
+{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 20 + 5 }}
+  </pre>
+  
 {% endblock %}

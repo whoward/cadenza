@@ -16,7 +16,7 @@ module Cadenza
       self.column = pos_token.column
     end
   
-    def render(context, stream='')
+    def render(context={}, stream='')
        raise 'Unimplemented evaluation'
     end
     

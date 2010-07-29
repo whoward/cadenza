@@ -28,6 +28,10 @@ h3 {
 	margin: 20px 0px;
 }
 
+a, a:visited {
+  color: blue;
+}
+
 /**
  *   Named HTML elements
  **/

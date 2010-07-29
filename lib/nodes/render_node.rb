@@ -8,7 +8,7 @@ module Cadenza
       self.locals = locals
     end
     
-    def render(context, stream='')
+    def render(context={}, stream='')
       template = Loader.get_template('Filesystem', self.filename.eval(context))
       
       if self.locals.nil?
