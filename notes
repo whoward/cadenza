@@ -1,0 +1,1 @@
+Apparently i can get the named routes helpers by include ActionController::UrlWriter
