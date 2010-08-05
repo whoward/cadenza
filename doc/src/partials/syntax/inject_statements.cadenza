@@ -1,0 +1,39 @@
+<h2 id="inject">Inject statements</h2>
+
+<p>Inject statements allow you to insert variables into your template and 
+  optionally apply some filters to them before they are injected.  Here's what
+  it looks like:</p>
+  
+<pre>
+  {{ "{{ name | upper }}" }}
+</pre>
+
+<p>In this example the variable named "name" is injected into the text but is 
+  first converted to upper case by using the "upper" filter.</p>
+  
+<p>Inject statements start with a double left curly brace "&#123;&#123;" and end in a 
+  double right curly brace "&#125;&#125;".  The first thing inside the braces should
+  be a <a href='#variables'>variable name</a>.  At the bare minimum an inject
+  statement can look like this:</p>
+  
+<pre>
+  {{ "{{ name }}" }}
+</pre>
+
+<p>Filters are optional and are separated by pipe "|" characters.  Some filters
+  take arguments which can be <a href='#constants'>constants</a> or 
+  <a href='#variables'>variables</a>.  Arguments go right after the filter
+  name and are separated by commas ",".  Here's some examples:</p>
+  
+<pre>
+  {{ "{{ name | upper }}" }}
+  {{ "{{ name | upper | escape }}" }}
+  {{ "{{ name | center 10 }}" }}
+  {{ '{{ name | center 10, "-" }}' }}
+</pre>
+  
+<p>For a list of all the basic filters that are included with Cadenza see the
+  <a href='filters.html'>filter reference</a>.  For information about writing
+  your own filters in Ruby see <a href='todo.html'>TODO</a>.</p>
+
+<p>And thats it for inject statements!</p>
