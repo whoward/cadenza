@@ -8,6 +8,10 @@ module Cadenza
       self.filters = filters
     end
     
+    def implied_globals
+      identifier.implied_globals | filters.map(&:params).flatten.map(&:implied_globals).flatten
+    end
+    
     def render(context={}, stream='')
       
       value = self.identifier.eval(context)

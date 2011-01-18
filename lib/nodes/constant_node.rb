@@ -6,6 +6,10 @@ module Cadenza
       super(pos)
       self.value = value.value
     end
+    
+    def implied_globals
+      []
+    end
           
     def render(context={}, stream='')
       stream << self.value.to_s

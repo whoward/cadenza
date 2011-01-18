@@ -2,11 +2,17 @@ module Cadenza
   class ForNode < Cadenza::Node
     attr_accessor :iterator, :iterable, :children
     
+    MAGIC_LOCALS = %w(forloop.counter forloop.counter0 forloop.first forloop.last)
+    
     def initialize(iterator, iterable, pos)
       super(pos)
       self.iterator = iterator
       self.iterable = iterable
       self.children = Array.new
+    end
+    
+    def implied_globals
+      (iterable.implied_globals | children.map(&:implied_globals).flatten) - MAGIC_LOCALS - iterator.implied_globals
     end
     
     def render(context={}, stream='')

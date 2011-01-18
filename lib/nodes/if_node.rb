@@ -5,8 +5,12 @@ module Cadenza
     def initialize(expression,true_children,false_children,pos)
       super(pos)
       self.expression = expression
-      self.true_children  = true_children
-      self.false_children = false_children
+      self.true_children  = true_children || []
+      self.false_children = false_children || []
+    end
+    
+    def implied_globals
+      expression.implied_globals | true_children.map(&:implied_globals).flatten | false_children.map(&:implied_globals).flatten
     end
     
     def render(context={}, stream='')

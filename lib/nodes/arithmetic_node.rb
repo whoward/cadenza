@@ -10,6 +10,10 @@ module Cadenza
       self.op = op
     end
     
+    def implied_globals
+      left.implied_globals | right.implied_globals
+    end
+    
     def render(context={}, stream='')
       stream << self.eval(context).to_s
     end

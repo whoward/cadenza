@@ -5,19 +5,22 @@ module Cadenza
       super(message << " on line #{node.line}, column #{node.column}")
     end
   end
-  
-  #TODO: i think at least the render() method should be thread safe, it may be anyways if it is read-only
+
   class Node
     attr_accessor :line, :column
     
-    def initialize(pos_token)
+    def initialize(token)
       super()
-      self.line = pos_token.line
-      self.column = pos_token.column
+      self.line = token.line
+      self.column = token.column
     end
   
     def render(context={}, stream='')
-       raise 'Unimplemented evaluation'
+       raise 'Unimplemented method: render'
+    end
+    
+    def implied_globals
+      raise 'Unimplemented method: implied_globals'
     end
     
     # tests for equality of the two nodes, we dont count the line and column attributes for equality

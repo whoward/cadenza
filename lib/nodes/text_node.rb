@@ -7,6 +7,10 @@ module Cadenza
       self.text = text.value
     end
     
+    def implied_globals
+      []
+    end
+    
     def render(context={}, stream='')
       stream << self.text
     end

@@ -7,6 +7,10 @@ module Cadenza
       self.identifier = identifier.value
     end
     
+    def implied_globals
+      [self.identifier]
+    end
+    
     def render(context={}, stream='')
       stream << self.eval(context).to_s
     end

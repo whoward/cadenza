@@ -9,6 +9,16 @@ module Cadenza
       self.blocks = Hash.new
     end
     
+    #
+    # Gets a list of all identifiers from the document's blocks and children
+    # which are not locally defined.
+    #
+    # TODO: the extended document must also be included in this list
+    #
+    def implied_globals
+      children.map(&:implied_globals).flatten | blocks.values.map(&:implied_globals).flatten 
+    end
+    
     def render(context={}, stream='', overriding_blocks=Hash.new)
       
       overriding_blocks.each do | name, block |

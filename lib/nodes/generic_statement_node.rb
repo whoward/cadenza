@@ -8,6 +8,10 @@ module Cadenza
       self.parameters = parameters
     end
     
+    def implied_globals
+      parameters.map(&:implied_globals).flatten.uniq
+    end
+    
     def render(context={}, stream='')
       name = self.statement_name.value
       
