@@ -6,6 +6,7 @@ require "#{CADENZA_ROOT}/lexer"
 require "#{CADENZA_ROOT}/parser"
 require "#{CADENZA_ROOT}/loader"
 require "#{CADENZA_ROOT}/node"
+require "#{CADENZA_ROOT}/version"
 
 # I know this can all be done better so i'm commenting it out for now
 
