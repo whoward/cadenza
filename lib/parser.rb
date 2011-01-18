@@ -29,6 +29,10 @@ module_eval <<'..end /home/will/rails-workspace/cadenza/tasks/../src/cadenza.y m
 	  @q.push(token)
 	  puts "Lexer: Token found #{token[0].to_s}(#{token[1].to_s})" if self.log_lexer
   end
+  
+  def self.parse(str)
+    new.parse(str)
+  end
  
   def parse( str )
 	  @lexer.source = str
