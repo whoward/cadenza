@@ -8,9 +8,25 @@ describe Cadenza::Lexer, 'line and column counter' do
   
   it "should start on column one, line one" do
     @lexer.source = ''
+    @lexer.position.should == [1, 1]
+  end
+  
+  it "should count spacing with comments" do
+    @lexer.source = "abc{# some comment #}def"
     
-    @lexer.column.should eql(1)
-    @lexer.line.should   eql(1)
+    @lexer.next_token
+    @lexer.next_token
+    @lexer.position.should == [25, 1]
+    
+    @lexer.source = "abc{# some\n comment\n #}def"
+    
+    @lexer.next_token
+    @lexer.next_token
+    @lexer.position.should == [7, 3]
+    
+    @lexer.source = "abc{# some comment"
+    @lexer.next_token
+    @lexer.next_token.should == [false, false]
   end
   
   it "should reset the counters after the source has changed" do
@@ -18,11 +34,11 @@ describe Cadenza::Lexer, 'line and column counter' do
     
     # pull out a token to advance the counter
     @lexer.next_token
-    [@lexer.column, @lexer.line].should eql([4,1])
+    @lexer.position.should == [4, 1]
     
     # Now change the source, we should see the counter reset
     @lexer.source = 'def'
-    [@lexer.column, @lexer.line].should eql([1,1])
+    @lexer.position.should == [1, 1]
     
     @lexer.next_token
   end

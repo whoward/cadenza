@@ -11,6 +11,10 @@ module Cadenza
     
     attr_accessor :line, :column
     
+    def position
+      [@column, @line]
+    end
+    
     def source=(src)
       src = '' if src.nil?
       
@@ -41,9 +45,22 @@ module Cadenza
           return make_token(:STMT_OPEN, m)
           
         # comments, skip the entire content
-        when m = @scanner.scan(/\{#/)
+        when m = @scanner.scan(/\{#/) 
           m = @scanner.scan_until(/#\}/)
-          #TODO: count the number of lines
+          
+          # if no ending for this comment was found then just return the final token
+          return [false, false] if m.nil?
+          
+          comment_text = '{#' + m
+          
+          line_count = comment_text.count("\n")
+          if line_count > 0
+            @line += line_count
+            @column = comment_text.length - comment_text.rindex("\n")
+          else
+            @column += comment_text.length
+          end
+
           return scan_text
           
         else
