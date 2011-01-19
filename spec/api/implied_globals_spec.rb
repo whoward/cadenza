@@ -78,20 +78,22 @@ describe Cadenza::DocumentNode, 'implied globals list' do
 end
 
 describe Cadenza::ForNode, 'implied globals list' do
-  it "should return a list of its children's implied globals minus any locals defined by it" do
+  it "should return a list of its children's implied globals minus any locals defined by it, properties of the local iterator should be in dot notation of the iterable" do
     node_a = Cadenza::Parser.parse("{% for foo in bars %} {{baz}} {{waz}} {% endfor %}").children.first
     node_b = Cadenza::Parser.parse("{% for foo in bars %} {{baz}} {{foo}} {% endfor %}").children.first
     node_c = Cadenza::Parser.parse("{% for foo in bars %} {{baz}} {{forloop.counter}} {% endfor %}").children.first
     node_d = Cadenza::Parser.parse("{% for foo in bars %} {{baz}} {{forloop.counter0}} {% endfor %}").children.first
     node_e = Cadenza::Parser.parse("{% for foo in bars %} {{baz}} {{forloop.first}} {% endfor %}").children.first
     node_f = Cadenza::Parser.parse("{% for foo in bars %} {{baz}} {{forloop.last}} {% endfor %}").children.first
-    
+    node_g = Cadenza::Parser.parse("{% for foo in bars %} {{foo.baz}} {% endfor %}").children.first
+ 
     node_a.implied_globals.should == %w(bars baz waz)
     node_b.implied_globals.should == %w(bars baz)
     node_c.implied_globals.should == %w(bars baz)
     node_d.implied_globals.should == %w(bars baz)
     node_e.implied_globals.should == %w(bars baz)
     node_f.implied_globals.should == %w(bars baz)
+    node_g.implied_globals.should == %w(bars bars.baz)
   end
 end
 
