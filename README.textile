@@ -4,8 +4,12 @@ h1. Installation
 
 h1. Usage
 
+See: "Manual":http://whoward.github.com/Cadenza/manual
+See: "Yard Documentation":http://whoward.github.com/Cadenza/yard
+
 h1. Roadmap
-See our pivotal tracker project: https://www.pivotaltracker.com/projects/211737
+
+See: "Pivotal Tracker Project":https://www.pivotaltracker.com/projects/211737
 
 h1. Contributing
 
