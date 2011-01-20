@@ -86,14 +86,16 @@ describe Cadenza::ForNode, 'implied globals list' do
     node_e = Cadenza::Parser.parse("{% for foo in bars %} {{baz}} {{forloop.first}} {% endfor %}").children.first
     node_f = Cadenza::Parser.parse("{% for foo in bars %} {{baz}} {{forloop.last}} {% endfor %}").children.first
     node_g = Cadenza::Parser.parse("{% for foo in bars %} {{foo.baz}} {% endfor %}").children.first
- 
-    node_a.implied_globals.should == %w(bars baz waz)
-    node_b.implied_globals.should == %w(bars baz)
-    node_c.implied_globals.should == %w(bars baz)
-    node_d.implied_globals.should == %w(bars baz)
-    node_e.implied_globals.should == %w(bars baz)
-    node_f.implied_globals.should == %w(bars baz)
-    node_g.implied_globals.should == %w(bars bars.baz)
+    node_h = Cadenza::Parser.parse("{% for foo in bars %}{{a}}{% for baz in foo.bazs %}{{b}}{{baz.waz}}{% endfor %}{% endfor %}").children.first
+
+    node_a.implied_globals.sort.should == %w(bars baz waz)
+    node_b.implied_globals.sort.should == %w(bars baz)
+    node_c.implied_globals.sort.should == %w(bars baz)
+    node_d.implied_globals.sort.should == %w(bars baz)
+    node_e.implied_globals.sort.should == %w(bars baz)
+    node_f.implied_globals.sort.should == %w(bars baz)
+    node_g.implied_globals.sort.should == %w(bars bars.baz)
+    node_h.implied_globals.sort.should == %w(a b bars bars.bazs bars.bazs.waz)
   end
 end
 
