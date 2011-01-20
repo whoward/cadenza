@@ -9,7 +9,7 @@
 		No Content!
 		{% endblock %}
 		</div>
-		<div id='forkme' onclick='javascript:alert("nope...not yet");'></div>
-    {% render 'partials/navigation.cadenza' %}
+		<a href='http://github.com/whoward/Cadenza' id='forkme'></a>
+		{% render 'partials/navigation.cadenza' %}
 	</body>
 </html>

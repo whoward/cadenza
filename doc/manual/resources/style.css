@@ -46,7 +46,7 @@ div#body {
 	text-align: left;
 }
 
-div#forkme {
+a#forkme {
   background-image: url("forkme.png");
   width: 149px;
   height: 149px;
