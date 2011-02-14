@@ -71,7 +71,7 @@ module Cadenza
           # in the scanner otherwise return the pointer to before the block
           if m.nil?
             text_block = @scanner.rest
-            @scanner.pos = @scanner.string.length
+            @scanner.terminate
           else
             text_block = m[0..-3]
             @scanner.pos = @scanner.pos - 2
@@ -161,7 +161,7 @@ module Cadenza
 
     
     def next_token
-      return [false, false] if @scanner.empty?
+      return [false, false] if @scanner.eos?
       
       case @context
         when :body
