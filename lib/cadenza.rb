@@ -1,4 +1,4 @@
-CADENZA_ROOT = File.join(File.dirname(__FILE__), 'cadenza') 
+CADENZA_ROOT = File.expand_path("cadenza", File.dirname(__FILE__)) 
 
 require "#{CADENZA_ROOT}/filters/standard"
 require "#{CADENZA_ROOT}/statements/standard"
