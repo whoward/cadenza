@@ -4,56 +4,37 @@ describe Cadenza::Lexer do
   before(:all) do
     @lexer = Cadenza::Lexer.new
   end
-  
-  def all_tokens
-    @lexer.remaining_tokens.map(&:first)
-  end
-  
-  it "should scan text" do
-    @lexer.source = 'abcdefghijkl'
-    
-    all_tokens.should == [:TEXT_BLOCK, false]
+
+  def token_values(source)
+    @lexer.source = source
+    @lexer.remaining_tokens.map(&:last).map {|x| x == false ? x : x.value }
   end
 
-  it "should ignore comments inside of text blocks" do
-    @lexer.source = "abc {# some comment #} def"
-    
-    all_tokens.should == [:TEXT_BLOCK, :TEXT_BLOCK, false]
+  it "should report the counter position at (0, 0) until the parser is given something to parse" do
+    @lexer.position.should == [0, 0]
   end
 
-  it "should scan inject statements" do
-    @lexer.source = "abc {{ def }} ghi"
-    
-    all_tokens.should == [:TEXT_BLOCK, :VAR_OPEN, :IDENTIFIER, :VAR_CLOSE, :TEXT_BLOCK, false]
+  it "should not raise an error if nil is passed as the data" do
+    lambda do
+      @lexer.source = nil
+    end.should_not raise_error
+  end
+
+  it "should assign a integer value of an integer constant token" do
+    token_values("{{ 123 }}").should == ["{{", 123, "}}", false]
+  end
+
+  it "should assign a real value of a real constant token" do
+    token_values("{{ 123.45 }}").should == ["{{", 123.45, "}}", false]
   end
   
-  it "should scan inject statements with filters" do
-    @lexer.source = "abc {{ def | ghi 'jkl' | mno }} pqr"
-    
-    all_tokens.should == [:TEXT_BLOCK, :VAR_OPEN, :IDENTIFIER, '|', :IDENTIFIER, :STRING, '|', :IDENTIFIER, :VAR_CLOSE, :TEXT_BLOCK, false]
+  it "should assign a string value of a string constant token" do
+    token_values("{{ 'foo' }}").should == ["{{", "foo", "}}", false]
+    token_values("{{ \"foo\" }}").should == ["{{", "foo", "}}", false]
   end
-  
-  it "should scan statements" do
-    @lexer.source = "abc {% def 'ghi' %} jkl"
-    
-    all_tokens.should == [:TEXT_BLOCK, :STMT_OPEN, :IDENTIFIER, :STRING, :STMT_CLOSE, :TEXT_BLOCK, false]
+
+  it "should assign a identifier's name as the value of an identifier token" do
+    token_values("{{ foo.bar }}").should == ["{{", "foo.bar", "}}", false]
   end
-  
-  it "should scan constants inside of statements" do
-    @lexer.source = "{% abc \"def\" 'ghi' 123 123.45 %}"
-    
-    all_tokens.should == [:STMT_OPEN, :IDENTIFIER, :STRING, :STRING, :INTEGER, :REAL, :STMT_CLOSE, false]
-  end
-  
-  it "should scan keywords separately from identifiers inside of statements" do
-    @lexer.source = "{{ if else endif for in endfor block endblock extends render }}"
-    
-    all_tokens.should == [:VAR_OPEN, :IF, :ELSE, :ENDIF, :FOR, :IN, :ENDFOR, :BLOCK, :ENDBLOCK, :EXTENDS, :RENDER, :VAR_CLOSE, false]
-  end
-  
-  it "should scan identifiers that start with keywords as identifiers" do
-    @lexer.source = "{{ forloop }}"
-    
-    all_tokens.should == [:VAR_OPEN, :IDENTIFIER, :VAR_CLOSE, false]
-  end
+
 end

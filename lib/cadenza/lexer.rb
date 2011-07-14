@@ -1,189 +1,191 @@
 require 'strscan'
+
 module Cadenza
 
-  class Token < Struct.new(:value, :line, :column)
-    def ==(rhs)
-      self.value == rhs.value
-    end
-  end
-  
   class Lexer
-    
-    attr_accessor :line, :column
-    
-    def position
-      [@column, @line]
+    def initialize
+      @line = 0
+      @column = 0
     end
-    
-    def source=(src)
-      src = '' if src.nil?
-      
+
+    def source=(source)
+      @scanner = ::StringScanner.new(source || "")
+
       @line = 1
-      @column = 1 
+      @column = 1
+
       @context = :body
-      
-      @scanner = StringScanner.new(src)
     end
-    
-    def make_token(type, value, column_count=nil, line_count=0)
-      token = [type, Token.new(value, @line, @column)]
-      
-      @column += value.length if column_count.nil?
-      @line += line_count
-      
-      return token
+
+    def position
+      [@line, @column]
     end
-        
-    def scan_text
+
+    def next_token
+      if @scanner.eos?
+        [false, false]
+      else
+        send("scan_#{@context}")
+      end
+    end
+
+    def remaining_tokens
+      result = []
+
+      loop do
+        result.push next_token
+        break if result.last == [false, false]
+      end
+
+      result
+    end
+
+  private
+
+    #
+    # Updates the line and column counters based on the given text.
+    #
+    def update_counter(text)
+      number_of_newlines = text.count("\n")
+
+      if number_of_newlines > 0
+        @line += text.count("\n")
+        @column = text.length - text.rindex("\n")
+      else
+        @column += text.length
+      end
+    end
+
+    #
+    # Creates and returns a token with the line and column number from the end of
+    # the previous token.  Afterwards updates the counter based on the contents
+    # of the text.  The value of the token is determined by the text given and 
+    # the type of the token.
+    #
+    def token(type, text)
+      value = case type
+        when :INTEGER then text.to_i
+        when :REAL then text.to_f
+        when :STRING then text[1..-2]
+        else text
+      end
+
+      token = Token.new(value, text, @line, @column)
+
+      update_counter(token.source)
+
+      [type, token]
+    end
+
+    #
+    # Scans the next characters based on the body context (the context the lexer
+    # should initially be in), which will attempt to match the opening tokens
+    # for statements.  Failing that it will parse a text block token.
+    #
+    def scan_body
       case
-        when m = @scanner.scan(/\{\{/)
+        when text = @scanner.scan(/\{\{/) 
           @context = :statement
-          return make_token(:VAR_OPEN, m)
-        
-        when m = @scanner.scan(/\{%/)
+          token(:VAR_OPEN, text)
+
+        when text = @scanner.scan(/\{%/)
           @context = :statement
-          return make_token(:STMT_OPEN, m)
-          
-        # comments, skip the entire content
-        when m = @scanner.scan(/\{#/) 
-          m = @scanner.scan_until(/#\}/)
-          
-          # if no ending for this comment was found then just return the final token
-          return [false, false] if m.nil?
-          
-          comment_text = '{#' + m
-          
-          line_count = comment_text.count("\n")
-          if line_count > 0
-            @line += line_count
-            @column = comment_text.length - comment_text.rindex("\n")
+          token(:STMT_OPEN, text)
+
+        when text = @scanner.scan(/\{#/)
+          # scan until the end of the comment bracket, ignore the text for all
+          # purposes except for advancing the counters appropriately
+          comment = @scanner.scan_until(/#\}/)
+
+          # increment the counters based on the content of the counter
+          update_counter(text + comment)
+
+          # scan in the body context again, since we're not actually returning a
+          # token from the comment.  Don't scan if we're at the end of the body,
+          # just return a terminator token.
+          if @scanner.eos?
+            [false, false]
           else
-            @column += comment_text.length
+            scan_body
           end
 
-          return scan_text
-          
         else
           # scan ahead until we find a variable opening tag or a block opening tag
-          m = @scanner.scan_until(/\{[\{%#]/)
-          
+          text = @scanner.scan_until(/\{[\{%#]/)
+
           # if there was no instance of an opening block then just take what remains 
           # in the scanner otherwise return the pointer to before the block
-          if m.nil?
-            text_block = @scanner.rest
+          if text
+            text = text[0..-3]
+            @scanner.pos -= 2
+          else
+            text = @scanner.rest
             @scanner.terminate
-          else
-            text_block = m[0..-3]
-            @scanner.pos = @scanner.pos - 2
           end
-          
-          # Make the token before advancing the counters
-          token = make_token(:TEXT_BLOCK, text_block, 0, 0)
-          
-          # if there were new lines in the text block then add them to the line count
-          # and count the number of characters since the last line break, otherwise
-          # add the number of characters in the text block to the column count.
-          count = text_block.count("\n")
-          if count > 0
-            @line += count
-            @column = text_block.length - text_block.rindex("\n")
-          else
-            @column += text_block.length
-          end
-          
-          return token
-  
-      end
-    end
-    
-    def scan_statement
-      scan_whitespace
-      
-      case
-        when m = @scanner.scan(/\}\}/)
-          @context = :body
-          return make_token(:VAR_CLOSE, m)
-          
-        when m = @scanner.scan(/%\}/)
-          @context = :body
-          return make_token(:STMT_CLOSE, m)
-          
-        when m = @scanner.scan(/==/)
-          return make_token(:OP_EQ, m)
-        
-        when m = @scanner.scan(/!=/)
-          return make_token(:OP_NEQ, m)
-          
-        when m = @scanner.scan(/>=/)
-          return make_token(:OP_GEQ, m)
-        
-        when m = @scanner.scan(/<=/)
-          return make_token(:OP_LEQ, m)
-          
-        when m = @scanner.scan(/=>/)
-          return make_token(:OP_MAP, m)
-          
-        # Keywords, require space afterwards so that identifiers can begin with keywords (but not match them)
-        #TODO: this requires space after a keyword, really i just want some non-keyword thing
-        when m = @scanner.scan(/(if|else|endif|for|in|endfor|block|endblock|extends|render)\s+/)
-          return make_token(m.chop.upcase.to_sym, m.chop, m.length)
-  
-        when m = @scanner.scan(/[A-Za-z_][A-Za-z0-9_\.]*/)
-          return make_token(:IDENTIFIER, m)
-          
-        when m = @scanner.scan(/['][^']*[']|["][^"]*["]/)
-          return make_token(:STRING, m[1..-2], m.length, m.count("\n"))
-        
-        when m = @scanner.scan(/[0-9]+[\.][0-9]+/)
-          return make_token(:REAL, m.to_f, m.length)
-          
-        when m = @scanner.scan(/[1-9][0-9]*|0/)
-          return make_token(:INTEGER, m.to_i, m.length)
-          
-        # any single character
-        when m = @scanner.scan(/./)
-          return make_token(m, m)
-          
-      end
-    end
-    
-    def scan_whitespace
-      return unless m = @scanner.scan(/\s+/)
-      
-      count = m.count("\n")
-      if count > 0
-        @line += count
-        @column = m.length - m.rindex("\n")
-      else
-        @column += m.length
+
+          token(:TEXT_BLOCK, text)
       end
     end
 
-    
-    def next_token
-      return [false, false] if @scanner.eos?
-      
-      case @context
-        when :body
-          return scan_text
-        when :statement
-          return scan_statement
+    #
+    # Scans the next characters based on the statement context, which will ignore
+    # whitespace and look for tokens you would expect to find inside any kind
+    # of statement.
+    #
+    def scan_statement
+      # eat any whitespace at the start of the string
+      whitespace = @scanner.scan_until(/\S/)
+
+      if whitespace
+        @scanner.pos -= 1
+        update_counter(whitespace[0..-2])
+      end
+
+      # look for matches
+      case
+        when text = @scanner.scan(/\}\}/)
+          @context = :body
+          token(:VAR_CLOSE, text)
+        
+        when text = @scanner.scan(/%\}/)
+          @context = :body
+          token(:STMT_CLOSE, text)
+
+        when text = @scanner.scan(/[=]=/) # i've added the square brackets because syntax highlighters dont like /=
+          token(:OP_EQ, text)
+
+        when text = @scanner.scan(/>=/)
+          token(:OP_GEQ, text)
+
+        when text = @scanner.scan(/<=/)
+          token(:OP_LEQ, text)
+
+        when text = @scanner.scan(/[=]>/) # i've added the square brackets because syntax highlighters dont like /=
+          token(:OP_MAP, text)
+
+        when text = @scanner.scan(/(if|else|endif|for|in|endfor|block|endblock|extends|render)[\W]/)
+          keyword = text[0..-2]
+          @scanner.pos -= 1
+
+          token(keyword.upcase.to_sym, keyword)
+
+        when text = @scanner.scan(/[+\-]?[0-9]+\.[0-9]+/)
+          token(:REAL, text)
+
+        when text = @scanner.scan(/[+\-]?[1-9][0-9]*|0/)
+          token(:INTEGER, text)
+        
+        when text = @scanner.scan(/['][^']*[']|["][^"]*["]/)
+          token(:STRING, text)
+
+        when text = @scanner.scan(/[A-Za-z_][A-Za-z0-9_\.]*/)
+          token(:IDENTIFIER, text)
+
         else
-          raise "Unknown lexing context: #{@context}"
+          next_character = @scanner.getch
+          token(next_character, next_character)
       end
-  
     end
-    
-    def remaining_tokens
-      result = Array.new
-      
-      while (token = next_token) != [false, false]
-        result << token
-      end
-      
-      return result + [[false, false]]
-    end
-    
   end
 
 end

@@ -7,10 +7,10 @@ namespace :compile do
   desc "compile the grammar file (cadenza.y) to a racc parser"
   task :parser do
     basedir = File.dirname(__FILE__)
-    srcfile = File.join(basedir, '..', 'src', 'cadenza.y')
-    outfile = File.join(basedir, '..', 'lib', 'parser.rb')
+    srcfile = File.expand_path(File.join('..', 'src', 'cadenza.y'), basedir)
+    outfile = File.expand_path(File.join('..', 'lib', 'cadenza', 'parser.rb'), basedir)
     
-    system "racc -o #{outfile} #{srcfile}"
+    system "racc -o \"#{outfile}\" \"#{srcfile}\""
   end
   
 end
