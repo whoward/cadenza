@@ -1,2 +1,1 @@
-
-require File.join(File.dirname(__FILE__),'..','lib', 'cadenza')
+require File.expand_path(File.join("..", "lib", "cadenza"), File.dirname(__FILE__))
