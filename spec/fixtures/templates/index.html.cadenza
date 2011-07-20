@@ -1,0 +1,4 @@
+{% extends "layout.html.cadenza" %}
+{% block content %}
+<p>Hello World!</p>
+{% endblock %}

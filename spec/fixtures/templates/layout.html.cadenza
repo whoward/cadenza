@@ -1,0 +1,11 @@
+<html>
+   <head>
+      <title>{% block title %}Default Title{% endblock %}</title>
+   </head>
+   <body>
+      <h1>My awesome page</h1>
+      {% block content %}
+      <p>No content on this page</p>
+      {% endblock %}
+   </body>
+</html>

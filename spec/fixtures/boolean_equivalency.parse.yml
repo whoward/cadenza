@@ -1,0 +1,13 @@
+# result of {{ foo == 1 }}
+DocumentNode:
+  children:
+    - InjectNode:
+        value:
+          BooleanNode:
+            operator: ==
+            left:
+              VariableNode:
+                value: foo
+            right:
+              ConstantNode:
+                value: 1

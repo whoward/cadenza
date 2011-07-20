@@ -1,0 +1,15 @@
+# {% block foo %}bar{% endblock %}
+DocumentNode:
+   children:
+      - BlockNode:
+         name: "foo"
+         children:
+            - TextNode:
+               text: "bar"
+   blocks:
+      foo:
+         BlockNode:
+            name: "foo"
+            children:
+               - TextNode:
+                  text: "bar"

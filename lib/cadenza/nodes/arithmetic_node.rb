@@ -1,28 +1,28 @@
 module Cadenza
-  class ArithmeticNode < Cadenza::Node
-    attr_accessor :left, :right, :op
-    
-    def initialize(left,right,op,pos)
-      super(pos)
-      
-      self.left = left
-      self.right = right
-      self.op = op
+  class ArithmeticNode
+    attr_accessor :left, :right, :operator
+
+    def initialize(left, op, right)
+      @left = left
+      @right = right
+      @operator = op
     end
-    
+
+    def ==(rhs)
+      @operator == rhs.operator and
+      @left == rhs.left and
+      @right == rhs.right
+    end
+
     def implied_globals
-      left.implied_globals | right.implied_globals
-    end
-    
-    def render(context={}, stream='')
-      stream << self.eval(context).to_s
+      @left.implied_globals | @right.implied_globals
     end
     
     def eval(context)
       l = self.left.eval(context)
       r = self.right.eval(context)
       
-      case self.op
+      case self.operator
         when '+'
           return l + r
           
@@ -33,20 +33,9 @@ module Cadenza
           return l * r
           
         when '/'
-          raise TemplateError('division by zero',self) if r == 0
+          # raise TemplateError('division by zero',self) if r == 0
           return l / r
       end
-    end
-    
-    def ==(rhs)
-      super(rhs) and
-      self.left == rhs.left and
-      self.right == rhs.right and
-      self.op == rhs.op
-    end
-    
-    def to_s
-      "ArithmeticNode" << TAB << self.left.to_s.gsub(/\n/,TAB) << TAB << self.op << TAB << self.right.to_s.gsub(/\n/,TAB)
     end
   end
 end

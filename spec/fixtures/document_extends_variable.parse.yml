@@ -1,0 +1,6 @@
+# {% extends somefile %}
+DocumentNode:
+  extends: 
+    VariableNode:
+      value: "somefile"
+  children: []

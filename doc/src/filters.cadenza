@@ -18,9 +18,9 @@
 	be added.  <b>padding string</b> specifies which string shall be used to center the string.
 	<h3>Example:</h3>
 	<pre>
-{{ '{{ "hello" | center 4 }}'}} produces "{{ "hello" | center 4 }}"
-{{ '{{ "hello" | center 20 }}'}} produces "{{ "hello" | center 20 }}"
-{{ '{{ "hello" | center 20, "-" }}'}} produces "{{ "hello" | center 20, "-" }}"
+{{ '{{ "hello" | center: 4 }}'}} produces "{{ "hello" | center: 4 }}"
+{{ '{{ "hello" | center: 20 }}'}} produces "{{ "hello" | center: 20 }}"
+{{ '{{ "hello" | center: 20, "-" }}'}} produces "{{ "hello" | center: 20, "-" }}"
 	</pre>
 	
 	<h2>cut "value"</h2>
@@ -28,7 +28,7 @@
 	Removes all <b>values</b> from the string
 	<h3>Example:</h3>
 	<pre>
-{{ '{{ "string with spaces" | cut " " }}' }} produces {{ "string with spaces" | cut " " }}
+{{ '{{ "string with spaces" | cut: " " }}' }} produces {{ "string with spaces" | cut: " " }}
 	</pre>
 	
 	<h2>date ["format"="%F"]</h2>
@@ -39,7 +39,7 @@
 	<h3>Example:</h3>
 	<pre>
 {{ '{{ now | date }}' }} produces {{ now | date }}
-{{ '{{ now | date "%A %B %e %Y %r" }}' }} produces {{ now | date "%A %B %e %Y %r" }}
+{{ '{{ now | date: "%A %B %e %Y %r" }}' }} produces {{ now | date: "%A %B %e %Y %r" }}
 	</pre>
 	
 	<h2>default "default_value"</h2>
@@ -47,10 +47,10 @@
 	Uses the <b>default_value</b> passed instead of the value is nil, empty or evaluates to false. 
 	<h3>Example:</h3>
 	<pre>
-{{ '{{ nil | default "Not defined" }}' }} produces {{ nil | default "Not defined" }}
-{{ '{{ "" | default "Not defined" }}' }} produces {{ "" | default "Not defined" }}
-{{ '{{ empty_list | default "Not defined" }}' }} produces {{ empty_list | default "Not defined" }}
-{{ '{{ "abc" | default "Not defined" }}' }} produces {{ "abc" | default "Not defined" }}
+{{ '{{ nil | default: "Not defined" }}' }} produces {{ nil | default: "Not defined" }}
+{{ '{{ "" | default: "Not defined" }}' }} produces {{ "" | default: "Not defined" }}
+{{ '{{ empty_list | default: "Not defined" }}' }} produces {{ empty_list | default: "Not defined" }}
+{{ '{{ "abc" | default: "Not defined" }}' }} produces {{ "abc" | default: "Not defined" }}
 	</pre>
 	
 	<h2>escape</h2>
@@ -74,7 +74,7 @@
 	Joins together every element of a list with a <b>glue</b> string.
 	<h3>Example:</h3>
 	<pre>
-{{ '{{ alphabet | join "" }}' }} produces "{{ alphabet | join " " }}"
+{{ '{{ alphabet | join: "" }}' }} produces "{{ alphabet | join: " " }}"
 	</pre>
 
 	<h2>last</h2>
@@ -108,10 +108,10 @@
 	by the optional <b>separator</b>.  Gives a nice column effect, very useful on courier fonts.
 	<h3>Example:</h3>
 	<pre>
-{{ '{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 25 }}' }}
+{{ '{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 25 }}' }}
 
 produces
 
-{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 25 }}
+{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 25 }}
 	</pre>
 {% endblock %}

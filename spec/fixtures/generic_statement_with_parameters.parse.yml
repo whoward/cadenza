@@ -1,0 +1,8 @@
+# result of {% javascript_include_tag 'jquery-1.6.0.js' %}
+DocumentNode:
+  children:
+    - GenericStatementNode:
+        name: "javascript_include_tag"
+        parameters:
+         - ConstantNode:
+            value: "jquery-1.6.0.js"

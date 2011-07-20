@@ -13,9 +13,9 @@
 
 <h3>Example: filter arguments</h3>
 <pre>
-  {{ '{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 20 + 5 }}' }}
+  {{ '{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 20 + 5 }}' }}
       
   produces
       
-  {{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap 20 + 5 }}
+  {{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 20 + 5 }}
 </pre>

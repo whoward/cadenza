@@ -1,57 +1,48 @@
 module Cadenza
-  class BooleanNode < Cadenza::Node
-    attr_accessor :left, :right, :op
-    
-    def initialize(left,right,op,pos)
-      super(pos)
-      
-      self.left = left
-      self.right = right
-      self.op = op
-    end
-    
-    def implied_globals
-      left.implied_globals | right.implied_globals
-    end
-    
-    def render(context={}, stream='')
-      stream << self.eval(context).to_s
-    end
+  class BooleanNode
+      attr_accessor :left, :right, :operator
+
+      def initialize(left, operator, right)
+         @left = left
+         @right = right
+         @operator = operator
+      end
+          
+      def implied_globals
+         @left.implied_globals | @right.implied_globals
+      end
     
     def eval(context)
-      l = self.left.eval(context)
-      r = self.right.eval(context)
-      
-      case self.op
-        when '=='
-          return l == r
-          
-        when '!='
-          return l != r
-          
-        when '>='
-          return l >= r
-          
-        when '<='
-          return l <= r
-          
-        when '>'
-          return l > r
-        
-        when '<'
-          return l < r
+      l = @left.eval(context)
+      r = @right.eval(context)
+
+      case @operator
+         when '=='
+            return l == r
+
+         when '!='
+            return l != r
+
+         when '>='
+            return l >= r
+
+         when '<='
+            return l <= r
+
+         when '>'
+            return l > r
+
+         when '<'
+            return l < r
+
+         else throw "undefined operator: #{@operator}"
       end
     end
-    
-    def ==(rhs)
-      super(rhs) and
-      self.left == rhs.left and
-      self.right == rhs.right and
-      self.op == rhs.op
-    end
-    
-    def to_s
-      "BooleanNode" << TAB << self.left.to_s.gsub(/\n/,TAB) << TAB << self.op << TAB << self.right.to_s.gsub(/\n/,TAB)
-    end
+
+      def ==(rhs)
+         @operator == rhs.operator and
+         @left == rhs.left and
+         @right == rhs.right
+      end
   end
 end

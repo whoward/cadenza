@@ -1,0 +1,6 @@
+DocumentNode:
+  children:
+    - InjectNode:
+        value:
+          VariableNode:
+            value: foo

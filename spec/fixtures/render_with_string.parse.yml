@@ -1,0 +1,5 @@
+# {% render 'foo' %}
+DocumentNode:
+  children:
+    - RenderNode:
+        filename: "foo"

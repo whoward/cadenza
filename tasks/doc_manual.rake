@@ -2,38 +2,32 @@
 namespace :doc do
 
   desc "compile the user manual for cadenza"
-  task :manual => :environment do
+  task :manual do
+    require File.expand_path(File.join("..", "lib", "cadenza"), File.dirname(__FILE__))
+
     # get some useful directories before we get started
-    root_directory = File.join(File.dirname(__FILE__), '..')
+    root_directory = File.expand_path("..", File.dirname(__FILE__))
     source_directory = File.join(root_directory, 'doc', 'src')
     output_directory = File.join(root_directory, 'doc', 'manual')
     
     # This will be the context passed to EVERY example
-    context_file = File.join(source_directory, 'context.rb')
-    
-    context = Kernel.eval(File.read(context_file))
+    scope = Kernel.eval(File.read(File.join(source_directory, 'context.rb')))
 
     # Set up the loading path for the filesystem loader
-    Cadenza::FilesystemLoader.template_paths.push(source_directory)
+    Cadenza::BaseContext.add_loader Cadenza::FilesystemLoader.new(source_directory)
     
-    # Ask the loader to compile every file ending in *.cadenza
-    Dir.glob(File.join(source_directory, '*.cadenza')).each do | cadenza_file |
-      file = File.basename(cadenza_file)
-      protocol = Cadenza::FilesystemLoader.protocol_name
-      Cadenza::Loader.get_template(protocol, file)  
-    end
-    
-    # Now render every loaded template to a file
-    Cadenza::Loader.loaded_templates.each do | key, template |
-      protocol, filename = key
-      
-      filename.gsub!(/\.cadenza$/,".html")
-      
-      ofstream = File.open(File.join(output_directory, filename), 'w') rescue next
-      
-      template.render(context, ofstream)
-      
-      ofstream.close
+    # Compile all the cadenza files under the source directory
+    Dir.glob(File.join(source_directory, '*.cadenza')).each do |cadenza_file|
+      template_name = File.basename(cadenza_file, ".cadenza")
+
+      input_file = File.expand_path("#{template_name}.cadenza", source_directory)
+
+      output_file = File.expand_path("#{template_name}.html", output_directory)
+
+      puts "rendering #{input_file} to #{output_file}"
+      File.open(output_file, "w") do |file|
+        file.write Cadenza.render(File.read(input_file), scope)
+      end
     end
   end
 

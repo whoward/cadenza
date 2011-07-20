@@ -154,6 +154,9 @@ module Cadenza
         when text = @scanner.scan(/[=]=/) # i've added the square brackets because syntax highlighters dont like /=
           token(:OP_EQ, text)
 
+        when text = @scanner.scan(/!=/)
+          token(:OP_NEQ, text)
+
         when text = @scanner.scan(/>=/)
           token(:OP_GEQ, text)
 

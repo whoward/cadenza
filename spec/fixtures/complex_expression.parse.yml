@@ -1,0 +1,19 @@
+# should be the result of parsing "{{ a + b * c }}"
+DocumentNode:
+  children:
+    - InjectNode:
+        value:
+          ArithmeticNode:
+            operator: "+"
+            left:
+              VariableNode:
+                value: a
+            right:
+              ArithmeticNode:
+                operator: "*"
+                left:
+                  VariableNode:
+                    value: b
+                right:
+                  VariableNode:
+                    value: c

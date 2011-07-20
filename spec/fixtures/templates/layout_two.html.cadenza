@@ -1,0 +1,8 @@
+{% extends "layout.html.cadenza" %}
+
+{% block title %}Some Title{% endblock %}
+
+{# this block should not be displayed since any other template should inherit it #}
+{% block content %}
+   <p>foo</p>
+{% endblock %}

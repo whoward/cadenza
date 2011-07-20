@@ -1,0 +1,11 @@
+# abc{{pi}}ghi
+DocumentNode:
+  children:
+   - TextNode:
+      text: abc
+   - InjectNode:
+      value:
+         VariableNode:
+            value: pi
+   - TextNode:
+      text: ghi

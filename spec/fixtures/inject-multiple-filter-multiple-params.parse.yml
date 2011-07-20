@@ -1,0 +1,17 @@
+# should be the result of parsing "{{ name | trim | somefilter: 'foo', 3.14159 }}"
+DocumentNode:
+   children:
+      - InjectNode:
+         value:
+            VariableNode:
+               value: name
+         filters:
+            - FilterNode:
+                identifier: trim
+            - FilterNode:
+                identifier: somefilter
+                parameters:
+                  - ConstantNode:
+                      value: foo
+                  - ConstantNode:
+                      value: 3.14159

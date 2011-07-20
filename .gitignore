@@ -1,3 +1,4 @@
+Gemfile.lock
 doc/plugin/*
 doc/manual/*.html
 doc/.yardb/*

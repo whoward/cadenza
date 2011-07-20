@@ -1,0 +1,13 @@
+# {% if foo %}bar{% else %}baz{% endif %}
+DocumentNode:
+  children:
+    - IfNode:
+         expression:
+            VariableNode:
+               value: "foo"
+         true_children:
+            - TextNode:
+               text: "bar"
+         false_children:
+            - TextNode:
+               text: "baz"

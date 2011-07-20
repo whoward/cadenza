@@ -1,0 +1,12 @@
+DocumentNode:
+  children:
+    - InjectNode:
+        value:
+          ArithmeticNode:
+            operator: +
+            left:
+              VariableNode:
+                value: x
+            right:
+              ConstantNode:
+                value: 1

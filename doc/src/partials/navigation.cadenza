@@ -4,6 +4,5 @@
     <li><a href='index.html'>Home</a></li>
     <li><a href='syntax.html'>Syntax</a></li>
     <li><a href='filters.html'>Filter reference</a></li>
-    <li><a href='activesupport_filters.html'>ActiveSupport Filters</a></li>
   </ul>
 </div>

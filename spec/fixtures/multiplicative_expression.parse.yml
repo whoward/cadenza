@@ -1,0 +1,12 @@
+DocumentNode:
+  children:
+    - InjectNode:
+        value:
+          ArithmeticNode:
+            operator: "*"
+            left:
+              VariableNode:
+                value: a
+            right:
+              VariableNode:
+                value: b

@@ -84,6 +84,10 @@ describe Cadenza::Lexer, 'token parsing' do
     tokens_for("{% == %}").should == [:STMT_OPEN, :OP_EQ, :STMT_CLOSE, false]
   end
 
+  it "should scan the inequivalence operator" do
+    tokens_for("{% != %}").should == [:STMT_OPEN, :OP_NEQ, :STMT_CLOSE, false]
+  end
+
   it "should scan the greater than or equal to operator" do
     tokens_for("{% >= %}").should == [:STMT_OPEN, :OP_GEQ, :STMT_CLOSE, false]
   end
