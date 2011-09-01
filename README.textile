@@ -1,6 +1,9 @@
 h1. Description
 
+
 h1. Installation
+
+    gem install cadenza
 
 h1. Usage
 
