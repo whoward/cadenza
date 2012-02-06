@@ -1,5 +1,53 @@
 {% extends "partials/base.cadenza" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-  <h1>Cadenza Templating Language for Ruby</h1>
+   <h1>Cadenza Templating Language for Ruby</h1>
+
+   <section>
+      <h2>What is Cadenza?</h2>
+      <p>Cadenza is a template language for processing text in a secure
+      and flexible way.  Cadenza was built with simplicity in mind, keeping the
+      complexities of rendering logic as simple as possible to help those without
+      a technical background grasp the essential concepts and be able to use them.</p>
+   </section>
+
+   <section>
+      <h2>Using Cadenza: for Designers</h2>
+      <p>How you use Cadenza will ultimately be determined by whoever has set
+      up your environment.  </p>
+   </section>
+
+   <section>
+      <h2>Using Cadenza: for Programmers</h2>
+      <p>Cadenza is a library which can be embedded into any language which 
+      supports interpreting Ruby.  This means that any framework which is built 
+      on Ruby, such as Ruby on Rails or Sinatra is capable of integrating Cadenza 
+      as well as languages such as Java which can make use of Cadenza through an 
+      embedded interpreter like JRuby or IronRuby.</p>
+
+      <h3>Using Cadenza with Ruby (1.9.x, 1.8.7, Ruby Enterprise Edition)</h3>
+      <p>In your console run the following command</p>
+      <pre>gem install cadenza</pre>
+
+      <p>There are several ways to render your templates with Cadenza.  The 
+      simplest way is via the <tt>Cadenza#render</tt> method.  Here's an example
+      in your IRB console:</p>
+
+      Ruby:
+      <pre>
+> require 'rubygems'
+> require 'cadenza'
+> Cadenza.render "Hello {{ "{{name}}" }}!", :name => "World"
+=> "Hello World!"
+> Cadenza.render "Hello {{ "{{name}}" }}!", :name => "from Cadenza"
+=> "Hello from Cadenza!"</pre>
+
+      <p>Pretty simple, eh?</p>
+
+      <p>Thats the basics.  From here you'll probably want to have at the
+      <a href='reference.html'>reference</a> pages to get more of an understanding
+      of Cadenza.</p>
+
+   </section>
+
 {% endblock %}
