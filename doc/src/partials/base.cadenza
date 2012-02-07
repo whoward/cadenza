@@ -1,9 +1,11 @@
 <html>
 	<head>
 		<title>Cadenza: {% block title %}Untitled Page{% endblock %}</title>
+		<script src="resources/modernizr-2.0.6.js"></script>
 		<link type='text/css' rel='stylesheet' href='resources/style.css'/> 
 	</head>
 	<body>
+		<div id='logo'>Cadenza</div>
 		<div id='body'>
 		{% block content %}
 		No Content!
