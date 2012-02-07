@@ -1,11 +1,39 @@
-<h3 id="for_statement">For Statement</h3>
-<p>For statements allow you to continually output some text for every element
-  in a list. Here's what for statements look like:</p>
-  
-<pre>
-  &lt;ol&gt;
-  {{ "{% for error in errors %}" }}
-    &lt;li&gt;{{ "{{ error }}" }}&lt;/li&gt;
-  {{ "{% endfor %}" }}
-  &lt;/ol&gt;
-</pre>
+<section>
+   <h2 id="for_statement">Loops</h2>
+   <p>Sometimes you'll want to continually re-render the same section of template
+   for a set of items.  For instance perhaps you'll want a table with a row for
+   each piece of data you're trying to show.</p>
+
+   <p>"For statements" allow you to continually output some text for every 
+   element in a list. Here's what for statements look like:</p>
+     
+   <pre>
+     &lt;ol&gt;
+     {{ "{% for error in errors %}" }}
+       &lt;li&gt;{{ "{{ error }}" }}&lt;/li&gt;
+     {{ "{% endfor %}" }}
+     &lt;/ol&gt;
+   </pre>
+
+   <p>You can see here that "for statements" are blocks, just like "if statements"
+   are.  The general syntax for writing a "for statement" is:
+
+   <pre>
+      {{ "{% for x in y %}" }}
+          ...
+      {{ "{% endfor %}" }}
+   </pre>
+
+   <p><b>"Y"</b> is a variable we call the <b>Enumerable</b>.  The enumerable
+   should be some kind of object which <i>contains</i> or can <i>generate</i>.
+   In programming we usually call this a <tt>list</tt> or an <tt>array</tt>.</p>
+
+   <p>Regardless, we also have the variable <b>"X"</b> above.  <b>"X"</b> is 
+   called the <b>enumerator</b> variable and you can name it whatever you want.</p>
+   
+   <p>By convention, most people will name the <b>Enumerable</b> as the plural
+   form of whatever the enumerable contains and name the <b>Enumerator</b> whatever
+   the singular form of the enumerable.  In other words you will often see an 
+   enumerable named something like "items" and an enumerator named "item".  Of
+   course, this is just a suggestion and you can use whatever names you want.</p>
+</section>

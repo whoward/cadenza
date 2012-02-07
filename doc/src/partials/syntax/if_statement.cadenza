@@ -1,18 +1,20 @@
-<h3 id="if_statement">If Statement</h3>
-<p>If statements provide you a way to include certain text in your output 
-  based on some kind of condition.  Here's what they look like:</p>
-  
-<pre>
-  {{ "{% if model.errors.length > 0 %}" }}
-  You have {{ "{{ errors | length }}"}} errors in your code.
-  {{ "{% else %}"}}
-  You have no errors!
-  {{ "{% endif %}" }}
-</pre>
+<section>
+   <h2 id="if_statement">If Statements</h2>
+   <p>If statements provide you a way to include certain text in your output 
+     based on some kind of condition.  Here's what they look like:</p>
+     
+   <pre>
+     {{ "{% if model.errors.length > 0 %}" }}
+     You have {{ "{{ errors | length }}"}} errors in your code.
+     {{ "{% else %}"}}
+     You have no errors!
+     {{ "{% endif %}" }}
+   </pre>
 
-<p>You'll see the syntax is just the keyword 'if' followed by an expression.
-  Expression syntax is detailed <a href='#expressions'>here</a>.</p>
-  
-<p>As shown above if statements can also <b>optionally</b> have an else 
-  block.  In these cases the content of the else block is output if the 
-  expression turns out to be false.</p>
+   <p>You'll see the syntax is just the keyword 'if' followed by an expression.
+     Expression syntax is detailed <a href='#expressions'>here</a>.</p>
+     
+   <p>As shown above if statements can also <b>optionally</b> have an else 
+     block.  In these cases the content of the else block is output if the 
+     expression turns out to be false.</p>
+</section>

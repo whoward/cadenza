@@ -48,8 +48,4 @@
       </tr>
     </tbody>
   </table>
-
-  <p><b>Note:</b> currently Cadenza doesn't support complex logic, found in 
-    languages like C or Java.  Currently you can not use 'and' (&&) or 'or' (||) 
-    operators in your expressions.</p>
 </section>
