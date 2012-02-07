@@ -1,0 +1,9 @@
+<section>
+   <h2>cut "value"</h2>
+   <h3>Description</h3>
+   Removes all <b>values</b> from the string
+   <h3>Example:</h3>
+   <pre>
+{{ '{{ "string with spaces" | cut: " " }}' }} produces {{ "string with spaces" | cut: " " }}
+   </pre>
+</section>

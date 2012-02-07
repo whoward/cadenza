@@ -2,13 +2,16 @@
 {% block title %}Syntax{% endblock %}
 {% block content %}
   <h1 id="syntax">Syntax of Cadenza</h1>
-  <p>Cadenza is a text templating language.  This means you can use it to make 
-    templates for HTML, emails, source code, text documents and so on - Cadenza
-    doesn't care what it's sandwiched between.</p>
-    
-  <p>That said, Cadenza has <b>two</b> basic structures it uses for syntax: 
-    <a href='#general'>general statements</a> and 
-    <a href='#inject'>inject statements</a>.</p>
+
+  <section>
+    <p>Cadenza is a text templating language.  This means you can use it to make 
+      templates for HTML, emails, source code, text documents and so on - Cadenza
+      doesn't care what it's sandwiched between.</p>
+      
+    <p>That said, Cadenza has <b>two</b> basic structures it uses for syntax: 
+      <a href='#general'>general statements</a> and 
+      <a href='#inject'>inject statements</a>.</p>
+  </section>
     
   {% render "partials/syntax/inject_statements.cadenza" %}
   {% render "partials/syntax/general_statements.cadenza" %}

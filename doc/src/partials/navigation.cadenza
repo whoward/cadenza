@@ -1,8 +1,9 @@
-<div id='navigation'>
+<nav>
   <h3>Topics</h3>
   <ul>
     <li><a href='index.html'>Home</a></li>
     <li><a href='syntax.html'>Syntax</a></li>
     <li><a href='filters.html'>Filter reference</a></li>
+    <li><a href='reference.html'>Programming Reference</a></li>
   </ul>
-</div>
+</nav>

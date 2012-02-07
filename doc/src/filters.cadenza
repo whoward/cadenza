@@ -3,115 +3,16 @@
 {% block content %}
 	<h1>Filters in Cadenza</h1>
 
-	<h2>addslashes</h2>
-	<h3>Description</h3>
-	Adds C style backslashes before quotes.  Usually used for CSV output, not for JavaScript.
-	<h3>Example:</h3>
-	<pre>
-&#123;&#123; "'abc'" | addslashes &#125;&#125; produces {{ "'abc'" | addslashes }}
-&#123;&#123; '"abc"' | addslashes &#125;&#125; produces {{ '"abc"' | addslashes }}
-	</pre>
-	
-	<h2>center "len" ["padding string"=" "]</h2>
-	<h3>Description</h3>
-	Centers a string in a string of length <b>len</b>.  If the string is longer than <b>len</b> no extra padding will 
-	be added.  <b>padding string</b> specifies which string shall be used to center the string.
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ "hello" | center: 4 }}'}} produces "{{ "hello" | center: 4 }}"
-{{ '{{ "hello" | center: 20 }}'}} produces "{{ "hello" | center: 20 }}"
-{{ '{{ "hello" | center: 20, "-" }}'}} produces "{{ "hello" | center: 20, "-" }}"
-	</pre>
-	
-	<h2>cut "value"</h2>
-	<h3>Description</h3>
-	Removes all <b>values</b> from the string
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ "string with spaces" | cut: " " }}' }} produces {{ "string with spaces" | cut: " " }}
-	</pre>
-	
-	<h2>date ["format"="%F"]</h2>
-	<h3>Description</h3>
-	Formats a date value according to the <b>format</b>.  The <b>format</b> uses strftime, common to many
-	languages - such as PHP.  See the documentation <a href='http://php.net/manual/en/function.strftime.php'>there</a>
-	for specifics on the format. 
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ now | date }}' }} produces {{ now | date }}
-{{ '{{ now | date: "%A %B %e %Y %r" }}' }} produces {{ now | date: "%A %B %e %Y %r" }}
-	</pre>
-	
-	<h2>default "default_value"</h2>
-	<h3>Description</h3>
-	Uses the <b>default_value</b> passed instead of the value is nil, empty or evaluates to false. 
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ nil | default: "Not defined" }}' }} produces {{ nil | default: "Not defined" }}
-{{ '{{ "" | default: "Not defined" }}' }} produces {{ "" | default: "Not defined" }}
-{{ '{{ empty_list | default: "Not defined" }}' }} produces {{ empty_list | default: "Not defined" }}
-{{ '{{ "abc" | default: "Not defined" }}' }} produces {{ "abc" | default: "Not defined" }}
-	</pre>
-	
-	<h2>escape</h2>
-	<h3>Description</h3>
-	Performs HTML escaping on the value.  Specifically replaces &, ", <, and > with their HTML special character equivalents.
-	<h3>Example:</h3>
-	<pre>
-&#123;&#123; 'foo "bar" &lt;baz&gt;' | escape &#125;&#125; produces {{ 'foo "bar" <baz>' | escape | escape }}
-	</pre>
-	
-	<h2>first</h2>
-	<h3>Description</h3>
-	Returns the first element of a list
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ alphabet | first }}' }}  produces {{ alphabet | first }}
-	</pre>
-	
-	<h2>join "glue"</h2>
-	<h3>Description</h3>
-	Joins together every element of a list with a <b>glue</b> string.
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ alphabet | join: "" }}' }} produces "{{ alphabet | join: " " }}"
-	</pre>
-
-	<h2>last</h2>
-	<h3>Description</h3>
-	Returns the last element of a list
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ alphabet | last }}' }}  produces {{ alphabet | last }}
-	</pre>
-	
-	<h2>length</h2>
-	<h3>Description</h3>
-	Returns the length of a value
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ "abc" | length }}' }}  produces {{ "abc" | length }}
-{{ '{{ alphabet | length }}' }}  produces {{ alphabet | length }}
-	</pre>
-	
-	<h2>upper</h2>
-	<h3>Description</h3>
-	Converts the entire string to uppercase.
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ "this was all lower case" | upper }}' }}  produces {{ "this was all lower case" | upper }}
-	</pre>
-	
-	<h2>wordwrap "number" ["separator"="&lt;br/&gt;"]</h2>
-	<h3>Description</h3>
-	Takes long text and forces a line break every <b>number</b> of given characters.  The type of line break is specified
-	by the optional <b>separator</b>.  Gives a nice column effect, very useful on courier fonts.
-	<h3>Example:</h3>
-	<pre>
-{{ '{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 25 }}' }}
-
-produces
-
-{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 25 }}
-	</pre>
+	{% render "partials/filters/addslashes.cadenza" %}
+	{% render "partials/filters/center.cadenza" %}
+	{% render "partials/filters/cut.cadenza" %}
+	{% render "partials/filters/date.cadenza" %}
+	{% render "partials/filters/default.cadenza" %}
+	{% render "partials/filters/escape.cadenza" %}	
+	{% render "partials/filters/first.cadenza" %}
+	{% render "partials/filters/join.cadenza" %}
+	{% render "partials/filters/last.cadenza" %}
+	{% render "partials/filters/length.cadenza" %}	
+	{% render "partials/filters/upper.cadenza" %}
+	{% render "partials/filters/wordwrap.cadenza" %}
 {% endblock %}

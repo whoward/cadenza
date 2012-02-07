@@ -1,22 +1,24 @@
-<h2 id="constants">Constants</h2>
+<section>
+   <h2 id="constants">Constants</h2>
 
-<p>Constants are very simple, all they are is numbers or strings defined inside
-  your template.  They come in three flavours:</p>
-  
-<b>Integers</b> - simply numbers without decimal points.  Here's some examples:
-<pre>
-  {{ "{{ 123 }}" }}
-  {{ "{% if 456 < 789 %}" }}
-</pre>
+   <p>Constants are very simple, all they are is numbers or strings defined inside
+     your template.  They come in three flavours:</p>
+     
+   <b>Integers</b> - simply numbers without decimal points.  Here's some examples:
+   <pre>
+     {{ "{{ 123 }}" }}
+     {{ "{% if 456 < 789 %}" }}
+   </pre>
 
-<b>Reals</b> - numbers again, but these include decimals.  Here's some examples:
-<pre>
-  {{ "{{ 3.14159 }}" }}
-</pre>
+   <b>Reals</b> - numbers again, but these include decimals.  Here's some examples:
+   <pre>
+     {{ "{{ 3.14159 }}" }}
+   </pre>
 
-<b>Strings</b> - letters joined together into a string of characters surrounded
-by single quotes or double quotes.  Here's some examples:
-<pre>
-  {{ "{{ 'Hello World!' }}" }}
-  &#123;&#123; "I'm writing Cadenza!" &#125;&#125;
-</pre>
+   <b>Strings</b> - letters joined together into a string of characters surrounded
+   by single quotes or double quotes.  Here's some examples:
+   <pre>
+     {{ "{{ 'Hello World!' }}" }}
+     &#123;&#123; "I'm writing Cadenza!" &#125;&#125;
+   </pre>
+</section>

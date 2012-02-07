@@ -1,36 +1,38 @@
-<h2 id="general">General statements</h2>
+<section>
+  <h2 id="general">General statements</h2>
 
-<p>"General statements" really encompasses a whole family of statements that
-  all use the same syntax but each work differently.  Here's what they look
-  like in general:</p>
-  
-<pre>
-  {{ "{% foo bar 'baz' %}" }}
-</pre>
+  <p>"General statements" really encompasses a whole family of statements that
+    all use the same syntax but each work differently.  Here's what they look
+    like in general:</p>
+    
+  <pre>
+    {{ "{% foo bar 'baz' %}" }}
+  </pre>
 
-<p>You'll notice it looks very similar to inject statements except that
-  there are no filters and the braces start with '&#123;%' and '%&#125;'</p>
+  <p>You'll notice it looks very similar to inject statements except that
+    there are no filters and the braces start with '&#123;%' and '%&#125;'</p>
 
-<p>Many types of general statements (not all of them though) form blocks of 
-  text which are used to give you control of how those blocks appear in the
-  output.  Statements which form blocks generally look like this:</p>
-  
-<pre>
-  {{ "{% if errors %}" }}
-  You have {{ "{{ errors | length }}" }} errors in your code.
-  {{ "{% endif %}"}}
-</pre>
+  <p>Many types of general statements (not all of them though) form blocks of 
+    text which are used to give you control of how those blocks appear in the
+    output.  Statements which form blocks generally look like this:</p>
+    
+  <pre>
+    {{ "{% if errors %}" }}
+    You have {{ "{{ errors | length }}" }} errors in your code.
+    {{ "{% endif %}"}}
+  </pre>
 
-<p>That covers the basic syntax - now lets look at the specifics of each
-  kind of general statement:</p>
-<ol>
-  <li><a href='#if_statement'>if statements</a></li>
-  <li><a href='#for_statement'>for statements</a></li>
-  <li><a href='#render_statement'>render statements</a></li>
-  <li><a href='#extends_statement'>extends statement and blocks statements</a></li>
-</ol>
+  <p>That covers the basic syntax - now lets look at the specifics of each
+    kind of general statement:</p>
+  <ol>
+    <li><a href='#if_statement'>if statements</a></li>
+    <li><a href='#for_statement'>for statements</a></li>
+    <li><a href='#render_statement'>render statements</a></li>
+    <li><a href='#extends_statement'>extends statement and blocks statements</a></li>
+  </ol>
 
-{% render "partials/syntax/if_statement.cadenza" %}
-{% render "partials/syntax/for_statement.cadenza" %}
-{% render "partials/syntax/render_statement.cadenza" %}
-{% render "partials/syntax/extends_statement.cadenza" %}
+  {% render "partials/syntax/if_statement.cadenza" %}
+  {% render "partials/syntax/for_statement.cadenza" %}
+  {% render "partials/syntax/render_statement.cadenza" %}
+  {% render "partials/syntax/extends_statement.cadenza" %}
+</section>

@@ -1,0 +1,9 @@
+<section>
+   <h2>upper</h2>
+   <h3>Description</h3>
+   Converts the entire string to uppercase.
+   <h3>Example:</h3>
+   <pre>
+{{ '{{ "this was all lower case" | upper }}' }}  produces {{ "this was all lower case" | upper }}
+   </pre>
+</section>

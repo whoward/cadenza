@@ -1,0 +1,14 @@
+<section>
+   <h2>wordwrap "number" ["separator"="&lt;br/&gt;"]</h2>
+   <h3>Description</h3>
+   Takes long text and forces a line break every <b>number</b> of given characters.  The type of line break is specified
+   by the optional <b>separator</b>.  Gives a nice column effect, very useful on courier fonts.
+   <h3>Example:</h3>
+   <pre>
+{{ '{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 25 }}' }}
+
+produces
+
+{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 25 }}
+   </pre>
+</section>

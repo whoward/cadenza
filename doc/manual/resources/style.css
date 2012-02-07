@@ -1,9 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Gravitas+One);
 
-/**
- *   Basic HTML styling
- **/
- 
 body {
    text-align: center;
    
@@ -11,6 +7,15 @@ body {
    font-size:   14px;
    
    overflow: scroll;
+
+   background: #499bea; /* Old browsers */
+   background: -moz-linear-gradient(top,  #499bea 0%, #207ce5 100%); /* FF3.6+ */
+   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#499bea), color-stop(100%,#207ce5)); /* Chrome,Safari4+ */
+   background: -webkit-linear-gradient(top,  #499bea 0%,#207ce5 100%); /* Chrome10+,Safari5.1+ */
+   background: -o-linear-gradient(top,  #499bea 0%,#207ce5 100%); /* Opera 11.10+ */
+   background: -ms-linear-gradient(top,  #499bea 0%,#207ce5 100%); /* IE10+ */
+   background: linear-gradient(top,  #499bea 0%,#207ce5 100%); /* W3C */
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=0 ); /* IE6-9 */
 }
 
 #logo {
@@ -32,8 +37,21 @@ body {
    -webkit-box-reflect: below -45px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(white));
 }
 
+section, h1 {
+   background-color: rgba(237, 239, 244, 0.9);
+   border: 3px solid rgba(237, 239, 244, 1);
+   border-radius: 20px;
+   padding: 10px 30px;
+   margin-bottom: 20px;
+}
+
+h1 {
+   padding: 10px 30px;
+   margin-top: 0;
+}
+
 h2 {
-   margin: 30px 0px 5px 0px;
+   margin: 5px 0px 10px 0px;
    border-bottom: 2px solid black;
    
    color: orange;
@@ -91,38 +109,41 @@ a, a:visited {
    border: 1px solid #EBAA65;
 }
 
-/**
- *   Named HTML elements
- **/
- 
-div#body {
+#content {
    width: 800px;
-   padding: 20px;
-   margin: 160px auto 100px auto;
-   background-color: #EDEFF4;
-   opacity: 50;
-   border-radius: 20px;
+   min-height: 600px;
+   margin: 110px auto 30px auto;
    text-align: left;
 }
 
-div#navigation {
+nav {
   padding: 10px;
   
-  background-color: #EDEFF4;
+  background-color: rgba(237, 239, 244, 0.9);
+  border: 3px solid rgba(237, 239, 244, 1);
   
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
    
   position: fixed;
   left: 0;
-  top: 160px;
+  top: 110px;
   
   max-height: 90%;
   
   text-align: left;
 }
 
-div#navigation h3 {
+nav h3 {
   margin: 0;
   padding: 0;
+}
+
+nav ul {
+   padding: 0;
+   margin: 10px 0;
+}
+
+nav ul li {
+   list-style: none;
 }

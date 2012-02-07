@@ -1,53 +1,55 @@
-<h2 id="expressions">Expressions</h2>
+<section>
+  <h2 id="expressions">Expressions</h2>
 
-<p>Expressions are currently used only inside of 
-  <a href='#if_statement'>if statements</a>, they are used to compare two 
-  values using a <i>comparator</i>.  Here's what they look like:</p>
-  
-<pre>
-  {{ "{% if a < b %}" }}
-  {{ "{% if 3 > 2 %}" }}
-  {{ "{% if pi == 3.14159 %}" }}
-</pre>
+  <p>Expressions are currently used only inside of 
+    <a href='#if_statement'>if statements</a>, they are used to compare two 
+    values using a <i>comparator</i>.  Here's what they look like:</p>
+    
+  <pre>
+    {{ "{% if a < b %}" }}
+    {{ "{% if 3 > 2 %}" }}
+    {{ "{% if pi == 3.14159 %}" }}
+  </pre>
 
-<p>Comparators come in 5 different kinds:</p>
-<table>
-  <thead>
-    <tr>
-      <th>Comparator</th>
-      <th>Example</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Equality</td>
-      <td>a == b</td>
-      <td>Evaluates true if a is equal to b</td>
-    </tr>
-    <tr>
-      <td>Greater Than</td>
-      <td>a &gt; b</td>
-      <td>Evaluates true if a is greater than b</td>
-    </tr>
-    <tr>
-      <td>Less Than</td>
-      <td>a &lt; b</td>
-      <td>Evaluates true if a is less than b</td>
-    </tr>
-    <tr>
-      <td>Greater Than or Equal To</td>
-      <td>a &gt;= b</td>
-      <td>Evaluates true if a is greater than b or a equals b</td>
-    </tr>
-    <tr>
-      <td>Less Than or Equal To</td>
-      <td>a &lt;= b</td>
-      <td>Evaluates true if a is less than b or a equals b</td>
-    </tr>
-  </tbody>
-</table>
+  <p>Comparators come in 5 different kinds:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Comparator</th>
+        <th>Example</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Equality</td>
+        <td>a == b</td>
+        <td>Evaluates true if a is equal to b</td>
+      </tr>
+      <tr>
+        <td>Greater Than</td>
+        <td>a &gt; b</td>
+        <td>Evaluates true if a is greater than b</td>
+      </tr>
+      <tr>
+        <td>Less Than</td>
+        <td>a &lt; b</td>
+        <td>Evaluates true if a is less than b</td>
+      </tr>
+      <tr>
+        <td>Greater Than or Equal To</td>
+        <td>a &gt;= b</td>
+        <td>Evaluates true if a is greater than b or a equals b</td>
+      </tr>
+      <tr>
+        <td>Less Than or Equal To</td>
+        <td>a &lt;= b</td>
+        <td>Evaluates true if a is less than b or a equals b</td>
+      </tr>
+    </tbody>
+  </table>
 
-<p><b>Note:</b> currently Cadenza doesn't support complex logic, found in 
-  languages like C or Java.  Currently you can not use 'and' (&&) or 'or' (||) 
-  operators in your expressions.</p>
+  <p><b>Note:</b> currently Cadenza doesn't support complex logic, found in 
+    languages like C or Java.  Currently you can not use 'and' (&&) or 'or' (||) 
+    operators in your expressions.</p>
+</section>

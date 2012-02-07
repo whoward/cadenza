@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Cadenza: {% block title %}Untitled Page{% endblock %}</title>
@@ -9,7 +10,7 @@
 		<div class='ribbon-holder'>
 			<a href='http://www.github.com/whoward/Cadenza' target="_blank"><span>Fork me on GitHub</span></a>
 		</div>
-		<div id='body'>
+		<div id='content'>
 		{% block content %}
 		No Content!
 		{% endblock %}
