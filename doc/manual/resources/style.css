@@ -2,6 +2,7 @@
 /**
  *   Basic HTML styling
  **/
+@import url(http://fonts.googleapis.com/css?family=Gravitas+One);
  
 body {
 	text-align: center;
@@ -15,38 +16,22 @@ body {
 }
 
 #logo {
+   text-align: left;
+   width: 100%;
+
    position: fixed;
    top: 0;
-   left: 10mm;
-   font-size: 25mm;
+   left: 50px;
+   font-size: 80px;
    font-style: italic;
+   font-family: "Gravitas One", cursive;
    z-index: -1;
-}
 
-#logo:before, #logo:after {
-    display: block;
-    position: absolute;
-    bottom: -.67em; /* You should change this value to fit your font */
-    left: 0;
-    right: 0;
-}
-#logo:before {
-    content: 'Cadenza';
-    opacity: .3;
-    /* This is how the text is flipped vertically */
-    -webkit-transform: scaleY(-1);
-    -moz-transform: scaleY(-1);
-    -o-transform: scaleY(-1);
-}
-#logo:after {
-    /* Fading using CSS gradient */
-    /* Don't forget to change the colors to your background color */
-    background: -webkit-gradient(linear, left top, left center, from(rgba(255,255,255,0)), to(rgb(255,255,255)));
-    background: -moz-linear-gradient(top, rgba(255,255,255,0), rgb(255,255,255));
-    /* I left out the `filter` property,
-       because IE doesn't know `:before` and `:after` pseudo-elements anyway */
-    content: ' ';
-    height: 1em;
+   background-image: -webkit-linear-gradient(top, #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%);;
+
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   -webkit-box-reflect: below -45px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(white));
 }
 
 h2 {
