@@ -6,12 +6,14 @@
 	</head>
 	<body>
 		<div id='logo'>Cadenza</div>
+		<div class='ribbon-holder'>
+			<a href='http://www.github.com/whoward/Cadenza' target="_blank"><span>Fork me on GitHub</span></a>
+		</div>
 		<div id='body'>
 		{% block content %}
 		No Content!
 		{% endblock %}
 		</div>
-		<a href='http://github.com/whoward/Cadenza' id='forkme'></a>
 		{% render 'partials/navigation.cadenza' %}
 	</body>
 </html>

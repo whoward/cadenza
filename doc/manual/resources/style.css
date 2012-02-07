@@ -1,18 +1,16 @@
+@import url(http://fonts.googleapis.com/css?family=Gravitas+One);
 
 /**
  *   Basic HTML styling
  **/
-@import url(http://fonts.googleapis.com/css?family=Gravitas+One);
  
 body {
-	text-align: center;
-	
-	font-family: sans-serif;
-	font-size:   14px;
-	
-	/*background: url("logo.png") no-repeat 10px 10px;*/
-	
-	overflow: scroll;
+   text-align: center;
+   
+   font-family: sans-serif;
+   font-size:   14px;
+   
+   overflow: scroll;
 }
 
 #logo {
@@ -35,21 +33,62 @@ body {
 }
 
 h2 {
-	margin: 30px 0px 5px 0px;
-	border-bottom: 2px solid black;
-	
-	color: orange;
-	
-	font-family: sans-serif;
-	font-size:   2em;
+   margin: 30px 0px 5px 0px;
+   border-bottom: 2px solid black;
+   
+   color: orange;
+   
+   font-family: sans-serif;
+   font-size:   2em;
 }
 
 h3 {
-	margin: 20px 0px;
+   margin: 20px 0px;
 }
 
 a, a:visited {
   color: blue;
+}
+
+.ribbon-holder {
+   position: fixed;
+   right: 0px;
+   top: 0px;
+   height: 10em;
+}
+
+.ribbon-holder a {
+   font: bold 1.25em 'Helvetiva Neue', Helvetica, Arial, sans-serif;
+
+   text-decoration: none;
+   
+   letter-spacing: -.1px;
+   
+   opacity: 0.95;
+   padding: 0.25em 0;
+   
+   position: relative;
+
+   top: 3em;
+   right: -3.5em;
+
+   -moz-box-shadow: 0 0 13px #888;
+   -webkit-box-shadow: 0 0 13px #888;
+
+   color: white;
+   display: block;
+   line-height: 1.35em;
+
+   -moz-transform: rotate(45deg);
+   -webkit-transform: rotate(45deg);
+
+   background: -webkit-gradient(linear, left bottom, left top, from(#DC7202), to(#EE7906));
+   background: -webkit-gradient(linear, left bottom, left top, from(#DC7202), to(#EE7906));
+}
+
+.ribbon-holder span {
+   padding: 0.1em 3em;
+   border: 1px solid #EBAA65;
 }
 
 /**
@@ -57,23 +96,13 @@ a, a:visited {
  **/
  
 div#body {
-	width: 800px;
-	padding: 20px;
-	margin: 160px auto 100px auto;
-	background-color: #EDEFF4;
-	opacity: 50;
-	border-radius: 20px;
-	text-align: left;
-}
-
-a#forkme {
-  background-image: url("forkme.png");
-  width: 149px;
-  height: 149px;
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  cursor: pointer;
+   width: 800px;
+   padding: 20px;
+   margin: 160px auto 100px auto;
+   background-color: #EDEFF4;
+   opacity: 50;
+   border-radius: 20px;
+   text-align: left;
 }
 
 div#navigation {
