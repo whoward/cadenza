@@ -55,16 +55,18 @@ module Cadenza
             # grab some values for the inner context
             value = enumerator.next rescue break
 
-            is_first = (counter == 0)
+            is_first = (counter == 0) ? true : false
             is_last  = enumerator.peek rescue false ? true : false  #TODO: this doesn't work in 1.8.x
 
             # push the inner context with the 'magic' variables
             context.push({
-               iterator => value, 
-               'counter' => counter + 1, 
-               'counter0' => counter, 
-               'first' => is_first, 
-               'last' => is_last
+               iterator => value,
+               'forloop' => {
+                  'counter' => counter + 1,
+                  'counter0' => counter,
+                  'first' => is_first,
+                  'last' => is_last
+               }
             })
 
             # render each of the child nodes with the context

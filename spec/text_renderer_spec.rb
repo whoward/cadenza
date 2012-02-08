@@ -90,7 +90,7 @@ describe Cadenza::TextRenderer do
    it "should render a for-block's children once for each iterated object" do
       iterable = Cadenza::VariableNode.new("alphabet")
       iterator = Cadenza::VariableNode.new("x")
-      counter  = Cadenza::VariableNode.new("counter")
+      counter  = Cadenza::VariableNode.new("forloop.counter")
 
       children = [Cadenza::InjectNode.new(counter), Cadenza::TextNode.new(": "), Cadenza::InjectNode.new(iterator), Cadenza::TextNode.new("\n")]
 
