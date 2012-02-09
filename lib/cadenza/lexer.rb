@@ -163,9 +163,6 @@ module Cadenza
         when text = @scanner.scan(/<=/)
           token(:OP_LEQ, text)
 
-        when text = @scanner.scan(/[=]>/) # i've added the square brackets because syntax highlighters dont like /=
-          token(:OP_MAP, text)
-
         when text = @scanner.scan(/(if|else|endif|for|in|endfor|block|endblock|extends|render)[\W]/)
           keyword = text[0..-2]
           @scanner.pos -= 1

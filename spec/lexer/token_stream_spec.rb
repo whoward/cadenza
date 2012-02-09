@@ -96,10 +96,6 @@ describe Cadenza::Lexer, 'token parsing' do
     tokens_for("{% <= %}").should == [:STMT_OPEN, :OP_LEQ, :STMT_CLOSE, false]
   end
 
-  it "should scan the hash rocket operaor" do
-    tokens_for("{% => %}").should == [:STMT_OPEN, :OP_MAP, :STMT_CLOSE, false]
-  end
-
   it "should match individual characters inside of statements" do
     tokens_for("{% if foo > 0 %}").should == [:STMT_OPEN, :IF, :IDENTIFIER, ">", :INTEGER, :STMT_CLOSE, false]
   end
