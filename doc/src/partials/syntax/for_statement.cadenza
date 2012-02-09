@@ -36,4 +36,52 @@
    the singular form of the enumerable.  In other words you will often see an 
    enumerable named something like "items" and an enumerator named "item".  Of
    course, this is just a suggestion and you can use whatever names you want.</p>
+
+   <p>The enumerator also defines some magic variables on itself which you may
+   find useful when working with a for loop.  Here's a list of them:</p>
+
+   <dl>
+      <dt>forloop.counter</dt>
+      <dd>Gives you the number of times the loop has been processed.</dd>
+
+      <dt>forloop.counter0</dt>
+      <dd>Like <b>counter</b> but assumes the first loop is loop #0, not loop #1.</dd>
+
+      <dt>forloop.first</dt>
+      <dd>Gives you a true value if this is the first iteration through a loop.</dd>
+
+      <dt>forloop.last</dt>
+      <dd>Gives you a true value if this is the last iteration through a loop.</dd>
+   </dl>
+
+   <p>So, with these variables you could write a HTML table like this:</p>
+
+   <pre>
+   TODO: - put the table's source code here!
+   </pre>
+
+   <p>Which will display like this:</p>
+
+   <table class='scrollable'>
+      <thead>
+         <tr>
+            <th>x</th>
+            <th>x.counter</th>
+            <th>x.counter0</th>
+            <th>x.first</th>
+            <th>x.last</th>
+         </tr>
+      </thead>
+      <tbody>
+      {% for x in alphabet %}
+         <tr>
+            <td>{{ x }}</td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ forloop.counter0 }}</td>
+            <td>{% if forloop.first %}Yes{% else %}No{% endif %}</td>
+            <td>{% if forloop.last %}Yes{% else %}No {% endif %}</td>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
 </section>

@@ -148,3 +148,22 @@ nav ul li {
    list-style: none;
    line-height: 175%;
 }
+
+/** Scrollable tables for long lists of data */
+
+table.scrollable {
+   display: block;
+}
+
+table.scrollable tbody {
+   max-height: 300px;
+   display: block;
+   overflow-y: auto;
+}
+
+table.scrollable td, table.scrollable th {
+   max-width: 120px;
+   width: 120px;
+   text-overflow: ellipsis;
+   overflow-x: hidden;
+}
