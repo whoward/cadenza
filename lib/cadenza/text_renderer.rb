@@ -47,16 +47,13 @@ module Cadenza
       end
 
       def render_for(node, context, blocks)
-         enumerator = node.iterable.eval(context).to_enum
+         # sadly to_enum doesn't work in 1.8.x so we need to array-ify the iterable first
+         values = node.iterable.eval(context).to_a
          iterator = node.iterator.identifier
 
-         counter = 0
-         loop do
-            # grab some values for the inner context
-            value = enumerator.next rescue break
-
+         values.each_with_index do |value, counter|
             is_first = (counter == 0) ? true : false
-            is_last  = enumerator.peek rescue false ? true : false  #TODO: this doesn't work in 1.8.x
+            is_last  = (counter == values.length - 1) ? true : false
 
             # push the inner context with the 'magic' variables
             context.push({

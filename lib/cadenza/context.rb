@@ -136,18 +136,18 @@ module Cadenza
       def lookup_on_scope(scope, identifier)
          sym_identifier = identifier.to_sym
 
-         # if the identifier is a callable method then call that
-         return scope.send(sym_identifier) if scope.respond_to?(sym_identifier)
-
          # allow looking up array indexes with dot notation, example: alphabet.0 => "a"
          if scope.respond_to?(:[]) and scope.is_a?(Array) and identifier =~ /\d+/
             return scope[identifier.to_i]
          end
 
-         # otherwise assume it is a hash and look up the string and symbolized key
-         if scope.respond_to?(:[])
+         # otherwise if it's a hash look up the string or symbolized key
+         if scope.respond_to?(:[]) and scope.is_a?(Hash) and (scope.has_key?(identifier) || scope.has_key?(sym_identifier))
             return scope[identifier] || scope[sym_identifier]
          end
+
+         # if the identifier is a callable method then call that
+         return scope.send(sym_identifier) if scope.respond_to?(sym_identifier)
 
          nil
       end
