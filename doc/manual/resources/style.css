@@ -149,6 +149,37 @@ nav ul li {
    line-height: 175%;
 }
 
+table {
+   border-collapse: collapse;
+}
+
+table thead tr:first-child {
+   border-top: 2px solid black;
+}
+
+table thead tr:last-child, table tbody tr:last-child {
+   border-bottom: 2px solid black;
+}
+
+table tr {
+   border-left: 2px solid black;
+   border-right: 2px solid black;
+}
+
+table tbody td, table thead th {
+   text-align: center;
+   border-left: 1px solid gray;
+}
+
+table tbody td:last-child, table thead th:last-child {
+   border-right: 1px solid gray;
+}
+
+table tbody tr:nth-child(even), table thead tr {
+   background-color: #DDD;
+}
+
+
 /** Scrollable tables for long lists of data */
 
 table.scrollable {
@@ -163,7 +194,7 @@ table.scrollable tbody {
 
 table.scrollable td, table.scrollable th {
    max-width: 120px;
-   width: 120px;
+   min-width: 120px;
    text-overflow: ellipsis;
    overflow-x: hidden;
 }
