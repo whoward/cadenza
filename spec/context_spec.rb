@@ -213,11 +213,16 @@ describe Cadenza::Context do
          context.add_loader(filesystem_loader)
          context.add_loader(Cadenza::FilesystemLoader.new(template_path))
 
+         context.load_source("fake.html").should be_nil
          context.load_template("fake.html").should be_nil
       end
 
       it "should raise an error if no template was found and whiny template loading is enabled" do
          context.whiny_template_loading = true
+         
+         lambda do
+            context.load_source("fake.html")
+         end.should raise_error Cadenza::TemplateNotFoundError
 
          lambda do
             context.load_template("fake.html")
@@ -225,6 +230,10 @@ describe Cadenza::Context do
       end
 
       it "should always raise the exception regardless of whiny template loading when the bang is provided" do
+         lambda do
+            context.load_source!("fake.html")
+         end.should raise_error Cadenza::TemplateNotFoundError
+
          lambda do
             context.load_template!("fake.html")
          end.should raise_error Cadenza::TemplateNotFoundError

@@ -7,12 +7,22 @@ module Cadenza
          @path = path
       end
 
-      def load_template(template)
+      def load_source(template)
          filename = File.join(path, template)
 
          return unless File.file?(filename)
 
-         Cadenza::Parser.new.parse(File.read filename)
+         File.read filename
+      end
+
+      def load_template(template)
+         source = load_source(template)
+
+         if source
+            return Cadenza::Parser.new.parse(source)
+         else
+            return nil
+         end
       end
    end
 end

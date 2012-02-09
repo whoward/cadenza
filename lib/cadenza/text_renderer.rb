@@ -43,7 +43,7 @@ module Cadenza
       def render_generic_statement(node, context, blocks)
          params = node.parameters.map {|n| n.eval(context) }
          
-         context.evaluate_statement(node.name, params)
+         output << context.evaluate_statement(node.name, params)
       end
 
       def render_for(node, context, blocks)

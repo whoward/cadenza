@@ -89,6 +89,25 @@ module Cadenza
          @loaders.reject! { true }
       end
 
+      def load_source(template_name)
+         source = nil
+
+         @loaders.each do |loader|
+            source = loader.load_source(template_name)
+            break if source
+         end
+
+         if source.nil? and whiny_template_loading
+            raise TemplateNotFoundError.new(template_name)
+         else
+            return source
+         end
+      end
+
+      def load_source!(template_name)
+         load_source(template_name) || raise(TemplateNotFoundError.new(template_name))
+      end
+
       def load_template(template_name)
          template = nil
 
@@ -105,13 +124,7 @@ module Cadenza
       end
 
       def load_template!(template_name)
-         template = load_template(template_name)
-
-         if template
-            return template
-         else
-            raise TemplateNotFoundError.new(template_name)
-         end
+         load_template(template_name) || raise(TemplateNotFoundError.new(template_name))
       end
 
    private

@@ -105,7 +105,7 @@ describe Cadenza::TextRenderer do
 
    it "should evaluate the generic statement" do
       context = Cadenza::Context.new
-      context.define_statement(:assign) {|context, name, value| context.assign(name, value) }
+      context.define_statement(:assign) {|context, name, value| context.assign(name, value); nil }
 
       foo = Cadenza::ConstantNode.new("foo")
       bar = Cadenza::ConstantNode.new("bar")
