@@ -13,7 +13,8 @@ end
 define_filter :capitalize, &:capitalize
 
 # centers the string in a fixed width field with the given padding
-define_filter :center do |string, length, padding=' '|
+define_filter :center do |string, length, *args|
+   padding = args.first || ' ' # Ruby 1.8.x compatibility
    string.center(length, padding)
 end
 
@@ -23,7 +24,8 @@ define_filter :cut do |string, value|
 end
 
 # formats the given date object with the given format string
-define_filter :date do |date, format='%F'|
+define_filter :date do |date, *args|
+   format = args.first || '%F' # Ruby 1.8.x compatibility
    date.strftime(format)
 end
 
@@ -44,7 +46,7 @@ end
 # returns the first item of an iterable
 define_filter :first do |input|
    if input.respond_to?(:[])
-      input[0]
+      RUBY_VERSION =~ /^1.8/ && input.is_a?(String) ? input[0].chr : input[0]
    else
       input.first
    end
@@ -53,7 +55,7 @@ end
 # returns the last item of an iterable
 define_filter :last do |input|
    if input.respond_to?(:[])
-      input[-1]
+      RUBY_VERSION =~ /^1.8/ && input.is_a?(String) ? input[-1].chr : input[-1]
    else
       input.last
    end
@@ -68,12 +70,14 @@ end
 define_filter :length, &:length
 
 # returns the string left justified with the given padding character
-define_filter :ljust do |input, length, padding=' '|
+define_filter :ljust do |input, length, *args|
+   padding = args.first || ' '  # Ruby 1.8.x compatibility
    input.ljust(length, padding)
 end
 
 # returns the string right justified with the given padding character
-define_filter :rjust do |input, length, padding=' '|
+define_filter :rjust do |input, length, *args|
+   padding = args.first || ' '  # Ruby 1.8.x compatibility
    input.rjust(length, padding)
 end
 
@@ -86,7 +90,8 @@ define_filter :upper, &:upcase
 # returns the given words wrapped to fit inside the given column width.  Wrapping
 # is done on word boundaries so that no word cutting is done.
 # source: http://www.java2s.com/Code/Ruby/String/WordwrappingLinesofText.htm
-define_filter :wordwrap do |input, length, linefeed="\n"|
+define_filter :wordwrap do |input, length, *args|
+   linefeed = args.first || "\n" # Ruby 1.8.x compatibility
    input.gsub(/(.{1,#{length}})(\s+|\Z)/, "\\1#{linefeed}")
 end
 

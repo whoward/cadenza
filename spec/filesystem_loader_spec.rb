@@ -30,10 +30,6 @@ describe Cadenza::FilesystemLoader do
          template.should have_an_identical_syntax_tree_to "templates/test.parse.yml"
       end
 
-      it "should return nil if the file exists but is not in a subtree of the path" do
-         loader.load_template("../empty.parse.yml").should be_nil
-      end
-
       it "should return the parsed template tree if the file is in a subdirectory" do
          template = loader.load_template("test-directory/test.html.cadenza")
 
