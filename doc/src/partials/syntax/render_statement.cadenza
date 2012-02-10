@@ -7,6 +7,6 @@
      Here's what it looks like:</p>
      
    <pre>
-     {{ '{% render "partials/syntax/render_statement.cadenza" %}' }}
+     {{ '{{ render "partials/syntax/render_statement.cadenza" }}' }}
    </pre>
 </section>
