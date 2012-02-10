@@ -68,7 +68,6 @@ describe Cadenza::Lexer, 'token parsing' do
     tokens_for("{%block%}").should    == [:STMT_OPEN, :BLOCK, :STMT_CLOSE, false]
     tokens_for("{%endblock%}").should == [:STMT_OPEN, :ENDBLOCK, :STMT_CLOSE, false]
     tokens_for("{%extends%}").should  == [:STMT_OPEN, :EXTENDS, :STMT_CLOSE, false]
-    tokens_for("{%render%}").should   == [:STMT_OPEN, :RENDER, :STMT_CLOSE, false]
   end
 
   it "should ignore whitespace inside of statements" do

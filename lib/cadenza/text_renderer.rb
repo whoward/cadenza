@@ -1,6 +1,13 @@
+require 'stringio'
 
 module Cadenza
    class TextRenderer < BaseRenderer
+      def self.render(template, context)
+         io = StringIO.new
+         new(io).render(template, context)
+         io.string
+      end
+
       def render_document(node, context, blocks)
          if node.extends
             # merge the inherited blocks onto this document's blocks to
@@ -16,12 +23,6 @@ module Cadenza
          else
             node.children.each {|x| render(x, context, blocks) }
          end         
-      end
-
-      def render_render(node, context, blocks)
-         template = context.load_template(node.filename) || ""
-
-         TextRenderer.new(output).render(template, context)
       end
 
       def render_block(node, context, blocks)

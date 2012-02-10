@@ -104,11 +104,6 @@ rule
     | STMT_OPEN EXTENDS IDENTIFIER STMT_CLOSE { result = VariableNode.new(val[2].value) }
     ;
 
-  render_statement
-    : STMT_OPEN RENDER STRING STMT_CLOSE { result = RenderNode.new(val[2].value) }
-    | STMT_OPEN RENDER IDENTIFIER STMT_CLOSE { result = RenderNode.new(VariableNode.new(val[2].value)) }
-    ;
-
   generic_statement
     : STMT_OPEN IDENTIFIER STMT_CLOSE { result = GenericStatementNode.new(val[1].value) }
     | STMT_OPEN IDENTIFIER parameter_list STMT_CLOSE { result = GenericStatementNode.new(val[1].value, val[2]) }
@@ -119,7 +114,6 @@ rule
     | inject_statement
     | if_block
     | for_block
-    | render_statement
     | generic_statement
     ;
 

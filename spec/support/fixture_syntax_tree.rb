@@ -25,7 +25,6 @@ private
       when "IfNode" then parse_if_node(node)
       when "ForNode" then parse_for_node(node)
       when "BlockNode" then parse_block_node(node)
-      when "RenderNode" then parse_render_node(node)
       when "GenericStatementNode" then parse_generic_statement_node(node)
       else raise "unknown type: #{type}"
     end
@@ -107,12 +106,6 @@ private
     children = list_for_key(node, "children")
 
     Cadenza::BlockNode.new(name, children)
-  end
-
-  def parse_render_node(node)
-    filename = node["filename"].is_a?(String) ? node["filename"] : node_for_key(node, "filename")
-
-    Cadenza::RenderNode.new(filename)
   end
 
   def parse_generic_statement_node(node)

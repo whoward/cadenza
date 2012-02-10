@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'stringio'
 
 describe Cadenza::TextRenderer do
    let(:output)   { StringIO.new }
@@ -165,16 +164,6 @@ describe Cadenza::TextRenderer do
          renderer.render(document, context)
          renderer.output.string.should == "Hello World"
       end
-   end
-
-   context "render nodes" do
-      it "should render the children of the rendered template" do
-         document.children.push Cadenza::RenderNode.new("test.html.cadenza")
-
-         renderer.render(document, context)
-         renderer.output.string.should == "abc3.14159ghi"
-      end
-
    end
 
    context "extension nodes" do

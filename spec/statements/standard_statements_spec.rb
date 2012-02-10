@@ -15,4 +15,17 @@ describe Cadenza::BaseContext, 'standard statements' do
          subject.evaluate_statement(:load, ["fake.html"]).should be_nil
       end
    end
+
+   context "render" do
+      before { subject.push :pi => "def" }
+      after  { subject.pop }
+
+      it "should return the rendered content of the given file" do
+         subject.evaluate_statement(:render, ["test.html.cadenza"]).should == "abcdefghi"
+      end
+
+      it "should return empty text if the template does not exist" do
+         subject.evaluate_statement(:render, ["fake.html"]).should == ""
+      end
+   end
 end
