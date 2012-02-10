@@ -1,5 +1,0 @@
-# result of {% server_environment %}
-DocumentNode:
-  children:
-    - GenericStatementNode:
-        name: "server_environment"

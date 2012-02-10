@@ -52,8 +52,20 @@ rule
     ;
 
   inject_statement
-    : VAR_OPEN boolean_expression VAR_CLOSE { result = InjectNode.new(val[1]) }
-    | VAR_OPEN boolean_expression '|' filter_list VAR_CLOSE { result = InjectNode.new(val[1], val[3]) }
+    : VAR_OPEN boolean_expression VAR_CLOSE
+      { result = InjectNode.new(val[1]) }
+    | VAR_OPEN boolean_expression '|' filter_list VAR_CLOSE
+      { result = InjectNode.new(val[1], val[3]) }
+    | VAR_OPEN IDENTIFIER parameter_list VAR_CLOSE 
+      {
+        variable = VariableNode.new(val[1].value)
+        result = InjectNode.new(variable, [], val[2])
+      }
+    | VAR_OPEN IDENTIFIER parameter_list '|' filter_list VAR_CLOSE
+      {
+        variable = VariableNode.new(val[1].value)
+        result = InjectNode.new(variable, val[4], val[2])
+      }
     ;
 
   if_statement
@@ -104,17 +116,11 @@ rule
     | STMT_OPEN EXTENDS IDENTIFIER STMT_CLOSE { result = VariableNode.new(val[2].value) }
     ;
 
-  generic_statement
-    : STMT_OPEN IDENTIFIER STMT_CLOSE { result = GenericStatementNode.new(val[1].value) }
-    | STMT_OPEN IDENTIFIER parameter_list STMT_CLOSE { result = GenericStatementNode.new(val[1].value, val[2]) }
-    ;
-    
   document_component
     : TEXT_BLOCK { result = TextNode.new(val[0].value) }
     | inject_statement
     | if_block
     | for_block
-    | generic_statement
     ;
 
   document

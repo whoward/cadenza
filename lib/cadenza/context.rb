@@ -162,6 +162,9 @@ module Cadenza
          # if the identifier is a callable method then call that
          return scope.send(sym_identifier) if scope.respond_to?(sym_identifier)
 
+         # if a statement is defined matching the identifier name then return that
+         return @statements[sym_identifier] if @statements.has_key?(sym_identifier)
+         
          nil
       end
 

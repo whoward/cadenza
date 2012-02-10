@@ -41,12 +41,6 @@ module Cadenza
          node.evaluate_expression_for_children(context).each {|x| render(x, context) }
       end
 
-      def render_generic_statement(node, context, blocks)
-         params = node.parameters.map {|n| n.eval(context) }
-         
-         output << context.evaluate_statement(node.name, params)
-      end
-
       def render_for(node, context, blocks)
          # sadly to_enum doesn't work in 1.8.x so we need to array-ify the iterable first
          values = node.iterable.eval(context).to_a

@@ -102,23 +102,6 @@ describe Cadenza::TextRenderer do
       renderer.output.string.should == "1: a\n2: b\n3: c\n"
    end
 
-   it "should evaluate the generic statement" do
-      context = Cadenza::Context.new
-      context.define_statement(:assign) {|context, name, value| context.assign(name, value); nil }
-
-      foo = Cadenza::ConstantNode.new("foo")
-      bar = Cadenza::ConstantNode.new("bar")
-
-      foovar = Cadenza::VariableNode.new("foo")
-
-      document.children.push Cadenza::GenericStatementNode.new("assign", [foo, bar])
-      document.children.push Cadenza::InjectNode.new(foovar)
-
-      renderer.render(document, context)
-
-      renderer.output.string.should == "bar"
-   end
-
    context "block nodes" do
       it "should render it's children if the document has no layout file" do
          text = Cadenza::TextNode.new("Lorem Ipsum")

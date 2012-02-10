@@ -1,0 +1,10 @@
+# should be the result of parsing "{{ load 'mytemplate' }}"
+DocumentNode:
+   children:
+      - InjectNode:
+         value:
+            VariableNode:
+               value: load
+         parameters:
+            - ConstantNode:
+               value: mytemplate

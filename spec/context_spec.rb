@@ -80,12 +80,12 @@ describe Cadenza::Context do
    end
 
    context "#lookup" do
-      let(:context) do
-         Cadenza::Context.new({
-            :foo => {:bar => "baz"}, 
-            :abc => OpenStruct.new(:def => "ghi"), 
-            :alphabet => %w(a b c)
-         })
+      let(:scope) { {:foo => {:bar => "baz"}, :abc => OpenStruct.new(:def => "ghi"), :alphabet => %w(a b c)} }
+      let(:assign) { lambda {|context, name, value| context.assign(name, value) } }
+      let(:context) { Cadenza::Context.new(scope) }
+
+      before do
+         context.define_statement(:assign, &assign)
       end
 
       it "should retrieve the value of an identifier" do
@@ -122,6 +122,10 @@ describe Cadenza::Context do
 
       it "should look up array indexes" do
          context.lookup("alphabet.1").should == "b"
+      end
+
+      it "should look up a functional variable by it's name" do
+         context.lookup("assign").should == assign
       end
    end
 
