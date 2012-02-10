@@ -56,12 +56,9 @@
 
    <p>So, with these variables you could write a HTML table like this:</p>
 
-<pre>
-{# TODO: build a "filter" block and HTML escape this load statement #}
-{% load "partials/syntax/examples/forloop.cadenza" %}
-</pre>
+   <pre>{{ load "partials/syntax/examples/forloop.cadenza" | escape }}</pre>
 
    <p>Which will display like this:</p>
 
-   {% render "partials/syntax/examples/forloop.cadenza" %}
+   {{ render "partials/syntax/examples/forloop.cadenza" }}
 </section>

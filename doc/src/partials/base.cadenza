@@ -15,6 +15,6 @@
 		No Content!
 		{% endblock %}
 		</div>
-		{% render 'partials/navigation.cadenza' %}
+		{{ render 'partials/navigation.cadenza' }}
 	</body>
 </html>

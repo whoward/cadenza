@@ -13,15 +13,15 @@
       <a href='#inject'>inject statements</a>.</p>
   </section>
     
-  {% render "partials/syntax/inject_statements.cadenza" %}
-  {% render "partials/syntax/general_statements.cadenza" %}
-  {% render "partials/syntax/comments.cadenza" %}
-  {% render "partials/syntax/constants.cadenza" %}
-  {% render "partials/syntax/identifiers.cadenza" %}
-  {% render "partials/syntax/arithmetic.cadenza" %}
-  {% render "partials/syntax/expressions.cadenza" %}
-  {% render "partials/syntax/if_statement.cadenza" %}
-  {% render "partials/syntax/for_statement.cadenza" %}
-  {% render "partials/syntax/render_statement.cadenza" %}
-  {% render "partials/syntax/extends_statement.cadenza" %}
+  {{ render "partials/syntax/inject_statements.cadenza" }}
+  {{ render "partials/syntax/general_statements.cadenza" }}
+  {{ render "partials/syntax/comments.cadenza" }}
+  {{ render "partials/syntax/constants.cadenza" }}
+  {{ render "partials/syntax/identifiers.cadenza" }}
+  {{ render "partials/syntax/arithmetic.cadenza" }}
+  {{ render "partials/syntax/expressions.cadenza" }}
+  {{ render "partials/syntax/if_statement.cadenza" }}
+  {{ render "partials/syntax/for_statement.cadenza" }}
+  {{ render "partials/syntax/render_statement.cadenza" }}
+  {{ render "partials/syntax/extends_statement.cadenza" }}
 {% endblock %}

@@ -15,7 +15,7 @@
          <td>{{ forloop.counter }}</td>
          <td>{{ forloop.counter0 }}</td>
          <td>{% if forloop.first %}Yes{% else %}No{% endif %}</td>
-         <td>{% if forloop.last %}Yes{% else %}No {% endif %}</td>
+         <td>{% if forloop.last %}Yes{% else %}No{% endif %}</td>
       </tr>
    {% endfor %}
    </tbody>
