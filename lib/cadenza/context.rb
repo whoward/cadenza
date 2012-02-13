@@ -9,14 +9,18 @@ module Cadenza
    class StatementNotDefinedError < StandardError
    end
 
+   class BlockNotDefinedError < StandardError
+   end
+
    class Context
-      attr_accessor :stack, :filters, :statements, :loaders
+      attr_accessor :stack, :filters, :statements, :blocks, :loaders
       attr_accessor :whiny_template_loading
 
       def initialize(initial_scope={})
          @stack = []
          @filters = {}
          @statements = {}
+         @blocks = {}
          @loaders = []
          @whiny_template_loading = false
 
@@ -75,6 +79,16 @@ module Cadenza
          statement = @statements[name.to_sym]
          raise StatementNotDefinedError.new("undefined statement '#{name}'") if statement.nil?
          statement.call([self] + params)
+      end
+
+      def define_block(name, &block)
+         @blocks[name.to_sym] = block
+      end
+
+      def evaluate_block(name, nodes, parameters)
+         block = @blocks[name.to_sym]
+         raise BlockNotDefinedError.new("undefined block '#{name}") if block.nil?
+         block.call(self, nodes, parameters)
       end
 
       def add_loader(loader)

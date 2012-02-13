@@ -25,6 +25,7 @@ private
       when "IfNode" then parse_if_node(node)
       when "ForNode" then parse_for_node(node)
       when "BlockNode" then parse_block_node(node)
+      when "GenericBlockNode" then parse_generic_block_node(node)
       else raise "unknown type: #{type}"
     end
   end
@@ -106,6 +107,14 @@ private
     children = list_for_key(node, "children")
 
     Cadenza::BlockNode.new(name, children)
+  end
+
+  def parse_generic_block_node(node)
+    identifier = node["identifier"]
+    children   = list_for_key(node, "children")
+    parameters = list_for_key(node, "parameters")
+
+    Cadenza::GenericBlockNode.new(identifier, children, parameters)
   end
 
 private

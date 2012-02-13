@@ -72,6 +72,10 @@ module Cadenza
          end
       end
 
+      def render_generic_block(node, context, blocks)
+         output << context.evaluate_block(node.identifier, node.children, node.parameters)
+      end
+
       # none of these should appear directly inside the body of the 
       # document but for safety we will render them anyways
       def render_constant(node, context, blocks)

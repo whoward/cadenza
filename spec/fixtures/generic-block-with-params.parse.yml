@@ -1,0 +1,11 @@
+# {% filter escape %}<h1>Hello World!</h1>{% end %}
+DocumentNode:
+  children:
+    - GenericBlockNode:
+         identifier: "filter"
+         parameters:
+            - VariableNode:
+               value: "escape"
+         children:
+            - TextNode:
+               text: "<h1>Hello World!</h1>"

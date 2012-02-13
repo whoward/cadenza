@@ -149,6 +149,31 @@ describe Cadenza::TextRenderer do
       end
    end
 
+   context "generic block nodes" do
+      before do
+         context.define_filter(:escape) {|input| CGI.escapeHTML(input) }
+
+         context.define_block :filter do |context, nodes, parameters|
+            filter = parameters.first.identifier
+
+            nodes.inject("") do |output, child|
+               node_text = Cadenza::TextRenderer.render(child, context)
+               output << context.evaluate_filter(filter, node_text)
+            end
+         end
+      end
+
+      it "should render the text with the block's logic applied" do
+         text = Cadenza::TextNode.new("<h1>Hello World!</h1>")
+         escape =  Cadenza::VariableNode.new("escape")
+
+         document.children.push(Cadenza::GenericBlockNode.new("filter", [text], [escape]))
+
+         renderer.render(document, context)
+         renderer.output.string.should == "&lt;h1&gt;Hello World!&lt;/h1&gt;"
+      end
+   end
+
    context "extension nodes" do
       index_file     = File.read(fixture_filename "templates/index.html.cadenza")
       index_two_file = File.read(fixture_filename "templates/index_two.html.cadenza")

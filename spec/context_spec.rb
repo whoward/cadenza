@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'ostruct'
+require 'cgi'
 
 describe Cadenza::Context do
    it "should start with an empty stack" do
@@ -186,6 +187,42 @@ describe Cadenza::Context do
          lambda do
             context.evaluate_statement(:foo, [])
          end.should raise_error Cadenza::StatementNotDefinedError
+      end
+   end
+
+   context "#define_block" do
+      let(:context) { Cadenza::Context.new }
+      let(:escape) { Cadenza::VariableNode.new("escape") }
+
+      before do
+         context.define_filter(:escape) {|input| CGI.escapeHTML(input) }
+
+         context.define_block :filter do |context, nodes, parameters|
+            filter = parameters.first.identifier
+
+            nodes.inject("") do |output, child|
+               node_text = Cadenza::TextRenderer.render(child, context)
+               output << context.evaluate_filter(filter, node_text)
+            end
+         end
+      end
+
+      it "should define the block" do
+         context.blocks[:filter].should be_a Proc
+      end
+
+      it "should evaluate a block" do
+         text = Cadenza::TextNode.new("<h1>Hello World!</h1>")
+
+         output = context.evaluate_block(:filter, [text], [escape])
+
+         output.should == "&lt;h1&gt;Hello World!&lt;/h1&gt;"
+      end
+
+      it "should raise a BlockNotDefinedError if the block is not defined" do
+         lambda do
+            context.evaluate_block(:foo, [], [])
+         end.should raise_error Cadenza::BlockNotDefinedError
       end
    end
 

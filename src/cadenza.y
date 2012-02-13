@@ -111,6 +111,15 @@ rule
       { result = BlockNode.new(val[2].value, @stack.pop.children) }
     ;
 
+  generic_block
+    : STMT_OPEN IDENTIFIER STMT_CLOSE { @stack.push DocumentNode.new }
+      document 
+      STMT_OPEN END STMT_CLOSE { result = GenericBlockNode.new(val[1].value, @stack.pop.children) }
+    | STMT_OPEN IDENTIFIER parameter_list STMT_CLOSE  { @stack.push DocumentNode.new }
+      document 
+      STMT_OPEN END STMT_CLOSE { result = GenericBlockNode.new(val[1].value, @stack.pop.children, val[2]) }
+    ;
+
   extends_statement
     : STMT_OPEN EXTENDS STRING STMT_CLOSE { result = val[2].value }
     | STMT_OPEN EXTENDS IDENTIFIER STMT_CLOSE { result = VariableNode.new(val[2].value) }
@@ -121,6 +130,7 @@ rule
     | inject_statement
     | if_block
     | for_block
+    | generic_block
     ;
 
   document
