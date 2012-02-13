@@ -7,13 +7,13 @@
    <p>"For statements" allow you to continually output some text for every 
    element in a list. Here's what for statements look like:</p>
      
-   <pre>
-     &lt;ol&gt;
+   {% code_example %}
+     <ol>
      {{ "{% for error in errors %}" }}
-       &lt;li&gt;{{ "{{ error }}" }}&lt;/li&gt;
+       <li>{{ "{{ error }}" }}</li>
      {{ "{% endfor %}" }}
-     &lt;/ol&gt;
-   </pre>
+     </ol>
+   {% end %}
 
    <p>You can see here that "for statements" are blocks, just like "if statements"
    are.  The general syntax for writing a "for statement" is:

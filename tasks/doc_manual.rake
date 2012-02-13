@@ -10,8 +10,8 @@ namespace :doc do
     source_directory = File.join(root_directory, 'doc', 'src')
     output_directory = File.join(root_directory, 'doc', 'manual')
     
-    # This will be the context passed to EVERY example
-    scope = Kernel.eval(File.read(File.join(source_directory, 'context.rb')))
+    # define any custom context definitions for the document
+    Cadenza::BaseContext.instance_eval(File.read(File.join source_directory, "context.rb"))
 
     # Set up the loading path for the filesystem loader
     Cadenza::BaseContext.add_loader Cadenza::FilesystemLoader.new(source_directory)
@@ -26,7 +26,7 @@ namespace :doc do
 
       puts "rendering #{input_file} to #{output_file}"
       File.open(output_file, "w") do |file|
-        file.write Cadenza.render(File.read(input_file), scope)
+        file.write Cadenza.render(File.read(input_file), {})
       end
     end
   end
