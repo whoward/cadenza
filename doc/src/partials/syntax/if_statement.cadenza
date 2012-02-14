@@ -8,14 +8,7 @@
    <p>If statements are constructed like this:</p>
      
    <pre>{{ load "partials/syntax/examples/if-statements1.cadenza" | escape }}</pre>
-
-   <p>You can see that unlike most blocks the if statement can have two blocks
-   separated by an <tt>{{ "{% else %}" }}</tt> tag.  The else tag and the block
-   which follows it is optional, so the simplest form of an if statement looks
-   like this:</p>
-
-   <pre>{{ load "partials/syntax/examples/if-statements2.cadenza" | escape }}</pre>
-
+   
    <aside class='right'>
       <div><b>true</b> and <b>false</b> are called boolean values.  This sounds 
       complicated but really all what boolean values are is the result of 
@@ -25,6 +18,13 @@
       would be <b>false</b>, however, if I said "the year 1985 is in the past" 
       then my statement would be <b>true</b>.</div>
    </aside>
+
+   <p>You can see that unlike most blocks the if statement can have two blocks
+   separated by an <tt>{{ "{% else %}" }}</tt> tag.  The else tag and the block
+   which follows it is optional, so the simplest form of an if statement looks
+   like this:</p>
+
+   <pre>{{ load "partials/syntax/examples/if-statements2.cadenza" | escape }}</pre>
 
    <p>Depending on how the expression evaluates the different blocks will be
    rendered.  If the expression evaluates to true then the first block will

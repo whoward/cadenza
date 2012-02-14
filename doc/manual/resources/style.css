@@ -68,6 +68,26 @@ a, a:visited {
   color: blue;
 }
 
+.example {
+   border: 1px solid #BBB;
+   border-radius: 10px;
+   padding: 20px;
+   clear: both;
+   position: relative;
+   margin: 20px 0px;
+}
+
+.example:before {
+   content: "Example:";
+   background-color: white;
+   padding: 5px;
+   border: 1px solid #BBB;
+   border-radius: 10px;
+   position: absolute;
+   top: -13px;
+   left: 20px;
+}
+
 .ribbon-holder {
    position: fixed;
    right: 0px;
@@ -185,6 +205,9 @@ pre.source, pre.rendered {
    background-color: #CCC;
    border: 1px solid #AAA;
    padding: 10px;
+   margin: 0;
+   max-width: 310px;
+   overflow-x: auto;
 }
 
 pre.source {
