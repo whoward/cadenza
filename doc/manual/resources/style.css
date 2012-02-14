@@ -234,6 +234,7 @@ table tr {
 table tbody td, table thead th {
    text-align: center;
    border-left: 1px solid gray;
+   padding: 3px 5px;
 }
 
 table tbody td:last-child, table thead th:last-child {
