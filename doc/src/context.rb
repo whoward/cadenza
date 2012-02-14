@@ -13,13 +13,17 @@ push({
 })
 
 define_statement :example do |context, template|
-  result = "<pre class='source'>"
+  result = "<div class='example'>"
+
+  result << "<pre class='source'>"
   result << context.evaluate_statement("load", [template])
   result << "</pre>"
 
   result << "<pre class='rendered'>"
   result << context.evaluate_statement("render", [template])
   result << "</pre>"
+
+  result << "</div>"
 
   result
 end
