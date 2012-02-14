@@ -1,37 +1,19 @@
 <section>
-  <h2 id="variables">Identifiers</h2>
+  <h2 id="variables">Variables</h2>
 
-  <p>Identifiers are different from <a href='#constants'>constants</a> because 
-    they dont have a value (like constants do) but hold the place for some value
-    that varies (in other words - variables).</p>
+  <p>Variables are different from <a href='#constants'>constants</a> because 
+  they dont have a value (like constants do) but hold the place for some value
+  that varies (in other words - variables).</p>
     
-  <p>Most of the time you'll be using identifiers inside of 
-    <a href='#inject'>inject statements</a> to say what variable you want injected
-    into the document.  Otherwise identifiers are used from time to time in 
-    <a href='#arithmetic'>arithmetic</a>, <a href='#expressions'>expressions</a>,
-    and <a href='#for_statement'>for statements</a>.</p>
-
-  <p>Except for the <i>iterator</i> identifier used in for statements you can 
-    never set a new identifier from inside of a template.  In other words Cadenza
-    expects you to define the value in the template's <a href='#'>context</a>.</p>
-
-  <p>Identifiers may begin with uppercase or lowercase characters or an underscore
-    (_) and, after the first character, include digits (0-9).  So, for instance,
-    the following are valid identifiers:</p>
+  <p>Variables may begin with uppercase or lowercase characters or an underscore
+  <tt>_</tt> and, after the first character, include digits (0-9).  So, for instance,
+  the following are valid identifiers:</p>
     
-  <pre>
-    {{ "{{ foo }}" }}
-    {{ "{{ hello123 }}" }}
-    {{ "{{ _var }}" }}
-    {{ "{{ MyVariable }}" }}
-  </pre>
+  <pre>{{ load "partials/syntax/examples/valid-variables.cadenza" }}</pre>
 
   <p>However, the following examples are not:</p>
-  <pre>
-    {{ "{{ 9abc }}" }}
-    {{ "{{ foo-bar }}" }}
-  </pre>
+  <pre>{{ load "partials/syntax/examples/invalid-variables.cadenza" }}</pre>
 
-  <p><b>Note:</b> identifiers are case sensitive so HelloWorld and helloWorld are
-  treated differently.</p>
+  <p><b>Note:</b> identifiers are case sensitive so <tt>HelloWorld</tt> and 
+  <tt>helloWorld</tt> are treated differently.</p>
 </section>

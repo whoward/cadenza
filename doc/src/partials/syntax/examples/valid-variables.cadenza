@@ -1,0 +1,4 @@
+{{ foo }}
+{{ hello123 }}
+{{ _var }}
+{{ MyVariable }}

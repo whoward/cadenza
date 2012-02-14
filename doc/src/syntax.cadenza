@@ -4,23 +4,28 @@
   <h1 id="syntax">Syntax of Cadenza</h1>
 
   <section>
-    <p>Cadenza is a text templating language.  This means you can use it to make 
-      templates for HTML, emails, source code, text documents and so on - Cadenza
-      doesn't care what it's sandwiched between.</p>
+    <h2>Introduction</h2>
+    <p>Cadenza is a text templating language.  The reason for pointing out that it
+    is a "text" templating language is so that you realize that it can apply to 
+    any kind of text document out there, from the HTML documents you'll likely
+    be using it for to emails, to source code, to anything else - Cadenza
+    doesn't care what kind of text document it's working on.</p>
       
-    <p>That said, Cadenza has <b>two</b> basic structures it uses for syntax: 
-      <a href='#general'>general statements</a> and 
-      <a href='#inject'>inject statements</a>.</p>
+    <p>That said, Cadenza was designed with HTML pages in mind so most of this
+    document will refer to using Cadenza with HTML.  If you haven't had a chance
+    to learn any HTML before I'd suggest learning the basics as it's a very easy
+    language to learn and this document will probably make more sense after you 
+    have had a chance to do so.</p>
   </section>
     
-  {{ render "partials/syntax/inject_statements.cadenza" }}
-  {{ render "partials/syntax/general_statements.cadenza" }}
+  {{ render "partials/syntax/basics.cadenza" }}
   {{ render "partials/syntax/comments.cadenza" }}
   {{ render "partials/syntax/constants.cadenza" }}
   {{ render "partials/syntax/identifiers.cadenza" }}
+  {{ render "partials/syntax/inject_tags.cadenza" }}
   {{ render "partials/syntax/arithmetic.cadenza" }}
-  {{ render "partials/syntax/expressions.cadenza" }}
   {{ render "partials/syntax/if_statement.cadenza" }}
+  {{ render "partials/syntax/expressions.cadenza" }}
   {{ render "partials/syntax/for_statement.cadenza" }}
   {{ render "partials/syntax/extends_statement.cadenza" }}
 {% endblock %}

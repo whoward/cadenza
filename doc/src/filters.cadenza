@@ -1,7 +1,7 @@
 {% extends "partials/base.cadenza" %}
-{% block title %}Filters{% endblock %}
+{% block title %}Standard Filters Reference{% endblock %}
 {% block content %}
-	<h1>Filters in Cadenza</h1>
+	<h1>Standard Filters Reference</h1>
 
 	{{ render "partials/filters/addslashes.cadenza" }}
 	{{ render "partials/filters/center.cadenza" }}

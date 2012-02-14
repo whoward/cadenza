@@ -1,20 +1,44 @@
 <section>
    <h2 id="if_statement">If Statements</h2>
-   <p>If statements provide you a way to include certain text in your output 
-     based on some kind of condition.  Here's what they look like:</p>
-     
-   <pre>
-     {{ "{% if model.errors.length > 0 %}" }}
-     You have {{ "{{ errors | length }}"}} errors in your code.
-     {{ "{% else %}"}}
-     You have no errors!
-     {{ "{% endif %}" }}
-   </pre>
+   <p>If statements are a kind of control tag that provide you a way to control
+   whether or not Cadenza will render a certain section of your template. To
+   determine this if statements must contain an <b>expression</b> which Cadenza
+   will evaluate.</p>
 
-   <p>You'll see the syntax is just the keyword 'if' followed by an expression.
-     Expression syntax is detailed <a href='#expressions'>here</a>.</p>
+   <p>If statements are constructed like this:</p>
      
-   <p>As shown above if statements can also <b>optionally</b> have an else 
-     block.  In these cases the content of the else block is output if the 
-     expression turns out to be false.</p>
+   <pre>{{ load "partials/syntax/examples/if-statements1.cadenza" | escape }}</pre>
+
+   <p>You can see that unlike most blocks the if statement can have two blocks
+   separated by an <tt>{{ "{% else %}" }}</tt> tag.  The else tag and the block
+   which follows it is optional, so the simplest form of an if statement looks
+   like this:</p>
+
+   <pre>{{ load "partials/syntax/examples/if-statements2.cadenza" | escape }}</pre>
+
+   <aside class='right'>
+      <div><b>true</b> and <b>false</b> are called boolean values.  This sounds 
+      complicated but really all what boolean values are is the result of 
+      evaluating some kind of logic.</div>
+      <br/>
+      <div>For example if I said "the current year is 1985" then my statement 
+      would be <b>false</b>, however, if I said "the year 1985 is in the past" 
+      then my statement would be <b>true</b>.</div>
+   </aside>
+
+   <p>Depending on how the expression evaluates the different blocks will be
+   rendered.  If the expression evaluates to true then the first block will
+   be rendered:</p>
+
+   {{ example "partials/syntax/examples/if-statements3.cadenza" }}
+
+   <p>When the expression evaluates to false then the second block will be 
+   rendered:</p>
+
+   {{ example "partials/syntax/examples/if-statements4.cadenza" }}
+
+   <p>Of course, if no <tt>{{ "{% else %}" }}</tt> block is provided and the
+   expression evaluates to false then nothing will be rendered at all:</p>
+
+   {{ example "partials/syntax/examples/if-statements5.cadenza" }}
 </section>

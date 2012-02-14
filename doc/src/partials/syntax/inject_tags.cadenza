@@ -1,0 +1,42 @@
+<section>
+  <h2 id="inject">Inject tags</h2>
+
+  <p>Inject tags allow you to insert variables into your template and optionally
+  apply some filters to them before they are injected.  An inject tag generally
+  looks something like this:</p>
+    
+  {% code_example %}{{ "{{ name | upper }}" }}{% end %}
+
+  <p>In this example the variable named "name" is injected into the text but is 
+  first converted to upper case by using the "upper" filter.  Filters are 
+  entirely optional, meaning that the most basic inject tag looks like this:</p>
+    
+  {% code_example %}{{ "{{ name }}" }}{% end %}
+
+  <p>When you do want to use a filter just insert a pipe character <tt>|</tt>
+  and then give the name of your filter.  If you're wondering what filters are
+  available then you can have a look at the <a href='filters.html'>standard filter
+  reference</a>.  When using Cadenza, programmers can also write custom filters
+  for you to use, for information about writing custom filters consult the
+  <a href='reference.html'>programmer's reference</a>.</p>
+
+  <p>Some filters take a list of <b>parameters</b> which change the way they
+  work.  When providing parameters add a colon <tt>:</tt> to the end of your 
+  filter name and then give your parameters separated by commas <tt>,</tt>.
+  Here's some examples: </p>
+  
+  {{ example "partials/syntax/examples/inject2.cadenza" }}
+
+  <p>Variables also sometimes come in the form of a function, which means that
+  each time you call them you may get a different result.  These variables are
+  called <b>functional variables</b>.  Functional variables can also take a list
+  of parameters which can further modify the result.  For example, the <tt>load</tt>
+  function will insert the text from another file without rendering it:</p>
+
+  {{ example "partials/syntax/examples/inject3.cadenza" }}
+
+  <p>For a full list of the functional variables you can use have a look at the
+  <a href='variables.html'>standard functional variables reference</a>.  You can
+  also define your own functional variables in Cadenza, see the 
+  <a href='reference.html'>programmer's reference</a> for details.</p>
+</section>

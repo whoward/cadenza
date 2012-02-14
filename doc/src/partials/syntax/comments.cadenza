@@ -1,12 +1,12 @@
 <section>
    <h2 id="comments">Comments</h2>  
 
-   <p>You can insert comments into your templates by placing them between
-     a left curly brace followed by a number sign '&#123;#' and a number
-     sign followed by a right curly brace '#&#125;'.  The comment doesn't show 
-     up in the output at all!  Here's what it looks like:</p>
+   <p>You can insert comments into your templates by placing them between a left 
+   curly brace followed by a number sign <tt>{{"{#"}}</tt> and a number sign 
+   followed by a right curly brace <tt>{{"#}"}}</tt>.  The comment doesn't show 
+   up in the output at all!</p>
 
-   <pre>
-     {{ "{# This is a comment in my template #}" }}
-   </pre>
+   <p>Here's an example of comments:</p>
+
+   {{ example "partials/syntax/examples/comment.cadenza" }}
 </section>

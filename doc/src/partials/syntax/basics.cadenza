@@ -1,0 +1,28 @@
+<section>
+    <h2>Basics</h2>
+    <p>Cadenza primarily uses two kinds of tags to mark up it's content as a 
+    template.</p>
+
+    <p>The first kind is used to inject some kind of text into your output 
+    document.  These are called <b>inject tags</b> and always start with
+    a double left curly bracket <tt>{{"{{"}}</tt> and end with a double right 
+    curly bracket <tt>{{"}}"}}</tt>.  The stuff that comes between the brackets 
+    defines what you want to inject into your document.  We will discuss 
+    <a href='#inject'>Inject Tags</a> more later.</p>
+
+    <p>The second kind of tag is called a <b>control tag</b>.  These tags are used to 
+    control the path Cadenza takes to render your template.</p>
+
+    <aside>We use the word <b>render</b> to talk about the process Cadenza takes
+    to write your output document from a template.</aside>
+
+    <p>Control tags always start with a single curly bracket <tt>{</tt> followed 
+    by a percent symbol <tt>%</tt>, making it look like this: <tt>{{"{%"}}</tt>.  Like inject tags, control tags end with the
+    opposite of what they start with: a percent symbol followed by a right curly
+    bracket: <tt>{{"%}"}}</tt>.</p>
+
+    <p>Some control tags come in pairs or even triplets - there's a lot of 
+    different kinds!  These control tags form what we call a <b>block</b>, which
+    will render differently depending on how the template is set up.  Don't worry,
+    we will go into more detail in later sections.</p>
+</section>

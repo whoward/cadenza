@@ -1,0 +1,6 @@
+Hello world! This template demonstrates the use of comments.  As you can see -
+there is nothing rendered between this paragraph and the next.
+
+{# This is my comment, it won't appear in the output #}
+
+Yes, nothing at all - no comments or anything.

@@ -113,7 +113,36 @@ a, a:visited {
    width: 800px;
    min-height: 600px;
    margin: 110px auto 30px auto;
-   text-align: left;
+   text-align: justify;
+}
+
+tt {
+   display: inline-block;
+   padding: 2px;
+   background-color: #DDD;
+   border: 1px solid #AAA;
+}
+
+aside {
+   float: right;
+   background-color: #DDD;
+   padding: 10px;
+   margin: 5px 15px;
+   border: 1px solid #AAA;
+   max-width: 300px;
+}
+
+
+.left {
+   float: left;
+}
+
+.right {
+   float: right;
+}
+
+.clear {
+   clear: both;
 }
 
 nav {
@@ -147,6 +176,19 @@ nav ul {
 nav ul li {
    list-style: none;
    line-height: 175%;
+}
+
+pre.source, pre.rendered {
+   display: inline-block;
+   vertical-align: top;
+
+   background-color: #CCC;
+   border: 1px solid #AAA;
+   padding: 10px;
+}
+
+pre.source {
+   margin-right: 20px;
 }
 
 table {

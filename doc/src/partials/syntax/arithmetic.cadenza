@@ -1,23 +1,18 @@
 <section>
    <h2 id="arithmetic">Arithmetic</h2>
-   <p>For any argument that can use numbers you can always substitute arithmetic 
-     expressions in.</p>
-     
-   <h3>Example: inject statements</h3>
-   <pre>
-     {{ "{{ 123 + 456 }}" }} produces {{ 123 + 456 }}
-     {{ "{{ 1 + 2 * 3 - 4 / 5 }}" }} produces {{ 1 + 2 * 3 - 4 / 5 }}
-     {{ "{{ (1 + 2) * ((3 - 4) / 5) }}" }} produces {{ (1 + 2) * ((3 - 4) / 5) }}
-     {{ '{{ "a" * 3 }}' }} produces {{ "a" * 3 }}
-     {{ "{{ alphabet.length - 1 }}" }} produces {{ alphabet.length - 1 }} 
-   </pre>
+   <p>When you need to you can perform arithmetic operations on your constants
+   and variables.  You can add using the plus symbol <tt>+</tt>, subtract using
+   the minus symbol <tt>-</tt>, multiply using the star symbol <tt>*</tt> and 
+   divide using the slash symbol <tt>/</tt>.</p>
 
-   <h3>Example: filter arguments</h3>
-   <pre>
-     {{ '{{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 20 + 5 }}' }}
-         
-     produces
-         
-     {{ "Lorem ipsum dolor sit amet, consectetur adipisicing elit" | wordwrap: 20 + 5 }}
-   </pre>
+   <p>Arithmetic is evaluated using the standard order of operations for
+   mathematics (Brackets, Divison & Multiplication, Addition & Subtraction).</p>
+    
+    <p>Here's an example of some arithmetic being used in inject tags:</p>
+    {{ example "partials/syntax/examples/arithmetic1.cadenza"}}
+
+    <p>It can be used anywhere you need to supply a value, for example, in filter
+    parameters:</p>
+
+    {{ example "partials/syntax/examples/arithmetic2.cadenza" }}
 </section>
