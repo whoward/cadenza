@@ -15,20 +15,29 @@ namespace :doc do
 
     # Set up the loading path for the filesystem loader
     Cadenza::BaseContext.add_loader Cadenza::FilesystemLoader.new(source_directory)
-    
-    # Compile all the cadenza files under the source directory
-    Dir.glob(File.join(source_directory, '*.cadenza')).each do |cadenza_file|
-      template_name = File.basename(cadenza_file, ".cadenza")
+    Cadenza::BaseContext.add_loader Cadenza::FilesystemLoader.new(File.join source_directory, "iframe")
 
-      input_file = File.expand_path("#{template_name}.cadenza", source_directory)
+    render = lambda do |filename|
+      template_name = File.basename(filename, ".cadenza")
 
-      output_file = File.expand_path("#{template_name}.html", output_directory)
+      indir = File.dirname(filename)
+      outdir = indir.gsub(source_directory, output_directory)
 
-      puts "rendering #{input_file} to #{output_file}"
+      FileUtils.mkdir_p(outdir)
+
+      output_file = File.expand_path("#{template_name}.html", outdir)
+
+      puts "rendering #{filename} to #{output_file}"
+
       File.open(output_file, "w") do |file|
-        file.write Cadenza.render(File.read(input_file), {})
+        file.write Cadenza.render(File.read(filename), {})
       end
     end
+    
+    # Compile all the cadenza files under the source directory
+    Dir[File.join(source_directory, '*.cadenza')].each {|file| render.call(file) }
+    
+    Dir[File.join(source_directory, 'iframe', '*.cadenza')].each {|file| render.call(file) }
   end
 
 end

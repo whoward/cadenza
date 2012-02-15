@@ -1,0 +1,5 @@
+{% extends "partials/layout.cadenza" %}
+{% block title %}Home page{% endblock %}
+{% block content %}
+Hi! Welcome to my web page!
+{% endblock %}

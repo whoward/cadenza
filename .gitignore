@@ -1,5 +1,5 @@
 Gemfile.lock
 doc/plugin/*
-doc/manual/*.html
+doc/manual/*
 doc/.yardb/*
 .rspec

@@ -64,11 +64,17 @@ h3 {
    margin: 20px 0px;
 }
 
+h4 {
+   margin-bottom: 0;
+   padding-bottom: 3px;
+   border-bottom: 1px solid black;
+}
+
 a, a:visited {
   color: blue;
 }
 
-.example {
+.example, .example-without-label {
    border: 1px solid #BBB;
    border-radius: 10px;
    padding: 20px;
@@ -143,6 +149,20 @@ tt {
    border: 1px solid #AAA;
 }
 
+dt {
+   display: inline-block;
+   padding: 4px;
+   background-color: #DDD;
+   border: 1px solid #AAA;
+
+   margin-top: 10px;
+   margin-bottom: 3px;
+}
+
+dd {
+   margin-left: 20px;
+}
+
 aside {
    float: right;
    background-color: #DDD;
@@ -198,16 +218,19 @@ nav ul li {
    line-height: 175%;
 }
 
-pre.source, pre.rendered {
+pre.source, pre.rendered, iframe.rendered {
+   background-color: white;
    display: inline-block;
    vertical-align: top;
+   max-width: 310px;
+   overflow-x: auto;
+}
 
+pre.source, pre.rendered {
    background-color: #CCC;
    border: 1px solid #AAA;
    padding: 10px;
    margin: 0;
-   max-width: 310px;
-   overflow-x: auto;
 }
 
 pre.source {

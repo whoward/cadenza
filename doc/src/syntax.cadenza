@@ -27,5 +27,5 @@
   {{ render "partials/syntax/if_statement.cadenza" }}
   {{ render "partials/syntax/expressions.cadenza" }}
   {{ render "partials/syntax/for_statement.cadenza" }}
-  {{ render "partials/syntax/extends_statement.cadenza" }}
+  {{ render "partials/syntax/template-inheritance.cadenza" }}
 {% endblock %}

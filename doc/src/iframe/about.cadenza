@@ -1,0 +1,6 @@
+{% extends "partials/layout.cadenza" %}
+{% block title %}About me{% endblock %}
+{% block content %}
+I'm a software developer at (insert company here), you can email me at foo@example.com
+{% endblock %}
+{% block footer %}please don't spam me{% endblock %}

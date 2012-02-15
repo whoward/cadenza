@@ -7,22 +7,12 @@
    <p>"For statements" allow you to continually output some text for every 
    element in a list. Here's what for statements look like:</p>
      
-   {% code_example %}
-     <ol>
-     {{ "{% for error in errors %}" }}
-       <li>{{ "{{ error }}" }}</li>
-     {{ "{% endfor %}" }}
-     </ol>
-   {% end %}
+   <pre>{{ load "partials/syntax/examples/for-statements1.cadenza" | escape }}</pre>
 
    <p>You can see here that "for statements" are blocks, just like "if statements"
    are.  The general syntax for writing a "for statement" is:
 
-   <pre>
-      {{ "{% for x in y %}" }}
-          ...
-      {{ "{% endfor %}" }}
-   </pre>
+   <pre>{{ load "partials/syntax/examples/for-statements2.cadenza" | escape }}</pre>
 
    <p><b>"Y"</b> is a variable we call the <b>Enumerable</b>.  The enumerable
    should be some kind of object which <i>contains</i> or can <i>generate</i>.
