@@ -1,1 +1,2 @@
 {{ alphabet | join: " " }}
+{{ alphabet | join: "." }}

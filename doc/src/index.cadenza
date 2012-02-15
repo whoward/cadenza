@@ -14,7 +14,9 @@
    <section>
       <h2>Using Cadenza: for Designers</h2>
       <p>How you use Cadenza will ultimately be determined by whoever has set
-      up your environment.  </p>
+      up your environment.  The best place to start is having a look at the
+      <a href='syntax.html'>syntax guide</a> to get an idea.  Also, you can try
+      out cadenza at any point <a href='live.html'>here</a>.</p>
    </section>
 
    <section>
@@ -33,18 +35,13 @@
       simplest way is via the <tt>Cadenza#render</tt> method.  Here's an example
       in your IRB console:</p>
 
-      Ruby:
-      <pre>
-> require 'rubygems'
-> require 'cadenza'
-> Cadenza.render "Hello {{ "{{name}}" }}!", :name => "World"
-=> "Hello World!"
-> Cadenza.render "Hello {{ "{{name}}" }}!", :name => "from Cadenza"
-=> "Hello from Cadenza!"</pre>
+      <div class='example'>
+         <pre class='source' style='max-width:100%;'>{{ load "partials/index/ruby-example.cadenza" }}</pre>
+      </div>
 
       <p>Pretty simple, eh?</p>
 
-      <p>Thats the basics.  From here you'll probably want to have at the
+      <p>Thats the basics.  From here you'll probably want to have a look at the
       <a href='reference.html'>reference</a> pages to get more of an understanding
       of Cadenza.</p>
 

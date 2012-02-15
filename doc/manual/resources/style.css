@@ -237,6 +237,16 @@ pre.source {
    margin-right: 20px;
 }
 
+/* parameter lists */
+
+dl.parameters {
+   margin: 0;
+   position: relative;
+   top: -15px;
+}
+
+/* tables */
+
 table {
    border-collapse: collapse;
 }

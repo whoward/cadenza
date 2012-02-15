@@ -1,7 +1,19 @@
 <section>
-   <h2>center "len" ["padding string"=" "]</h2>
+   <h2>center</h2>
+
+   <h3>Parameters</h3>
+   <dl class='parameters'>
+      <dt>length</dt>
+      <dd>total width of the string you want to center your text in</dd>
+
+      <dt>padding (optional: default = " ")</dt>
+      <dd>the character you want to use for the padding<dd>
+   </dl>
+
    <h3>Description</h3>
-   Centers a string in a string of length <b>len</b>.  If the string is longer than <b>len</b> no extra padding will 
-   be added.  <b>padding string</b> specifies which string shall be used to center the string.
+   Centers a string in a string of length <b>length</b>.  If the string is 
+   longer than <b>length</b> no extra padding will be added.  <b>padding 
+   string</b> specifies which string shall be used to center the string.
+   
    {{ example "partials/filters/examples/center.cadenza" }}
 </section>

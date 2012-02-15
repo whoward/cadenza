@@ -1,5 +1,12 @@
 <section>
-   <h2>date ["format"="%F"]</h2>
+   <h2>date</h2>
+
+   <h3>Parameters</h3>
+   <dl class='parameters'>
+      <dt>format (optional: default = "%F")</dt>
+      <dd>The format of the date string</dd>
+   </dl>
+
    <h3>Description</h3>
    Formats a date value according to the <b>format</b>.  The <b>format</b> uses strftime, common to many
    languages - such as PHP.  See the documentation <a href='http://php.net/manual/en/function.strftime.php'>there</a>

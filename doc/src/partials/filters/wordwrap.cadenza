@@ -1,7 +1,19 @@
 <section>
-   <h2>wordwrap "number" ["separator"="&lt;br/&gt;"]</h2>
+   <h2>wordwrap</h2>
+
+   <h3>Parameters</h3>
+   <dl class='parameters'>
+      <dt>number</dt>
+      <dd>the maximum width the text will go to in columns before inserting a separator</dd>
+
+      <dt>separator (optional: default = "&lt;br/&gt;")</dt>
+      <dd>the string used to separate lines</dd>
+   </dl>
+
    <h3>Description</h3>
-   Takes long text and forces a line break every <b>number</b> of given characters.  The type of line break is specified
-   by the optional <b>separator</b>.  Gives a nice column effect, very useful on courier fonts.
+   Takes long text and forces a line break every <b>number</b> of given 
+   characters.  The type of line break is specified by the optional 
+   <b>separator</b>.  Gives a nice column effect, very useful on courier fonts.
+
    {{ example "partials/filters/examples/wordwrap.cadenza" }}
 </section>

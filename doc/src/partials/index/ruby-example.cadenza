@@ -1,0 +1,6 @@
+> require 'rubygems'
+> require 'cadenza'
+> Cadenza.render "Hello {{name}}!", :name => "World"
+=> "Hello World!"
+> Cadenza.render "Hello {{name}}!", :name => "from Cadenza"
+=> "Hello from Cadenza!"

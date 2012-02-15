@@ -1,5 +1,9 @@
 <section>
    <h2>escape</h2>
+
+   <h3>Parameters</h3>
+   <tt>None</tt>
+
    <h3>Description</h3>
    Performs HTML escaping on the value.  Specifically replaces &, ", <, and > with their HTML special character equivalents.
    {{ example "partials/filters/examples/escape.cadenza" }}
