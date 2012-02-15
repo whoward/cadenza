@@ -2,9 +2,5 @@
    <h2>length</h2>
    <h3>Description</h3>
    Returns the length of a value
-   <h3>Example:</h3>
-   <pre>
-{{ '{{ "abc" | length }}' }}  produces {{ "abc" | length }}
-{{ '{{ alphabet | length }}' }}  produces {{ alphabet | length }}
-   </pre>
+   {{ example "partials/filters/examples/length.cadenza" }}
 </section>

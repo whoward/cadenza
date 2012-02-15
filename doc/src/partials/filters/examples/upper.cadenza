@@ -1,0 +1,1 @@
+{{ "this was all lower case" | upper }}

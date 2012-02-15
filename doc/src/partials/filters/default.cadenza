@@ -2,11 +2,5 @@
    <h2>default "default_value"</h2>
    <h3>Description</h3>
    Uses the <b>default_value</b> passed instead of the value is nil, empty or evaluates to false. 
-   <h3>Example:</h3>
-   <pre>
-{{ '{{ nil | default: "Not defined" }}' }} produces {{ nil | default: "Not defined" }}
-{{ '{{ "" | default: "Not defined" }}' }} produces {{ "" | default: "Not defined" }}
-{{ '{{ empty_list | default: "Not defined" }}' }} produces {{ empty_list | default: "Not defined" }}
-{{ '{{ "abc" | default: "Not defined" }}' }} produces {{ "abc" | default: "Not defined" }}
-   </pre>
+   {{ example "partials/filters/examples/default.cadenza" }}
 </section>

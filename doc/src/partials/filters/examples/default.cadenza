@@ -1,0 +1,4 @@
+{{ nil | default: "Not defined" }}
+{{ "" | default: "Not defined" }}
+{{ empty_list | default: "Not defined" }}
+{{ "abc" | default: "Not defined" }}

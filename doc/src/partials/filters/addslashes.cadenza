@@ -2,9 +2,5 @@
    <h2>addslashes</h2>
    <h3>Description</h3>
    Adds C style backslashes before quotes.  Usually used for CSV output, not for JavaScript.
-   <h3>Example:</h3>
-   <pre>
-&#123;&#123; "'abc'" | addslashes &#125;&#125; produces {{ "'abc'" | addslashes }}
-&#123;&#123; '"abc"' | addslashes &#125;&#125; produces {{ '"abc"' | addslashes }}
-   </pre>
+   {{ example "partials/filters/examples/addslashes.cadenza" }}
 </section>

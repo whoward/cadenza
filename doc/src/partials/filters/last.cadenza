@@ -2,8 +2,5 @@
    <h2>last</h2>
    <h3>Description</h3>
    Returns the last element of a list
-   <h3>Example:</h3>
-   <pre>
-{{ '{{ alphabet | last }}' }}  produces {{ alphabet | last }}
-   </pre>
+   {{ example "partials/filters/examples/last.cadenza" }}
 </section>

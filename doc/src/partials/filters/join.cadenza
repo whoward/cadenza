@@ -2,8 +2,5 @@
    <h2>join "glue"</h2>
    <h3>Description</h3>
    Joins together every element of a list with a <b>glue</b> string.
-   <h3>Example:</h3>
-   <pre>
-{{ '{{ alphabet | join: "" }}' }} produces "{{ alphabet | join: " " }}"
-   </pre>
+   {{ example "partials/filters/examples/join.cadenza" }}
 </section>

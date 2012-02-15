@@ -3,10 +3,5 @@
    <h3>Description</h3>
    Centers a string in a string of length <b>len</b>.  If the string is longer than <b>len</b> no extra padding will 
    be added.  <b>padding string</b> specifies which string shall be used to center the string.
-   <h3>Example:</h3>
-   <pre>
-{{ '{{ "hello" | center: 4 }}'}} produces "{{ "hello" | center: 4 }}"
-{{ '{{ "hello" | center: 20 }}'}} produces "{{ "hello" | center: 20 }}"
-{{ '{{ "hello" | center: 20, "-" }}'}} produces "{{ "hello" | center: 20, "-" }}"
-   </pre>
+   {{ example "partials/filters/examples/center.cadenza" }}
 </section>

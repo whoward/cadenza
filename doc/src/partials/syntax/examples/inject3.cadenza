@@ -1,1 +1,1 @@
-{{ load "partials/lorem-ipsum.cadenza" | escape | wordwrap: 75 }}
+{{ load "partials/lorem-ipsum.cadenza" | wordwrap: 75 }}

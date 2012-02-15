@@ -2,8 +2,5 @@
    <h2>escape</h2>
    <h3>Description</h3>
    Performs HTML escaping on the value.  Specifically replaces &, ", <, and > with their HTML special character equivalents.
-   <h3>Example:</h3>
-   <pre>
-&#123;&#123; 'foo "bar" &lt;baz&gt;' | escape &#125;&#125; produces {{ 'foo "bar" <baz>' | escape | escape }}
-   </pre>
+   {{ example "partials/filters/examples/escape.cadenza" }}
 </section>

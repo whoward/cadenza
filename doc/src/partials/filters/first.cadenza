@@ -2,8 +2,5 @@
    <h2>first</h2>
    <h3>Description</h3>
    Returns the first element of a list
-   <h3>Example:</h3>
-   <pre>
-{{ '{{ alphabet | first }}' }}  produces {{ alphabet | first }}
-   </pre>
+   {{ example "partials/filters/examples/first.cadenza" }}
 </section>
