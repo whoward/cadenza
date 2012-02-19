@@ -1,0 +1,9 @@
+{% filter escape %}
+<h1>Some title</h1>
+<p>Since this is passed through the 
+"escape" filter the < and > characters 
+will be converted to &gt; and &lt; 
+as you would expect them to if 
+passed through an inject tag with 
+the "escape" filter.</p>
+{% end %}

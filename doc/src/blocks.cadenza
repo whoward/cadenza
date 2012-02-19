@@ -1,0 +1,7 @@
+{% extends "partials/base.cadenza" %}
+{% block title %}Standard Blocks Reference{% endblock %}
+{% block content %}
+  <h1>Standard Blocks Reference</h1>
+
+  {{ render "partials/blocks/filter.cadenza" }}
+{% endblock %}
