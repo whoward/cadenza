@@ -1,0 +1,15 @@
+<section>
+   <h2>load</h2>
+   
+   <h3>Parameters</h3>
+   <dl class='parameters'>
+      <dt>filename</dt>
+      <dd>The path to the file you want to load</dd>
+   </dl>
+
+   <h3>Description</h3>
+   Loads the given filename and injects it into the rendered template without
+   performing any parsing or rendering.
+
+   {{ example "partials/variables/examples/load.cadenza" }}
+</section>

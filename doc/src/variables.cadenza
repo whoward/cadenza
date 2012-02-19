@@ -2,4 +2,7 @@
 {% block title %}Functional Variables Reference{% endblock %}
 {% block content %}
   <h1>Functional Variables Reference</h1>
+
+  {{ render "partials/variables/load.cadenza" }}
+  {{ render "partials/variables/render.cadenza" }}
 {% endblock %}
