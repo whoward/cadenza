@@ -2,4 +2,10 @@
 {% block title %}Programmer's Reference{% endblock %}
 {% block content %}
    <h1>Programmer's Reference</h1>
+
+   {{ render "partials/reference/introduction.cadenza" }}
+   {{ render "partials/reference/context.cadenza" }}
+   {{ render "partials/reference/parsing.cadenza" }}
+
+   {{ render "partials/reference/custom.cadenza" }}
 {% endblock %}

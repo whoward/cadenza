@@ -12,7 +12,7 @@ module Cadenza
   class Parser < Racc::Parser
 
 module_eval(<<'...end cadenza.y/module_eval...', 'cadenza.y', 149)
-attr_reader :lexer, :container_name
+attr_reader :lexer
 
 def initialize(options={})
   @lexer = options.fetch(:lexer, Cadenza::Lexer.new)

@@ -1,0 +1,1 @@
+context.assign :foo, "some value for foo"

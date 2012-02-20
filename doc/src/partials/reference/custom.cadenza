@@ -1,0 +1,8 @@
+<section>
+   <h2>Writing custom compiler components</h2>
+   <p style='color:red;font-size:1.2em;'>Heads up: until Cadenza reaches v1.0.0 
+   the component API is still flexible any may be subject to change.  However,
+   the current version should be mostly stable and any changes should be minor.</p>
+
+   <p>TODO - write this section.</p>
+</section>

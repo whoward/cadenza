@@ -1,0 +1,17 @@
+<section>
+   <h2>Parsing</h2>
+
+   <p>Parsing is the process of converting an input template into an Abstract
+   Syntax Tree and is managed by the <tt>Cadenza::Lexer</tt> and 
+   <tt>Cadenza::Parser</tt> classes.  To parse a template call <tt>#parse</tt> on
+   the parser object like this:</p>
+
+   <pre>{{ load "partials/reference/examples/parsing.cadenza" }}</pre>
+
+   <p>By default constructing the Parser object will have it use a new instance
+   of <tt>Cadenza::Lexer</tt> to process the input but by passing the
+   <tt>:lexer</tt> option to the constructor you can use any custom lexer 
+   instead:</p>
+
+   <pre>{{ load "partials/reference/examples/parsing2.cadenza" }}</pre>
+</section>

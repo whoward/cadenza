@@ -1,0 +1,5 @@
+# returns the value of the variable named "foo"
+context.lookup "foo"
+
+# returns the value of the variable named "foo" for the value of the variable "bar"
+context.lookup "foo.bar"

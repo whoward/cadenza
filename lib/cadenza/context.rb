@@ -27,12 +27,15 @@ module Cadenza
          push initial_scope
       end
 
+      # creates a new instance of the context with the stack, loaders, filters,
+      # functional variables and blocks shallow copied.
       def clone
          copy = super
          copy.stack = stack.dup
          copy.loaders = loaders.dup
          copy.filters = filters.dup
          copy.statements = statements.dup
+         #TODO: copy the blocks too
 
          copy
       end
@@ -53,6 +56,8 @@ module Cadenza
 
       # TODO: symbolizing strings is slow so consider symbolizing here to improve
       # the speed of the lookup method (its more important than push)
+      # TODO: since you can assign with the #assign method then make the scope
+      # variable optional (assigns an empty hash)
       def push(scope)
          @stack.push(scope)
       end

@@ -1,0 +1,8 @@
+# now "bar" will be returned when you call context.lookup("foo")
+context.push :foo => "bar"
+
+# now "baz" will be returned when you call context.lookup("foo")
+context.push :foo => "baz"
+
+# and again "bar" is returned when "foo" is looked up
+context.pop

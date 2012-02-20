@@ -1,0 +1,20 @@
+<section>
+   <h2>Introduction</h2>
+   <p>Cadenza is a template compiler composed of three parts: a lexer, parser
+   and renderer.  All three parts were designed to be interchangeable so you 
+   could write a replacement for any of these which should integrate with the
+   others seamlessly.</p>
+
+   <p>The lexer takes an input file and converts it into a list of useful tokens
+   which the parser can use.  The parser will in turn convert these tokens into 
+   an Abstract Syntax Tree (AST) which can be used by the renderer.  The renderer
+   finally uses a Context and an AST to create the rendered template.</p>
+
+   <div style='text-align: center;'><img src='resources/stack.png'/></div>
+
+   <p>Cadenza includes a standard stack of lexer/parser/renderer classes which
+   is what is used in the shorthand rendering method <tt>Cadenza#render</tt>. This
+   reference will cover the standard compiler stack and later will cover writing
+   custom compiler components in the <a href='#custom'>custom components</a>
+   section.</p>
+</section>

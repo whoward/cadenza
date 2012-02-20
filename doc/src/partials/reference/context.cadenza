@@ -1,0 +1,49 @@
+<section>
+   <h2>Contexts</h2>
+   <p>Contexts are managed by the <tt>Cadenza::Context</tt> class contain all 
+   the variable information used when rendering the template, including:</p>
+
+   <!-- TODO: linkify these -->
+   <ul>
+      <li>Variables</li>
+      <li>Functional Variables</li>
+      <li>Filters</li>
+      <li>Blocks</li>
+      <li>Loaders</li>
+   </ul>
+
+   <p>Cadenza includes a constant named <tt>Cadenza::BaseContext</tt> which was 
+   intended, as a convention, to be cloned each time you want to render a 
+   template.  Of course, for maximum control, you do not have to do this.</p>
+
+   <p>The purpose of this convention is to allow other developers to mix in their 
+   own filters, blocks, loaders, etc. to provide more power to your templates.  
+   For example a gem which mixes Cadenza and Ruby on Rails would likely define a
+   number of Rails specific filters, variables, etc.</p>
+
+   <h3>Variables</h3>
+   <p>Variables are defined on a <tt>Cadenza::Context</tt> through the context's
+   variable stack, accessible through the <tt>#stack</tt> method.  Each level of
+   the stack is referred to as a <b>scope</b>.  When looking up variables 
+   Cadenza inspects the stack from the top to the bottom.</p>
+
+   <p>To retrieve the value of a variable given it's name (named it's <b>identifier</b>)
+   you can use the <tt>#lookup</tt> method.  Be sure to include any dots if the 
+   identifier uses dot notation to refer to sub-objects:</p>
+
+   <pre>{{ load "partials/reference/examples/context.cadenza" }}</pre>
+
+   <p>If the variable couldn't be looked up then <tt>#lookup</tt> will return
+   <tt>nil</tt>.</p>
+
+   <p>Values can also be assigned to the top of the stack by using the 
+   <tt>#assign</tt>, method:</p>
+
+   <pre>{{ load "partials/reference/examples/context2.cadenza" }}</pre>
+
+   <p>To add and removes scopes from the variable stack you can call the
+   <tt>#push</tt> and <tt>#pop</tt> methods:</p>
+
+   <pre>{{ load "partials/reference/examples/context3.cadenza" }}</pre>
+
+</section>
