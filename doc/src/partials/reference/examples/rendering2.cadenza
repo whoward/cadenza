@@ -1,0 +1,2 @@
+# renders the document using a clone of Cadenza's BaseContext object (the suggested approach)
+renderer.render(document, Cadenza::BaseContext.clone)

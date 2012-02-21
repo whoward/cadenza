@@ -1,0 +1,7 @@
+# you likely won't have to do this yourself, the renderer usually uses this
+# behavior internally to facilitate template inheritance.
+
+context = Cadenza::BaseContext.clone
+blocks = [Cadenza::BlockNode.new(:foo), Cadenza::BlockNode.new(:bar)]
+
+renderer.render(document, context, blocks)
