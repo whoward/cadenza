@@ -1,19 +1,21 @@
-<h3>Blocks</h3>
+<section>
+   <h2>Contexts: Blocks</h2>
 
-<p>You can define blocks by calling the context object's <tt>#define_block</tt> 
-method with the name of the block and an object which responds to <tt>#call</tt>, 
-such as a <tt>Proc</tt>, <tt>lambda</tt> or a <tt>block</tt>.</p>
+   <p>You can define blocks by calling the context object's <tt>#define_block</tt> 
+   method with the name of the block and an object which responds to <tt>#call</tt>, 
+   such as a <tt>Proc</tt>, <tt>lambda</tt> or a <tt>block</tt>.</p>
 
-<pre>{{ load "partials/reference/examples/context-blocks.cadenza" }}</pre>
+   <pre>{{ load "partials/reference/examples/context-blocks.cadenza" }}</pre>
 
-<p>When evaluating the block the passed callable object will be called with
-a variable number of arguments.  The first argument will always be the context
-object.  The second argument will be an Array of Node objects which are the 
-block's parsed children, it is up to the callable to render these as it sees fit.
-The remaining arguments will be the parameters the block is being evaluated with.</p>
+   <p>When evaluating the block the passed callable object will be called with
+   a variable number of arguments.  The first argument will always be the context
+   object.  The second argument will be an Array of Node objects which are the 
+   block's parsed children, it is up to the callable to render these as it sees fit.
+   The remaining arguments will be the parameters the block is being evaluated with.</p>
 
-<p>To evaluate a block call the <tt>#evaluate_block</tt> method on the context
-object, passing the name of the block, an array of nodes (the block's children),
-and an array of the parameters for it:</p>
+   <p>To evaluate a block call the <tt>#evaluate_block</tt> method on the context
+   object, passing the name of the block, an array of nodes (the block's children),
+   and an array of the parameters for it:</p>
 
-<pre>{{ load "partials/reference/examples/context-blocks2.cadenza" }}</pre>
+   <pre>{{ load "partials/reference/examples/context-blocks2.cadenza" }}</pre>
+</section>

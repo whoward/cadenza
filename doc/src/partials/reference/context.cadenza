@@ -19,10 +19,4 @@
    own filters, blocks, loaders, etc. to provide more power to your templates.  
    For example a gem which mixes Cadenza and Ruby on Rails would likely define a
    number of Rails specific filters, variables, etc.</p>
-
-   {{ render "partials/reference/context-variables.cadenza" }}
-   {{ render "partials/reference/context-functional-variables.cadenza" }}
-   {{ render "partials/reference/context-filters.cadenza" }}
-   {{ render "partials/reference/context-blocks.cadenza" }}
-   {{ render "partials/reference/context-loaders.cadenza" }}
 </section>

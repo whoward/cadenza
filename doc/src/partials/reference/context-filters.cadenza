@@ -1,17 +1,19 @@
-<h3>Filters</h3>
+<section>
+   <h2>Contexts: Filters</h2>
 
-<p>You can define filters by calling the context object's <tt>#define_filter</tt> 
-method with the name of the filter and an object which responds to <tt>#call</tt>, 
-such as a <tt>Proc</tt>, <tt>lambda</tt> or a <tt>block</tt>.</p>
+   <p>You can define filters by calling the context object's <tt>#define_filter</tt> 
+   method with the name of the filter and an object which responds to <tt>#call</tt>, 
+   such as a <tt>Proc</tt>, <tt>lambda</tt> or a <tt>block</tt>.</p>
 
-<pre>{{ load "partials/reference/examples/context-filters.cadenza" }}</pre>
+   <pre>{{ load "partials/reference/examples/context-filters.cadenza" }}</pre>
 
-<p>When evaluating the filter the passed callable object will be called with
-a variable number of arguments.  The first argument will always be the input
-string object.  The remaining arguments will be the parameters the filter is 
-being evaluated with.</p>
+   <p>When evaluating the filter the passed callable object will be called with
+   a variable number of arguments.  The first argument will always be the input
+   string object.  The remaining arguments will be the parameters the filter is 
+   being evaluated with.</p>
 
-<p>To evaluate a filter call the <tt>#evaluate_filter</tt> method on the context
-object, passing the name of the filter and an array of the parameters for it:</p>
+   <p>To evaluate a filter call the <tt>#evaluate_filter</tt> method on the context
+   object, passing the name of the filter and an array of the parameters for it:</p>
 
-<pre>{{ load "partials/reference/examples/context-filters2.cadenza" }}</pre>
+   <pre>{{ load "partials/reference/examples/context-filters2.cadenza" }}</pre>
+</section>

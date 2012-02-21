@@ -4,10 +4,17 @@
    <h1>Programmer's Reference</h1>
 
    {{ render "partials/reference/introduction.cadenza" }}
+
    {{ render "partials/reference/context.cadenza" }}
+   {{ render "partials/reference/context-variables.cadenza" }}
+   {{ render "partials/reference/context-functional-variables.cadenza" }}
+   {{ render "partials/reference/context-filters.cadenza" }}
+   {{ render "partials/reference/context-blocks.cadenza" }}
+   {{ render "partials/reference/context-loaders.cadenza" }}
+
    {{ render "partials/reference/lexing.cadenza" }}
    {{ render "partials/reference/parsing.cadenza" }}
    {{ render "partials/reference/rendering.cadenza" }}
-
+   
    {{ render "partials/reference/custom.cadenza" }}
 {% endblock %}
