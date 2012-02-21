@@ -1,0 +1,2 @@
+# calls the "foo" filter proc with "abc" and 123 as the arguments
+context.evaluate_filter :foo, ["abc", 123]

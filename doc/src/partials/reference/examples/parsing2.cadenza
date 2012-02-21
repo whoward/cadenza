@@ -1,1 +1,1 @@
-Cadenza::Parser.new(:lexer => MyCustomParser.new).parse "Hello {{ x }}!!"
+Cadenza::Parser.new(:lexer => CustomLexer.new).parse "Hello {{ x }}!!"

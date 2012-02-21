@@ -1,0 +1,17 @@
+<section>
+   <h2>Lexing</h2>
+
+   <p>Lexing is the process of converting an input file's text into a stream of
+   tokens.  Most users won't have to concern themselves with Lexing since the 
+   parser will manage constructing and using the lexer.</p>
+
+   <p>A token is an array which has two elements in it.  The first element is the
+   type of the token and the second will be an instance of <tt>Cadenza::Token</tt>,
+   which describes the value of a token.</p>
+
+   <p>The lexer has an input stream assigned to it by using the <tt>#source=</tt>
+   method.  From here tokens are parsed from the input by continually calling
+   <tt>#next_token</tt> on the lexer.  When there are no more tokens to be 
+   retrieved from the input a token <tt>[false, false]</tt> will be returned
+   instead.</p>
+</section>

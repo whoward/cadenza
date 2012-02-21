@@ -1,0 +1,3 @@
+# should return the file's text (unparsed) or nil if the template couldn't
+# be found.
+context.load_source "path/to/template.cadenza"

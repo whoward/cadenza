@@ -1,0 +1,3 @@
+# should return an AST for the given template if the template was found, or
+# nil otherwise
+context.load_template "path/to/template.cadenza"

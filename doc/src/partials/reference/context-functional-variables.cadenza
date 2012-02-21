@@ -1,0 +1,19 @@
+<h3>Functional Variables</h3>
+
+<p>You can define functional variables by calling the context object's
+<tt>#define_functional_variable</tt> method with the name of the variable and
+an object which responds to <tt>#call</tt>, such as a <tt>Proc</tt>, 
+<tt>lambda</tt> or a <tt>block</tt>.</p>
+
+<pre>{{ load "partials/reference/examples/context-fvar.cadenza" }}</pre>
+
+<p>When evaluating the variable the passed callable object will be called with
+a variable number of arguments.  The first argument will always be the context
+object.  The remaining arguments will be the parameters the variable is being
+evaluated with.</p>
+
+<p>To evaluate a functional variable call the <tt>#evaluate_functional_variable</tt>
+method on the context object, passing the name of the variable and an array of the
+parameters for it:</p>
+
+<pre>{{ load "partials/reference/examples/context-fvar2.cadenza" }}</pre>

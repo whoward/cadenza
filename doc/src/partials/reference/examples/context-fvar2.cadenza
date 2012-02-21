@@ -1,0 +1,2 @@
+# calls the "foo" variable proc with "abc" and 123 as the arguments
+context.evaluate_functional_variable :foo, ["abc", 123]

@@ -5,7 +5,9 @@
 
    {{ render "partials/reference/introduction.cadenza" }}
    {{ render "partials/reference/context.cadenza" }}
+   {{ render "partials/reference/lexing.cadenza" }}
    {{ render "partials/reference/parsing.cadenza" }}
+   {{ render "partials/reference/rendering.cadenza" }}
 
    {{ render "partials/reference/custom.cadenza" }}
 {% endblock %}

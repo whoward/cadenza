@@ -1,0 +1,3 @@
+# calls the "foo" block proc with "abc" and 123 as the arguments and
+# a text child node with "xyz" as it's content
+context.evaluate_filter :foo, [Cadenza::TextNode.new("xyz")], ["abc", 123]
