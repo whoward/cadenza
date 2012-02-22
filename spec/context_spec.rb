@@ -11,8 +11,8 @@ describe Cadenza::Context do
       Cadenza::Context.new.filters.should be_empty
    end
 
-   it "should start with an empty statement map" do
-      Cadenza::Context.new.statements.should be_empty
+   it "should start with an empty functional variable map" do
+      Cadenza::Context.new.functional_variables.should be_empty
    end
 
    it "should begin with whiny template loading disabled" do
@@ -36,11 +36,11 @@ describe Cadenza::Context do
       before do
          context.add_loader Cadenza::FilesystemLoader.new(fixture_filename "templates")
          context.define_filter(:upcase, &:upcase)
-         context.define_statement(:assign) {|context, name, value| context.assign(name, value) }
+         context.define_functional_variable(:assign) {|context, name, value| context.assign(name, value) }
 
          context.loaders.should have(1).item
          context.filters.should have(1).item
-         context.statements.should have(1).item
+         context.functional_variables.should have(1).item
       end
 
       it "should duplicate it's stack" do
@@ -61,13 +61,13 @@ describe Cadenza::Context do
          context.clone.filters[:upcase].should equal context.filters[:upcase]
       end
 
-      it "should duplicate it's statements" do
-         context.clone.statements.should_not equal context.statements
-         context.clone.statements.should == context.statements
+      it "should duplicate it's functional variables" do
+         context.clone.functional_variables.should_not equal context.functional_variables
+         context.clone.functional_variables.should == context.functional_variables
       end
 
-      it "should not duplicate the statement definitions" do
-         context.clone.statements[:assign].should equal context.statements[:assign]
+      it "should not duplicate the functional variables definitions" do
+         context.clone.functional_variables[:assign].should equal context.functional_variables[:assign]
       end
 
       it "should duplicate it's loader list" do
@@ -95,7 +95,7 @@ describe Cadenza::Context do
       let(:context) { Cadenza::Context.new(scope) }
 
       before do
-         context.define_statement(:assign, &assign)
+         context.define_functional_variable(:assign, &assign)
       end
 
       it "should retrieve the value of an identifier" do
@@ -173,29 +173,29 @@ describe Cadenza::Context do
       end
    end
 
-   context "#define_statement" do
+   context "#define_functional_variable" do
       let(:context) { Cadenza::Context.new }
 
       before do
-         context.define_statement(:assign) {|context, name, value| context.assign(name, value) }
+         context.define_functional_variable(:assign) {|context, name, value| context.assign(name, value) }
       end
 
-      it "should allow defining a statement method" do
-         context.statements[:assign].should be_a(Proc)
+      it "should allow defining a functional variable" do
+         context.functional_variables[:assign].should be_a(Proc)
       end
 
-      it "should evaluate a statement" do
+      it "should evaluate a functional variable" do
          context.lookup("foo").should be_nil
          
-         context.evaluate_statement(:assign, ["foo", 123])
+         context.evaluate_functional_variable(:assign, ["foo", 123])
 
          context.lookup("foo").should == 123
       end
 
-      it "should raise a StatementNotDefinedError if the statement is not defined" do
+      it "should raise a FunctionalVariableNotDefinedError if the functional variable is not defined" do
          lambda do
-            context.evaluate_statement(:foo, [])
-         end.should raise_error Cadenza::StatementNotDefinedError
+            context.evaluate_functional_variable(:foo, [])
+         end.should raise_error Cadenza::FunctionalVariableNotDefinedError
       end
    end
 

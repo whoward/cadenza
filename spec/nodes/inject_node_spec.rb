@@ -78,8 +78,8 @@ describe Cadenza::InjectNode do
     let(:add_one_node) { Cadenza::FilterNode.new("add", [Cadenza::ConstantNode.new(1)]) }
 
     before do
-      context.define_statement(:ctx) {|context| context.inspect } # output's the inspected context
-      context.define_statement(:load) {|context, template| template == "foo" ? "bar" : "baz" } # fake load method
+      context.define_functional_variable(:ctx) {|context| context.inspect } # output's the inspected context
+      context.define_functional_variable(:load) {|context, template| template == "foo" ? "bar" : "baz" } # fake load method
 
       context.define_filter(:floor, &:floor)
       context.define_filter(:upper, &:upcase)

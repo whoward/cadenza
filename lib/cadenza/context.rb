@@ -6,20 +6,20 @@ module Cadenza
    class FilterNotDefinedError < StandardError
    end
 
-   class StatementNotDefinedError < StandardError
+   class FunctionalVariableNotDefinedError < StandardError
    end
 
    class BlockNotDefinedError < StandardError
    end
 
    class Context
-      attr_accessor :stack, :filters, :statements, :blocks, :loaders
+      attr_accessor :stack, :filters, :functional_variables, :blocks, :loaders
       attr_accessor :whiny_template_loading
 
       def initialize(initial_scope={})
          @stack = []
          @filters = {}
-         @statements = {}
+         @functional_variables = {}
          @blocks = {}
          @loaders = []
          @whiny_template_loading = false
@@ -34,7 +34,7 @@ module Cadenza
          copy.stack = stack.dup
          copy.loaders = loaders.dup
          copy.filters = filters.dup
-         copy.statements = statements.dup
+         copy.functional_variables = functional_variables.dup
          copy.blocks = blocks.dup
 
          copy
@@ -76,14 +76,14 @@ module Cadenza
          filter.call(*params)
       end
 
-      def define_statement(name, &block)
-         @statements[name.to_sym] = block
+      def define_functional_variable(name, &block)
+         @functional_variables[name.to_sym] = block
       end
 
-      def evaluate_statement(name, params=[])
-         statement = @statements[name.to_sym]
-         raise StatementNotDefinedError.new("undefined statement '#{name}'") if statement.nil?
-         statement.call([self] + params)
+      def evaluate_functional_variable(name, params=[])
+         var = @functional_variables[name.to_sym]
+         raise FunctionalVariableNotDefinedError.new("undefined functional variable '#{name}'") if var.nil?
+         var.call([self] + params)
       end
 
       def define_block(name, &block)
@@ -181,8 +181,8 @@ module Cadenza
          # if the identifier is a callable method then call that
          return scope.send(sym_identifier) if scope.respond_to?(sym_identifier)
 
-         # if a statement is defined matching the identifier name then return that
-         return @statements[sym_identifier] if @statements.has_key?(sym_identifier)
+         # if a functional variable is defined matching the identifier name then return that
+         return @functional_variables[sym_identifier] if @functional_variables.has_key?(sym_identifier)
          
          nil
       end

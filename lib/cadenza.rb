@@ -48,7 +48,7 @@ Dir[File.join File.dirname(__FILE__), 'cadenza', 'filters', '*.rb'].each do |fil
    Cadenza::BaseContext.instance_eval File.read(filename)
 end
 
-Dir[File.join File.dirname(__FILE__), 'cadenza', 'statements', '*.rb'].each do |filename|
+Dir[File.join File.dirname(__FILE__), 'cadenza', 'functional_variables', '*.rb'].each do |filename|
    Cadenza::BaseContext.instance_eval File.read(filename)
 end
 

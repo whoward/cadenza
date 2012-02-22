@@ -16,15 +16,15 @@ push({
   'lorem_ipsum' => "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
 })
 
-define_statement :example do |context, template|
+define_functional_variable :example do |context, template|
   result = "<div class='example'>"
 
   result << "<pre class='source'>"
-  result << CGI::escapeHTML(context.evaluate_statement("load", [template]))
+  result << CGI::escapeHTML(context.evaluate_functional_variable("load", [template]))
   result << "</pre>"
 
   result << "<pre class='rendered'>"
-  result << CGI::escapeHTML(context.evaluate_statement("render", [template]))
+  result << CGI::escapeHTML(context.evaluate_functional_variable("render", [template]))
   result << "</pre>"
 
   result << "</div>"
