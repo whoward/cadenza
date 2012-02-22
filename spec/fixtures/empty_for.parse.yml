@@ -1,0 +1,10 @@
+# {% for foo in bar %}{% endfor %}
+DocumentNode:
+  children:
+    - ForNode:
+         iterator:
+            VariableNode:
+               value: "foo"
+         iterable:
+            VariableNode:
+               value: "bar"

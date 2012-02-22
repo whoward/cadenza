@@ -1,7 +1,7 @@
 class Cadenza::Parser
 
 /* expect this many shift/reduce conflicts */
-expect 1
+expect 2
 
 rule
   target
@@ -93,14 +93,27 @@ rule
       }
     ;
 
+  for_tag
+    : STMT_OPEN FOR IDENTIFIER IN IDENTIFIER STMT_CLOSE { result = [val[2].value, val[4].value] }
+    ;
+
+  end_for_tag
+    : STMT_OPEN ENDFOR STMT_CLOSE
+    ;
+
+  /* this has a shift/reduce conflict but since Racc will shift in this case it is the correct behavior */
   for_block
-    : STMT_OPEN FOR IDENTIFIER IN IDENTIFIER STMT_CLOSE
-      { @stack.push DocumentNode.new } 
-      document
-      STMT_OPEN ENDFOR STMT_CLOSE
+    : for_tag end_for_tag
       {
-        iterator = VariableNode.new(val[2].value)
-        iterable = VariableNode.new(val[4].value)
+        iterator = VariableNode.new(val[0][0])
+        iterable = VariableNode.new(val[0][1])
+        
+        result = ForNode.new(iterator, iterable, [])      
+      }
+    | for_tag { @stack.push DocumentNode.new } document end_for_tag
+      {
+        iterator = VariableNode.new(val[0][0])
+        iterable = VariableNode.new(val[0][1])
         
         result = ForNode.new(iterator, iterable, @stack.pop.children)
       }
@@ -114,7 +127,7 @@ rule
     : STMT_OPEN ENDBLOCK STMT_CLOSE
     ;
 
-  /* this has a shift/reduce conflict but since Bison will shift in this case it is the correct behavior */
+  /* this has a shift/reduce conflict but since Racc will shift in this case it is the correct behavior */
   block_block
     : block_tag end_block_tag { result = BlockNode.new(val[0], []) }
     | block_tag { @stack.push DocumentNode.new } document end_block_tag { result = BlockNode.new(val[0], @stack.pop.children) }
