@@ -6,6 +6,7 @@
    {{ render "partials/reference/introduction.cadenza" }}
 
    {{ render "partials/reference/context.cadenza" }}
+   {{ render "partials/reference/context-configuration.cadenza" }}
    {{ render "partials/reference/context-variables.cadenza" }}
    {{ render "partials/reference/context-functional-variables.cadenza" }}
    {{ render "partials/reference/context-filters.cadenza" }}

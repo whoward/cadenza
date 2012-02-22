@@ -1,4 +1,7 @@
 require 'cgi'
+
+whiny_template_loading = true
+
 #
 # This hash is the context that will be used for all the documentation pages
 #

@@ -1,0 +1,13 @@
+
+class CustomLexer
+
+   def source=(io_object)
+      # reset any internal variables and prepare to read from the io object
+   end
+
+   def next_token
+      # return the next token from the input, if there are no more tokens
+      # then return [false, false]
+   end
+
+end

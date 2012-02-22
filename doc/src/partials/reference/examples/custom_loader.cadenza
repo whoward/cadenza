@@ -1,0 +1,11 @@
+class CustomLoader
+   def load_source(template_name)
+      # return the unparsed source of the given template name or nil if this 
+      # loader can't match a file for the name
+   end
+
+   def load_template(template_name)
+      # return the parsed AST for the given template name or nil if this loader
+      # can't match a file for the name
+   end
+end

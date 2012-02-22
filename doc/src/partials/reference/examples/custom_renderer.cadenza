@@ -1,0 +1,14 @@
+class CustomRenderer
+   def initialize(io_object)
+      # assign the IO object given, when rendering the template should write
+      # directly to this IO object.
+   end
+
+   def render(document_node, context, blocks=[])
+      # navigate the AST (document_node) and render the output to the IO object,
+      # the context can be used to look up values for variables, filters, etc.
+
+      # When doing template inheritance blocks will be passed as the third parameter
+      # which are expected to be rendered in place of blocks matching the same name
+   end
+end

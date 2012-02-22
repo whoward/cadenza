@@ -1,0 +1,14 @@
+class CustomParser
+
+   def initialize(options={})
+      # create a new parser object.  The options has may contain :lexer which
+      # you should use to retrieve tokens, or create a new lexer if it is not
+      # present.
+   end
+
+   def parse(source)
+      # assign the source to your lexer and parse all tokens from it.  Return
+      # an AST from this method.
+   end
+
+end

@@ -1,0 +1,16 @@
+<section>
+   <h2>Contexts: Configuration</h2>
+
+   <p>All configuration for Cadenza is stored on the context object.  As such 
+   any configuration work you want to do when integrating Cadenza should be 
+   done on the <tt>Cadenza::BaseContext</tt> object (again, simply a suggestion,
+   for maximum control you can always construct your own Context object and
+   configure it from there).</p>
+
+   <dl class='parameters'>
+      <dt>whiny_template_loading (boolean: default = false)</dt>
+      <dd>When loading a template using the regular method <tt>#load_template</tt>
+      instead of the bang method <tt>#load_template!</tt> Cadenza will still raise
+      a <tt>Cadenza::TemplateNotFoundError</tt> when no template could be loaded.</dd>
+   </dl>
+</section>
