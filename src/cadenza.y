@@ -1,5 +1,8 @@
 class Cadenza::Parser
 
+/* expect this many shift/reduce conflicts */
+expect 1
+
 rule
   target
     : document
@@ -103,12 +106,18 @@ rule
       }
     ;
 
+  block_tag
+    : STMT_OPEN BLOCK IDENTIFIER STMT_CLOSE { result = val[2].value }
+    ;
+
+  end_block_tag
+    : STMT_OPEN ENDBLOCK STMT_CLOSE
+    ;
+
+  /* this has a shift/reduce conflict but since Bison will shift in this case it is the correct behavior */
   block_block
-    : STMT_OPEN BLOCK IDENTIFIER STMT_CLOSE
-      { @stack.push DocumentNode.new }
-      document
-      STMT_OPEN ENDBLOCK STMT_CLOSE
-      { result = BlockNode.new(val[2].value, @stack.pop.children) }
+    : block_tag end_block_tag { result = BlockNode.new(val[0], []) }
+    | block_tag { @stack.push DocumentNode.new } document end_block_tag { result = BlockNode.new(val[0], @stack.pop.children) }
     ;
 
   generic_block
