@@ -239,7 +239,7 @@ describe Cadenza::Context do
       let(:context) { Cadenza::Context.new }
       let(:template_path) { fixture_filename("templates/fake") }
       let(:filesystem_loader) { Cadenza::FilesystemLoader.new(template_path) }
-      let(:template) { FixtureSyntaxTree.new("text.parse.yml").document }
+      let(:template) { FixtureSyntaxTree.new("text/basic.yml").document }
 
       it "should start with an empty list of loaders" do
          context.loaders.should == []
