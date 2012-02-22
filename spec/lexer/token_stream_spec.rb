@@ -59,19 +59,21 @@ describe Cadenza::Lexer, 'token parsing' do
   end
 
   it "should scan keywords" do
-    tokens_for("{%if%}").should       == [:STMT_OPEN, :IF, :STMT_CLOSE, false]
-    tokens_for("{%else%}").should     == [:STMT_OPEN, :ELSE, :STMT_CLOSE, false]
-    tokens_for("{%endif%}").should    == [:STMT_OPEN, :ENDIF, :STMT_CLOSE, false]
-    tokens_for("{%for%}").should      == [:STMT_OPEN, :FOR, :STMT_CLOSE, false]
-    tokens_for("{%in%}").should       == [:STMT_OPEN, :IN, :STMT_CLOSE, false]
-    tokens_for("{%endfor%}").should   == [:STMT_OPEN, :ENDFOR, :STMT_CLOSE, false]
-    tokens_for("{%block%}").should    == [:STMT_OPEN, :BLOCK, :STMT_CLOSE, false]
-    tokens_for("{%endblock%}").should == [:STMT_OPEN, :ENDBLOCK, :STMT_CLOSE, false]
-    tokens_for("{%extends%}").should  == [:STMT_OPEN, :EXTENDS, :STMT_CLOSE, false]
-    tokens_for("{%end%}").should      == [:STMT_OPEN, :END, :STMT_CLOSE, false]
-    tokens_for("{%and%}").should      == [:STMT_OPEN, :AND, :STMT_CLOSE, false]
-    tokens_for("{%or%}").should       == [:STMT_OPEN, :OR, :STMT_CLOSE, false]
-    tokens_for("{%not%}").should      == [:STMT_OPEN, :NOT, :STMT_CLOSE, false]
+    tokens_for("{%if%}").should        == [:STMT_OPEN, :IF, :STMT_CLOSE, false]
+    tokens_for("{%else%}").should      == [:STMT_OPEN, :ELSE, :STMT_CLOSE, false]
+    tokens_for("{%endif%}").should     == [:STMT_OPEN, :ENDIF, :STMT_CLOSE, false]
+    tokens_for("{%for%}").should       == [:STMT_OPEN, :FOR, :STMT_CLOSE, false]
+    tokens_for("{%in%}").should        == [:STMT_OPEN, :IN, :STMT_CLOSE, false]
+    tokens_for("{%endfor%}").should    == [:STMT_OPEN, :ENDFOR, :STMT_CLOSE, false]
+    tokens_for("{%block%}").should     == [:STMT_OPEN, :BLOCK, :STMT_CLOSE, false]
+    tokens_for("{%endblock%}").should  == [:STMT_OPEN, :ENDBLOCK, :STMT_CLOSE, false]
+    tokens_for("{%extends%}").should   == [:STMT_OPEN, :EXTENDS, :STMT_CLOSE, false]
+    tokens_for("{%end%}").should       == [:STMT_OPEN, :END, :STMT_CLOSE, false]
+    tokens_for("{%and%}").should       == [:STMT_OPEN, :AND, :STMT_CLOSE, false]
+    tokens_for("{%or%}").should        == [:STMT_OPEN, :OR, :STMT_CLOSE, false]
+    tokens_for("{%not%}").should       == [:STMT_OPEN, :NOT, :STMT_CLOSE, false]
+    tokens_for("{%unless%}").should    == [:STMT_OPEN, :UNLESS, :STMT_CLOSE, false]
+    tokens_for("{%endunless%}").should == [:STMT_OPEN, :ENDUNLESS, :STMT_CLOSE, false]
   end
 
   it "should ignore whitespace inside of statements" do

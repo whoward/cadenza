@@ -77,4 +77,12 @@
       </tr>
     </tbody>
   </table>
+
+  <p>When you want to invert the logic in your expressions you can use the 
+  <tt>not</tt> keyword.  If you want to invert the whole expression you can use
+  the <tt>unless</tt> keyword instead of the <tt>if</tt> keyword.</p>
+
+  <pre>{{ load "partials/syntax/examples/expressions3.cadenza" }}</pre>
+
+
 </section>

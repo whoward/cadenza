@@ -1,0 +1,13 @@
+# {% unless foo %}{% else %}bar{% endunless %}
+DocumentNode:
+  children:
+    - IfNode:
+         expression:
+            BooleanInverseNode:
+               expression:
+                  VariableNode:
+                     value: "foo"
+         true_children: []
+         false_children:
+            - TextNode:
+               text: "bar"

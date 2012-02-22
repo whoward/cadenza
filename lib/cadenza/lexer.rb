@@ -163,7 +163,7 @@ module Cadenza
         when text = @scanner.scan(/<=/)
           token(:OP_LEQ, text)
 
-        when text = @scanner.scan(/(if|else|endif|for|in|endfor|block|endblock|extends|end|and|or|not)[\W]/)
+        when text = @scanner.scan(/(if|unless|else|endif|endunless|for|in|endfor|block|endblock|extends|end|and|or|not)[\W]/)
           keyword = text[0..-2]
           @scanner.pos -= 1
 
