@@ -1,73 +1,121 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Cadenza::BooleanNode do
-   it "should equal a node with the same operands and operator" do
-      variable = Cadenza::VariableNode.new("x")
-      constant = Cadenza::ConstantNode.new(1)
 
-      Cadenza::BooleanNode.new(variable, "==", constant).should == Cadenza::BooleanNode.new(variable, "==", constant)
+   subject { Cadenza::BooleanNode }
+
+   context "equality" do
+      it "should equal a node with the same operands and operator" do
+         variable = Cadenza::VariableNode.new("x")
+         constant = Cadenza::ConstantNode.new(1)
+
+         node_a = subject.new(variable, "==", constant)
+         node_b = subject.new(variable, "==", constant)
+
+         node_a.should == node_b
+      end
+
+      it "should not equal a node with a different operator" do
+         variable = Cadenza::VariableNode.new("x")
+         constant = Cadenza::ConstantNode.new(1)
+
+         node_a = subject.new(variable, "==", constant)
+         node_b = subject.new(variable, "!=", constant)
+
+         node_a.should_not == node_b
+      end
+
+      it "should not equal a node with a different left side" do
+         variable_a = Cadenza::VariableNode.new("x")
+         variable_b = Cadenza::VariableNode.new("y")
+         constant   = Cadenza::ConstantNode.new(1)
+
+         node_a = subject.new(variable_a, "==", constant)
+         node_b = subject.new(variable_b, "==", constant)
+
+         node_a.should_not == node_b
+      end
+
+      it "should not equal a node with a different right side" do
+         variable = Cadenza::VariableNode.new("x")
+         constant_a = Cadenza::ConstantNode.new(1)
+         constant_b = Cadenza::ConstantNode.new(2)
+
+         node_a = subject.new(variable, "==", constant_a)
+         node_b = subject.new(variable, "==", constant_b)
+
+         node_a.should_not == node_b
+      end
    end
 
-   it "should not equal a node with a different operator" do
-      variable = Cadenza::VariableNode.new("x")
-      constant = Cadenza::ConstantNode.new(1)
+   context "#implied_globals" do
+      it "should use the union of it's left and right node's implied globals for it's own implied globals" do
+         variable_a = Cadenza::VariableNode.new("a")
+         variable_b = Cadenza::VariableNode.new("b")
 
-      Cadenza::BooleanNode.new(variable, "==", constant).should_not == Cadenza::BooleanNode.new(variable, "!=", constant)
+         boolean_a = subject.new(variable_a, "==", variable_b)
+         boolean_b = subject.new(variable_a, "==", variable_a)
+
+         boolean_a.implied_globals.should == %w(a b)
+         boolean_b.implied_globals.should == %w(a)
+      end
    end
 
-   it "should not equal a node with a different left side" do
-      variable_a = Cadenza::VariableNode.new("x")
-      variable_b = Cadenza::VariableNode.new("y")
-      constant   = Cadenza::ConstantNode.new(1)
+   context "#eval" do
+      let(:ten)     { Cadenza::ConstantNode.new(10) }
+      let(:twenty)  { Cadenza::ConstantNode.new(20) }
+      let(:context) { Cadenza::Context.new }
 
-      Cadenza::BooleanNode.new(variable_a, "==", constant).should_not == Cadenza::BooleanNode.new(variable_b, "==", constant)
-   end
+      let(:true_condition)  { subject.new(twenty, '>', ten) }
+      let(:false_condition) { subject.new(twenty, '<', ten) }
 
-   it "should not equal a node with a different right side" do
-      variable = Cadenza::VariableNode.new("x")
-      constant_a = Cadenza::ConstantNode.new(1)
-      constant_b = Cadenza::ConstantNode.new(2)
+      it "should evaluate equality operators" do
+         subject.new(ten, '==', twenty).eval(context).should be_false
+         subject.new(ten, '==', ten).eval(context).should be_true
+      end
 
-      Cadenza::BooleanNode.new(variable, "==", constant_a).should_not == Cadenza::BooleanNode.new(variable, "==", constant_b)
-   end
+      it "should evaluate inequality operators" do
+         subject.new(ten, '!=', twenty).eval(context).should be_true
+         subject.new(ten, '!=', ten).eval(context).should be_false
+      end
 
-   it "should use the union of it's left and right node's implied globals for it's own implied globals" do
-      variable_a = Cadenza::VariableNode.new("a")
-      variable_b = Cadenza::VariableNode.new("b")
+      it "should evaluate greater than or equal to operators" do
+         subject.new(ten,    '>=', twenty).eval(context).should be_false
+         subject.new(ten,    '>=', ten).eval(context).should be_true
+         subject.new(twenty, '>=', ten).eval(context).should be_true
+      end
 
-      boolean_a = Cadenza::BooleanNode.new(variable_a, "==", variable_b)
-      boolean_b = Cadenza::BooleanNode.new(variable_a, "==", variable_a)
+      it "should evaluate less than or equal to operators" do
+         subject.new(ten,    '<=', twenty).eval(context).should be_true
+         subject.new(ten,    '<=', ten).eval(context).should be_true
+         subject.new(twenty, '<=', ten).eval(context).should be_false         
+      end
 
-      boolean_a.implied_globals.should == %w(a b)
-      boolean_b.implied_globals.should == %w(a)
-   end
+      it "should evaluate less than operators" do
+         subject.new(ten,    '<', twenty).eval(context).should be_true
+         subject.new(ten,    '<', ten).eval(context).should be_false
+         subject.new(twenty, '<', ten).eval(context).should be_false         
+      end
 
-   it "should eval to the boolean value determined by the operator and operands" do
-      ten = Cadenza::ConstantNode.new(10)
-      twenty = Cadenza::ConstantNode.new(20)
+      it "should evaluate greater than operators" do
+         subject.new(ten,    '>', twenty).eval(context).should be_false
+         subject.new(ten,    '>', ten).eval(context).should be_false
+         subject.new(twenty, '>', ten).eval(context).should be_true         
+      end
 
-      context = Cadenza::Context.new
+      it "should evaluate 'and' conjunctions" do
+         subject.new(true_condition,  'and', true_condition).eval(context).should  be_true
+         subject.new(true_condition,  'and', false_condition).eval(context).should be_false
+         subject.new(false_condition, 'and', true_condition).eval(context).should  be_false
+         subject.new(false_condition, 'and', false_condition).eval(context).should be_false
+      end
 
-      Cadenza::BooleanNode.new(ten, '==', twenty).eval(context).should be_false
-      Cadenza::BooleanNode.new(ten, '==', ten).eval(context).should be_true
+      it "should evaluate 'or' conjunctions" do
+         subject.new(true_condition,  'or', true_condition).eval(context).should  be_true
+         subject.new(true_condition,  'or', false_condition).eval(context).should be_true
+         subject.new(false_condition, 'or', true_condition).eval(context).should  be_true
+         subject.new(false_condition, 'or', false_condition).eval(context).should be_false
+      end
 
-      Cadenza::BooleanNode.new(ten, '!=', twenty).eval(context).should be_true
-      Cadenza::BooleanNode.new(ten, '!=', ten).eval(context).should be_false
-
-      Cadenza::BooleanNode.new(ten,    '>=', twenty).eval(context).should be_false
-      Cadenza::BooleanNode.new(ten,    '>=', ten).eval(context).should be_true
-      Cadenza::BooleanNode.new(twenty, '>=', ten).eval(context).should be_true
-
-      Cadenza::BooleanNode.new(ten,    '<=', twenty).eval(context).should be_true
-      Cadenza::BooleanNode.new(ten,    '<=', ten).eval(context).should be_true
-      Cadenza::BooleanNode.new(twenty, '<=', ten).eval(context).should be_false
-
-      Cadenza::BooleanNode.new(ten,    '<', twenty).eval(context).should be_true
-      Cadenza::BooleanNode.new(ten,    '<', ten).eval(context).should be_false
-      Cadenza::BooleanNode.new(twenty, '<', ten).eval(context).should be_false
-
-      Cadenza::BooleanNode.new(ten,    '>', twenty).eval(context).should be_false
-      Cadenza::BooleanNode.new(ten,    '>', ten).eval(context).should be_false
-      Cadenza::BooleanNode.new(twenty, '>', ten).eval(context).should be_true
    end
 end

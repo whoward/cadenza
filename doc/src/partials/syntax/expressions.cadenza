@@ -48,8 +48,6 @@
     </tbody>
   </table>
 
-  <h3 style="color: red;">Everything until the end of the section is a lie! (for now)</h3>
-
   <p>If you want to use more than one term in an expression then you'll have to
   include a <b>conjunction</b>.  Conjunctions are words which describe what the 
   two terms must evaluate to to be true overall.</p>

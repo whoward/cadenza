@@ -14,7 +14,7 @@ rule
     | INTEGER    { result = ConstantNode.new(val[0].value) }
     | REAL       { result = ConstantNode.new(val[0].value) }
     | STRING     { result = ConstantNode.new(val[0].value) }
-    | '(' boolean_expression ')'  { result = val[1] }
+    | '(' logical_expression ')'  { result = val[1] }
     ;
 
   multiplicative_expression
@@ -39,9 +39,20 @@ rule
     | boolean_expression '<' additive_expression  { result = BooleanNode.new(val[0], "<", val[2]) }
     ;
 
+  inverse_expression
+    : boolean_expression
+    | NOT boolean_expression { result = BooleanInverseNode.new(val[1]) }
+    ;
+
+  logical_expression
+    : inverse_expression
+    | logical_expression AND inverse_expression { result = BooleanNode.new(val[0], "and", val[2]) }
+    | logical_expression OR inverse_expression { result = BooleanNode.new(val[0], "or", val[2]) }
+    ;
+
   parameter_list
-    : boolean_expression                     { result = [val[0]] }
-    | parameter_list ',' boolean_expression  { result = val[0].push(val[2]) }
+    : logical_expression                     { result = [val[0]] }
+    | parameter_list ',' logical_expression  { result = val[0].push(val[2]) }
     ;
 
   filter
@@ -55,9 +66,9 @@ rule
     ;
 
   inject_statement
-    : VAR_OPEN boolean_expression VAR_CLOSE
+    : VAR_OPEN logical_expression VAR_CLOSE
       { result = InjectNode.new(val[1]) }
-    | VAR_OPEN boolean_expression '|' filter_list VAR_CLOSE
+    | VAR_OPEN logical_expression '|' filter_list VAR_CLOSE
       { result = InjectNode.new(val[1], val[3]) }
     | VAR_OPEN IDENTIFIER parameter_list VAR_CLOSE 
       {
@@ -72,7 +83,7 @@ rule
     ;
 
   if_tag
-    : STMT_OPEN IF boolean_expression STMT_CLOSE
+    : STMT_OPEN IF logical_expression STMT_CLOSE
       {
         @stack.push DocumentNode.new
         result = val[2]

@@ -12,32 +12,38 @@ module Cadenza
          @left.implied_globals | @right.implied_globals
       end
     
-    def eval(context)
-      l = @left.eval(context)
-      r = @right.eval(context)
+      def eval(context)
+         l = @left.eval(context)
+         r = @right.eval(context)
 
-      case @operator
-         when '=='
-            return l == r
+         case @operator
+            when '=='
+               return l == r
 
-         when '!='
-            return l != r
+            when '!='
+               return l != r
 
-         when '>='
-            return l >= r
+            when '>='
+               return l >= r
 
-         when '<='
-            return l <= r
+            when '<='
+               return l <= r
 
-         when '>'
-            return l > r
+            when '>'
+               return l > r
 
-         when '<'
-            return l < r
+            when '<'
+               return l < r
 
-         else throw "undefined operator: #{@operator}"
+            when 'and'
+               return l && r
+
+            when 'or'
+               return l || r
+
+            else throw "undefined operator: #{@operator}"
+         end
       end
-    end
 
       def ==(rhs)
          @operator == rhs.operator and

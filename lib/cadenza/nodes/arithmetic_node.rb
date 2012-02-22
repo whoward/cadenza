@@ -1,4 +1,5 @@
 module Cadenza
+  #TODO: merge into BooleanNode and rename to OperationNode
   class ArithmeticNode
     attr_accessor :left, :right, :operator
 

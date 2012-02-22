@@ -1,0 +1,25 @@
+# result of {{ foo == 1 and bar > 3 }}
+DocumentNode:
+  children:
+    - InjectNode:
+        value:
+          BooleanNode:
+            operator: and
+            left:
+              BooleanNode:
+                operator: "=="
+                left:
+                  VariableNode:
+                    value: foo
+                right:
+                  ConstantNode:
+                    value: 1
+            right:
+              BooleanNode:
+                operator: ">"
+                left:
+                  VariableNode:
+                    value: "bar"
+                right:
+                  ConstantNode:
+                    value: 3

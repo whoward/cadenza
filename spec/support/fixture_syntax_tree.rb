@@ -26,6 +26,7 @@ private
       when "ForNode" then parse_for_node(node)
       when "BlockNode" then parse_block_node(node)
       when "GenericBlockNode" then parse_generic_block_node(node)
+      when "BooleanInverseNode" then parse_boolean_inverse_node(node)
       else raise "unknown type: #{type}"
     end
   end
@@ -115,6 +116,12 @@ private
     parameters = list_for_key(node, "parameters")
 
     Cadenza::GenericBlockNode.new(identifier, children, parameters)
+  end
+
+  def parse_boolean_inverse_node(node)
+    expression = node_for_key(node, "expression")
+
+    Cadenza::BooleanInverseNode.new(expression)
   end
 
 private
