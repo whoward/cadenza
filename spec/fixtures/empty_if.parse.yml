@@ -1,0 +1,9 @@
+# {% if foo %}{% endif %}
+DocumentNode:
+  children:
+    - IfNode:
+         expression:
+            VariableNode:
+               value: "foo"
+         true_children: []
+         false_children: []

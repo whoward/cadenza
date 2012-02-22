@@ -71,7 +71,7 @@ rule
       }
     ;
 
-  if_statement
+  if_tag
     : STMT_OPEN IF boolean_expression STMT_CLOSE
       {
         @stack.push DocumentNode.new
@@ -79,14 +79,28 @@ rule
       }
     ;
 
+  else_tag
+    : STMT_OPEN ELSE STMT_CLOSE { @stack.push DocumentNode.new }
+    ;
+
+  end_if_tag
+    : STMT_OPEN ENDIF STMT_CLOSE
+    ;
+
   if_block
-    : if_statement document STMT_OPEN ENDIF STMT_CLOSE
-      { 
-        result = IfNode.new(val[0], @stack.pop.children)
+    : if_tag end_if_tag { @stack.pop; result = IfNode.new(val[0]) }
+    | if_tag document end_if_tag { result = IfNode.new(val[0], @stack.pop.children) }
+    | if_tag else_tag document end_if_tag
+      {
+        false_children, true_children = @stack.pop.children, @stack.pop.children
+        result = IfNode.new(val[0], true_children, false_children)
       }
-    | if_statement document STMT_OPEN ELSE
-      { @stack.push DocumentNode.new }
-      STMT_CLOSE document STMT_OPEN ENDIF STMT_CLOSE
+    | if_tag document else_tag end_if_tag
+      {
+        false_children, true_children = @stack.pop.children, @stack.pop.children
+        result = IfNode.new(val[0], true_children, false_children)
+      }
+    | if_tag document else_tag document end_if_tag
       {
         false_children, true_children = @stack.pop.children, @stack.pop.children
         result = IfNode.new(val[0], true_children, false_children)
