@@ -35,7 +35,7 @@ module Cadenza
          copy.loaders = loaders.dup
          copy.filters = filters.dup
          copy.statements = statements.dup
-         #TODO: copy the blocks too
+         copy.blocks = blocks.dup
 
          copy
       end

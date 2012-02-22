@@ -78,6 +78,15 @@ describe Cadenza::Context do
       it "should not duplicate the loaders inside the list" do
          context.clone.loaders.first.should equal context.loaders.first
       end
+
+      it "should duplicate it's blocks list" do
+         context.clone.blocks.should_not equal context.blocks
+         context.clone.blocks.should == context.blocks
+      end
+
+      it "should not duplicate the blocks inside the list" do
+         context.clone.blocks.first.should equal context.blocks.first
+      end
    end
 
    context "#lookup" do
