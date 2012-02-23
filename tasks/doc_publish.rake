@@ -1,7 +1,7 @@
 
 namespace :doc do
    desc "Publishes documentation to your Github Pages"
-   task :publish => [:manual, :yard] do
+   task :publish => :manual do #[:manual, :yard] do
       require 'tmpdir'
       
       ROOT = File.expand_path("#{File.dirname(__FILE__)}/../")
@@ -10,19 +10,19 @@ namespace :doc do
       
       Dir.mktmpdir do |dir|
          FileUtils.cp_r("#{ROOT}/doc/manual", dir)
-         FileUtils.cp_r("#{ROOT}/doc/plugin", dir)
+         # FileUtils.cp_r("#{ROOT}/doc/plugin", dir)
 
          system "cd #{ROOT}"
          system "git checkout gh-pages"
          system "git rm -r manual"
-         system "git rm -r yard"
+         # system "git rm -r yard"
             
          FileUtils.rm_r("#{ROOT}/doc")
          FileUtils.cp_r("#{dir}/manual", "#{ROOT}/manual")
-         FileUtils.cp_r("#{dir}/plugin", "#{ROOT}/yard")
+         # FileUtils.cp_r("#{dir}/plugin", "#{ROOT}/yard")
 
          system "git add manual/*"
-         system "git add yard/*"
+         # system "git add yard/*"
 
          system "git commit -m 'publish new pages from #{current_branch}'"
          system "git push origin gh-pages"
