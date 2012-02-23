@@ -1,4 +1,36 @@
 require 'cgi'
+require 'pygments'
+
+def example(context, template)
+  result = "<div class='example'>"
+
+  result << "<pre class='source'>"
+  result << CGI::escapeHTML(context.evaluate_functional_variable("load", [template]))
+  result << "</pre>"
+
+  result << "<pre class='rendered'>"
+  result << CGI::escapeHTML(context.evaluate_functional_variable("render", [template]))
+  result << "</pre>"
+
+  result << "</div>"
+
+  result  
+end
+
+def code_example(context, nodes, parameters)
+  result = "<pre>"
+  nodes.each do |node|
+    result << CGI.escapeHTML(Cadenza::TextRenderer.render(node, context))
+  end
+  result << "</pre>"
+  result  
+end
+
+def ruby_example(context, template)
+  source = context.evaluate_functional_variable("load", [template])
+
+  Pygments.highlight(source, :lexer => "ruby")
+end
 
 whiny_template_loading = true
 
@@ -16,27 +48,7 @@ push({
   'lorem_ipsum' => "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
 })
 
-define_functional_variable :example do |context, template|
-  result = "<div class='example'>"
+define_functional_variable :example, &method(:example)
+define_functional_variable :ruby_example, &method(:ruby_example)
 
-  result << "<pre class='source'>"
-  result << CGI::escapeHTML(context.evaluate_functional_variable("load", [template]))
-  result << "</pre>"
-
-  result << "<pre class='rendered'>"
-  result << CGI::escapeHTML(context.evaluate_functional_variable("render", [template]))
-  result << "</pre>"
-
-  result << "</div>"
-
-  result
-end
-
-define_block :code_example do |context, nodes, parameters|
-  result = "<pre>"
-  nodes.each do |node|
-    result << CGI.escapeHTML(Cadenza::TextRenderer.render(node, context))
-  end
-  result << "</pre>"
-  result
-end
+define_block :code_example, &method(:code_example)

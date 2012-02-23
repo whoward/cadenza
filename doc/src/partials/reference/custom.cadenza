@@ -22,7 +22,7 @@
    <p>A new lexer must implement two methods to be useable in Cadenza: 
    <tt>#source=(io_object)</tt> and <tt>#next_token</tt></p>
 
-   <pre>{{ load "partials/reference/examples/custom_lexer.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/custom_lexer.cadenza" }}
 </section>
 
 <section>
@@ -45,7 +45,7 @@
    <p>Cadenza requires the parser have the same constructor as <tt>Cadenza::Parser</tt>
    and also requires it define the <tt>#parse</tt> method.</p>
 
-   <pre>{{ load "partials/reference/examples/custom_parser.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/custom_parser.cadenza" }}
 </section>
 
 <section>
@@ -58,7 +58,7 @@
    which will take care of some of the setup for you and make the subclass a bit
    cleaner.</p>
 
-   <pre>{{ load "partials/reference/examples/custom_renderer.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/custom_renderer.cadenza" }}
 </section>
 
 <section>
@@ -73,5 +73,5 @@
    for example in a database loader you could specify the template name like so:
    <tt>"template_id:135"</tt>.</p>
 
-   <pre>{{ load "partials/reference/examples/custom_loader.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/custom_loader.cadenza" }}
 </section>

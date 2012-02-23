@@ -5,7 +5,7 @@
    method with the name of the block and an object which responds to <tt>#call</tt>, 
    such as a <tt>Proc</tt>, <tt>lambda</tt> or a <tt>block</tt>.</p>
 
-   <pre>{{ load "partials/reference/examples/context-blocks.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context-blocks.cadenza" }}
 
    <p>When evaluating the block the passed callable object will be called with
    a variable number of arguments.  The first argument will always be the context
@@ -17,5 +17,5 @@
    object, passing the name of the block, an array of nodes (the block's children),
    and an array of the parameters for it:</p>
 
-   <pre>{{ load "partials/reference/examples/context-blocks2.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context-blocks2.cadenza" }}
 </section>

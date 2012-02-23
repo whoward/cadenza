@@ -237,6 +237,12 @@ pre.source {
    margin-right: 20px;
 }
 
+.highlight {
+   background-color: #272822;
+   padding: 3px 10px;
+   border-radius: 5px;
+}
+
 /* parameter lists */
 
 dl.parameters {

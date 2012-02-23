@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/whoward/Cadenza}
 
   s.summary = %q{Powerful text templating language similar to Smarty/Liquid/Django}
-  s.description = s.summary
 
   s.require_paths = ["lib"]
 
@@ -23,6 +22,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "racc", "~> 1.4.6"
   s.add_development_dependency "nokogiri-diff", "~> 0.1.0"
   s.add_development_dependency "yard"
+
+  s.add_development_dependency "pygments.rb"
 
   # to make testing more fun (if only it needed less configuration)
   s.add_development_dependency "guard"

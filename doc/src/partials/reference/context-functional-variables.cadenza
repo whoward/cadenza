@@ -6,7 +6,7 @@
    an object which responds to <tt>#call</tt>, such as a <tt>Proc</tt>, 
    <tt>lambda</tt> or a <tt>block</tt>.</p>
 
-   <pre>{{ load "partials/reference/examples/context-fvar.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context-fvar.cadenza" }}
 
    <p>When evaluating the variable the passed callable object will be called with
    a variable number of arguments.  The first argument will always be the context
@@ -17,5 +17,5 @@
    method on the context object, passing the name of the variable and an array of the
    parameters for it:</p>
 
-   <pre>{{ load "partials/reference/examples/context-fvar2.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context-fvar2.cadenza" }}
 </section>

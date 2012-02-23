@@ -9,20 +9,20 @@
    <p>Renderers must be instantiated with an IO object used for writing output
    to.  This IO object should already be opened and ready for writing.</p>
 
-   <pre>{{ load "partials/reference/examples/rendering.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/rendering.cadenza" }}
 
    <p>Once constructed the object can render an AST by calling the <tt>#render</tt>
    method with the AST and context.</p>
 
-   <pre>{{ load "partials/reference/examples/rendering2.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/rendering2.cadenza" }}
 
    <p>To facilitate template inheritance an array of <tt>Cadenza::BlockNode</tt>
    objects can be passed.</p>
 
-   <pre>{{ load "partials/reference/examples/rendering3.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/rendering3.cadenza" }}
 
    <p><tt>Cadenza::TextRenderer</tt> also features a class level shorthand to
    render a given AST and context to a string which will be returned</p>
 
-   <pre>{{ load "partials/reference/examples/rendering4.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/rendering4.cadenza" }}
 </section>

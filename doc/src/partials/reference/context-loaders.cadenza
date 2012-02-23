@@ -7,21 +7,21 @@
 
    <p>To add a loader onto the list you can call the <tt>#add_loader</tt> method.</p>
 
-   <pre>{{ render "partials/reference/examples/context-loaders.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context-loaders.cadenza" }}
 
    <p>To load the content of a file using the loaders you can call either the
    <tt>#load_source</tt> or <tt>#load_source!</tt> method on the context with the
    name of the template you want to load.  The bang version of the method will 
    raise an exception if the given template could not be loaded.</p>
 
-   <pre>{{ render "partials/reference/examples/context-loaders2.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context-loaders2.cadenza" }}
 
    <p>To load the parsed content of a file using the loader you can call either the
    <tt>#load_template</tt> or <tt>#load_template!</tt> in the same fashion as the
    <tt>#load_source</tt> methods.  These will return an AST if the template was 
    successfully loaded.</p>
 
-   <pre>{{ render "partials/reference/examples/context-loaders3.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context-loaders3.cadenza" }}
 
    <p>Cadenza includes the following loaders:</p>
 

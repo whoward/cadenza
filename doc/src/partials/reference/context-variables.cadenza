@@ -9,7 +9,7 @@
    you can use the <tt>#lookup</tt> method.  Be sure to include any dots if the 
    identifier uses dot notation to refer to sub-objects:</p>
 
-   <pre>{{ load "partials/reference/examples/context.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context.cadenza" }}
 
    <p>If the variable couldn't be looked up then <tt>#lookup</tt> will return
    <tt>nil</tt>.</p>
@@ -17,10 +17,10 @@
    <p>Values can also be assigned to the top of the stack by using the 
    <tt>#assign</tt>, method:</p>
 
-   <pre>{{ load "partials/reference/examples/context2.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context2.cadenza" }}
 
    <p>To add and removes scopes from the variable stack you can call the
    <tt>#push</tt> and <tt>#pop</tt> methods:</p>
 
-   <pre>{{ load "partials/reference/examples/context3.cadenza" }}</pre>
+   {{ ruby_example "partials/reference/examples/context3.cadenza" }}
 </section>
