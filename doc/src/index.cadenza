@@ -36,7 +36,7 @@
       in your IRB console:</p>
 
       <div class='example'>
-         <pre class='source' style='max-width:100%;'>{{ load "partials/index/ruby-example.cadenza" }}</pre>
+         {{ irb_example "partials/index/ruby-example.cadenza" }}
       </div>
 
       <p>Pretty simple, eh?</p>

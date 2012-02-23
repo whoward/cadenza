@@ -26,10 +26,18 @@ def code_example(context, nodes, parameters)
   result  
 end
 
-def ruby_example(context, template)
+def highlighted_example(context, template, lexer)
   source = context.evaluate_functional_variable("load", [template])
 
-  Pygments.highlight(source, :lexer => "ruby")
+  Pygments.highlight(source, :lexer => lexer)
+end
+
+def ruby_example(context, template)
+  highlighted_example context, template, "ruby"
+end
+
+def irb_example(context, template)
+  highlighted_example context, template, "irb"
 end
 
 whiny_template_loading = true
@@ -50,5 +58,6 @@ push({
 
 define_functional_variable :example, &method(:example)
 define_functional_variable :ruby_example, &method(:ruby_example)
+define_functional_variable :irb_example, &method(:irb_example)
 
 define_block :code_example, &method(:code_example)
