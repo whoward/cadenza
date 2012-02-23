@@ -35,9 +35,7 @@
       simplest way is via the <tt>Cadenza#render</tt> method.  Here's an example
       in your IRB console:</p>
 
-      <div class='example'>
-         {{ irb_example "partials/index/ruby-example.cadenza" }}
-      </div>
+      {{ irb_example "partials/index/ruby-example.cadenza" }}
 
       <p>Pretty simple, eh?</p>
 
