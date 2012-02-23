@@ -5,13 +5,13 @@
   apply some filters to them before they are injected.  An inject tag generally
   looks something like this:</p>
     
-  {% code_example %}{{ "{{ name | upper }}" }}{% end %}
+  {{ cadenza_example "partials/syntax/examples/inject0.cadenza" }}
 
   <p>In this example the variable named "name" is injected into the text but is 
   first converted to upper case by using the "upper" filter.  Filters are 
   entirely optional, meaning that the most basic inject tag looks like this:</p>
     
-  {% code_example %}{{ "{{ name }}" }}{% end %}
+  {{ cadenza_example "partials/syntax/examples/inject1.cadenza" }}
 
   <p>When you do want to use a filter just insert a pipe character <tt>|</tt>
   and then give the name of your filter.  If you're wondering what filters are
@@ -25,7 +25,7 @@
   filter name and then give your parameters separated by commas <tt>,</tt>.
   Here's some examples: </p>
   
-  {{ example "partials/syntax/examples/inject2.cadenza" }}
+  {{ rendering_example "partials/syntax/examples/inject2.cadenza" }}
 
   <p>Variables also sometimes come in the form of a function, which means that
   each time you call them you may get a different result.  These variables are
@@ -33,7 +33,7 @@
   of parameters which can further modify the result.  For example, the <tt>load</tt>
   function will insert the text from another file without rendering it:</p>
 
-  {{ example "partials/syntax/examples/inject3.cadenza" }}
+  {{ rendering_example "partials/syntax/examples/inject3.cadenza" }}
 
   <p>For a full list of the functional variables you can use have a look at the
   <a href='variables.html'>standard functional variables reference</a>.  You can

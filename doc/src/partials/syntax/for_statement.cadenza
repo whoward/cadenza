@@ -7,12 +7,12 @@
    <p>"For statements" allow you to continually output some text for every 
    element in a list. Here's what for statements look like:</p>
      
-   <pre>{{ load "partials/syntax/examples/for-statements1.cadenza" | escape }}</pre>
+   {{ cadenza_example "partials/syntax/examples/for-statements1.cadenza" }}
 
    <p>You can see here that "for statements" are blocks, just like "if statements"
    are.  The general syntax for writing a "for statement" is:
 
-   <pre>{{ load "partials/syntax/examples/for-statements2.cadenza" | escape }}</pre>
+   {{ cadenza_example "partials/syntax/examples/for-statements2.cadenza" }}
 
    <p><b>"Y"</b> is a variable we call the <b>Enumerable</b>.  The enumerable
    should be some kind of object which <i>contains</i> or can <i>generate</i>.
@@ -46,7 +46,7 @@
 
    <p>So, with these variables you could write a HTML table like this:</p>
 
-   <pre>{{ load "partials/syntax/examples/forloop.cadenza" | escape }}</pre>
+   {{ cadenza_example "partials/syntax/examples/forloop.cadenza" }}
 
    <p>Which will display like this:</p>
 

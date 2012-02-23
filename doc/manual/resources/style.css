@@ -94,6 +94,33 @@ a, a:visited {
    left: 20px;
 }
 
+.example .highlight {
+   margin-bottom: 10px;
+}
+
+.example .highlight:last-child {
+   margin-bottom: 0;
+}
+
+.example .highlight, .example-without-label .highlight {
+   display: inline-block;
+   vertical-align: top;
+   width: 310px;
+   max-width: 310px;
+   overflow-x: auto;
+}
+
+.example .highlight:first-child, .example-without-label .highlight:first-child {
+   margin-right: 20px;
+}
+
+.highlight {
+   background-color: #272822;
+   padding: 3px 10px;
+   border-radius: 5px;
+   color: white;
+}
+
 .ribbon-holder {
    position: fixed;
    right: 0px;
@@ -235,12 +262,6 @@ pre.source, pre.rendered {
 
 pre.source {
    margin-right: 20px;
-}
-
-.highlight {
-   background-color: #272822;
-   padding: 3px 10px;
-   border-radius: 5px;
 }
 
 /* parameter lists */

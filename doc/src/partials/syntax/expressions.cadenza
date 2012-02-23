@@ -7,7 +7,7 @@
   <p>An expression is made up of a list of terms, each of which has two values 
   which you are comparing using a symbol called a <b>comparator</b>.</p>
 
-  <pre>{{ load "partials/syntax/examples/expressions1.cadenza" }}</pre>
+  {{ cadenza_example "partials/syntax/examples/expressions1.cadenza" }}
 
   <p>Cadenza supports all of the following comparators:</p>
 
@@ -52,7 +52,7 @@
   include a <b>conjunction</b>.  Conjunctions are words which describe what the 
   two terms must evaluate to to be true overall.</p>
 
-  <pre>{{ load "partials/syntax/examples/expressions2.cadenza" }}</pre>
+  {{ cadenza_example "partials/syntax/examples/expressions2.cadenza" }}
 
   <p>Cadenza supports the following conjunctions:</p>
 
@@ -82,7 +82,7 @@
   <tt>not</tt> keyword.  If you want to invert the whole expression you can use
   the <tt>unless</tt> keyword instead of the <tt>if</tt> keyword.</p>
 
-  <pre>{{ load "partials/syntax/examples/expressions3.cadenza" }}</pre>
+  {{ cadenza_example "partials/syntax/examples/expressions3.cadenza" }}
 
 
 </section>

@@ -14,7 +14,7 @@
   <p>The extend tag is a control tag that has no block, all what you have to do
   is give it the filename of your parent template as a parameter, like so:</p>
 
-  <pre>{{ load "partials/syntax/examples/extends.cadenza" }}</pre>
+  {{ cadenza_example "partials/syntax/examples/extends.cadenza" }}
 
   <h3>Block tags</h3>
 
@@ -22,7 +22,7 @@
   block a name by passing it a variable name as a paremeter.  You can give it any
   name you want.</p>
 
-  <pre>{{ load "partials/syntax/examples/blocks.cadenza" | escape }}</pre>
+  {{ cadenza_example "partials/syntax/examples/blocks.cadenza" }}
 
   <p>In a child template the block wont be rendered at all but it's contents
   will be captured for use in the parent template.  In the parent template
@@ -33,25 +33,25 @@
   <h3>Example: Input documents</h3>
    
   <h4>partials/layout.cadenza</h4>
-  <pre>{{ load "iframe/partials/layout.cadenza" | escape }}</pre>
+  {{ cadenza_example "iframe/partials/layout.cadenza" }}
 
   <h4>home.cadenza</h4>
-  <pre>{{ load "iframe/home.cadenza" | escape }}</pre>
+  {{ cadenza_example "iframe/home.cadenza" }}
    
   <h4>about.cadenza</h4>
-  <pre>{{ load "iframe/about.cadenza" | escape }}</pre>
+  {{ cadenza_example "iframe/about.cadenza" }}
 
   <h3>Example: Rendered documents</h3>
 
   <h4>home.html</h4>
   <div class='example-without-label'>
-    <pre class='source'>{{ render "iframe/home.cadenza" | escape }}</pre>
+    {{ cadenza_example "iframe/home.cadenza" }}
     <iframe src="iframe/home.html" class='rendered'></iframe>
   </div>
 
   <h4>about.html</h4>
   <div class='example-without-label'>
-    <pre class='source'>{{ render "iframe/about.cadenza" | escape }}</pre>
+    {{ cadenza_example "iframe/about.cadenza" }}
     <iframe src="iframe/about.html" class='rendered'></iframe>
   </div>
 

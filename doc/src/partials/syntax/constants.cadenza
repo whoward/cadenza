@@ -8,11 +8,11 @@
      
    <h4>Numbers</h4>
    <p>Numbers are any integer or real.</p>
-   {{ example "partials/syntax/examples/numbers.cadenza" }}
+   {{ rendering_example "partials/syntax/examples/numbers.cadenza" }}
 
    <h4>Strings</h4>
    <p>Strings refer to a "string of characters", you can enter them in by wrapping
    your words and spaces with either a double quote <tt>"</tt> or single quote 
    <tt>'</tt>.</p>
-   {{ example "partials/syntax/examples/strings.cadenza" }}
+   {{ rendering_example "partials/syntax/examples/strings.cadenza" }}
 </section>

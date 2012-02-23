@@ -9,10 +9,10 @@
    mathematics (Brackets, Divison & Multiplication, Addition & Subtraction).</p>
     
     <p>Here's an example of some arithmetic being used in inject tags:</p>
-    {{ example "partials/syntax/examples/arithmetic1.cadenza"}}
+    {{ rendering_example "partials/syntax/examples/arithmetic1.cadenza"}}
 
     <p>It can be used anywhere you need to supply a value, for example, in filter
     parameters:</p>
 
-    {{ example "partials/syntax/examples/arithmetic2.cadenza" }}
+    {{ rendering_example "partials/syntax/examples/arithmetic2.cadenza" }}
 </section>

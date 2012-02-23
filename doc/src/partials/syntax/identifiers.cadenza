@@ -9,10 +9,10 @@
   <tt>_</tt> and, after the first character, include digits (0-9).  So, for instance,
   the following are valid identifiers:</p>
     
-  <pre>{{ load "partials/syntax/examples/valid-variables.cadenza" }}</pre>
+  {{ cadenza_example "partials/syntax/examples/valid-variables.cadenza" }}
 
   <p>However, the following examples are not:</p>
-  <pre>{{ load "partials/syntax/examples/invalid-variables.cadenza" }}</pre>
+  {{ cadenza_example "partials/syntax/examples/invalid-variables.cadenza" }}
 
   <p><b>Note:</b> identifiers are case sensitive so <tt>HelloWorld</tt> and 
   <tt>helloWorld</tt> are treated differently.</p>
