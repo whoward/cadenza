@@ -8,7 +8,7 @@ DocumentNode:
          parameters:
             - ConstantNode:
                value: mytemplate
-            - ArithmeticNode:
+            - BooleanNode:
                operator: +
                left:
                  VariableNode:

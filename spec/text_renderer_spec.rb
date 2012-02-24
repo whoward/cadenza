@@ -42,7 +42,7 @@ describe Cadenza::TextRenderer do
    end
 
    it "should render the stringified result of an arithmetic node's value" do
-      document.children.push Cadenza::ArithmeticNode.new pi, "+", one
+      document.children.push Cadenza::BooleanNode.new pi, "+", one
 
       renderer.render(document, context)
 

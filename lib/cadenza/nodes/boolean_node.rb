@@ -41,6 +41,18 @@ module Cadenza
             when 'or'
                return l || r
 
+            when '+'
+               return l + r
+
+            when '-'
+               return l - r
+
+            when '*'
+               return l * r
+
+            when '/'
+               return l / r
+
             else throw "undefined operator: #{@operator}"
          end
       end

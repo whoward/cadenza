@@ -2,7 +2,7 @@ DocumentNode:
   children:
     - InjectNode:
         value:
-          ArithmeticNode:
+          BooleanNode:
             operator: /
             left:
               VariableNode:

@@ -117,5 +117,21 @@ describe Cadenza::BooleanNode do
          subject.new(false_condition, 'or', false_condition).eval(context).should be_false
       end
 
+      it "should evaluate plus operators" do
+         subject.new(ten, '+', twenty).eval(context).should == 30
+      end
+
+      it "should evaluate minus operators" do
+         subject.new(twenty, '-', ten).eval(context).should == 10
+      end
+
+      it "should evaluate multiplication operators" do
+         subject.new(ten, '*', twenty).eval(context).should == 200
+      end
+
+      it "should evaluate division operators" do
+         subject.new(twenty, '/', ten).eval(context).should == 2
+      end
+
    end
 end

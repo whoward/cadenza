@@ -19,14 +19,14 @@ rule
 
   multiplicative_expression
     : primary_expression
-    | multiplicative_expression '*' primary_expression { result = ArithmeticNode.new(val[0], "*", val[2]) }
-    | multiplicative_expression '/' primary_expression { result = ArithmeticNode.new(val[0], "/", val[2]) }
+    | multiplicative_expression '*' primary_expression { result = BooleanNode.new(val[0], "*", val[2]) }
+    | multiplicative_expression '/' primary_expression { result = BooleanNode.new(val[0], "/", val[2]) }
     ;
 
   additive_expression
     : multiplicative_expression
-    | additive_expression '+' multiplicative_expression { result = ArithmeticNode.new(val[0], "+", val[2]) }
-    | additive_expression '-' multiplicative_expression { result = ArithmeticNode.new(val[0], "-", val[2]) }
+    | additive_expression '+' multiplicative_expression { result = BooleanNode.new(val[0], "+", val[2]) }
+    | additive_expression '-' multiplicative_expression { result = BooleanNode.new(val[0], "-", val[2]) }
     ;
 
   boolean_expression

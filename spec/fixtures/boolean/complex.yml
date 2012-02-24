@@ -3,13 +3,13 @@ DocumentNode:
   children:
     - InjectNode:
         value:
-          ArithmeticNode:
+          BooleanNode:
             operator: "+"
             left:
               VariableNode:
                 value: a
             right:
-              ArithmeticNode:
+              BooleanNode:
                 operator: "*"
                 left:
                   VariableNode:

@@ -34,4 +34,33 @@ describe Cadenza::Parser, 'boolean parsing' do
    it "should parse an 'or' conjunction" do
       parser.parse("{{ foo == 1 or bar > 3 }}").should have_an_identical_syntax_tree_to "boolean/or.yml"
    end
+
+
+   it "should parse a additive expression" do
+      parser.parse("{{ x + 1 }}").should have_an_identical_syntax_tree_to "boolean/additive.yml"
+   end
+
+   it "should parse multiple additive terms, ordered for evaluation left to right" do
+      parser.parse("{{ a + b + c }}").should have_an_identical_syntax_tree_to "boolean/multiple_additive.yml"
+   end
+
+   it "should parse a subtractive expression" do
+      parser.parse("{{ a - b }}").should have_an_identical_syntax_tree_to "boolean/subtractive.yml"
+   end
+
+   it "should parse a multiplicative expression" do
+      parser.parse("{{ a * b }}").should have_an_identical_syntax_tree_to "boolean/multiplicative.yml"
+   end
+
+   it 'should parse a division expression' do
+      parser.parse("{{ a / b }}").should have_an_identical_syntax_tree_to "boolean/division.yml"
+   end
+
+   it 'should parse a complex boolean expression using proper order of operations without brackets' do
+      parser.parse("{{ a + b * c }}").should have_an_identical_syntax_tree_to "boolean/complex.yml"
+   end
+
+   it 'should give precedence to brackets' do
+      parser.parse("{{ (a + b) * c }}").should have_an_identical_syntax_tree_to "boolean/brackets.yml"
+   end
 end

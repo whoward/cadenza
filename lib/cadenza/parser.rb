@@ -483,14 +483,14 @@ module_eval(<<'.,.,', 'cadenza.y', 16)
 
 module_eval(<<'.,.,', 'cadenza.y', 21)
   def _reduce_9(val, _values, result)
-     result = ArithmeticNode.new(val[0], "*", val[2]) 
+     result = BooleanNode.new(val[0], "*", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 22)
   def _reduce_10(val, _values, result)
-     result = ArithmeticNode.new(val[0], "/", val[2]) 
+     result = BooleanNode.new(val[0], "/", val[2]) 
     result
   end
 .,.,
@@ -499,14 +499,14 @@ module_eval(<<'.,.,', 'cadenza.y', 22)
 
 module_eval(<<'.,.,', 'cadenza.y', 27)
   def _reduce_12(val, _values, result)
-     result = ArithmeticNode.new(val[0], "+", val[2]) 
+     result = BooleanNode.new(val[0], "+", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 28)
   def _reduce_13(val, _values, result)
-     result = ArithmeticNode.new(val[0], "-", val[2]) 
+     result = BooleanNode.new(val[0], "-", val[2]) 
     result
   end
 .,.,
