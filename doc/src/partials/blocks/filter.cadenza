@@ -11,5 +11,5 @@
    Applies any filter that is defined on the current context to all the contents
    of the rendered block.
 
-   {{ example "partials/blocks/examples/filter.cadenza" }}
+   {{ rendering_example "partials/blocks/examples/filter.cadenza" }}
 </section>

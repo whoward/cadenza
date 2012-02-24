@@ -11,5 +11,5 @@
    Loads the given filename and injects it into the rendered template without
    performing any parsing or rendering.
 
-   {{ example "partials/variables/examples/load.cadenza" }}
+   {{ rendering_example "partials/variables/examples/load.cadenza" }}
 </section>

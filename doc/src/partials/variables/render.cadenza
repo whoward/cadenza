@@ -11,5 +11,5 @@
    Loads the given filename and renders it using the same context is it was 
    called with.
 
-   {{ example "partials/variables/examples/render.cadenza" }}
+   {{ rendering_example "partials/variables/examples/render.cadenza" }}
 </section>
