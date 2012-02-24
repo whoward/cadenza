@@ -15,5 +15,5 @@
    characters.  The type of line break is specified by the optional 
    <b>separator</b>.  Gives a nice column effect, very useful on courier fonts.
 
-   {{ example "partials/filters/examples/wordwrap.cadenza" }}
+   {{ rendering_example "partials/filters/examples/wordwrap.cadenza" }}
 </section>

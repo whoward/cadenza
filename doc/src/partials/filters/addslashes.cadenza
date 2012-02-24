@@ -6,5 +6,6 @@
 
    <h3>Description</h3>
    Adds C style backslashes before quotes.  Usually used for CSV output, not for JavaScript.
-   {{ example "partials/filters/examples/addslashes.cadenza" }}
+
+   {{ rendering_example "partials/filters/examples/addslashes.cadenza" }}
 </section>

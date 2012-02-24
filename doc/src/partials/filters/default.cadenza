@@ -9,5 +9,6 @@
 
    <h3>Description</h3>
    Uses the <b>default_value</b> passed instead of the value is nil, empty or evaluates to false. 
-   {{ example "partials/filters/examples/default.cadenza" }}
+   
+   {{ rendering_example "partials/filters/examples/default.cadenza" }}
 </section>

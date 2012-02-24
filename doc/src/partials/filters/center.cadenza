@@ -15,5 +15,5 @@
    longer than <b>length</b> no extra padding will be added.  <b>padding 
    string</b> specifies which string shall be used to center the string.
    
-   {{ example "partials/filters/examples/center.cadenza" }}
+   {{ rendering_example "partials/filters/examples/center.cadenza" }}
 </section>

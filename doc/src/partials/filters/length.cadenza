@@ -6,5 +6,6 @@
 
    <h3>Description</h3>
    Returns the length of a value
-   {{ example "partials/filters/examples/length.cadenza" }}
+   
+   {{ rendering_example "partials/filters/examples/length.cadenza" }}
 </section>

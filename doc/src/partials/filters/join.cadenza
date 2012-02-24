@@ -9,5 +9,6 @@
 
    <h3>Description</h3>
    Joins together every element of a list with a <b>glue</b> string.
-   {{ example "partials/filters/examples/join.cadenza" }}
+   
+   {{ rendering_example "partials/filters/examples/join.cadenza" }}
 </section>
