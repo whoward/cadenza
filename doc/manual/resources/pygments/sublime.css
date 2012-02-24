@@ -30,12 +30,12 @@
 .highlight .kr { color: #fb660a;  } /* Keyword.Reserved */
 .highlight .kt { color: #cdcaa9;  } /* Keyword.Type */
 .highlight .ld { color: #ffffff } /* Literal.Date */
-.highlight .m { color: #0086f7;  } /* Literal.Number */
+.highlight .m { color: #8c7bc7;  } /* Literal.Number */
 .highlight .s { color: #0086d2 } /* Literal.String */
 .highlight .na { color: #ff0086;  } /* Name.Attribute */
 .highlight .nb { color: #ffffff } /* Name.Builtin */
 .highlight .nc { color: #ffffff } /* Name.Class */
-.highlight .no { color: #0086d2 } /* Name.Constant */
+.highlight .no { color: #53cbc1 } /* Name.Constant */
 .highlight .nd { color: #ffffff } /* Name.Decorator */
 .highlight .ni { color: #ffffff } /* Name.Entity */
 .highlight .ne { color: #ffffff } /* Name.Exception */
