@@ -9,7 +9,7 @@ DocumentNode:
          parameters:
             - ConstantNode:
                value: mytemplate
-            - BooleanNode:
+            - OperationNode:
                operator: +
                left:
                   VariableNode:

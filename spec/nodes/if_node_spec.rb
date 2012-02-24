@@ -7,7 +7,7 @@ describe Cadenza::IfNode do
 
       var = Cadenza::VariableNode.new("bar")
       one = Cadenza::ConstantNode.new(1)
-      expression = Cadenza::BooleanNode.new(var, "==", one)
+      expression = Cadenza::OperationNode.new(var, "==", one)
 
       node_a = Cadenza::IfNode.new(expression, [text_a], [text_b])
       node_b = Cadenza::IfNode.new(expression, [text_a], [text_b])
@@ -22,8 +22,8 @@ describe Cadenza::IfNode do
       var = Cadenza::VariableNode.new("bar")
       one = Cadenza::ConstantNode.new(1)
       two = Cadenza::ConstantNode.new(2)
-      expression_a = Cadenza::BooleanNode.new(var, "==", one)
-      expression_b = Cadenza::BooleanNode.new(var, "==", two)
+      expression_a = Cadenza::OperationNode.new(var, "==", one)
+      expression_b = Cadenza::OperationNode.new(var, "==", two)
 
       node_a = Cadenza::IfNode.new(expression_a, [text_a], [text_b])
       node_b = Cadenza::IfNode.new(expression_b, [text_a], [text_b])
@@ -38,7 +38,7 @@ describe Cadenza::IfNode do
 
       var = Cadenza::VariableNode.new("bar")
       one = Cadenza::ConstantNode.new(1)
-      expression = Cadenza::BooleanNode.new(var, "==", one)
+      expression = Cadenza::OperationNode.new(var, "==", one)
 
       node_a = Cadenza::IfNode.new(expression, [text_a], text_b)
       node_b = Cadenza::IfNode.new(expression, [text_c], [text_b])
@@ -53,7 +53,7 @@ describe Cadenza::IfNode do
 
       var = Cadenza::VariableNode.new("bar")
       one = Cadenza::ConstantNode.new(1)
-      expression = Cadenza::BooleanNode.new(var, "==", one)
+      expression = Cadenza::OperationNode.new(var, "==", one)
 
       node_a = Cadenza::IfNode.new(expression, [text_a], [text_b])
       node_b = Cadenza::IfNode.new(expression, [text_a], [text_c])
@@ -64,7 +64,7 @@ describe Cadenza::IfNode do
    it "should assign an empty array to the children if not defined" do
       var = Cadenza::VariableNode.new("bar")
       one = Cadenza::ConstantNode.new(1)
-      expression = Cadenza::BooleanNode.new(var, "==", one)
+      expression = Cadenza::OperationNode.new(var, "==", one)
       
       node = Cadenza::IfNode.new(expression)
 
@@ -81,7 +81,7 @@ describe Cadenza::IfNode do
       inject_b = Cadenza::InjectNode.new(variable_b)
       inject_c = Cadenza::InjectNode.new(variable_c)
 
-      expression = Cadenza::BooleanNode.new(variable_a, "==", variable_b)
+      expression = Cadenza::OperationNode.new(variable_a, "==", variable_b)
 
       if_statement = Cadenza::IfNode.new(expression, [inject_c], [inject_a, inject_b, inject_c])
 
@@ -98,13 +98,13 @@ describe Cadenza::IfNode do
       let(:nope) { Cadenza::TextNode.new "nope" }
 
       it "should return the true children if the expression evaluates to true" do
-         node = Cadenza::IfNode.new(Cadenza::BooleanNode.new(pi, ">", one), [yup], [nope])
+         node = Cadenza::IfNode.new(Cadenza::OperationNode.new(pi, ">", one), [yup], [nope])
 
          node.evaluate_expression_for_children(context).should == [yup]
       end
 
       it "should return the false children if the expression evaluates to false" do
-         node = Cadenza::IfNode.new(Cadenza::BooleanNode.new(pi, "<", one), [yup], [nope])
+         node = Cadenza::IfNode.new(Cadenza::OperationNode.new(pi, "<", one), [yup], [nope])
 
          node.evaluate_expression_for_children(context).should == [nope]
       end

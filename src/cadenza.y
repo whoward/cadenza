@@ -19,24 +19,24 @@ rule
 
   multiplicative_expression
     : primary_expression
-    | multiplicative_expression '*' primary_expression { result = BooleanNode.new(val[0], "*", val[2]) }
-    | multiplicative_expression '/' primary_expression { result = BooleanNode.new(val[0], "/", val[2]) }
+    | multiplicative_expression '*' primary_expression { result = OperationNode.new(val[0], "*", val[2]) }
+    | multiplicative_expression '/' primary_expression { result = OperationNode.new(val[0], "/", val[2]) }
     ;
 
   additive_expression
     : multiplicative_expression
-    | additive_expression '+' multiplicative_expression { result = BooleanNode.new(val[0], "+", val[2]) }
-    | additive_expression '-' multiplicative_expression { result = BooleanNode.new(val[0], "-", val[2]) }
+    | additive_expression '+' multiplicative_expression { result = OperationNode.new(val[0], "+", val[2]) }
+    | additive_expression '-' multiplicative_expression { result = OperationNode.new(val[0], "-", val[2]) }
     ;
 
   boolean_expression
     : additive_expression
-    | boolean_expression OP_EQ additive_expression { result = BooleanNode.new(val[0], "==", val[2]) }
-    | boolean_expression OP_NEQ additive_expression { result = BooleanNode.new(val[0], "!=", val[2]) }
-    | boolean_expression OP_LEQ additive_expression { result = BooleanNode.new(val[0], "<=", val[2]) }
-    | boolean_expression OP_GEQ additive_expression { result = BooleanNode.new(val[0], ">=", val[2]) }
-    | boolean_expression '>' additive_expression  { result = BooleanNode.new(val[0], ">", val[2]) }
-    | boolean_expression '<' additive_expression  { result = BooleanNode.new(val[0], "<", val[2]) }
+    | boolean_expression OP_EQ additive_expression { result = OperationNode.new(val[0], "==", val[2]) }
+    | boolean_expression OP_NEQ additive_expression { result = OperationNode.new(val[0], "!=", val[2]) }
+    | boolean_expression OP_LEQ additive_expression { result = OperationNode.new(val[0], "<=", val[2]) }
+    | boolean_expression OP_GEQ additive_expression { result = OperationNode.new(val[0], ">=", val[2]) }
+    | boolean_expression '>' additive_expression  { result = OperationNode.new(val[0], ">", val[2]) }
+    | boolean_expression '<' additive_expression  { result = OperationNode.new(val[0], "<", val[2]) }
     ;
 
   inverse_expression
@@ -46,8 +46,8 @@ rule
 
   logical_expression
     : inverse_expression
-    | logical_expression AND inverse_expression { result = BooleanNode.new(val[0], "and", val[2]) }
-    | logical_expression OR inverse_expression { result = BooleanNode.new(val[0], "or", val[2]) }
+    | logical_expression AND inverse_expression { result = OperationNode.new(val[0], "and", val[2]) }
+    | logical_expression OR inverse_expression { result = OperationNode.new(val[0], "or", val[2]) }
     ;
 
   parameter_list

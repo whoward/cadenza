@@ -483,14 +483,14 @@ module_eval(<<'.,.,', 'cadenza.y', 16)
 
 module_eval(<<'.,.,', 'cadenza.y', 21)
   def _reduce_9(val, _values, result)
-     result = BooleanNode.new(val[0], "*", val[2]) 
+     result = OperationNode.new(val[0], "*", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 22)
   def _reduce_10(val, _values, result)
-     result = BooleanNode.new(val[0], "/", val[2]) 
+     result = OperationNode.new(val[0], "/", val[2]) 
     result
   end
 .,.,
@@ -499,14 +499,14 @@ module_eval(<<'.,.,', 'cadenza.y', 22)
 
 module_eval(<<'.,.,', 'cadenza.y', 27)
   def _reduce_12(val, _values, result)
-     result = BooleanNode.new(val[0], "+", val[2]) 
+     result = OperationNode.new(val[0], "+", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 28)
   def _reduce_13(val, _values, result)
-     result = BooleanNode.new(val[0], "-", val[2]) 
+     result = OperationNode.new(val[0], "-", val[2]) 
     result
   end
 .,.,
@@ -515,42 +515,42 @@ module_eval(<<'.,.,', 'cadenza.y', 28)
 
 module_eval(<<'.,.,', 'cadenza.y', 33)
   def _reduce_15(val, _values, result)
-     result = BooleanNode.new(val[0], "==", val[2]) 
+     result = OperationNode.new(val[0], "==", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 34)
   def _reduce_16(val, _values, result)
-     result = BooleanNode.new(val[0], "!=", val[2]) 
+     result = OperationNode.new(val[0], "!=", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 35)
   def _reduce_17(val, _values, result)
-     result = BooleanNode.new(val[0], "<=", val[2]) 
+     result = OperationNode.new(val[0], "<=", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 36)
   def _reduce_18(val, _values, result)
-     result = BooleanNode.new(val[0], ">=", val[2]) 
+     result = OperationNode.new(val[0], ">=", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 37)
   def _reduce_19(val, _values, result)
-     result = BooleanNode.new(val[0], ">", val[2]) 
+     result = OperationNode.new(val[0], ">", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 38)
   def _reduce_20(val, _values, result)
-     result = BooleanNode.new(val[0], "<", val[2]) 
+     result = OperationNode.new(val[0], "<", val[2]) 
     result
   end
 .,.,
@@ -568,14 +568,14 @@ module_eval(<<'.,.,', 'cadenza.y', 43)
 
 module_eval(<<'.,.,', 'cadenza.y', 48)
   def _reduce_24(val, _values, result)
-     result = BooleanNode.new(val[0], "and", val[2]) 
+     result = OperationNode.new(val[0], "and", val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 49)
   def _reduce_25(val, _values, result)
-     result = BooleanNode.new(val[0], "or", val[2]) 
+     result = OperationNode.new(val[0], "or", val[2]) 
     result
   end
 .,.,

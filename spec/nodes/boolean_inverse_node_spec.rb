@@ -24,8 +24,8 @@ describe Cadenza::BooleanInverseNode do
       number = Cadenza::VariableNode.new("number")
       three = Cadenza::ConstantNode.new(3)
 
-      true_condition = Cadenza::BooleanNode.new(number, "==", three)
-      false_condition = Cadenza::BooleanNode.new(number, "!=", three)
+      true_condition = Cadenza::OperationNode.new(number, "==", three)
+      false_condition = Cadenza::OperationNode.new(number, "!=", three)
 
       Cadenza::BooleanInverseNode.new(true_condition).eval(context).should be_false
       Cadenza::BooleanInverseNode.new(false_condition).eval(context).should be_true

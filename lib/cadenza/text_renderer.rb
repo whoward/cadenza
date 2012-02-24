@@ -82,9 +82,9 @@ module Cadenza
          output << node.eval(context).to_s
       end
 
-      alias :render_variable   :render_constant
-      alias :render_arithmetic :render_constant
-      alias :render_boolean    :render_constant
+      alias :render_variable        :render_constant
+      alias :render_operation       :render_constant
+      alias :render_boolean_inverse :render_constant
 
    end
 end

@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Cadenza::BooleanNode do
+describe Cadenza::OperationNode do
 
-   subject { Cadenza::BooleanNode }
+   subject { Cadenza::OperationNode }
 
    context "equality" do
       it "should equal a node with the same operands and operator" do

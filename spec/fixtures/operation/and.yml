@@ -3,10 +3,10 @@ DocumentNode:
   children:
     - InjectNode:
         value:
-          BooleanNode:
+          OperationNode:
             operator: and
             left:
-              BooleanNode:
+              OperationNode:
                 operator: "=="
                 left:
                   VariableNode:
@@ -15,7 +15,7 @@ DocumentNode:
                   ConstantNode:
                     value: 1
             right:
-              BooleanNode:
+              OperationNode:
                 operator: ">"
                 left:
                   VariableNode:

@@ -1,10 +1,10 @@
-# result of {{ foo != 1 }}
+# result of {{ foo == 1 }}
 DocumentNode:
   children:
     - InjectNode:
         value:
-          BooleanNode:
-            operator: "!="
+          OperationNode:
+            operator: ==
             left:
               VariableNode:
                 value: foo

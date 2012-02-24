@@ -19,7 +19,7 @@ private
       when "InjectNode"   then parse_inject_node(node)
       when "FilterNode" then parse_filter_node(node)
       when "VariableNode" then parse_variable_node(node)
-      when "BooleanNode" then parse_boolean_node(node)
+      when "OperationNode" then parse_operation_node(node)
       when "TextNode" then parse_text_node(node)
       when "IfNode" then parse_if_node(node)
       when "ForNode" then parse_for_node(node)
@@ -68,11 +68,11 @@ private
     Cadenza::VariableNode.new(node["value"])
   end
 
-  def parse_boolean_node(node)
+  def parse_operation_node(node)
     left = node_for_key(node, "left")
     right = node_for_key(node, "right")
 
-    Cadenza::BooleanNode.new(left, node["operator"], right)
+    Cadenza::OperationNode.new(left, node["operator"], right)
   end
 
   def parse_text_node(node)

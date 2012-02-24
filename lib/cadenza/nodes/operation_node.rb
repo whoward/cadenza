@@ -1,5 +1,5 @@
 module Cadenza
-  class BooleanNode
+  class OperationNode
       attr_accessor :left, :right, :operator
 
       def initialize(left, operator, right)

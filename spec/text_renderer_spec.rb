@@ -10,8 +10,8 @@ describe Cadenza::TextRenderer do
    let(:pi)  { Cadenza::VariableNode.new("pi") }
    let(:one) { Cadenza::ConstantNode.new(1) }
    
-   let(:true_boolean_expression) { Cadenza::BooleanNode.new pi, ">", one }
-   let(:false_boolean_expression) { Cadenza::BooleanNode.new pi, "<", one }
+   let(:true_boolean_expression) { Cadenza::OperationNode.new pi, ">", one }
+   let(:false_boolean_expression) { Cadenza::OperationNode.new pi, "<", one }
 
    before do
       context.add_loader Cadenza::FilesystemLoader.new(fixture_filename "templates")
@@ -42,7 +42,7 @@ describe Cadenza::TextRenderer do
    end
 
    it "should render the stringified result of an arithmetic node's value" do
-      document.children.push Cadenza::BooleanNode.new pi, "+", one
+      document.children.push Cadenza::OperationNode.new pi, "+", one
 
       renderer.render(document, context)
 
