@@ -119,6 +119,7 @@ a, a:visited {
    padding: 3px 10px;
    border-radius: 5px;
    color: white;
+   overflow: hidden;
 }
 
 .ribbon-holder {
@@ -194,7 +195,7 @@ aside {
    float: right;
    background-color: #DDD;
    padding: 10px;
-   margin: 5px 15px;
+   margin: 1em 0 1em 1em;
    border: 1px solid #AAA;
    max-width: 300px;
 }
