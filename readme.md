@@ -6,10 +6,11 @@ Cadenza is a template parsing and rendering library for Ruby.  The syntax is ver
 similar to other template languages like Django (Python), Smart (PHP), or Liquid (Ruby).
 
 In addition to the usual template language features, Cadenza features:
-* template inheritance
-* extendable syntax
-* interchangeable lexers, parsers, loaders and renderers
-* much more
+
+- template inheritance
+- extendable syntax
+- interchangeable lexers, parsers, loaders and renderers
+- much more
 
 # Installation
 
