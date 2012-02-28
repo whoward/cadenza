@@ -9,7 +9,7 @@ DocumentNode:
             - ConstantNode:
                value: mytemplate
             - OperationNode:
-               operator: +
+               operator: "+"
                left:
                  VariableNode:
                    value: x

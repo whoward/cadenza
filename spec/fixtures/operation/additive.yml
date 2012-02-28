@@ -3,7 +3,7 @@ DocumentNode:
     - InjectNode:
         value:
           OperationNode:
-            operator: +
+            operator: "+"
             left:
               VariableNode:
                 value: x
