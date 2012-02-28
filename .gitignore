@@ -3,3 +3,4 @@ doc/plugin/*
 doc/.yardb/*
 .rspec
 .yardoc
+.rbx
