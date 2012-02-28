@@ -1,1 +1,0 @@
-{{ lorem_ipsum | wordwrap: 25 }}

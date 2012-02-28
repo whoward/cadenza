@@ -1,3 +1,0 @@
-{{ "hello" | center: 4 }}
-{{ "hello" | center: 20 }}
-{{ "hello" | center: 20, "-" }}

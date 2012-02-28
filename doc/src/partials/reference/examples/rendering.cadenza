@@ -1,3 +1,0 @@
-Cadenza::TextRenderer.new File.open("/path/to/file", "w+")
-
-Cadenza::TextRenderer.new StringIO.new

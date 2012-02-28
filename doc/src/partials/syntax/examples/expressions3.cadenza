@@ -1,3 +1,0 @@
-{# these two expressions are logically equivalent #}
-{% if not (a > b and b > c) %}
-{% unless a > b and b > c %}

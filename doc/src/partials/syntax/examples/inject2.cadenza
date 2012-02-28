@@ -1,4 +1,0 @@
-{{ name | upper }}
-{{ name | upper | cut: "DOE" }}
-{{ name | center: 20 }}
-{{ name | center: 20, "-" }}

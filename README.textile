@@ -4,7 +4,7 @@ h1. Installation
 
 h1. Usage
 
-See: "Manual":http://whoward.github.com/Cadenza/manual
+See: "Manual":http://cadenza-manual.heroku.com/
 See: "Yard Documentation":http://whoward.github.com/Cadenza/yard
 
 h1. Roadmap

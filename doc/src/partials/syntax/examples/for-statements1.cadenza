@@ -1,5 +1,0 @@
-<ol>
-   {% for error in errors %}
-   <li>{{ error }}</li>
-   {% endfor %}
-</ol>

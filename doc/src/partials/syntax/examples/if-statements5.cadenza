@@ -1,3 +1,0 @@
-{% if something_false %}
-   It was true!
-{% endif %}

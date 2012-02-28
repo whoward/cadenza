@@ -1,2 +1,0 @@
-{{ now | date }}
-{{ now | date: "%A %B %e %Y %r" }}

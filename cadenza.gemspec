@@ -23,11 +23,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "nokogiri-diff", "~> 0.1.0"
   s.add_development_dependency "yard"
 
-  s.add_development_dependency "pygments.rb"
-
   # to make testing more fun (if only it needed less configuration)
   s.add_development_dependency "guard-rspec"
   s.add_development_dependency "guard-shell"
-
 end
 

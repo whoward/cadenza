@@ -1,3 +1,0 @@
-context.define_functional_variable :foo do |context|
-   # do something here and return the result
-end

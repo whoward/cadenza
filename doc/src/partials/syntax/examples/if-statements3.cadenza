@@ -1,5 +1,0 @@
-{% if something_true %}
-   It was true!
-{% else %}
-   It was false!
-{% endif %}
