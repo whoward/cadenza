@@ -40,6 +40,17 @@ include test cases to support any code you have submitted.  If your code modifie
 the usage of Cadenza, either by templates or by ruby developers then please
 submit a documentation update to the [Cadenza Manual Repository](http://github.com/whoward/cadenza-manual).
 
+# Supported Ruby Versions
+
+- Ruby 1.8.7
+- Ruby 1.9.2
+- Ruby 1.9.3
+- Ruby Enterprise Edition
+- Rubinius 2.0 (1.8 mode)
+- Rubinius 2.0 (1.9 mode)
+
+Unforunately JRuby does not seem to work with Racc because of issues with it's native extension "cparse"
+
 # License
 
 Cadenza is released under the MIT license
