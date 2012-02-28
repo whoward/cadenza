@@ -40,14 +40,14 @@ describe Cadenza::BaseContext, 'standard filters' do
    end
 
    context "date" do
-      let(:time) { Time.at(0) }
+      let(:time) { Time.at(0).utc }
 
       it "should format the date using sprintf notation" do
-         subject.evaluate_filter(:date, [time]).should == "1969-12-31"
+         subject.evaluate_filter(:date, [time]).should == "1970-01-01"
       end
 
       it "should allow passing a custom string fomrmatting time" do
-         subject.evaluate_filter(:date, [time, "%F %R"]).should == "1969-12-31 19:00"
+         subject.evaluate_filter(:date, [time, "%F %R"]).should == "1970-01-01 00:00"
       end
    end
 
