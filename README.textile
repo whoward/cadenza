@@ -1,3 +1,5 @@
+!https://secure.travis-ci.org/whoward/Cadenza.png?branch=master(Build Status)!:http://travis-ci.org/whoward/Cadenza
+
 h1. Description
 
 h1. Installation
