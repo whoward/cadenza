@@ -13,9 +13,32 @@ module Cadenza
    end
 
    class Context
-      attr_accessor :stack, :filters, :functional_variables, :blocks, :loaders
+      # @return [Array] the variable stack
+      attr_accessor :stack
+
+      # @return [Hash] the filter names mapped to their implementing procs
+      attr_accessor :filters
+
+      # @return [Hash] the functional variable names mapped to their implementing procs
+      attr_accessor :functional_variables
+
+      # @return [Hash] the block names mapped to their implementing procs
+      attr_accessor :blocks
+
+      # @return [Array] the list of loaders
+      attr_accessor :loaders
+
+      # @return [Boolean] true if a {TemplateNotFoundError} should still be
+      #                   raised if not calling the bang form of {#load_source}
+      #                   or {#load_template}
       attr_accessor :whiny_template_loading
 
+      # creates a new context object with an empty stack, filter list, functional
+      # variable list, block list, loaders list and default configuration options.
+      #
+      # When created you can push an optional scope onto as the initial stack
+      #
+      # @param [Hash] initial_scope the initial scope for the context
       def initialize(initial_scope={})
          @stack = []
          @filters = {}
@@ -29,6 +52,8 @@ module Cadenza
 
       # creates a new instance of the context with the stack, loaders, filters,
       # functional variables and blocks shallow copied.
+      #
+      # @return [Context] the cloned context
       def clone
          copy = super
          copy.stack = stack.dup
@@ -40,6 +65,12 @@ module Cadenza
          copy
       end
 
+      # retrieves the value of the given identifier by inspecting the variable
+      # stack from top to bottom.  Identifiers with dots in them are separated
+      # on that dot character and looked up as a path.  If no value could be 
+      # found then nil is returned.
+      #
+      # @return [Object] the object matching the identifier or nil if not found
       def lookup(identifier)
          @stack.reverse_each do |scope|
             value = lookup_identifier(scope, identifier)
@@ -50,52 +81,107 @@ module Cadenza
          nil
       end
 
+      # assigns the given value to the given identifier at the highest current
+      # scope of the stack.
+      #
+      # @param [String] identifier the name of the variable to store
+      # @param [Object] value the value to assign to the given name
       def assign(identifier, value)
          @stack.last[identifier.to_sym] = value
       end
 
-      # TODO: symbolizing strings is slow so consider symbolizing here to improve
-      # the speed of the lookup method (its more important than push)
-      # TODO: since you can assign with the #assign method then make the scope
-      # variable optional (assigns an empty hash)
+      # creates a new scope on the variable stack and assigns the given hash
+      # to it.
+      #
+      # @param [Hash] scope the mapping of names to values for the new scope
       def push(scope)
+         # TODO: symbolizing strings is slow so consider symbolizing here to improve
+         # the speed of the lookup method (its more important than push)
+
+         # TODO: since you can assign with the #assign method then make the scope
+         # variable optional (assigns an empty hash)
          @stack.push(scope)
       end
 
+      # removes the highest scope from the variable stack
       def pop
          @stack.pop
       end
 
+      # defines a filter proc with the given name
+      #
+      # @param [Symbol] name the name for the template to use for this filter
+      # @yield [String, *args] the block will receive the input string and a 
+      #                        variable number of arguments passed to the filter.
       def define_filter(name, &block)
          @filters[name.to_sym] = block
       end
 
+      # calls the defined filter proc with the given parameters and returns the
+      # result.  
+      #
+      # @raise [FilterNotDefinedError] if the named filter doesn't exist
+      # @param [Symbol] name the name of the filter to evaluate
+      # @param [Array] params a list of parameters to pass to the filter 
+      #                block when calling it.
       def evaluate_filter(name, params=[])
          filter = @filters[name.to_sym]
          raise FilterNotDefinedError.new("undefined filter '#{name}'") if filter.nil?
          filter.call(*params)
       end
 
+      # defines a functional variable proc with the given name
+      #
+      # @param [Symbol] name the name for the template to use for this variable
+      # @yield [Context, *args] the block will receive the context object and a
+      #                         variable number of arguments passed to the variable.
       def define_functional_variable(name, &block)
          @functional_variables[name.to_sym] = block
       end
 
+      # calls the defined functional variable proc with the given parameters and
+      # returns the result.
+      #
+      # @raise [FunctionalVariableNotDefinedError] if the named variable doesn't exist
+      # @param [Symbol] name the name of the functional variable to evaluate
+      # @param [Array] params a list of parameters to pass to the variable
+      #                block when calling it
       def evaluate_functional_variable(name, params=[])
          var = @functional_variables[name.to_sym]
          raise FunctionalVariableNotDefinedError.new("undefined functional variable '#{name}'") if var.nil?
          var.call([self] + params)
       end
 
+      # defines a generic block proc with the given name
+      #
+      # @param [Symbol] name the name for the template to use for this block
+      # @yield [Context, Array, *args] the block will receive the context object,
+      #                                a list of Node objects (it's children), and
+      #                                a variable number of aarguments passed to
+      #                                the block.
       def define_block(name, &block)
          @blocks[name.to_sym] = block
       end
 
+      # calls the defined generic block proc with the given name and children
+      # nodes.
+      #
+      # @raise [BlockNotDefinedError] if the named block does not exist
+      # @param [Symbol] name the name of the block to evaluate
+      # @param [Array] nodes the child nodes of the block
+      # @param [Array, []] params a list of parameters to pass to the block
+      #                    when calling it.
       def evaluate_block(name, nodes, parameters)
          block = @blocks[name.to_sym]
          raise BlockNotDefinedError.new("undefined block '#{name}") if block.nil?
          block.call(self, nodes, parameters)
       end
 
+      # adds the given loader to the end of the loader list.  If the argument 
+      # passed is a string then a {FilesystemLoader} will be constructed with
+      # the string given as a path for it.
+      #
+      # @param [Loader,String] loader the loader to add
       def add_loader(loader)
          if loader.is_a?(String)
             @loaders.push FilesystemLoader.new(loader)
@@ -104,10 +190,17 @@ module Cadenza
          end
       end
 
+      # removes all loaders from the context
       def clear_loaders
          @loaders.reject! { true }
       end
 
+      # loads and returns the given template but does not parse it
+      #
+      # @raise [TemplateNotFoundError] if {#whiny_template_loading} is enabled and
+      #                                the template could not be loaded.
+      # @param [String] template_name the name of the template to load
+      # @return [String] the template text or nil if the template could not be loaded
       def load_source(template_name)
          source = nil
 
@@ -123,10 +216,22 @@ module Cadenza
          end
       end
 
+      # loads and returns the given template but does not parse it
+      #
+      # @raise [TemplateNotFoundError] if the template could not be loaded
+      # @param [String] template_name the name of the template to load
+      # @return [String] the template text
       def load_source!(template_name)
          load_source(template_name) || raise(TemplateNotFoundError.new(template_name))
       end
 
+      # loads, parses and returns the given template
+      #
+      # @raise [TemplateNotFoundError] if {#whiny_template_loading} is enabled and
+      #                                the template could not be loaded.
+      # @param [String] template_name the name of the template to load
+      # @return [DocumentNode] the root of the parsed document or nil if the 
+      #                          template could not be loaded.
       def load_template(template_name)
          template = nil
 
@@ -142,6 +247,11 @@ module Cadenza
          end
       end
 
+      # loads, parses and returns the given template
+      #
+      # @raise [TemplateNotFoundError] if the template could not be loaded
+      # @param [String] template_name the name of the template ot load
+      # @return [DocumentNode] the root of the parsed document
       def load_template!(template_name)
          load_template(template_name) || raise(TemplateNotFoundError.new(template_name))
       end
