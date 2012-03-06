@@ -1,6 +1,7 @@
 require 'cadenza/error'
 require 'cadenza/token'
 require 'cadenza/lexer'
+require 'cadenza/racc_parser'
 require 'cadenza/parser'
 require 'cadenza/context'
 require 'cadenza/base_renderer'
