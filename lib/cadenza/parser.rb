@@ -1,5 +1,8 @@
 
 module Cadenza
+  class ParseError < Cadenza::Error
+  end
+
   # The {Parser} class takes all tokens retrieved from it's lexer and forms them
   # into an abstract syntax tree (AST) with a {DocumentNode} at it's root.
   #
@@ -28,6 +31,7 @@ module Cadenza
     #
     # @param [String] source the template text to parse
     # @return [DocumentNode] the root node of the parsed AST
+    # @raise [ParseError] if the given template does not have a valid syntax
     def parse(source)
       @lexer.source = source
 
@@ -40,17 +44,41 @@ module Cadenza
 
   private
 
+    # this is a handy method to add a node to the AST properly, it's used in
+    # the cadenza.y file
     def push_child(node)
       @stack.last.children.push(node)
     end
 
+    # this is a handy method to add a block to the AST properly, it's used in
+    # the cadenza.y file
     def push_block(block_node)
       @stack.first.add_block(block_node)
       push_child(block_node)
     end
 
+    # this is the method Racc will call to get the next token in the stream
     def next_token
       @lexer.next_token
+    end
+
+    # this is Racc's callback for a parse error
+    def on_error(error_token_id, error_value, value_stack)
+      token = token_to_str(error_token_id)
+      value = error_value
+
+      line, column = value ? [value.line, value.column] : [nil, nil]
+
+      # use the stringified token to try to get as informative and human an error
+      # message as possible for us to raise.
+      #
+      # To contributors: if you get an uninformative error message please let me know so I can improve this!
+      msg = case token
+        when "$end" then "unexpected end of input"
+        else "unexpected token #{value.source.inspect} at line #{line.inspect}, column #{column.inspect}"
+      end
+
+      raise ParseError, msg
     end
   end
 end

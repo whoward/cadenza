@@ -46,4 +46,12 @@ describe Cadenza::Parser do
 
     parser.parse("").should have_an_identical_syntax_tree_to "empty.yml"
   end
+
+  it "should raise a Cadenza::ParseError when attempting to parse an invalid template" do
+    parser = Cadenza::Parser.new
+
+    lambda do
+      parser.parse "foo {{ bar"
+    end.should raise_error Cadenza::ParseError
+  end
 end
