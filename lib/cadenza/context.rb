@@ -12,6 +12,11 @@ module Cadenza
    class BlockNotDefinedError < StandardError
    end
 
+   # The {Context} class is an essential class in Cadenza that contains all the
+   # data necessary to render a template to it's output.  The context holds all
+   # defined variable names (see {#stack}), {#filters}, {#functional_variables},
+   # generic {#blocks}, {#loaders} and configuration data as well as all the 
+   # methods you should need to define and evaluate those.
    class Context
       # @return [Array] the variable stack
       attr_accessor :stack
@@ -94,6 +99,7 @@ module Cadenza
       # to it.
       #
       # @param [Hash] scope the mapping of names to values for the new scope
+      # @return nil
       def push(scope)
          # TODO: symbolizing strings is slow so consider symbolizing here to improve
          # the speed of the lookup method (its more important than push)
@@ -101,9 +107,12 @@ module Cadenza
          # TODO: since you can assign with the #assign method then make the scope
          # variable optional (assigns an empty hash)
          @stack.push(scope)
+
+         nil
       end
 
       # removes the highest scope from the variable stack
+      # @return [Hash] the removed scope
       def pop
          @stack.pop
       end
@@ -113,8 +122,10 @@ module Cadenza
       # @param [Symbol] name the name for the template to use for this filter
       # @yield [String, *args] the block will receive the input string and a 
       #                        variable number of arguments passed to the filter.
+      # @return nil
       def define_filter(name, &block)
          @filters[name.to_sym] = block
+         nil
       end
 
       # calls the defined filter proc with the given parameters and returns the
@@ -124,6 +135,7 @@ module Cadenza
       # @param [Symbol] name the name of the filter to evaluate
       # @param [Array] params a list of parameters to pass to the filter 
       #                block when calling it.
+      # @return [String] the result of evaluating the filter
       def evaluate_filter(name, params=[])
          filter = @filters[name.to_sym]
          raise FilterNotDefinedError.new("undefined filter '#{name}'") if filter.nil?
@@ -135,8 +147,10 @@ module Cadenza
       # @param [Symbol] name the name for the template to use for this variable
       # @yield [Context, *args] the block will receive the context object and a
       #                         variable number of arguments passed to the variable.
+      # @return nil
       def define_functional_variable(name, &block)
          @functional_variables[name.to_sym] = block
+         nil
       end
 
       # calls the defined functional variable proc with the given parameters and
@@ -146,6 +160,7 @@ module Cadenza
       # @param [Symbol] name the name of the functional variable to evaluate
       # @param [Array] params a list of parameters to pass to the variable
       #                block when calling it
+      # @return [Object] the result of  evaluating the functional variable
       def evaluate_functional_variable(name, params=[])
          var = @functional_variables[name.to_sym]
          raise FunctionalVariableNotDefinedError.new("undefined functional variable '#{name}'") if var.nil?
@@ -159,8 +174,10 @@ module Cadenza
       #                                a list of Node objects (it's children), and
       #                                a variable number of aarguments passed to
       #                                the block.
+      # @return nil
       def define_block(name, &block)
          @blocks[name.to_sym] = block
+         nil
       end
 
       # calls the defined generic block proc with the given name and children
@@ -171,6 +188,7 @@ module Cadenza
       # @param [Array] nodes the child nodes of the block
       # @param [Array, []] params a list of parameters to pass to the block
       #                    when calling it.
+      # @return [String] the result of evaluating the block
       def evaluate_block(name, nodes, parameters)
          block = @blocks[name.to_sym]
          raise BlockNotDefinedError.new("undefined block '#{name}") if block.nil?
@@ -182,17 +200,21 @@ module Cadenza
       # the string given as a path for it.
       #
       # @param [Loader,String] loader the loader to add
+      # @return nil
       def add_loader(loader)
          if loader.is_a?(String)
             @loaders.push FilesystemLoader.new(loader)
          else
             @loaders.push loader
          end
+         nil
       end
 
       # removes all loaders from the context
+      # @return nil
       def clear_loaders
          @loaders.reject! { true }
+         nil
       end
 
       # loads and returns the given template but does not parse it

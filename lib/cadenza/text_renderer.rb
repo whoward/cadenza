@@ -1,13 +1,23 @@
 require 'stringio'
 
 module Cadenza
+   # The {TextRenderer} is the standard rendering logic for Cadenza.  It will 
+   # render an AST according to the rules specified in the Cadenza manual.  See
+   # the manual for details.
    class TextRenderer < BaseRenderer
-      def self.render(template, context)
+
+      # Renders the document given with the given context directly to a string 
+      # returns.
+      # @param [DocumentNode] document_node the root of the AST you want to render.
+      # @param [Context] context the context object to render the document with
+      def self.render(document_node, context)
          io = StringIO.new
-         new(io).render(template, context)
+         new(io).render(document_node, context)
          io.string
       end
 
+   private
+   
       def render_document(node, context, blocks)
          if node.extends
             # merge the inherited blocks onto this document's blocks to

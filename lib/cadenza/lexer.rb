@@ -1,7 +1,8 @@
 require 'strscan'
 
 module Cadenza
-
+  # The {Lexer} class accepts in input {IO} object which it will parse simple
+  # {Token}s from for use in a {Parser} class.
   class Lexer
 
     # constructs a new parser and sets it to the position (0, 0)
