@@ -1,3 +1,4 @@
+require 'cadenza/error'
 require 'cadenza/token'
 require 'cadenza/lexer'
 require 'cadenza/parser'

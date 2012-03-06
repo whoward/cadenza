@@ -7,9 +7,10 @@ module Cadenza
    # This implemenation makes no attempt to be secure so upwards relative file
    # paths could be used to load sensitive files into the output template.
    # 
-   # Example:
+   # ```django
    #   {# assuming you add /home/someuser as a loaded path #}
    #   {{ load '../../etc/passwd' }}
+   # ```
    #
    # If you allow loading to be used for insecure user content then consider
    # using a more secure loader class such as {ZipLoader} or writing a simple
