@@ -1,10 +1,5 @@
 
 module Cadenza
-# The {RaccParser} is a superclass to {Parser} which contains all the LALR parser
-# rules for that class.  It was separated from {Parser} so that {Parser} could
-# actually be documented - Racc's current version uses a lot of metaprogramming
-# which confuses YARD.
-
   # The {Parser} class takes all tokens retrieved from it's lexer and forms them
   # into an abstract syntax tree (AST) with a {DocumentNode} at it's root.
   #
