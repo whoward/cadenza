@@ -15,7 +15,7 @@ In addition to the usual template language features, Cadenza features:
 # Installation
 
 ```bash
-   gem install cadenza --pre
+   gem install cadenza
 ```
 
 # Usage
@@ -24,8 +24,7 @@ To learn how to both write Cadenza templates and use Cadenza in your Ruby
 projects have a look at the [Cadenza Manual](http://cadenza-manual.heroku.com/)
 
 To learn how to extend Cadenza with custom Lexers, Parsers, Loaders and Renderers
-visit the [Yard Documentation](http://whoward.github.com/Cadenza/yard)
-(NOT YET WRITTEN)
+visit the [Yard Documentation](http://rubydoc.info/github/whoward/Cadenza/)
 
 # Roadmap
 
