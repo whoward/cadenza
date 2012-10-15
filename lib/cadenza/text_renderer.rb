@@ -72,7 +72,7 @@ module Cadenza
             })
 
             # render each of the child nodes with the context
-            node.children.each {|x| render(x, context) }
+            node.children.each {|x| render(x, context, blocks) }
 
             # pop the inner context off
             context.pop

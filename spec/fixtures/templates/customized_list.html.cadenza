@@ -1,0 +1,5 @@
+{% extends "list_logic.html.cadenza" %}
+
+{% block item_content %}
+   <div class='custom'>{{item}}</div>
+{% endblock %}

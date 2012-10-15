@@ -1,0 +1,3 @@
+{% for item in collection %}
+   {% block item_content %}<span>{{item}}</span>{% endblock %}
+{% endfor %}

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Cadenza::TextRenderer do
    let(:output)   { StringIO.new }
    let(:renderer) { Cadenza::TextRenderer.new(output) }
-   let(:context)  { Cadenza::Context.new(:pi => 3.14159) }
+   let(:context)  { Cadenza::Context.new(:pi => 3.14159, :collection => %w(a b c)) }
    let(:document) { Cadenza::DocumentNode.new }
 
    # some sample constant and variable nodes
@@ -86,20 +86,42 @@ describe Cadenza::TextRenderer do
       renderer.output.string.should == "4"
    end
 
-   it "should render a for-block's children once for each iterated object" do
-      iterable = Cadenza::VariableNode.new("alphabet")
-      iterator = Cadenza::VariableNode.new("x")
-      counter  = Cadenza::VariableNode.new("forloop.counter")
+   context "for nodes" do
+      let(:standard_list_template) { fixture_filename "templates/standard_list.html.cadenza" }
+      let(:standard_list_output)   { fixture_filename "templates/standard_list.html" }
 
-      children = [Cadenza::InjectNode.new(counter), Cadenza::TextNode.new(": "), Cadenza::InjectNode.new(iterator), Cadenza::TextNode.new("\n")]
+      let(:customized_list_template) { fixture_filename "templates/customized_list.html.cadenza" }
+      let(:customized_list_output)   { fixture_filename "templates/customized_list.html" }
 
-      context = Cadenza::Context.new({:alphabet => %w(a b c)})
+      it "should render a for-block's children once for each iterated object" do
+         iterable = Cadenza::VariableNode.new("alphabet")
+         iterator = Cadenza::VariableNode.new("x")
+         counter  = Cadenza::VariableNode.new("forloop.counter")
 
-      document.children.push Cadenza::ForNode.new(iterator, iterable, children)
+         children = [Cadenza::InjectNode.new(counter), Cadenza::TextNode.new(": "), Cadenza::InjectNode.new(iterator), Cadenza::TextNode.new("\n")]
 
-      renderer.render(document, context)
+         context = Cadenza::Context.new({:alphabet => %w(a b c)})
 
-      renderer.output.string.should == "1: a\n2: b\n3: c\n"
+         document.children.push Cadenza::ForNode.new(iterator, iterable, children)
+
+         renderer.render(document, context)
+
+         renderer.output.string.should == "1: a\n2: b\n3: c\n"
+      end
+
+      it "should render default blocks in it's children" do
+         index = Cadenza::Parser.new.parse(File.read standard_list_template)
+
+         renderer.render(index, context)
+         renderer.output.string.should be_html_equivalent_to File.read(standard_list_output)
+      end
+
+      it "should render overriden blocks in it's children" do
+         index = Cadenza::Parser.new.parse(File.read customized_list_template)
+
+         renderer.render(index, context)
+         renderer.output.string.should be_html_equivalent_to File.read(customized_list_output)
+      end
    end
 
    context "block nodes" do
