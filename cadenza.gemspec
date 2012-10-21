@@ -14,6 +14,9 @@ Gem::Specification.new do |s|
 
   s.require_paths = ["lib"]
 
+  s.default_executable = %q{cadenza}
+  s.executables = ["cadenza"]
+
   s.files = Dir.glob("lib/**/*.rb")
   s.test_files = Dir.glob("test/**/*.rb")
 
