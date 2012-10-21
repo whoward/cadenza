@@ -301,6 +301,7 @@ module Cadenza
          sym_identifier = identifier.to_sym
 
          # allow looking up array indexes with dot notation, example: alphabet.0 => "a"
+         #TODO: the /\d+/ regex doesn't have the \A\z terminators, could that allow expected calling? example: alpabet.a0
          if scope.respond_to?(:[]) and scope.is_a?(Array) and identifier =~ /\d+/
             return scope[identifier.to_i]
          end
@@ -309,6 +310,21 @@ module Cadenza
          if scope.respond_to?(:[]) and scope.is_a?(Hash) and (scope.has_key?(identifier) || scope.has_key?(sym_identifier))
             return scope[identifier] || scope[sym_identifier]
          end
+
+         #TODO: security vulnerability below, we use #send on an object which can
+         # allow us to call private or protected methods on an object.
+         # 
+         # We could use #public_send but it is only available in Ruby 1.9.x so 
+         # we would have to drop 1.8.7 support.
+         #
+         # Alternatively we could forbid binding regular objects to contexts
+         # entirely and require that any bound object is a subclass of Cadenza::Drop
+         # Knowing this we could take public methods defined on the object
+         # and subtract public methods defined on the drop to get a list of 
+         # safely callable methods. And it will work in 1.8.7
+         #
+         # This won't happen until Cadenza 0.8.0 however as it will possibly break
+         # backwards compatibility.
 
          # if the identifier is a callable method then call that
          return scope.send(sym_identifier) if scope.respond_to?(sym_identifier)

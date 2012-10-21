@@ -90,7 +90,24 @@ describe Cadenza::Context do
    end
 
    context "#lookup" do
-      let(:scope) { {:foo => {:bar => "baz"}, :abc => OpenStruct.new(:def => "ghi"), :alphabet => %w(a b c)} }
+      class ScopedClass
+         def public_method
+            123
+         end
+
+      protected
+         def protected_method
+            456
+         end
+
+      private
+         def private_method
+            789
+         end
+
+      end
+
+      let(:scope) { {:foo => {:bar => "baz"}, :abc => OpenStruct.new(:def => "ghi"), :alphabet => %w(a b c), :obj => ScopedClass.new} }
       let(:assign) { lambda {|context, name, value| context.assign(name, value) } }
       let(:context) { Cadenza::Context.new(scope) }
 
@@ -136,6 +153,16 @@ describe Cadenza::Context do
 
       it "should look up a functional variable by it's name" do
          context.lookup("assign").should == assign
+      end
+
+      it "should call methods on objects" do
+         context.lookup("obj.public_method").should == 123
+      end
+
+      it "should not call protected or private methods on objects" do
+         pending "does not currently work, will be supported in Cadenza 0.8.0"
+         context.lookup("obj.protected_method").should == nil
+         context.lookup("obj.private_method").should == nil
       end
    end
 
