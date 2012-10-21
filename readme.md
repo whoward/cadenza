@@ -33,7 +33,7 @@ See: [Pivotal Tracker Project](https://www.pivotaltracker.com/projects/211737)
 
 # Contributing
 
-See: CONTRIBUTING.md
+See: [CONTRIBUTING.md](http://github.com/whoward/cadenza/tree/master/CONTRIBUTING.md)
 
 # Supported Ruby Versions
 
