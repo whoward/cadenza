@@ -1,5 +1,6 @@
 require 'optparse'
-require 'json'
+require 'multi_json'
+
 module Cadenza
   class Cli
     class Options < OptionParser
@@ -17,7 +18,7 @@ module Cadenza
       end
 
       def context_option(context)
-        @options[:context] = JSON.parse(context)
+        @options[:context] = MultiJson.load(context)
       end
 
       def set_opts

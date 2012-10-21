@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
   s.files = Dir.glob("lib/**/*.rb")
   s.test_files = Dir.glob("test/**/*.rb")
 
+  s.add_dependency "multi_json", ">= 1.3.0"
+
   s.add_development_dependency "rake", "~> 0.9.2"
   s.add_development_dependency "rspec", "~> 2.6.0"
   s.add_development_dependency "racc", "~> 1.4.6"
