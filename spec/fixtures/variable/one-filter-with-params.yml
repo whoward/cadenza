@@ -1,0 +1,13 @@
+# should be the result of parsing "{{ name | cut: 5 }}"
+DocumentNode:
+   children:
+      - InjectNode:
+         value:
+            VariableNode:
+               value: name
+               filters:
+                  - FilterNode:
+                     identifier: cut
+                     parameters:
+                        - ConstantNode:
+                           value: 5

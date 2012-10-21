@@ -51,10 +51,8 @@ private
 
   def parse_inject_node(node)
     value = node_for_key(node, "value")
-    filters = list_for_key(node, "filters")
-    parameters = list_for_key(node, "parameters")
     
-    Cadenza::InjectNode.new(value, filters, parameters)
+    Cadenza::InjectNode.new(value)
   end
 
   def parse_filter_node(node)
@@ -65,7 +63,10 @@ private
   end
 
   def parse_variable_node(node)
-    Cadenza::VariableNode.new(node["value"])
+    filters = list_for_key(node, "filters")
+    parameters = list_for_key(node, "parameters")
+
+    Cadenza::VariableNode.new(node["value"], filters, parameters)
   end
 
   def parse_operation_node(node)
