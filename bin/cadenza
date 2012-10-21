@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+$: << File.expand_path(File.dirname(__FILE__) + '/../lib')
+
+require 'cadenza'
+require 'cadenza/cli'
+
+options = Cadenza::Cli::Options.parse!
+path = ARGV[0]
+
+Cadenza::Cli.run! path, options[:context]
