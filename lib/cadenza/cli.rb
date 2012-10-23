@@ -1,42 +1,9 @@
+require 'cadenza/cli/options'
 require 'optparse'
 require 'multi_json'
 
 module Cadenza
-  class Cli
-    class Options < OptionParser
-      attr_reader :options
-
-      def self.parse!
-        parser = new("Cadenza")
-        parser.set_opts.parse!
-        parser.options
-      end
-
-      def initialize(*args)
-        @options = {}
-        super
-      end
-
-      def context_option(context)
-        if File.exist?(context)
-          context = File.read(context)
-        end
-        @options[:context] = MultiJson.load(context)
-      end
-
-      def set_opts
-        on("--context json") do |value|
-          context_option value
-        end
-        on("-c json") do |value|
-          context_option value
-        end
-        on("--root path") do |value|
-          @options[:root] = value
-        end
-
-      end
-    end
+  module Cli
 
     def self.run!(path, options={})
 
@@ -45,6 +12,7 @@ module Cadenza
       Cadenza::BaseContext.whiny_template_loading = true
 
       Cadenza.render_template path, options[:context]
+
     end
 
   end
