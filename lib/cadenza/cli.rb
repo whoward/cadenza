@@ -18,11 +18,17 @@ module Cadenza
       end
 
       def context_option(context)
+        if File.exist?(context)
+          context = File.read(context)
+        end
         @options[:context] = MultiJson.load(context)
       end
 
       def set_opts
         on("--context json") do |value|
+          context_option value
+        end
+        on("-c json") do |value|
           context_option value
         end
         on("--root path") do |value|
