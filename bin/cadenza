@@ -7,4 +7,4 @@ require 'cadenza/cli'
 options = Cadenza::Cli::Options.parse!
 path = ARGV[0]
 
-STDOUT.puts Cadenza::Cli.run!(path, options[:context])
+STDOUT.puts Cadenza::Cli.run!(path, options)

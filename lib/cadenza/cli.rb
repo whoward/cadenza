@@ -25,14 +25,20 @@ module Cadenza
         on("--context json") do |value|
           context_option value
         end
+        on("--root path") do |value|
+          @options[:root] = value
+        end
+
       end
     end
 
-    def self.run!(path, context)
-      Cadenza::BaseContext.add_loader Cadenza::FilesystemLoader.new(File.expand_path('.'))
+    def self.run!(path, options={})
+
+      root = options[:root] || File.expand_path(Dir.pwd)
+      Cadenza::BaseContext.add_loader Cadenza::FilesystemLoader.new(root)
       Cadenza::BaseContext.whiny_template_loading = true
 
-      Cadenza.render_template path, context
+      Cadenza.render_template path, options[:context]
     end
 
   end
