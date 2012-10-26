@@ -1,5 +1,5 @@
-require 'cadenza/cli/options'
 require 'optparse'
+require 'cadenza/cli/options'
 require 'multi_json'
 
 module Cadenza
