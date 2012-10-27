@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rake", "~> 0.9.2"
   s.add_development_dependency "rspec", "~> 2.6.0"
-  s.add_development_dependency "racc", "~> 1.4.6"
+  s.add_development_dependency "racc", "~> 1.4.6" if RUBY_PLATFORM != "java"
   s.add_development_dependency "nokogiri-diff", "~> 0.1.0"
   s.add_development_dependency "yard"
 
