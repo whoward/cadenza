@@ -43,8 +43,8 @@ See: [CONTRIBUTING.md](http://github.com/whoward/cadenza/tree/master/CONTRIBUTIN
 - Ruby Enterprise Edition
 - Rubinius 2.0 (1.8 mode)
 - Rubinius 2.0 (1.9 mode)
-
-Unforunately JRuby does not seem to work with Racc because of issues with it's native extension "cparse"
+- JRuby (1.8 mode)
+- JRuby (1.9 mode)
 
 # License
 
