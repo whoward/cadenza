@@ -1,0 +1,9 @@
+{% extends "nested_blocks/parent.html.cadenza" %}
+
+{% block nested %}
+  <p class="content">
+    blah
+  </p>
+{% endblock %}
+
+
