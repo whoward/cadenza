@@ -36,7 +36,7 @@ module Cadenza
       end
 
       def render_block(node, context, blocks)
-         (blocks[node.name] || node).children.each {|x| render(x, context) }
+         (blocks[node.name] || node).children.each {|x| render(x, context, blocks) }
       end
 
       def render_text(node, context, blocks)

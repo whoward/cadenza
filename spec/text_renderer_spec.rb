@@ -86,6 +86,19 @@ describe Cadenza::TextRenderer do
       renderer.output.string.should == "4"
    end
 
+   context "nested blocks" do
+     let(:nested_block_template) { fixture_filename "templates/nested_blocks/child.html.cadenza" }
+     let(:nested_block_output) { fixture_filename "templates/nested_blocks/child.html"}
+
+     it "renders content nested within nested layouts" do
+
+       index = Cadenza::Parser.new.parse(File.read nested_block_template)
+
+       renderer.render(index, context)
+       renderer.output.string.should be_html_equivalent_to File.read(nested_block_output)
+     end
+   end
+
    context "for nodes" do
       let(:standard_list_template) { fixture_filename "templates/standard_list.html.cadenza" }
       let(:standard_list_output)   { fixture_filename "templates/standard_list.html" }
