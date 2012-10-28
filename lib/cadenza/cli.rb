@@ -7,8 +7,19 @@ module Cadenza
 
     def self.run!(path, options={})
 
-      root = options[:root] || File.expand_path(Dir.pwd)
-      Cadenza::BaseContext.add_loader Cadenza::FilesystemLoader.new(root)
+      load_paths =
+        if options[:root]
+          [options[:root]]
+        elsif options.key?(:load_paths) && [:load_paths].any?
+          options[:load_paths]
+        else
+          [Dir.pwd]
+        end
+
+      load_paths.each do |path|
+        Cadenza::BaseContext.add_load_path path
+      end
+
       Cadenza::BaseContext.whiny_template_loading = true
 
       Cadenza.render_template path, options[:context]
