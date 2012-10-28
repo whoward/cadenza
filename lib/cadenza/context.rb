@@ -195,6 +195,17 @@ module Cadenza
          block.call(self, nodes, parameters)
       end
 
+      # constructs a {FilesystemLoader} with the string given as its path and
+      # adds the loader to the end of the loader list.
+      #
+      # @param [String] path to use for loader
+      # @return [Loader] the loader that was created
+      def add_load_path(path)
+        loader = FilesystemLoader.new(path)
+        add_loader(loader)
+        loader
+      end
+
       # adds the given loader to the end of the loader list.  If the argument 
       # passed is a string then a {FilesystemLoader} will be constructed with
       # the string given as a path for it.
@@ -202,11 +213,7 @@ module Cadenza
       # @param [Loader,String] loader the loader to add
       # @return nil
       def add_loader(loader)
-         if loader.is_a?(String)
-            @loaders.push FilesystemLoader.new(loader)
-         else
-            @loaders.push loader
-         end
+          @loaders.push loader
          nil
       end
 

@@ -21,6 +21,11 @@ module Cadenza::Cli
         @options[:context] = MultiJson.load(context)
       end
 
+      def add_load_path(path)
+        @options[:load_paths] ||= []
+        @options[:load_paths] << path
+      end
+
       def set_opts
         on("--context json") do |value|
           context_option value
@@ -30,6 +35,9 @@ module Cadenza::Cli
         end
         on("--root path") do |value|
           @options[:root] = value
+        end
+        on("-I", "--load-path PATH", "Add a path for the filesystem loader") do |path|
+          add_load_path(path)
         end
 
       end

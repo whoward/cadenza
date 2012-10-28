@@ -277,9 +277,9 @@ describe Cadenza::Context do
          context.loaders.should == [filesystem_loader]
       end
 
-      it "should push a string object as a filesystem loader" do
+      it "should allow adding a load path" do
          path = fixture_filename("foo")
-         context.add_loader(path)
+         context.add_load_path(path)
 
          context.loaders.should have(1).item
          context.loaders[0].should be_a Cadenza::FilesystemLoader
