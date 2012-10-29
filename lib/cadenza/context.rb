@@ -206,11 +206,9 @@ module Cadenza
         loader
       end
 
-      # adds the given loader to the end of the loader list.  If the argument 
-      # passed is a string then a {FilesystemLoader} will be constructed with
-      # the string given as a path for it.
+      # adds the given loader to the end of the loader list.
       #
-      # @param [Loader,String] loader the loader to add
+      # @param [Loader] loader the loader to add
       # @return nil
       def add_loader(loader)
           @loaders.push loader
