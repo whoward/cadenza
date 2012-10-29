@@ -1,0 +1,5 @@
+<div>
+{% if pi > 1.00 %}
+   {% block foo %}<p>some text</p>{% endblock %}
+{% endif %}
+</div>

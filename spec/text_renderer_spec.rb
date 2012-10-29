@@ -49,23 +49,45 @@ describe Cadenza::TextRenderer do
       renderer.output.string.should == "4.14159"
    end
 
-   it "should render the stringified result of a boolean node's value" do
-      document.children.push true_boolean_expression
+   context "if nodes" do
+      let(:if_blocks_template) { fixture_filename "templates/if_node/blocks.html.cadenza" }
+      let(:if_blocks_output)   { fixture_filename "templates/if_node/blocks.html" }
 
-      renderer.render(document, context)
+      let(:custom_if_blocks_template) { fixture_filename "templates/if_node/custom_blocks.html.cadenza" }
+      let(:custom_if_blocks_output)   { fixture_filename "templates/if_node/custom_blocks.html" }
+   
+      it "should render the stringified result of a boolean node's value" do
+         document.children.push true_boolean_expression
 
-      renderer.output.string.should == "true"
-   end
+         renderer.render(document, context)
 
-   it "should render the appropriate block of the if node" do
-      yup = Cadenza::TextNode.new "yup"
-      nope = Cadenza::TextNode.new "nope"
+         renderer.output.string.should == "true"
+      end
 
-      document.children.push Cadenza::IfNode.new(true_boolean_expression, [yup], [nope])
+      it "should render the appropriate block of the if node" do
+         yup = Cadenza::TextNode.new "yup"
+         nope = Cadenza::TextNode.new "nope"
 
-      renderer.render(document, context)
+         document.children.push Cadenza::IfNode.new(true_boolean_expression, [yup], [nope])
 
-      renderer.output.string.should == "yup"
+         renderer.render(document, context)
+
+         renderer.output.string.should == "yup"
+      end
+
+      it "renders default blocks in it's child nodes" do
+         index = Cadenza::Parser.new.parse(File.read if_blocks_template)
+
+         renderer.render(index, context)
+         renderer.output.string.should be_html_equivalent_to File.read(if_blocks_output)
+      end
+
+      it "renders overriden blocks in it's child nodes" do
+         index = Cadenza::Parser.new.parse(File.read custom_if_blocks_template)
+
+         renderer.render(index, context)
+         renderer.output.string.should be_html_equivalent_to File.read(custom_if_blocks_output)
+      end
    end
 
    it "should render the value of a inject node to the output" do

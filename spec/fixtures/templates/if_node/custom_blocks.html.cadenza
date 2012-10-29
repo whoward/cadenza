@@ -1,0 +1,3 @@
+{% extends "if_node/logic.html.cadenza" %}
+
+{% block foo %}<p>Hello World!</p>{% endblock %}

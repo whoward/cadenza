@@ -48,7 +48,7 @@ module Cadenza
       end
 
       def render_if(node, context, blocks)
-         node.evaluate_expression_for_children(context).each {|x| render(x, context) }
+         node.evaluate_expression_for_children(context).each {|x| render(x, context, blocks) }
       end
 
       def render_for(node, context, blocks)
