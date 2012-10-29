@@ -16,8 +16,8 @@ module Cadenza
           [Dir.pwd]
         end
 
-      load_paths.each do |path|
-        Cadenza::BaseContext.add_load_path path
+      load_paths.each do |load_path|
+        Cadenza::BaseContext.add_load_path load_path
       end
 
       Cadenza::BaseContext.whiny_template_loading = true
