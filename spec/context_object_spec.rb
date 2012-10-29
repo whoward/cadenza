@@ -1,31 +1,32 @@
 require 'spec_helper'
 
 describe Cadenza::ContextObject do
-   subject { Cadenza::ContextObject }
+   subject { TestContextObject.new }
 
-   it "should be instantiable" do
-      lambda { subject.new }.should_not raise_error
+   it "invokes public methods" do
+      subject.send(:invoke_context_method, "public_method").should == 123
    end
 
-   # Cadenza::ContextObject is just a placeholder for now, it will be implemented
-   # for Cadenza 0.8.0 as a replacement for general calling methods on objects
-   # bounds to the context - binding an object in 0.8+ will pretty much do
-   # nothing unless it is a subclass of Cadenza::ContextObject
-   #
-   # The reason for doing so is that we support Ruby 1.8.7 which does not
-   # implement Object#public_send, and shoddy support for Object#respond_to?
-   # (it will find protected methods), this probably won't be cleared up
-   # until Ruby 2.0. (see: http://bugs.ruby-lang.org/issues/3562)
-   #
-   # In 1.8.7 however we can just use a diff of Object#public_instance_methods
-   # to figure out just what was defined publicly on the object subclass.
-   #
-   # As a side effect we can enable metaprogramming and live benchmarking by
-   # adding before/after filters to objects, you could imagine a class hierarchy
-   # like this:
-   #
-   #    MyObject < BenchmarkingContextObject < Cadenza::ContextObject
-   # 
-   # where BenchmarkingContextObject would be responsible for collecting
-   # statistics.
+   it "doesn't invoke private methods" do
+      subject.send(:invoke_context_method, "private_method").should == nil
+   end
+
+   it "doesn't invoke protected methods" do
+      subject.send(:invoke_context_method, "protected_method").should == nil
+   end
+
+   it "invokes before_method if defined" do
+      subject.should_receive(:before_method).once
+      subject.send(:invoke_context_method, "public_method")
+   end
+
+   it "invokes after_method if defined" do
+      subject.should_receive(:after_method).once
+      subject.send(:invoke_context_method, "public_method")
+   end
+
+   it "invokes missing_context_method if trying to invoke a method which doesn't exist" do
+      subject.should_receive(:missing_context_method).with("foo").once
+      subject.send(:invoke_context_method, "foo")
+   end
 end

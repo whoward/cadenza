@@ -90,24 +90,7 @@ describe Cadenza::Context do
    end
 
    context "#lookup" do
-      class ScopedClass
-         def public_method
-            123
-         end
-
-      protected
-         def protected_method
-            456
-         end
-
-      private
-         def private_method
-            789
-         end
-
-      end
-
-      let(:scope) { {:foo => {:bar => "baz"}, :abc => OpenStruct.new(:def => "ghi"), :alphabet => %w(a b c), :obj => ScopedClass.new} }
+      let(:scope) { {:foo => {:bar => "baz"}, :abc => OpenStruct.new(:def => "ghi"), :alphabet => %w(a b c), :obj => TestContextObject.new} }
       let(:assign) { lambda {|context, name, value| context.assign(name, value) } }
       let(:context) { Cadenza::Context.new(scope) }
 
@@ -143,10 +126,6 @@ describe Cadenza::Context do
          context.lookup("foo").should == {:bar => "baz"}
       end
 
-      it "should look up identifiers on an object if the object responds to that identifier" do
-         context.lookup("abc.def").should == "ghi"
-      end
-
       it "should look up array indexes" do
          context.lookup("alphabet.1").should == "b"
       end
@@ -155,14 +134,12 @@ describe Cadenza::Context do
          context.lookup("assign").should == assign
       end
 
-      it "should call methods on objects" do
+      it "calls methods on ContextObjects" do
          context.lookup("obj.public_method").should == 123
       end
 
-      it "should not call protected or private methods on objects" do
-         pending "does not currently work, will be supported in Cadenza 0.8.0"
-         context.lookup("obj.protected_method").should == nil
-         context.lookup("obj.private_method").should == nil
+      it "doesn't look up values on objects which are not ContextObjects" do
+         context.lookup("abc.def").should == nil
       end
    end
 
