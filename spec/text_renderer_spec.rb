@@ -91,17 +91,17 @@ describe Cadenza::TextRenderer do
    end
 
    it "should render the value of a inject node to the output" do
-      pi = Cadenza::VariableNode.new("pi")
-
       floor = Cadenza::FilterNode.new("floor")
       add_one = Cadenza::FilterNode.new("add", [Cadenza::ConstantNode.new(1)])
+
+      pi = Cadenza::VariableNode.new("pi", [floor, add_one])
 
       context = Cadenza::Context.new(:pi => 3.14159)
 
       context.define_filter(:floor) {|value|        value.floor    }
       context.define_filter(:add)   {|value,amount| value + amount }
 
-      document.children.push Cadenza::InjectNode.new(pi, [floor, add_one])
+      document.children.push Cadenza::InjectNode.new(pi)
 
       renderer.render(document, context)
 

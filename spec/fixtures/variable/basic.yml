@@ -1,3 +1,4 @@
+# should be the result of parsing "{{ foo }}"
 DocumentNode:
   children:
     - InjectNode:

@@ -1,7 +1,7 @@
 class Cadenza::RaccParser
 
 /* expect this many shift/reduce conflicts */
-expect 2
+expect 44
 
 rule
   target
@@ -9,11 +9,33 @@ rule
     | /* none */ { result = nil }
     ;
 
+  parameter_list
+    : logical_expression                     { result = [val[0]] }
+    | parameter_list ',' logical_expression  { result = val[0].push(val[2]) }
+    ;
+
+  filter
+    : IDENTIFIER                    { result = FilterNode.new(val[0].value) }
+    | IDENTIFIER ':' parameter_list { result = FilterNode.new(val[0].value, val[2]) }
+    ;
+
+  filter_list
+    : filter { result = [val[0]] }
+    | filter_list '|' filter { result = val[0].push(val[2]) }
+    ;
+
+  variable_expression
+    : IDENTIFIER                                { result = VariableNode.new(val[0].value) }
+    | IDENTIFIER '|' filter_list                { result = VariableNode.new(val[0].value, val[2]) }
+    | IDENTIFIER parameter_list                 { result = VariableNode.new(val[0].value, [], val[1]) }
+    | IDENTIFIER parameter_list '|' filter_list { result = VariableNode.new(val[0].value, val[3], val[1]) }
+    ;
+
   primary_expression
-    : IDENTIFIER { result = VariableNode.new(val[0].value) }
-    | INTEGER    { result = ConstantNode.new(val[0].value) }
-    | REAL       { result = ConstantNode.new(val[0].value) }
-    | STRING     { result = ConstantNode.new(val[0].value) }
+    : variable_expression
+    | INTEGER                     { result = ConstantNode.new(val[0].value) }
+    | REAL                        { result = ConstantNode.new(val[0].value) }
+    | STRING                      { result = ConstantNode.new(val[0].value) }
     | '(' logical_expression ')'  { result = val[1] }
     ;
 
@@ -50,36 +72,8 @@ rule
     | logical_expression OR inverse_expression { result = OperationNode.new(val[0], "or", val[2]) }
     ;
 
-  parameter_list
-    : logical_expression                     { result = [val[0]] }
-    | parameter_list ',' logical_expression  { result = val[0].push(val[2]) }
-    ;
-
-  filter
-    : IDENTIFIER                    { result = FilterNode.new(val[0].value) }
-    | IDENTIFIER ':' parameter_list { result = FilterNode.new(val[0].value, val[2]) }
-    ;
-
-  filter_list
-    : filter { result = [val[0]] }
-    | filter_list '|' filter { result = val[0].push(val[2]) }
-    ;
-
   inject_statement
-    : VAR_OPEN logical_expression VAR_CLOSE
-      { result = InjectNode.new(val[1]) }
-    | VAR_OPEN logical_expression '|' filter_list VAR_CLOSE
-      { result = InjectNode.new(val[1], val[3]) }
-    | VAR_OPEN IDENTIFIER parameter_list VAR_CLOSE 
-      {
-        variable = VariableNode.new(val[1].value)
-        result = InjectNode.new(variable, [], val[2])
-      }
-    | VAR_OPEN IDENTIFIER parameter_list '|' filter_list VAR_CLOSE
-      {
-        variable = VariableNode.new(val[1].value)
-        result = InjectNode.new(variable, val[4], val[2])
-      }
+    : VAR_OPEN logical_expression VAR_CLOSE { result = InjectNode.new(val[1]) }
     ;
 
   if_tag
@@ -151,7 +145,7 @@ rule
     ;
 
   for_tag
-    : STMT_OPEN FOR IDENTIFIER IN IDENTIFIER STMT_CLOSE { result = [val[2].value, val[4].value] }
+    : STMT_OPEN FOR IDENTIFIER IN variable_expression STMT_CLOSE { result = [val[2].value, val[4]] }
     ;
 
   end_for_tag
@@ -163,14 +157,14 @@ rule
     : for_tag end_for_tag
       {
         iterator = VariableNode.new(val[0][0])
-        iterable = VariableNode.new(val[0][1])
+        iterable = val[0][1]
         
         result = ForNode.new(iterator, iterable, [])      
       }
     | for_tag { @stack.push DocumentNode.new } document end_for_tag
       {
         iterator = VariableNode.new(val[0][0])
-        iterable = VariableNode.new(val[0][1])
+        iterable = val[0][1]
         
         result = ForNode.new(iterator, iterable, @stack.pop.children)
       }
