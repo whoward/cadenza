@@ -5,6 +5,6 @@ DocumentNode:
          value:
             VariableNode:
                value: load
-         parameters:
-            - ConstantNode:
-               value: mytemplate
+               parameters:
+                  - ConstantNode:
+                     value: mytemplate

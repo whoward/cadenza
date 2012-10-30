@@ -1,0 +1,13 @@
+# should be the result of parsing "{{ load 'mytemplate' | htmlescape }}"
+DocumentNode:
+   children:
+      - InjectNode:
+         value:
+            VariableNode:
+               value: load
+               filters:
+                  - FilterNode:
+                     identifier: htmlescape
+               parameters:
+                  - ConstantNode:
+                     value: mytemplate
