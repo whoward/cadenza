@@ -100,9 +100,8 @@ describe Cadenza::TextRenderer do
       add_one = Cadenza::FilterNode.new("add", [Cadenza::ConstantNode.new(1)])
       
       pi = Cadenza::VariableNode.new("pi")
-      filtered_node = Cadenza::FilteredValueNode.new(pi, [floor, add_one])
 
-      document.children.push Cadenza::InjectNode.new(filtered_node)
+      document.children.push Cadenza::FilteredValueNode.new(pi, [floor, add_one])
 
       renderer.render(document, context)
 
@@ -134,7 +133,7 @@ describe Cadenza::TextRenderer do
          iterator = Cadenza::VariableNode.new("x")
          counter  = Cadenza::VariableNode.new("forloop.counter")
 
-         children = [Cadenza::InjectNode.new(counter), Cadenza::TextNode.new(": "), Cadenza::InjectNode.new(iterator), Cadenza::TextNode.new("\n")]
+         children = [counter, Cadenza::TextNode.new(": "), iterator, Cadenza::TextNode.new("\n")]
 
          context = Cadenza::Context.new({:alphabet => %w(a b c)})
 

@@ -77,13 +77,9 @@ describe Cadenza::IfNode do
       variable_b = Cadenza::VariableNode.new("y")
       variable_c = Cadenza::VariableNode.new("z")
 
-      inject_a = Cadenza::InjectNode.new(variable_a)
-      inject_b = Cadenza::InjectNode.new(variable_b)
-      inject_c = Cadenza::InjectNode.new(variable_c)
-
       expression = Cadenza::OperationNode.new(variable_a, "==", variable_b)
 
-      if_statement = Cadenza::IfNode.new(expression, [inject_c], [inject_a, inject_b, inject_c])
+      if_statement = Cadenza::IfNode.new(expression, [variable_c], [variable_a, variable_b, variable_c])
 
       if_statement.implied_globals.should == %w(x y z)
    end

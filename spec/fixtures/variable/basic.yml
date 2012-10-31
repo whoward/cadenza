@@ -1,7 +1,5 @@
 # should be the result of parsing "{{ foo }}"
 DocumentNode:
   children:
-    - InjectNode:
-        value:
-          VariableNode:
-            value: foo
+    - VariableNode:
+        value: foo

@@ -1,9 +1,7 @@
 # {{ not x }}
 DocumentNode:
    children:
-      - InjectNode:
-         value:
-            BooleanInverseNode:
-               expression:
-                  VariableNode:
-                     value: x
+      - BooleanInverseNode:
+         expression:
+            VariableNode:
+               value: x

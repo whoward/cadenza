@@ -1,7 +1,0 @@
-# should be the result of parsing "{{ somevar }}"
-DocumentNode:
-  children:
-    - InjectNode:
-        value:
-          VariableNode:
-            value: somevar

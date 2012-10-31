@@ -1,25 +1,23 @@
 # result of {{ foo == 1 or bar > 3 }}
 DocumentNode:
   children:
-    - InjectNode:
-        value:
+    - OperationNode:
+        operator: or
+        left:
           OperationNode:
-            operator: or
+            operator: "=="
             left:
-              OperationNode:
-                operator: "=="
-                left:
-                  VariableNode:
-                    value: foo
-                right:
-                  ConstantNode:
-                    value: 1
+              VariableNode:
+                value: foo
             right:
-              OperationNode:
-                operator: ">"
-                left:
-                  VariableNode:
-                    value: "bar"
-                right:
-                  ConstantNode:
-                    value: 3
+              ConstantNode:
+                value: 1
+        right:
+          OperationNode:
+            operator: ">"
+            left:
+              VariableNode:
+                value: "bar"
+            right:
+              ConstantNode:
+                value: 3

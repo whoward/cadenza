@@ -53,31 +53,29 @@ describe Cadenza::ForNode do
       let(:iterator) { Cadenza::VariableNode.new("foo") }
 
       it "should return the children's implied globals minus locals defined (the iterator)" do
-         global_inject = Cadenza::InjectNode.new(Cadenza::VariableNode.new("waz"))
+         variable = Cadenza::VariableNode.new("waz")
 
-         for_node = Cadenza::ForNode.new(iterator, iterable, [global_inject])
+         for_node = Cadenza::ForNode.new(iterator, iterable, [variable])
 
          for_node.implied_globals.should == %w(bars waz)
       end
 
       it "should not return the iterator if found in the children's implied globals" do
-         iterator_inject = Cadenza::InjectNode.new(iterator)
-
-         for_node = Cadenza::ForNode.new(iterator, iterable, [iterator_inject])
+         for_node = Cadenza::ForNode.new(iterator, iterable, [iterator])
 
          for_node.implied_globals.should == %w(bars)
       end
 
       it "should not return magic locals assigned to the inner scope" do
-         counter_inject = Cadenza::InjectNode.new(Cadenza::VariableNode.new("forloop.counter"))
-         counter0_inject = Cadenza::InjectNode.new(Cadenza::VariableNode.new("forloop.counter0"))
-         first_inject = Cadenza::InjectNode.new(Cadenza::VariableNode.new("forloop.first"))
-         last_inject = Cadenza::InjectNode.new(Cadenza::VariableNode.new("forloop.last"))
+         counter = Cadenza::VariableNode.new("forloop.counter")
+         counter0 = Cadenza::VariableNode.new("forloop.counter0")
+         first = Cadenza::VariableNode.new("forloop.first")
+         last = Cadenza::VariableNode.new("forloop.last")
 
-         for_node_a = Cadenza::ForNode.new(iterator, iterable, [counter_inject])
-         for_node_b = Cadenza::ForNode.new(iterator, iterable, [counter0_inject])
-         for_node_c = Cadenza::ForNode.new(iterator, iterable, [first_inject])
-         for_node_d = Cadenza::ForNode.new(iterator, iterable, [last_inject])
+         for_node_a = Cadenza::ForNode.new(iterator, iterable, [counter])
+         for_node_b = Cadenza::ForNode.new(iterator, iterable, [counter0])
+         for_node_c = Cadenza::ForNode.new(iterator, iterable, [first])
+         for_node_d = Cadenza::ForNode.new(iterator, iterable, [last])
 
          for_node_a.implied_globals.should == %w(bars)
          for_node_b.implied_globals.should == %w(bars)
@@ -86,9 +84,9 @@ describe Cadenza::ForNode do
       end
 
       it "should rewrite dot notations of the iterator in terms of the iterable's identifier" do
-         dot_notation_inject = Cadenza::InjectNode.new(Cadenza::VariableNode.new("foo.baz"))
+         dot_notation = Cadenza::VariableNode.new("foo.baz")
 
-         for_node = Cadenza::ForNode.new(iterator, iterable, [dot_notation_inject])
+         for_node = Cadenza::ForNode.new(iterator, iterable, [dot_notation])
 
          for_node.implied_globals.should == %w(bars bars.baz)
       end

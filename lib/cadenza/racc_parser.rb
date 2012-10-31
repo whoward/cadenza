@@ -608,7 +608,7 @@ module_eval(<<'.,.,', 'cadenza.y', 71)
 
 module_eval(<<'.,.,', 'cadenza.y', 75)
   def _reduce_35(val, _values, result)
-     result = InjectNode.new(val[1]) 
+     result = val[1] 
     result
   end
 .,.,

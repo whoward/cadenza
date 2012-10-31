@@ -16,7 +16,6 @@ private
     case type
       when "DocumentNode" then parse_document_node(node)
       when "ConstantNode" then parse_constant_node(node)
-      when "InjectNode"   then parse_inject_node(node)
       when "FilterNode" then parse_filter_node(node)
       when "VariableNode" then parse_variable_node(node)
       when "FilteredValueNode" then parse_filtered_value_node(node)
@@ -48,12 +47,6 @@ private
 
   def parse_constant_node(node)
     Cadenza::ConstantNode.new(node["value"])
-  end
-
-  def parse_inject_node(node)
-    value = node_for_key(node, "value")
-    
-    Cadenza::InjectNode.new(value)
   end
 
   def parse_filter_node(node)

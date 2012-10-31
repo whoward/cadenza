@@ -3,9 +3,7 @@ DocumentNode:
   children:
    - TextNode:
       text: abc
-   - InjectNode:
-      value:
-         VariableNode:
-            value: def
+   - VariableNode:
+      value: def
    - TextNode:
       text: ghi

@@ -43,10 +43,6 @@ module Cadenza
          output << node.text
       end
 
-      def render_inject(node, context, blocks)
-         output << node.evaluate(context).to_s
-      end
-
       def render_if(node, context, blocks)
          node.evaluate_expression_for_children(context).each {|x| render(x, context, blocks) }
       end
@@ -86,8 +82,6 @@ module Cadenza
          output << context.evaluate_block(node.identifier, node.children, node.parameters)
       end
 
-      # none of these should appear directly inside the body of the 
-      # document but for safety we will render them anyways
       def render_constant(node, context, blocks)
          output << node.eval(context).to_s
       end
@@ -95,6 +89,7 @@ module Cadenza
       alias :render_variable        :render_constant
       alias :render_operation       :render_constant
       alias :render_boolean_inverse :render_constant
+      alias :render_filtered_value  :render_constant
 
    end
 end

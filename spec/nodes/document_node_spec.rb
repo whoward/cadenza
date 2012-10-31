@@ -40,8 +40,8 @@ describe Cadenza::DocumentNode do
   end
 
   it "should use it's children's implied globals (unique) for its own implied_globals" do
-    @inject_a = Cadenza::InjectNode.new(Cadenza::VariableNode.new("x"))
-    @inject_b = Cadenza::InjectNode.new(Cadenza::VariableNode.new("y"))
+    @inject_a = Cadenza::VariableNode.new("x")
+    @inject_b = Cadenza::VariableNode.new("y")
 
     @document_a = Cadenza::DocumentNode.new([@inject_a, @inject_b])
     @document_b = Cadenza::DocumentNode.new([@inject_a, @inject_a])

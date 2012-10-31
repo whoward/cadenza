@@ -1,6 +1,4 @@
 DocumentNode:
   children:
-    - InjectNode:
-        value:
-          ConstantNode:
-            value: 42
+    - ConstantNode:
+        value: 42

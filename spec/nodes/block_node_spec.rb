@@ -30,8 +30,8 @@ describe Cadenza::BlockNode do
   end
 
   it "should return a list of its children's unique implied globals" do
-    inject_a = Cadenza::InjectNode.new(Cadenza::VariableNode.new("a"))
-    inject_b = Cadenza::InjectNode.new(Cadenza::VariableNode.new("b"))
+    inject_a = Cadenza::VariableNode.new("a")
+    inject_b = Cadenza::VariableNode.new("b")
 
     block_a = Cadenza::BlockNode.new("foo", [inject_a, inject_b])
     block_b = Cadenza::BlockNode.new("foo", [inject_a, inject_a])

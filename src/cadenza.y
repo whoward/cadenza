@@ -73,7 +73,7 @@ rule
     ;
 
   inject_statement
-    : VAR_OPEN filtered_expression VAR_CLOSE { result = InjectNode.new(val[1]) }
+    : VAR_OPEN filtered_expression VAR_CLOSE { result = val[1] }
     ;
 
   if_tag

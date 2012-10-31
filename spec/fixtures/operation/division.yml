@@ -1,12 +1,10 @@
 DocumentNode:
   children:
-    - InjectNode:
-        value:
-          OperationNode:
-            operator: /
-            left:
-              VariableNode:
-                value: a
-            right:
-              VariableNode:
-                value: b
+    - OperationNode:
+        operator: /
+        left:
+          VariableNode:
+            value: a
+        right:
+          VariableNode:
+            value: b

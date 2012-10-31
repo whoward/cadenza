@@ -1,6 +1,4 @@
 DocumentNode:
   children:
-    - InjectNode:
-        value:
-          ConstantNode:
-            value: Foo
+    - ConstantNode:
+        value: Foo

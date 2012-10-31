@@ -1,13 +1,11 @@
 # result of {{ foo >= 1 }}
 DocumentNode:
   children:
-    - InjectNode:
-        value:
-          OperationNode:
-            operator: ">="
-            left:
-              VariableNode:
-                value: foo
-            right:
-              ConstantNode:
-                value: 1
+    - OperationNode:
+        operator: ">="
+        left:
+          VariableNode:
+            value: foo
+        right:
+          ConstantNode:
+            value: 1

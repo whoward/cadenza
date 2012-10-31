@@ -1,12 +1,10 @@
 # should be the result of parsing "{{ name | trim }}"
 DocumentNode:
    children:
-      - InjectNode:
+      - FilteredValueNode:
          value:
-            FilteredValueNode:
-               value:
-                  VariableNode:
-                     value: name
-               filters:
-                  - FilterNode:
-                     identifier: trim
+            VariableNode:
+               value: name
+         filters:
+            - FilterNode:
+               identifier: trim
