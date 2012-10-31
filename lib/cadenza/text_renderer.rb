@@ -16,13 +16,19 @@ module Cadenza
          io.string
       end
 
+      def render(node, context, blocks={})
+         passed_blocks = blocks.is_a?(BlockHierarchy) ? blocks : BlockHierarchy.new(blocks)
+
+         super(node, context, passed_blocks)
+      end
+
    private
    
       def render_document(node, context, blocks)
          if node.extends
             # merge the inherited blocks onto this document's blocks to
             # determine what to pass to the layout template
-            blocks = node.blocks.merge(blocks)
+            blocks.merge(node.blocks)
 
             # load the template of the document and render it to the same output stream
             template = context.load_template!(node.extends)
@@ -36,7 +42,23 @@ module Cadenza
       end
 
       def render_block(node, context, blocks)
-         (blocks[node.name] || node).children.each {|x| render(x, context, blocks) }
+         # create the full inheritance chain with this node on top, making sure
+         # not to mutate the block hierarchy's internals
+         chain = blocks[node.name].dup << node
+         
+         super_fn = lambda do |params|
+            parent_node = chain.shift
+
+            parent_node.children.each {|x| render(x, context, blocks) } if parent_node
+
+            nil
+         end
+
+         context.push('super' => super_fn)
+
+         chain.shift.children.each {|x| render(x, context, blocks) }
+
+         context.pop
       end
 
       def render_text(node, context, blocks)

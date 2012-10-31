@@ -234,19 +234,27 @@ describe Cadenza::TextRenderer do
    context "extension nodes" do
       index_file     = File.read(fixture_filename "templates/index.html.cadenza")
       index_two_file = File.read(fixture_filename "templates/index_two.html.cadenza")
+      super_file     = File.read(fixture_filename "templates/super.html.cadenza")
 
-      it "should render the extended template with the blocks from the base template" do
+      it "renders the extended template with the blocks from the base template" do
          index = Cadenza::Parser.new.parse(index_file)
          
          renderer.render(index, context)
          renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/index.html")
       end
 
-      it "should render a multi tier layout" do
+      it "renders a multi level layout" do
          index = Cadenza::Parser.new.parse(index_two_file)
 
          renderer.render(index, context)
          renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/index_two.html")
+      end
+
+      it "renders multiple levels of super calls" do
+         index = Cadenza::Parser.new.parse(super_file)
+
+         renderer.render(index, context)
+         renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/super.html")
       end
    end
 end
