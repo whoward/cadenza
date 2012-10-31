@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-require File.expand_path('perf_helper', File.dirname(__FILE__))
+require File.expand_path('../../perf_helper', File.dirname(__FILE__))
+require 'liquid'
 
 cadenza_parser = Cadenza::Parser.new
 cadenza_template_data = cadenza_template_data("template_1")

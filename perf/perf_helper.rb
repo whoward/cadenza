@@ -1,5 +1,4 @@
 require 'benchmark'
-require 'liquid'
 
 # this is a a wrapper script for loading the cadenza library, either from the git repo (../lib/cadenza.rb) or from rubygems
 # by default the git repo will be loaded, to load using rubygems pass CADENZA_USE_GEM=yes as an environment variable
