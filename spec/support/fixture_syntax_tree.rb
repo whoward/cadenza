@@ -19,6 +19,7 @@ private
       when "InjectNode"   then parse_inject_node(node)
       when "FilterNode" then parse_filter_node(node)
       when "VariableNode" then parse_variable_node(node)
+      when "FilteredValueNode" then parse_filtered_value_node(node)
       when "OperationNode" then parse_operation_node(node)
       when "TextNode" then parse_text_node(node)
       when "IfNode" then parse_if_node(node)
@@ -63,10 +64,16 @@ private
   end
 
   def parse_variable_node(node)
-    filters = list_for_key(node, "filters")
     parameters = list_for_key(node, "parameters")
 
-    Cadenza::VariableNode.new(node["value"], filters, parameters)
+    Cadenza::VariableNode.new(node["value"], parameters)
+  end
+
+  def parse_filtered_value_node(node)
+    value = node_for_key(node, "value")
+    filters = list_for_key(node, "filters")
+
+    Cadenza::FilteredValueNode.new(value, filters)
   end
 
   def parse_operation_node(node)

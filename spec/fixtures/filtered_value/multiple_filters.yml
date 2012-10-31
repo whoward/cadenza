@@ -3,8 +3,10 @@ DocumentNode:
    children:
       - InjectNode:
             value:
-               VariableNode:
-                  value: name
+               FilteredValueNode:
+                  value:
+                     VariableNode:
+                        value: name
                   filters:
                      - FilterNode:
                         identifier: trim

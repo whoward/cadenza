@@ -3,15 +3,17 @@ DocumentNode:
    children:
       - InjectNode:
          value:
-            VariableNode:
-               value: name
+            FilteredValueNode:
+               value:
+                  VariableNode:
+                     value: name
                filters:
                   - FilterNode:
-                      identifier: trim
+                     identifier: trim
                   - FilterNode:
-                      identifier: somefilter
-                      parameters:
+                     identifier: somefilter
+                     parameters:
                         - ConstantNode:
-                            value: foo
+                           value: foo
                         - ConstantNode:
-                            value: 3.14159
+                           value: 3.14159

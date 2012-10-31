@@ -1,7 +1,7 @@
 class Cadenza::RaccParser
 
 /* expect this many shift/reduce conflicts */
-expect 44
+expect 39
 
 rule
   target
@@ -14,29 +14,14 @@ rule
     | parameter_list ',' logical_expression  { result = val[0].push(val[2]) }
     ;
 
-  filter
-    : IDENTIFIER                    { result = FilterNode.new(val[0].value) }
-    | IDENTIFIER ':' parameter_list { result = FilterNode.new(val[0].value, val[2]) }
-    ;
-
-  filter_list
-    : filter { result = [val[0]] }
-    | filter_list '|' filter { result = val[0].push(val[2]) }
-    ;
-
-  variable_expression
-    : IDENTIFIER                                { result = VariableNode.new(val[0].value) }
-    | IDENTIFIER '|' filter_list                { result = VariableNode.new(val[0].value, val[2]) }
-    | IDENTIFIER parameter_list                 { result = VariableNode.new(val[0].value, [], val[1]) }
-    | IDENTIFIER parameter_list '|' filter_list { result = VariableNode.new(val[0].value, val[3], val[1]) }
-    ;
-
+  /* this has a shift/reduce conflict but since Racc will shift in this case it is the correct behavior */
   primary_expression
-    : variable_expression
-    | INTEGER                     { result = ConstantNode.new(val[0].value) }
-    | REAL                        { result = ConstantNode.new(val[0].value) }
-    | STRING                      { result = ConstantNode.new(val[0].value) }
-    | '(' logical_expression ')'  { result = val[1] }
+    : IDENTIFIER                   { result = VariableNode.new(val[0].value) }
+    | IDENTIFIER parameter_list    { result = VariableNode.new(val[0].value, val[1]) }
+    | INTEGER                      { result = ConstantNode.new(val[0].value) }
+    | REAL                         { result = ConstantNode.new(val[0].value) }
+    | STRING                       { result = ConstantNode.new(val[0].value) }
+    | '(' filtered_expression ')'   { result = val[1] }
     ;
 
   multiplicative_expression
@@ -72,8 +57,23 @@ rule
     | logical_expression OR inverse_expression { result = OperationNode.new(val[0], "or", val[2]) }
     ;
 
+  filter
+    : IDENTIFIER                    { result = FilterNode.new(val[0].value) }
+    | IDENTIFIER ':' parameter_list { result = FilterNode.new(val[0].value, val[2]) }
+    ;
+
+  filter_list
+    : filter { result = [val[0]] }
+    | filter_list '|' filter { result = val[0].push(val[2]) }
+    ;
+
+  filtered_expression
+    : logical_expression
+    | logical_expression '|' filter_list { result = FilteredValueNode.new(val[0], val[2]) }
+    ;
+
   inject_statement
-    : VAR_OPEN logical_expression VAR_CLOSE { result = InjectNode.new(val[1]) }
+    : VAR_OPEN filtered_expression VAR_CLOSE { result = InjectNode.new(val[1]) }
     ;
 
   if_tag
@@ -145,7 +145,7 @@ rule
     ;
 
   for_tag
-    : STMT_OPEN FOR IDENTIFIER IN variable_expression STMT_CLOSE { result = [val[2].value, val[4]] }
+    : STMT_OPEN FOR IDENTIFIER IN filtered_expression STMT_CLOSE { result = [val[2].value, val[4]] }
     ;
 
   end_for_tag
