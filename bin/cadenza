@@ -7,4 +7,12 @@ require 'cadenza/cli'
 options = Cadenza::Cli::Options.parse!
 path = ARGV[0]
 
-STDOUT.puts Cadenza::Cli.run!(path, options)
+begin
+    STDOUT.puts Cadenza::Cli.run!(path, options)
+rescue Cadenza::TemplateNotFoundError => e
+    STDERR.puts "Couldn't find template - #{e.message}"
+    exit 66
+rescue Cadenza::Error => e
+    STDERR.puts "#{e.backtrace}"
+    exit 1
+end
