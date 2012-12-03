@@ -151,4 +151,50 @@ describe Cadenza::BaseContext, 'standard filters' do
          wrapped.should == "This text is not too<br/>short to be wrapped.<br/>"
       end
    end
+
+   context "reverse" do
+      it "returns a string in reverse form" do
+         subject.evaluate_filter(:reverse, ["hello"]).should == "olleh"
+      end
+
+      it "returns an array in reverse form" do
+         subject.evaluate_filter(:reverse, [[1,2,3]]).should == [3,2,1]
+      end
+   end
+
+   context "limit" do
+      it "returns an array with the first N items" do
+         subject.evaluate_filter(:limit, [%w(a b c), 2]).should == %w(a b)
+      end
+
+      it "returns a string with the first N characters" do
+         subject.evaluate_filter(:limit, ["hello", 2]).should == "he"
+      end
+
+      it "returns an empty array if given an array and a length < 1" do
+         subject.evaluate_filter(:limit, [%w(a b c), 0]).should == []
+      end
+
+      it "returns an empty string if given a string and a length < 1" do
+         subject.evaluate_filter(:limit, ["hello", 0]).should == ""
+      end
+   end
+
+   context "offset" do
+      it "returns an array with the elements after the Nth item (1-based)" do
+         subject.evaluate_filter(:offset, [%w(a b c), 2]).should == %w(c)
+      end
+
+      it "returns a string with the characters after the Nth character (1-based)" do
+         subject.evaluate_filter(:offset, ["hello", 2]).should == "llo"
+      end
+
+      it "returns an empty array if given an array and a N > length" do
+         subject.evaluate_filter(:offset, [%w(a b c), 3]).should == []
+      end
+
+      it "returns an empty string if given a string and a N > length" do
+         subject.evaluate_filter(:offset, ["hello", 5]).should == ""
+      end
+   end
 end

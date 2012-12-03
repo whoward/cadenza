@@ -95,3 +95,20 @@ define_filter :wordwrap do |input, length, *args|
    input.gsub(/(.{1,#{length}})(\s+|\Z)/, "\\1#{linefeed}")
 end
 
+# returns the string or array reversed
+define_filter :reverse, &:reverse
+
+# returns the string or array with the first +length+ items/characters contained
+define_filter :limit do |input, length, *args|
+   if length > 0
+      input.slice(0..length-1)
+   else
+      input.is_a?(Array) ? [] : ""
+   end
+end
+
+# returns the string or array with all items/characters after the +index+ 
+# item/character (where 1 is the first index, not 0 as programmers are used to)
+define_filter :offset do |input, index, *args|
+   input.slice(index..-1)
+end
