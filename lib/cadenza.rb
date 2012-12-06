@@ -8,6 +8,7 @@ require 'cadenza/context_object'
 require 'cadenza/base_renderer'
 require 'cadenza/text_renderer'
 require 'cadenza/block_hierarchy'
+require 'cadenza/source_renderer'
 require 'cadenza/filesystem_loader'
 require 'cadenza/version'
 
