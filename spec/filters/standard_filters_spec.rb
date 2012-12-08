@@ -197,4 +197,16 @@ describe Cadenza::BaseContext, 'standard filters' do
          subject.evaluate_filter(:offset, ["hello", 5]).should == ""
       end
    end
+
+   context "pluck" do
+      let(:objects) { [{:name => "Mike"}, {:name => "Will"}, {:name => "Dave"}] }
+      it "returns an array with the collected property passed" do
+         subject.evaluate_filter(:pluck, [objects, "name"]).should == %w(Mike Will Dave)
+      end
+
+      it "is also aliased as map and collect" do
+         subject.evaluate_filter(:map, [objects, "name"]).should == %w(Mike Will Dave)
+         subject.evaluate_filter(:collect, [objects, "name"]).should == %w(Mike Will Dave)
+      end
+   end
 end

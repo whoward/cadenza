@@ -112,3 +112,12 @@ end
 define_filter :offset do |input, index, *args|
    input.slice(index..-1)
 end
+
+# returns an array of objects with the given identifier looked up on all of the
+# input array elements.
+define_filter :pluck do |input, identifier, *args|
+   input.map {|item| Cadenza::Context.lookup_on_object(identifier, item) }
+end
+
+alias_filter :pluck, :map
+alias_filter :pluck, :collect
