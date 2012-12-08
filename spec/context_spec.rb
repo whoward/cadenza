@@ -134,6 +134,11 @@ describe Cadenza::Context do
          context.lookup("assign").should == assign
       end
 
+      it "should look up a functional variable instead of a variable of the same name" do
+         context.push(:assign => "foo")
+         context.lookup("assign").should == assign
+      end
+
       it "calls methods on ContextObjects" do
          context.lookup("obj.public_method").should == 123
       end

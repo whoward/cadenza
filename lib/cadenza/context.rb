@@ -18,6 +18,26 @@ module Cadenza
    # generic {#blocks}, {#loaders} and configuration data as well as all the 
    # methods you should need to define and evaluate those.
    class Context
+      def self.lookup_on_object(identifier, object)
+         sym_identifier = identifier.to_sym
+
+         # allow looking up array indexes with dot notation, example: alphabet.0 => "a"
+         #TODO: the /\d+/ regex doesn't have the \A\z terminators, could that allow expected calling? example: alpabet.a0
+         if object.respond_to?(:[]) and object.is_a?(Array) and identifier =~ /\d+/
+            return object[identifier.to_i]
+         end
+
+         # otherwise if it's a hash look up the string or symbolized key
+         if object.respond_to?(:[]) and object.is_a?(Hash) and (object.has_key?(identifier) || object.has_key?(sym_identifier))
+            return object[identifier] || object[sym_identifier]
+         end
+
+         # if the identifier is a callable method then call that
+         return object.send(:invoke_context_method, identifier) if object.is_a?(Cadenza::ContextObject)
+         
+         nil
+      end
+
       # @return [Array] the variable stack
       attr_accessor :stack
 
@@ -77,6 +97,11 @@ module Cadenza
       #
       # @return [Object] the object matching the identifier or nil if not found
       def lookup(identifier)
+         sym_identifier = identifier.to_sym
+
+         # if a functional variable is defined matching the identifier name then return that
+         return @functional_variables[sym_identifier] if @functional_variables.has_key?(sym_identifier)
+
          @stack.reverse_each do |scope|
             value = lookup_identifier(scope, identifier)
 
@@ -288,7 +313,7 @@ module Cadenza
          if identifier.index('.')
             lookup_path(scope, identifier.split("."))
          else
-            lookup_on_scope(scope, identifier)
+            self.class.lookup_on_object(identifier, scope)
          end
       end
 
@@ -296,33 +321,10 @@ module Cadenza
          loop do
             component = path.shift
 
-            scope = lookup_on_scope(scope, component)
+            scope = self.class.lookup_on_object(component, scope)
 
             return scope if path.empty?
          end
-      end
-
-      def lookup_on_scope(scope, identifier)
-         sym_identifier = identifier.to_sym
-
-         # allow looking up array indexes with dot notation, example: alphabet.0 => "a"
-         #TODO: the /\d+/ regex doesn't have the \A\z terminators, could that allow expected calling? example: alpabet.a0
-         if scope.respond_to?(:[]) and scope.is_a?(Array) and identifier =~ /\d+/
-            return scope[identifier.to_i]
-         end
-
-         # otherwise if it's a hash look up the string or symbolized key
-         if scope.respond_to?(:[]) and scope.is_a?(Hash) and (scope.has_key?(identifier) || scope.has_key?(sym_identifier))
-            return scope[identifier] || scope[sym_identifier]
-         end
-
-         # if the identifier is a callable method then call that
-         return scope.send(:invoke_context_method, identifier) if scope.is_a?(Cadenza::ContextObject)
-
-         # if a functional variable is defined matching the identifier name then return that
-         return @functional_variables[sym_identifier] if @functional_variables.has_key?(sym_identifier)
-         
-         nil
       end
 
    end
