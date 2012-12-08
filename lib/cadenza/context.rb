@@ -153,6 +153,12 @@ module Cadenza
          nil
       end
 
+      def alias_filter(original_name, alias_name)
+         filter = @filters[original_name.to_sym]
+         raise FilterNotDefinedError.new("undefined filter '#{original_name}'") if filter.nil?
+         @filters[alias_name.to_sym] = filter
+      end
+
       # calls the defined filter proc with the given parameters and returns the
       # result.  
       #
@@ -176,6 +182,12 @@ module Cadenza
       def define_functional_variable(name, &block)
          @functional_variables[name.to_sym] = block
          nil
+      end
+
+      def alias_functional_variable(original_name, alias_name)
+         var = @functional_variables[original_name.to_sym]
+         raise FunctionalVariableNotDefinedError.new("undefined functional variable '#{original_name}'") if var.nil?
+         @functional_variables[alias_name.to_sym] = var
       end
 
       # calls the defined functional variable proc with the given parameters and
@@ -203,6 +215,12 @@ module Cadenza
       def define_block(name, &block)
          @blocks[name.to_sym] = block
          nil
+      end
+
+      def alias_block(original_name, alias_name)
+         block = @blocks[original_name.to_sym]
+         raise BlockNotDefinedError.new("undefined block '#{original_name}'") if block.nil?
+         @blocks[alias_name.to_sym] = block
       end
 
       # calls the defined generic block proc with the given name and children

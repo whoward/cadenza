@@ -180,6 +180,20 @@ describe Cadenza::Context do
             context.evaluate_filter(:foo, ["bar"])
          end.should raise_error Cadenza::FilterNotDefinedError
       end
+
+      context "#alias_filter" do
+         it "duplicates the filter block under a different name" do
+            context.alias_filter(:pluralize, :pluralizar) # alias it as the spanish form of pluralize
+
+            context.evaluate_filter(:pluralizar, ["bar"]).should == "bars"
+         end
+
+         it "raises a FilterNotDefinedError if the source filter is not defined" do
+            lambda do
+               context.alias_filter(:fake, :something)
+            end.should raise_error Cadenza::FilterNotDefinedError
+         end
+      end
    end
 
    context "#define_functional_variable" do
@@ -205,6 +219,22 @@ describe Cadenza::Context do
          lambda do
             context.evaluate_functional_variable(:foo, [])
          end.should raise_error Cadenza::FunctionalVariableNotDefinedError
+      end
+
+      context "#alias_functional_variable" do
+         it "duplicates the variable block under a different name" do
+            context.alias_functional_variable(:assign, :set)
+
+            context.evaluate_functional_variable(:set, ["foo", 123])
+
+            context.lookup("foo").should == 123
+         end
+
+         it "raises a FunctionalVariableNotDefinedError if the source variable is not defined" do
+            lambda do
+               context.alias_functional_variable(:fake, :something)
+            end.should raise_error Cadenza::FunctionalVariableNotDefinedError
+         end
       end
    end
 
@@ -241,6 +271,24 @@ describe Cadenza::Context do
          lambda do
             context.evaluate_block(:foo, [], [])
          end.should raise_error Cadenza::BlockNotDefinedError
+      end
+
+      context "#alias_block" do
+         it "duplicates the block under a different name" do
+            context.alias_block(:filter, :apply)
+
+            text = Cadenza::TextNode.new("<h1>Hello World!</h1>")
+
+            output = context.evaluate_block(:apply, [text], [escape])
+
+            output.should == "&lt;h1&gt;Hello World!&lt;/h1&gt;"
+         end
+
+         it "raises a FunctionalVariableNotDefinedError if the source variable is not defined" do
+            lambda do
+               context.alias_block(:fake, :something)
+            end.should raise_error Cadenza::BlockNotDefinedError
+         end         
       end
    end
 
