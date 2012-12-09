@@ -121,3 +121,13 @@ end
 
 alias_filter :pluck, :map
 alias_filter :pluck, :collect
+
+define_filter :sort do |input, *args|
+   identifier = args.first
+
+   if identifier
+      input.sort {|a,b| Cadenza::Context.lookup_on_object(identifier, a) <=> Cadenza::Context.lookup_on_object(identifier, b) }
+   else
+      input.sort
+   end
+end

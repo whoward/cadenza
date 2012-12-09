@@ -200,6 +200,7 @@ describe Cadenza::BaseContext, 'standard filters' do
 
    context "pluck" do
       let(:objects) { [{:name => "Mike"}, {:name => "Will"}, {:name => "Dave"}] }
+
       it "returns an array with the collected property passed" do
          subject.evaluate_filter(:pluck, [objects, "name"]).should == %w(Mike Will Dave)
       end
@@ -207,6 +208,19 @@ describe Cadenza::BaseContext, 'standard filters' do
       it "is also aliased as map and collect" do
          subject.evaluate_filter(:map, [objects, "name"]).should == %w(Mike Will Dave)
          subject.evaluate_filter(:collect, [objects, "name"]).should == %w(Mike Will Dave)
+      end
+   end
+
+   context "sort" do
+
+      it "returns an array with the items sorted in ascending order" do
+         subject.evaluate_filter(:sort, [%w(b c a), nil]).should == %w(a b c)
+      end
+
+      it "returns an array with the items sorted in ascending order by a given property" do
+         objects = [{:name => "Mike"}, {:name => "Will"}, {:name => "Dave"}]
+
+         subject.evaluate_filter(:sort, [objects, "name"]).should == objects.sort {|a,b| a[:name] <=> b[:name] }
       end
    end
 end
