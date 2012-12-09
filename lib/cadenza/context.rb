@@ -1,16 +1,9 @@
 
 module Cadenza
-   class TemplateNotFoundError < Cadenza::Error
-   end
-
-   class FilterNotDefinedError < Cadenza::Error
-   end
-
-   class FunctionalVariableNotDefinedError < Cadenza::Error
-   end
-
-   class BlockNotDefinedError < Cadenza::Error
-   end
+   TemplateNotFoundError = Class.new(Cadenza::Error)
+   FilterNotDefinedError = Class.new(Cadenza::Error)
+   FunctionalVariableNotDefinedError = Class.new(Cadenza::Error)
+   BlockNotDefinedError = Class.new(Cadenza::Error)
 
    # The {Context} class is an essential class in Cadenza that contains all the
    # data necessary to render a template to it's output.  The context holds all
