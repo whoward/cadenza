@@ -140,7 +140,7 @@ describe Cadenza::Context do
       end
 
       it "calls methods on ContextObjects" do
-         context.lookup("obj.public_method").should == 123
+         context.lookup("obj.public_visibility_method").should == 123
       end
 
       it "doesn't look up values on objects which are not ContextObjects" do

@@ -1,11 +1,11 @@
 
 class TestContextObject < Cadenza::ContextObject
-   def public_method
+   def public_visibility_method
       123
    end
 
 protected
-   def protected_method
+   def protected_visibility_method
       123
    end
 
@@ -19,7 +19,7 @@ private
    def missing_context_method(method)
    end
 
-   def private_method
+   def private_visibility_method
       123
    end
 end

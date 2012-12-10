@@ -93,7 +93,7 @@ module Cadenza
       # @return [Array] a list of methods which are in the public visibility 
       #         scope for this class
       def context_methods
-         self.class.public_instance_methods.map(&:to_s)
+         (self.class.public_instance_methods - ContextObject.public_instance_methods).map(&:to_s)
       end
       
    end
