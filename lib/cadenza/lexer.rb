@@ -4,9 +4,6 @@ module Cadenza
   # The {Lexer} class accepts in input {IO} object which it will parse simple
   # {Token}s from for use in a {Parser} class.
   class Lexer
-    #TODO: look at using the CodeRay scanner instead, it supports reading from
-    # an IO object (unlike StringScanner which must have a string in memory)
-    # http://coderay.rubychan.de/doc/classes/CodeRay/Scanners/Scanner.html
 
     # constructs a new parser and sets it to the position (0, 0)
     def initialize
