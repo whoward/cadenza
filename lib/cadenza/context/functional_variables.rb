@@ -4,7 +4,8 @@ module Cadenza
 
    class Context
       module FunctionalVariables
-         
+
+         # @!attribute [rw] functional_variables
          # @return [Hash] the functional variable names mapped to their implementing procs
          def functional_variables
             @functional_variables ||= {}
@@ -12,6 +13,15 @@ module Cadenza
 
          def functional_variables=(rhs)
             @functional_variables = rhs
+         end
+
+         # looks up the functional variable by name
+         # 
+         # @raise [FunctionalVariableNotDefinedError] if the functional variable can not be found
+         # @param [Symbol] name the name of the functional variable to look up
+         # @return [Proc] the functional variable implementation
+         def lookup_functional_variable(name)
+            functional_variables.fetch(name.to_sym) { raise FunctionalVariableNotDefinedError.new("undefined functional variable '#{name}'") }
          end
 
          # defines a functional variable proc with the given name
@@ -24,11 +34,15 @@ module Cadenza
             functional_variables[name.to_sym] = block
             nil
          end
-
+         
+         # creates an alias of the given functional variable name under a different name 
+         #
+         # @raise [FunctionalVariableNotDefinedError] if the original functional variable name isn't defined
+         # @param [Symbol] original_name the original name of the functional variable
+         # @param [Symbol] alias_name the new name of the functional variable
+         # @return nil
          def alias_functional_variable(original_name, alias_name)
-            var = functional_variables[original_name.to_sym]
-            raise FunctionalVariableNotDefinedError.new("undefined functional variable '#{original_name}'") if var.nil?
-            functional_variables[alias_name.to_sym] = var
+            define_functional_variable alias_name, &lookup_functional_variable(original_name)
          end
 
          # calls the defined functional variable proc with the given parameters and
@@ -40,9 +54,7 @@ module Cadenza
          #                block when calling it
          # @return [Object] the result of  evaluating the functional variable
          def evaluate_functional_variable(name, params=[])
-            var = functional_variables[name.to_sym]
-            raise FunctionalVariableNotDefinedError.new("undefined functional variable '#{name}'") if var.nil?
-            var.call([self] + params)
+            lookup_functional_variable(name).call([self] + params)
          end
          
       end

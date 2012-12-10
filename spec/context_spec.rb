@@ -181,7 +181,23 @@ describe Cadenza::Context do
          end.should raise_error Cadenza::FilterNotDefinedError
       end
 
+      context "#lookup_filter" do
+         it "returns the given filter" do
+            context.lookup_filter(:pluralize).should be_a Proc
+         end
+
+         it "raises a FilterNotDefinedError if the block is not defined" do
+            lambda do
+               context.lookup_filter(:fake)
+            end.should raise_error Cadenza::FilterNotDefinedError
+         end
+      end
+
       context "#alias_filter" do
+         it "returns nil" do
+            context.alias_filter(:pluralize, :pluralizar).should be_nil
+         end
+
          it "duplicates the filter block under a different name" do
             context.alias_filter(:pluralize, :pluralizar) # alias it as the spanish form of pluralize
 
@@ -221,7 +237,23 @@ describe Cadenza::Context do
          end.should raise_error Cadenza::FunctionalVariableNotDefinedError
       end
 
+      context "#lookup_functional_variable" do
+         it "returns the given functional variable" do
+            context.lookup_functional_variable(:assign).should be_a Proc
+         end
+
+         it "raises a FunctionalVariableNotDefinedError if the block is not defined" do
+            lambda do
+               context.lookup_functional_variable(:fake)
+            end.should raise_error Cadenza::FunctionalVariableNotDefinedError
+         end
+      end
+
       context "#alias_functional_variable" do
+         it "returns nil" do
+            context.alias_functional_variable(:assign, :set).should be_nil
+         end
+
          it "duplicates the variable block under a different name" do
             context.alias_functional_variable(:assign, :set)
 
@@ -272,8 +304,24 @@ describe Cadenza::Context do
             context.evaluate_block(:foo, [], [])
          end.should raise_error Cadenza::BlockNotDefinedError
       end
+      
+      context "#lookup_block" do
+         it "returns the given block" do
+            context.lookup_block(:filter).should be_a Proc
+         end
+
+         it "raises a BlockNotDefinedError if the block is not defined" do
+            lambda do
+               context.lookup_block(:fake)
+            end.should raise_error Cadenza::BlockNotDefinedError
+         end
+      end
 
       context "#alias_block" do
+         it "returns nil" do
+            context.alias_block(:filter, :apply).should be_nil
+         end
+
          it "duplicates the block under a different name" do
             context.alias_block(:filter, :apply)
 
@@ -284,7 +332,7 @@ describe Cadenza::Context do
             output.should == "&lt;h1&gt;Hello World!&lt;/h1&gt;"
          end
 
-         it "raises a FunctionalVariableNotDefinedError if the source variable is not defined" do
+         it "raises a BlockNotDefinedError if the source variable is not defined" do
             lambda do
                context.alias_block(:fake, :something)
             end.should raise_error Cadenza::BlockNotDefinedError

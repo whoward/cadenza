@@ -5,6 +5,7 @@ module Cadenza
    class Context
       module Loaders
 
+         # @!attribute [rw] whiny_template_loading
          # @return [Boolean] true if a {TemplateNotFoundError} should still be
          #                   raised if not calling the bang form of {#load_source}
          #                   or {#load_template}
@@ -16,6 +17,7 @@ module Cadenza
             @whiny_template_loading = rhs
          end
 
+         # @!attribute [rw] loaders
          # @return [Array] the list of loaders
          def loaders
             @loaders ||= []

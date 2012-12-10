@@ -5,6 +5,7 @@ module Cadenza
    class Context
       module Filters
 
+         # @!attribute [rw] filters
          # @return [Hash] the filter names mapped to their implementing procs
          def filters
             @filters ||= {}
@@ -12,6 +13,15 @@ module Cadenza
 
          def filters=(rhs)
             @filters = rhs
+         end
+
+         # looks up the filter by name
+         # 
+         # @raise [FilterNotDefinedError] if the filter can not be found
+         # @param [Symbol] name the name of the filter to look up
+         # @return [Proc] the filter implementation
+         def lookup_filter(name)
+            filters.fetch(name.to_sym) { raise FilterNotDefinedError.new("undefined filter '#{name}'") }
          end
 
          # defines a filter proc with the given name
@@ -25,10 +35,14 @@ module Cadenza
             nil
          end
 
+         # creates an alias of the given filter name under a different name 
+         #
+         # @raise [FilterNotDefinedError] if the original filter name isn't defined
+         # @param [Symbol] original_name the original name of the filter
+         # @param [Symbol] alias_name the new name of the filter
+         # @return nil
          def alias_filter(original_name, alias_name)
-            filter = filters[original_name.to_sym]
-            raise FilterNotDefinedError.new("undefined filter '#{original_name}'") if filter.nil?
-            filters[alias_name.to_sym] = filter
+            define_filter alias_name, &lookup_filter(original_name)
          end
 
          # calls the defined filter proc with the given parameters and returns the
@@ -40,9 +54,7 @@ module Cadenza
          #                block when calling it.
          # @return [String] the result of evaluating the filter
          def evaluate_filter(name, params=[])
-            filter = filters[name.to_sym]
-            raise FilterNotDefinedError.new("undefined filter '#{name}'") if filter.nil?
-            filter.call(*params)
+            lookup_filter(name).call(*params)
          end
 
 

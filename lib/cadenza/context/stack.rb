@@ -2,7 +2,8 @@
 module Cadenza
    class Context
       module Stack
-         
+
+         # @!attribute [rw] stack
          # @return [Array] the variable stack
          def stack
             @stack ||= []
