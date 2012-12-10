@@ -2,9 +2,10 @@
 module Cadenza
    # The {Context} class is an essential class in Cadenza that contains all the
    # data necessary to render a template to it's output.  The context holds all
-   # defined variable names (see {#stack}), {#filters}, {#functional_variables},
-   # generic {#blocks}, {#loaders} and configuration data as well as all the 
-   # methods you should need to define and evaluate those.
+   # defined variable names (see {#stack}), filters (see {#filters}), 
+   # functional variables (see {#functional_variables}), generic blocks 
+   # (see {#blocks}), loaders (see {#loaders}) and configuration data as well 
+   # as all the methods you should need to define and evaluate those.
    class Context
       include Cadenza::Context::Stack
       include Cadenza::Context::Filters
@@ -12,6 +13,20 @@ module Cadenza
       include Cadenza::Context::FunctionalVariables
       include Cadenza::Context::Loaders
 
+      # looks up the given identifier name on the given ruby object using
+      # Cadenza's internal logic for doing so.
+      #
+      # {Array} objects allow identifiers in the form of numbers to retrieve
+      # the index specified.  Example: alphabet.0 returns "a"
+      #
+      # {Hash} objects allow identifiers to be fetched as keys of that hash.
+      #
+      # Any object which is a subclass of {ContextObject} will have a value 
+      # looked up according to the logic defined in {ContextObject#invoke_context_method}
+      #
+      # @param [Symbol|String] identifier the name of the value to look up on this object
+      # @param [Object] object the object to look up the value on
+      # @return [Object] the result of the lookup
       def self.lookup_on_object(identifier, object)
          sym_identifier = identifier.to_sym
 
