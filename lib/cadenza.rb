@@ -1,15 +1,28 @@
 require 'cadenza/error'
+
 require 'cadenza/token'
+
 require 'cadenza/lexer'
+
 require 'cadenza/racc_parser'
 require 'cadenza/parser'
+
+require 'cadenza/context/stack'
+require 'cadenza/context/filters'
+require 'cadenza/context/blocks'
+require 'cadenza/context/functional_variables'
+require 'cadenza/context/loaders'
 require 'cadenza/context'
+
 require 'cadenza/context_object'
+
 require 'cadenza/base_renderer'
 require 'cadenza/text_renderer'
 require 'cadenza/block_hierarchy'
 require 'cadenza/source_renderer'
+
 require 'cadenza/filesystem_loader'
+
 require 'cadenza/version'
 
 require 'stringio'
