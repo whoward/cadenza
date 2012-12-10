@@ -5,14 +5,10 @@ module Cadenza
    class Context
       module Filters
 
-         # @!attribute [rw] filters
+         # @!attribute [r] filters
          # @return [Hash] the filter names mapped to their implementing procs
          def filters
             @filters ||= {}
-         end
-
-         def filters=(rhs)
-            @filters = rhs
          end
 
          # looks up the filter by name

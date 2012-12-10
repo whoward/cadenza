@@ -5,14 +5,10 @@ module Cadenza
    class Context
       module FunctionalVariables
 
-         # @!attribute [rw] functional_variables
+         # @!attribute [r] functional_variables
          # @return [Hash] the functional variable names mapped to their implementing procs
          def functional_variables
             @functional_variables ||= {}
-         end
-
-         def functional_variables=(rhs)
-            @functional_variables = rhs
          end
 
          # looks up the functional variable by name

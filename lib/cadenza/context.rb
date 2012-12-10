@@ -48,12 +48,12 @@ module Cadenza
       # @return [Context] the cloned context
       def clone
          copy = super
-         copy.stack = stack.dup
-         copy.loaders = loaders.dup
-         copy.filters = filters.dup
-         copy.functional_variables = functional_variables.dup
-         copy.blocks = blocks.dup
-
+         copy.instance_variable_set("@stack", stack.dup)
+         copy.instance_variable_set("@loaders", loaders.dup)
+         copy.instance_variable_set("@filters", filters.dup)
+         copy.instance_variable_set("@functional_variables", functional_variables.dup)
+         copy.instance_variable_set("@blocks", blocks.dup)
+         
          copy
       end
 

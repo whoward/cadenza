@@ -3,14 +3,10 @@ module Cadenza
    class Context
       module Stack
 
-         # @!attribute [rw] stack
+         # @!attribute [r] stack
          # @return [Array] the variable stack
          def stack
             @stack ||= []
-         end
-
-         def stack=(rhs)
-            @stack = rhs
          end
 
          # retrieves the value of the given identifier by inspecting the variable

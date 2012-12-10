@@ -17,14 +17,10 @@ module Cadenza
             @whiny_template_loading = rhs
          end
 
-         # @!attribute [rw] loaders
+         # @!attribute [r] loaders
          # @return [Array] the list of loaders
          def loaders
             @loaders ||= []
-         end
-
-         def loaders=(rhs)
-            @loaders = rhs
          end
 
          # constructs a {FilesystemLoader} with the string given as its path and

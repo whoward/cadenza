@@ -5,14 +5,10 @@ module Cadenza
    class Context
       module Blocks
          
-         # @!attribute [rw] blocks
+         # @!attribute [r] blocks
          # @return [Hash] the block names mapped to their implementing procs
          def blocks
             @blocks ||= {}
-         end
-
-         def blocks=(rhs)
-            @blocks = rhs
          end
 
          # looks up the block by name
