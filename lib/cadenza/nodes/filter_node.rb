@@ -37,8 +37,7 @@ module Cadenza
       # @param [String] value the input value to filter
       # @return the input value when passed through this evaluated filter
       def evaluate(context, value)
-         params = [value] + @parameters.map {|x| x.eval(context) }
-         context.evaluate_filter(@identifier, params)
+         context.evaluate_filter(@identifier, value, @parameters.map {|x| x.eval(context) })
       end
    end
 end

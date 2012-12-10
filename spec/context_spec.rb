@@ -35,7 +35,7 @@ describe Cadenza::Context do
 
       before do
          context.add_loader Cadenza::FilesystemLoader.new(fixture_filename "templates")
-         context.define_filter(:upcase, &:upcase)
+         context.define_filter(:upcase) {|input| input.upcase }
          context.define_functional_variable(:assign) {|context, name, value| context.assign(name, value) }
 
          context.loaders.should have(1).item
@@ -172,12 +172,12 @@ describe Cadenza::Context do
       end
 
       it "should evaluate a filter" do         
-         context.evaluate_filter(:pluralize, ["bar"]).should == "bars"
+         context.evaluate_filter(:pluralize, "bar").should == "bars"
       end
 
       it "should raise a FilterNotDefinedError if the filter is not defined" do
          lambda do
-            context.evaluate_filter(:foo, ["bar"])
+            context.evaluate_filter(:foo, "bar")
          end.should raise_error Cadenza::FilterNotDefinedError
       end
 
@@ -201,7 +201,7 @@ describe Cadenza::Context do
          it "duplicates the filter block under a different name" do
             context.alias_filter(:pluralize, :pluralizar) # alias it as the spanish form of pluralize
 
-            context.evaluate_filter(:pluralizar, ["bar"]).should == "bars"
+            context.evaluate_filter(:pluralizar, "bar").should == "bars"
          end
 
          it "raises a FilterNotDefinedError if the source filter is not defined" do

@@ -46,11 +46,12 @@ module Cadenza
          #
          # @raise [FilterNotDefinedError] if the named filter doesn't exist
          # @param [Symbol] name the name of the filter to evaluate
+         # @param [Object] input the input value which will be filtered
          # @param [Array] params a list of parameters to pass to the filter 
          #                block when calling it.
          # @return [String] the result of evaluating the filter
-         def evaluate_filter(name, params=[])
-            lookup_filter(name).call(*params)
+         def evaluate_filter(name, input, params=[])
+            lookup_filter(name).call(input, params)
          end
 
 

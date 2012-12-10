@@ -65,8 +65,8 @@ describe Cadenza::FilterNode do
   it "should pass parameters to the filter function when evaluating" do
     context = Cadenza::Context.new
 
-    context.define_filter :add do |value, amount|
-      value + amount
+    context.define_filter :add do |value, params|
+      value + params.first
     end
 
     filter = Cadenza::FilterNode.new("add", [Cadenza::ConstantNode.new(1)])

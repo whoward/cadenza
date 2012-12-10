@@ -93,8 +93,8 @@ describe Cadenza::TextRenderer do
    it "should render the value of a inject node to the output" do
       context = Cadenza::Context.new(:pi => 3.14159)
 
-      context.define_filter(:floor) {|value|        value.floor    }
-      context.define_filter(:add)   {|value,amount| value + amount }
+      context.define_filter(:floor) {|value| value.floor }
+      context.define_filter(:add)   {|value,params| value + params.first }
 
       floor = Cadenza::FilterNode.new("floor")
       add_one = Cadenza::FilterNode.new("add", [Cadenza::ConstantNode.new(1)])
