@@ -31,8 +31,7 @@ module Cadenza
          sym_identifier = identifier.to_sym
 
          # allow looking up array indexes with dot notation, example: alphabet.0 => "a"
-         #TODO: the /\d+/ regex doesn't have the \A\z terminators, could that allow expected calling? example: alpabet.a0
-         if object.respond_to?(:[]) && object.is_a?(Array) && identifier =~ /\d+/
+         if object.respond_to?(:[]) && object.is_a?(Array) && identifier =~ /\A\d+\z/
             return object[identifier.to_i]
          end
 
