@@ -1,11 +1,31 @@
 
 module Cadenza
+
+   # SourceRenderer is a rendering implementation that turns a Cadenza AST back
+   # into Cadenza source code.
+   #
+   # This is mainly intended for users who wish to migrate templates stored in
+   # databases, or other storage devices, as their product progresses.  
+   #
+   # For example: if in v1.0 of your app you define a filter X and deprecate it 
+   # in favour of filter Y you can use this renderer to automatically replace 
+   # instances of filter X with filter Y
+   #
+   # I'm sure there are many other exciting use cases for the imaginitive user,
+   # feel free to let me know what else you do with it!
+   #
    class SourceRenderer < BaseRenderer
+      # This exception is raised when you try to transition to an undefined state
       IllegalStateError = Class.new(RuntimeError)
+
+      # This exception is raised when you try to transition from one state to
+      # another which is not allowed
       IllegalStateTransitionError = Class.new(RuntimeError)
 
+      # A list of all valid states for the renderer
       ValidStates = [:text, :var, :tag]
 
+      # returns the current state of the renderer (see {#ValidStates})
       attr_reader :state
 
       # Renders the document given with the given context directly to a string 
@@ -18,11 +38,18 @@ module Cadenza
          io.string
       end
 
+      # creates a new {SourceRenderer} and places it into the :text state
       def initialize(*args)
          @state = :text
          super
       end
 
+      # transitions from the current state into the new state and emits opening
+      # and closing tag markers appropriately during the transition.
+      #
+      # @raise [IllegalStateError] if you try to transition to an invalid state
+      # @raise [IllegalStateTransitionError] if you try to transition from one
+      #        one state to another which is not allowed
       def state=(new_state)
          # if trying to transition to a new state raise an exception
          raise IllegalStateError.new(new_state) unless ValidStates.include?(new_state)
