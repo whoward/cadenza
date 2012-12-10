@@ -76,9 +76,9 @@ module Cadenza
 
    private
       def render_document(node, context, blocks)
-         output << %Q[{% extends "#{document.extends}" %}] if document.extends
+         output << %Q[{% extends "#{node.extends}" %}] if node.extends
 
-         document.children.each {|child| render(child, context, blocks) }
+         node.children.each {|child| render(child, context, blocks) }
 
          self.state = :text
       end

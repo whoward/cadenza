@@ -33,8 +33,6 @@ module Cadenza
             # load the template of the document and render it to the same output stream
             template = context.load_template!(node.extends)
 
-            document = template
-
             render(template, context, blocks)
          else
             node.children.each {|x| render(x, context, blocks) }

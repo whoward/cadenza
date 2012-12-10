@@ -6,10 +6,6 @@ module Cadenza
       # @return [IO] the io object that is being written to
       attr_reader :output
 
-      # @deprecated temporary hack, will be removed later
-      # @return [DocumentNode] the node which is at the root of the AST
-      attr_reader :document
-
       # creates a new renderer and assigns the given output io object to it
       # @param [IO] output_io the IO object which will be written to
       def initialize(output_io)
@@ -28,10 +24,6 @@ module Cadenza
       #               {BlockNode}.  The blocks given should be rendered instead
       #               of blocks of the same name in the given document.
       def render(node, context, blocks={})
-         #TODO: memoizing this is a terrible smell, add a "parent" hierarchy so
-         # we can always find the root node from any node in the AST
-         @document ||= node
-
          node_type = node.class.name.split("::").last
 
          node_name = underscore(node_type).gsub!(/_node$/, '')
