@@ -1,7 +1,7 @@
 require 'cgi'
 
 # adds slashes to \, ', and " characters in the given string
-define_filter :addslashes do |string|
+define_filter :addslashes do |string, params|
    word = string.dup
    word.gsub!(/\\/, "\\\\\\\\")
    word.gsub!(/'/, "\\\\'")
@@ -10,7 +10,7 @@ define_filter :addslashes do |string|
 end
 
 # capitalizes the first letter of the string
-define_filter :capitalize do |input|
+define_filter :capitalize do |input, params|
    input.capitalize
 end
 
@@ -44,12 +44,12 @@ define_filter :default do |input, params|
 end
 
 # escapes the HTML content of the value
-define_filter :escape do |input|
+define_filter :escape do |input, params|
    CGI::escapeHTML(input)
 end
 
 # returns the first item of an iterable
-define_filter :first do |input|
+define_filter :first do |input, params|
    if input.respond_to?(:[])
       RUBY_VERSION =~ /^1.8/ && input.is_a?(String) ? input[0].chr : input[0]
    else
@@ -58,7 +58,7 @@ define_filter :first do |input|
 end
 
 # returns the last item of an iterable
-define_filter :last do |input|
+define_filter :last do |input, params|
    if input.respond_to?(:[])
       RUBY_VERSION =~ /^1.8/ && input.is_a?(String) ? input[-1].chr : input[-1]
    else
@@ -73,7 +73,7 @@ define_filter :join do |input, params|
 end
 
 # returns the length of the input
-define_filter :length do |input|
+define_filter :length do |input, params|
    input.length
 end
 
@@ -92,12 +92,12 @@ define_filter :rjust do |input, params|
 end
 
 # returns the string downcased
-define_filter :lower do |input|
+define_filter :lower do |input, params|
    input.downcase
 end
 
 # returns the string upcased
-define_filter :upper do |input|
+define_filter :upper do |input, params|
    input.upcase
 end
 
@@ -111,7 +111,7 @@ define_filter :wordwrap do |input, params|
 end
 
 # returns the string or array reversed
-define_filter :reverse do |input|
+define_filter :reverse do |input, params|
    input.reverse
 end
 

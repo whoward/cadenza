@@ -93,7 +93,7 @@ describe Cadenza::TextRenderer do
    it "should render the value of a inject node to the output" do
       context = Cadenza::Context.new(:pi => 3.14159)
 
-      context.define_filter(:floor) {|value| value.floor }
+      context.define_filter(:floor) {|value,params| value.floor }
       context.define_filter(:add)   {|value,params| value + params.first }
 
       floor = Cadenza::FilterNode.new("floor")
@@ -208,7 +208,7 @@ describe Cadenza::TextRenderer do
 
    context "generic block nodes" do
       before do
-         context.define_filter(:escape) {|input| CGI.escapeHTML(input) }
+         context.define_filter(:escape) {|input,params| CGI.escapeHTML(input) }
 
          context.define_block :filter do |context, nodes, parameters|
             filter = parameters.first.identifier

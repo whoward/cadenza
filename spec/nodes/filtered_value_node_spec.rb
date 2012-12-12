@@ -40,7 +40,7 @@ describe Cadenza::FilteredValueNode do
       let(:add_one_node) { Cadenza::FilterNode.new("add", [Cadenza::ConstantNode.new(1)]) }
       
       before do
-         context.define_filter(:floor) {|value| value.floor }
+         context.define_filter(:floor) {|value,params| value.floor }
          context.define_filter(:add) {|value,params| value + params.first }
       end
 

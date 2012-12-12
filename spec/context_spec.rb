@@ -35,7 +35,7 @@ describe Cadenza::Context do
 
       before do
          context.add_loader Cadenza::FilesystemLoader.new(fixture_filename "templates")
-         context.define_filter(:upcase) {|input| input.upcase }
+         context.define_filter(:upcase) {|input, params| input.upcase }
          context.define_functional_variable(:assign) {|context, name, value| context.assign(name, value) }
 
          context.loaders.should have(1).item
@@ -164,7 +164,7 @@ describe Cadenza::Context do
       let(:context) { Cadenza::Context.new }
 
       before do
-         context.define_filter(:pluralize) {|input| "#{input}s" }
+         context.define_filter(:pluralize) {|input, params| "#{input}s" }
       end
 
       it "should allow defining a filter method" do
@@ -275,7 +275,7 @@ describe Cadenza::Context do
       let(:escape) { Cadenza::VariableNode.new("escape") }
 
       before do
-         context.define_filter(:escape) {|input| CGI.escapeHTML(input) }
+         context.define_filter(:escape) {|input, params| CGI.escapeHTML(input) }
 
          context.define_block :filter do |context, nodes, parameters|
             filter = parameters.first.identifier
