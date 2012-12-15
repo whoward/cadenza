@@ -107,7 +107,7 @@ end
 define_filter :wordwrap do |input, params|
    length = params[0]
    linefeed = params[1] || "\n"
-   input.gsub(/(.{1,#{length}})(\s+|\Z)/, "\\1#{linefeed}")
+   input.gsub(/(.{1,#{length}})(\s+|\Z)/, "\\1\n").strip.gsub(/\n/, linefeed)
 end
 
 # returns the string or array reversed

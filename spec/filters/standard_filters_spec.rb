@@ -142,13 +142,13 @@ describe Cadenza::BaseContext, 'standard filters' do
       it "should return the string with the words wrapped at the given column" do
          wrapped = subject.evaluate_filter(:wordwrap, "This text is not too short to be wrapped.", [20])
 
-         wrapped.should == "This text is not too\nshort to be wrapped.\n"
+         wrapped.should == "This text is not too\nshort to be wrapped."
       end
 
       it "should allow specifying the character(s) used for line endings" do
          wrapped = subject.evaluate_filter(:wordwrap, "This text is not too short to be wrapped.", [20, "<br/>"])
 
-         wrapped.should == "This text is not too<br/>short to be wrapped.<br/>"
+         wrapped.should == "This text is not too<br/>short to be wrapped."
       end
    end
 
