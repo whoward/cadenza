@@ -235,6 +235,7 @@ describe Cadenza::TextRenderer do
       index_file     = File.read(fixture_filename "templates/index.html.cadenza")
       index_two_file = File.read(fixture_filename "templates/index_two.html.cadenza")
       super_file     = File.read(fixture_filename "templates/super.html.cadenza")
+      nested_super_file = File.read(fixture_filename "templates/nested_blocks/super.html.cadenza")
 
       it "renders the extended template with the blocks from the base template" do
          index = Cadenza::Parser.new.parse(index_file)
@@ -256,5 +257,14 @@ describe Cadenza::TextRenderer do
          renderer.render(index, context)
          renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/super.html")
       end
+
+      it "renders super calls within blocks" do
+        index = Cadenza::Parser.new.parse(nested_super_file)
+
+        renderer.render(index, context)
+        renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/nested_blocks/super.html")
+
+      end
+
    end
 end

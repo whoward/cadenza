@@ -1,0 +1,6 @@
+{% block layout %}
+  {% block header %}
+    <header></header>
+  {% endblock %}
+  {% block content %}{% endblock %}
+{% endblock %}

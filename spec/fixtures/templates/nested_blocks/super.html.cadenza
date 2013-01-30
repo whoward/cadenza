@@ -1,0 +1,12 @@
+{% extends "nested_blocks/super-layout.html.cadenza" %}
+
+{% block layout %}
+  <section id="container">
+  {% block header %}
+    {{ super }}
+  {% endblock %}
+  {% block content %}
+    <section id="content"></section>
+  {% endblock %}
+  </section>
+{% endblock %}
