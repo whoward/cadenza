@@ -41,17 +41,9 @@ module Cadenza
    # @param [Hash] scope any variables to define as a new scope for {BaseContext}
    #               in this template.
    def self.render(template_text, scope=nil)
-      template = Parser.new.parse(template_text)
+      context = create_context(scope)
 
-      context = BaseContext.clone
-
-      context.push(scope) if scope
-
-      output = StringIO.new
-
-      TextRenderer.new(output).render(template, context)
-
-      output.string
+      do_render(Parser.new.parse(template_text), context)
    end
 
    # similar to {#render} except the given template name will be loaded using
@@ -61,14 +53,24 @@ module Cadenza
    # @param [Hash] scope any variables to define as a new scope for {BaseContext}
    #               in this template.
    def self.render_template(template_name, scope=nil)
+      context = create_context(scope)
+
+      do_render(context.load_template(template_name), context)
+   end
+
+   private
+
+   def self.create_context(scope)
       context = BaseContext.clone
 
       context.push(scope) if scope
 
-      template = context.load_template(template_name)
+      context
+   end
 
+   def self.do_render(template, context)
       output = StringIO.new
-      
+
       TextRenderer.new(output).render(template, context)
 
       output.string
