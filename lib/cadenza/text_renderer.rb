@@ -25,11 +25,10 @@ module Cadenza
    private
    
       def render_document(node, context, blocks)
-         if node.extends
-            # merge the inherited blocks onto this document's blocks to
-            # determine what to pass to the layout template
-            blocks.merge(node.blocks)
+         # merge the document's blocks into the inherited blocks
+         blocks.merge(node.blocks)
 
+         if node.extends
             # load the template of the document and render it to the same output stream
             template = context.load_template!(node.extends)
 

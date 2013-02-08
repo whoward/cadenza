@@ -263,7 +263,6 @@ describe Cadenza::TextRenderer do
 
         renderer.render(index, context)
         renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/nested_blocks/super.html")
-
       end
 
    end
