@@ -1,0 +1,21 @@
+# {% block parent %}{% block child %}{% endblock %}{% endblock %}
+DocumentNode:
+   children:
+      - BlockNode:
+         name: "parent"
+         children:
+            - BlockNode:
+               name: "parent.child"
+               children: []
+   blocks:
+      parent:
+         BlockNode:
+            name: "parent"
+            children:
+               - BlockNode:
+                  name: "parent.child"
+                  children: []
+      parent.child:
+         BlockNode:
+            name: "parent.child"
+            children: []

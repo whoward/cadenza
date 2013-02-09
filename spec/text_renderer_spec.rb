@@ -265,5 +265,12 @@ describe Cadenza::TextRenderer do
         renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/nested_blocks/super.html")
       end
 
+      it "renders nested blocks in a separate scope" do
+         index = Cadenza::Parser.new.parse File.read(fixture_filename "templates/nested_blocks/scoping.html.cadenza")
+
+         renderer.render(index, context)
+         renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/nested_blocks/scoping.html")
+      end
+
    end
 end
