@@ -82,7 +82,7 @@ rule
     ;
 
   else_tag
-    : STMT_OPEN ELSE STMT_CLOSE { open_scope! }
+    : STMT_OPEN ELSE STMT_CLOSE { result = close_scope!; open_scope! }
     ;
 
   end_if_tag
@@ -93,24 +93,9 @@ rule
   if_block
     : if_tag end_if_tag { result = IfNode.new(val[0], close_scope!) }
     | if_tag document end_if_tag { result = IfNode.new(val[0], close_scope!) }
-    | if_tag else_tag document end_if_tag
-      {
-        false_children = close_scope!
-        true_children  = close_scope!
-        result = IfNode.new(val[0], true_children, false_children)
-      }
-    | if_tag document else_tag end_if_tag
-      {
-        false_children = close_scope!
-        true_children  = close_scope!
-        result = IfNode.new(val[0], true_children, false_children)
-      }
-    | if_tag document else_tag document end_if_tag
-      {
-        false_children = close_scope!
-        true_children  = close_scope!
-        result = IfNode.new(val[0], true_children, false_children)
-      }
+    | if_tag else_tag document end_if_tag { result = IfNode.new(val[0], val[1], close_scope!) }
+    | if_tag document else_tag end_if_tag { result = IfNode.new(val[0], val[2], close_scope!) }
+    | if_tag document else_tag document end_if_tag { result = IfNode.new(val[0], val[2], close_scope!) }
     ;
 
   for_tag
