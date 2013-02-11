@@ -41,6 +41,7 @@ See: [CONTRIBUTING.md](http://github.com/whoward/cadenza/tree/master/CONTRIBUTIN
 - Ruby 1.8.7
 - Ruby 1.9.2
 - Ruby 1.9.3
+- Ruby 2.0.0 (pending it's release, check Travis CI for current support)
 - Ruby Enterprise Edition
 - Rubinius 2.0 (1.8 mode)
 - Rubinius 2.0 (1.9 mode)
