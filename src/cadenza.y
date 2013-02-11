@@ -1,7 +1,7 @@
 class Cadenza::RaccParser
 
 /* expect this many shift/reduce conflicts */
-expect 39
+expect 38
 
 rule
   target
@@ -79,7 +79,7 @@ rule
   if_tag
     : STMT_OPEN IF logical_expression STMT_CLOSE
       {
-        @stack.push DocumentNode.new
+        open_scope!
         result = val[2]
       }
     ;
@@ -87,13 +87,13 @@ rule
   unless_tag
     : STMT_OPEN UNLESS logical_expression STMT_CLOSE
       {
-        @stack.push DocumentNode.new
+        open_scope!
         result = BooleanInverseNode.new(val[2])
       }
     ;
 
   else_tag
-    : STMT_OPEN ELSE STMT_CLOSE { @stack.push DocumentNode.new }
+    : STMT_OPEN ELSE STMT_CLOSE { open_scope! }
     ;
 
   end_if_tag
@@ -105,41 +105,41 @@ rule
     ;
 
   if_block
-    : if_tag end_if_tag { @stack.pop; result = IfNode.new(val[0]) }
-    | if_tag document end_if_tag { result = IfNode.new(val[0], @stack.pop.children) }
+    : if_tag end_if_tag { close_scope!; result = IfNode.new(val[0]) }
+    | if_tag document end_if_tag { result = IfNode.new(val[0], close_scope!) }
     | if_tag else_tag document end_if_tag
       {
-        false_children, true_children = @stack.pop.children, @stack.pop.children
+        false_children, true_children = close_scope!, close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     | if_tag document else_tag end_if_tag
       {
-        false_children, true_children = @stack.pop.children, @stack.pop.children
+        false_children, true_children = close_scope!, close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     | if_tag document else_tag document end_if_tag
       {
-        false_children, true_children = @stack.pop.children, @stack.pop.children
+        false_children, true_children = close_scope!, close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     ;
 
   unless_block
     : unless_tag end_unless_tag { @stack.pop; result = IfNode.new(val[0]) }
-    | unless_tag document end_unless_tag { result = IfNode.new(val[0], @stack.pop.children) }
+    | unless_tag document end_unless_tag { result = IfNode.new(val[0], close_scope!) }
     | unless_tag else_tag document end_unless_tag
       {
-        false_children, true_children = @stack.pop.children, @stack.pop.children
+        false_children, true_children = close_scope!, close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     | unless_tag document else_tag end_unless_tag
       {
-        false_children, true_children = @stack.pop.children, @stack.pop.children
+        false_children, true_children = close_scope!, close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     | unless_tag document else_tag document end_unless_tag
       {
-        false_children, true_children = @stack.pop.children, @stack.pop.children
+        false_children, true_children = close_scope!, close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     ;
@@ -161,36 +161,36 @@ rule
         
         result = ForNode.new(iterator, iterable, [])      
       }
-    | for_tag { @stack.push DocumentNode.new } document end_for_tag
+    | for_tag { open_scope! } document end_for_tag
       {
         iterator = VariableNode.new(val[0][0])
         iterable = val[0][1]
         
-        result = ForNode.new(iterator, iterable, @stack.pop.children)
+        result = ForNode.new(iterator, iterable, close_scope!)
       }
     ;
 
   block_tag
-    : STMT_OPEN BLOCK IDENTIFIER STMT_CLOSE { result = val[2].value }
+    : STMT_OPEN BLOCK IDENTIFIER STMT_CLOSE { result = open_block_scope!(val[2].value) }
     ;
 
   end_block_tag
-    : STMT_OPEN ENDBLOCK STMT_CLOSE
+    : STMT_OPEN ENDBLOCK STMT_CLOSE { result = close_block_scope! }
     ;
 
   /* this has a shift/reduce conflict but since Racc will shift in this case it is the correct behavior */
   block_block
     : block_tag end_block_tag { result = BlockNode.new(val[0], []) }
-    | block_tag { @stack.push DocumentNode.new } document end_block_tag { result = BlockNode.new(val[0], @stack.pop.children) }
+    | block_tag document end_block_tag { result = BlockNode.new(val[0], val[2]) }
     ;
 
   generic_block
-    : STMT_OPEN IDENTIFIER STMT_CLOSE { @stack.push DocumentNode.new }
+    : STMT_OPEN IDENTIFIER STMT_CLOSE { open_scope! }
       document 
-      STMT_OPEN END STMT_CLOSE { result = GenericBlockNode.new(val[1].value, @stack.pop.children) }
-    | STMT_OPEN IDENTIFIER parameter_list STMT_CLOSE  { @stack.push DocumentNode.new }
+      STMT_OPEN END STMT_CLOSE { result = GenericBlockNode.new(val[1].value, close_scope!) }
+    | STMT_OPEN IDENTIFIER parameter_list STMT_CLOSE  { open_scope! }
       document 
-      STMT_OPEN END STMT_CLOSE { result = GenericBlockNode.new(val[1].value, @stack.pop.children, val[2]) }
+      STMT_OPEN END STMT_CLOSE { result = GenericBlockNode.new(val[1].value, close_scope!, val[2]) }
     ;
 
   extends_statement
@@ -205,15 +205,14 @@ rule
     | unless_block
     | for_block
     | generic_block
+    | block_block
     ;
 
   document
-    : document_component { push_child val[0] }
-    | document document_component { push_child val[1] }
-    | extends_statement  { @stack.first.extends = val[0] }
-    | document extends_statement { @stack.first.extends = val[1] }
-    | block_block { push_block(val[0]) }
-    | document block_block { push_block(val[1]) }
+    : document_component { push val[0] }
+    | document document_component { push val[1] }
+    | extends_statement  { document.extends = val[0] }
+    | document extends_statement { document.extends = val[1] }
     ;
 
 ---- header ----

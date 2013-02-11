@@ -36,6 +36,7 @@ module Cadenza
       @lexer.source = source
 
       @stack = [DocumentNode.new]
+      @namespaces = []
 
       do_parse
 
@@ -43,18 +44,35 @@ module Cadenza
     end
 
   private
+    def document
+      @stack.first
+    end
 
     # this is a handy method to add a node to the AST properly, it's used in
     # the cadenza.y file
-    def push_child(node)
+    def push(node)
+      @stack.first.add_block(node) if node.is_a?(BlockNode)
+
       @stack.last.children.push(node)
     end
 
-    # this is a handy method to add a block to the AST properly, it's used in
-    # the cadenza.y file
-    def push_block(block_node)
-      @stack.first.add_block(block_node)
-      push_child(block_node)
+    def open_scope!
+      @stack.push DocumentNode.new
+    end
+
+    def close_scope!
+      @stack.pop.children
+    end
+
+    def open_block_scope!(name)
+      @namespaces.push(name)
+      open_scope!
+      @namespaces.join(".")
+    end
+
+    def close_block_scope!
+      @namespaces.pop
+      close_scope!
     end
 
     # this is the method Racc will call to get the next token in the stream
