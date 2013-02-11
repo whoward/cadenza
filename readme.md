@@ -41,12 +41,21 @@ See: [CONTRIBUTING.md](http://github.com/whoward/cadenza/tree/master/CONTRIBUTIN
 - Ruby 1.8.7
 - Ruby 1.9.2
 - Ruby 1.9.3
-- Ruby 2.0.0 (pending it's release, check Travis CI for current support)
+- Ruby 2.0.0*
 - Ruby Enterprise Edition
-- Rubinius 2.0 (1.8 mode)
-- Rubinius 2.0 (1.9 mode)
+- Rubinius 2.0 (1.8 mode)*
+- Rubinius 2.0 (1.9 mode)*
 - JRuby (1.8 mode)
 - JRuby (1.9 mode)
+
+(*) Some supported ruby interpreters are not officially released yet (such as Rubinius or Ruby 2.0), these
+are a special case for support:
+
+> If you are using Cadenza from Rubygems then we will ensure that the build is passing on that interpreter 
+> at the point we are releasing.
+>
+> If you are using Cadenza from the master branch however, be sure to check our Travis CI page for current 
+> build status.  No guarantees.
 
 # License
 
