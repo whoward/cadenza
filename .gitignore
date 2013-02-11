@@ -4,3 +4,4 @@ doc/.yardb/*
 .rspec
 .yardoc
 .rbx
+.rvmrc
