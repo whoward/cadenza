@@ -77,19 +77,11 @@ rule
     ;
 
   if_tag
-    : STMT_OPEN IF logical_expression STMT_CLOSE
-      {
-        open_scope!
-        result = val[2]
-      }
+    : STMT_OPEN IF logical_expression STMT_CLOSE { open_scope!; result = val[2] }
     ;
 
   unless_tag
-    : STMT_OPEN UNLESS logical_expression STMT_CLOSE
-      {
-        open_scope!
-        result = BooleanInverseNode.new(val[2])
-      }
+    : STMT_OPEN UNLESS logical_expression STMT_CLOSE { open_scope!; result = BooleanInverseNode.new(val[2]) }
     ;
 
   else_tag
@@ -105,41 +97,47 @@ rule
     ;
 
   if_block
-    : if_tag end_if_tag { close_scope!; result = IfNode.new(val[0]) }
+    : if_tag end_if_tag { result = IfNode.new(val[0], close_scope!) }
     | if_tag document end_if_tag { result = IfNode.new(val[0], close_scope!) }
     | if_tag else_tag document end_if_tag
       {
-        false_children, true_children = close_scope!, close_scope!
+        false_children = close_scope!
+        true_children  = close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     | if_tag document else_tag end_if_tag
       {
-        false_children, true_children = close_scope!, close_scope!
+        false_children = close_scope!
+        true_children  = close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     | if_tag document else_tag document end_if_tag
       {
-        false_children, true_children = close_scope!, close_scope!
+        false_children = close_scope!
+        true_children  = close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     ;
 
   unless_block
-    : unless_tag end_unless_tag { @stack.pop; result = IfNode.new(val[0]) }
+    : unless_tag end_unless_tag { result = IfNode.new(val[0], close_scope!) }
     | unless_tag document end_unless_tag { result = IfNode.new(val[0], close_scope!) }
     | unless_tag else_tag document end_unless_tag
       {
-        false_children, true_children = close_scope!, close_scope!
+        false_children = close_scope!
+        true_children  = close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     | unless_tag document else_tag end_unless_tag
       {
-        false_children, true_children = close_scope!, close_scope!
+        false_children = close_scope!
+        true_children  = close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     | unless_tag document else_tag document end_unless_tag
       {
-        false_children, true_children = close_scope!, close_scope!
+        false_children = close_scope!
+        true_children  = close_scope!
         result = IfNode.new(val[0], true_children, false_children)
       }
     ;
@@ -184,13 +182,17 @@ rule
     | block_tag document end_block_tag { result = BlockNode.new(val[0], val[2]) }
     ;
 
+  generic_block_tag
+    : STMT_OPEN IDENTIFIER STMT_CLOSE { open_scope!; result = [val[1].value, []] }
+    | STMT_OPEN IDENTIFIER parameter_list STMT_CLOSE { open_scope!; result = [val[1].value, val[2]] }
+    ;
+
+  end_generic_block_tag
+    : STMT_OPEN END STMT_CLOSE { result = close_scope! }
+    ;
+
   generic_block
-    : STMT_OPEN IDENTIFIER STMT_CLOSE { open_scope! }
-      document 
-      STMT_OPEN END STMT_CLOSE { result = GenericBlockNode.new(val[1].value, close_scope!) }
-    | STMT_OPEN IDENTIFIER parameter_list STMT_CLOSE  { open_scope! }
-      document 
-      STMT_OPEN END STMT_CLOSE { result = GenericBlockNode.new(val[1].value, close_scope!, val[2]) }
+    : generic_block_tag document end_generic_block_tag { result = GenericBlockNode.new(val[0].first, val[2], val[0].last) }
     ;
 
   extends_statement
