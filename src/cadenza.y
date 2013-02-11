@@ -78,10 +78,7 @@ rule
 
   if_tag
     : STMT_OPEN IF logical_expression STMT_CLOSE { open_scope!; result = val[2] }
-    ;
-
-  unless_tag
-    : STMT_OPEN UNLESS logical_expression STMT_CLOSE { open_scope!; result = BooleanInverseNode.new(val[2]) }
+    | STMT_OPEN UNLESS logical_expression STMT_CLOSE { open_scope!; result = BooleanInverseNode.new(val[2]) }
     ;
 
   else_tag
@@ -90,10 +87,7 @@ rule
 
   end_if_tag
     : STMT_OPEN ENDIF STMT_CLOSE
-    ;
-
-  end_unless_tag
-    : STMT_OPEN ENDUNLESS STMT_CLOSE
+    | STMT_OPEN ENDUNLESS STMT_CLOSE
     ;
 
   if_block
@@ -112,29 +106,6 @@ rule
         result = IfNode.new(val[0], true_children, false_children)
       }
     | if_tag document else_tag document end_if_tag
-      {
-        false_children = close_scope!
-        true_children  = close_scope!
-        result = IfNode.new(val[0], true_children, false_children)
-      }
-    ;
-
-  unless_block
-    : unless_tag end_unless_tag { result = IfNode.new(val[0], close_scope!) }
-    | unless_tag document end_unless_tag { result = IfNode.new(val[0], close_scope!) }
-    | unless_tag else_tag document end_unless_tag
-      {
-        false_children = close_scope!
-        true_children  = close_scope!
-        result = IfNode.new(val[0], true_children, false_children)
-      }
-    | unless_tag document else_tag end_unless_tag
-      {
-        false_children = close_scope!
-        true_children  = close_scope!
-        result = IfNode.new(val[0], true_children, false_children)
-      }
-    | unless_tag document else_tag document end_unless_tag
       {
         false_children = close_scope!
         true_children  = close_scope!
@@ -204,7 +175,6 @@ rule
     : TEXT_BLOCK { result = TextNode.new(val[0].value) }
     | inject_statement
     | if_block
-    | unless_block
     | for_block
     | generic_block
     | block_block
