@@ -188,8 +188,8 @@ racc_reduce_table = [
   4, 55, :_reduce_36,
   4, 55, :_reduce_37,
   3, 56, :_reduce_38,
-  3, 57, :_reduce_none,
-  3, 57, :_reduce_none,
+  3, 57, :_reduce_39,
+  3, 57, :_reduce_40,
   2, 58, :_reduce_41,
   3, 58, :_reduce_42,
   4, 58, :_reduce_43,
@@ -598,41 +598,51 @@ module_eval(<<'.,.,', 'cadenza.y', 84)
   end
 .,.,
 
-# reduce 39 omitted
+module_eval(<<'.,.,', 'cadenza.y', 88)
+  def _reduce_39(val, _values, result)
+     result = close_scope! 
+    result
+  end
+.,.,
 
-# reduce 40 omitted
+module_eval(<<'.,.,', 'cadenza.y', 89)
+  def _reduce_40(val, _values, result)
+     result = close_scope! 
+    result
+  end
+.,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 93)
   def _reduce_41(val, _values, result)
-     result = IfNode.new(val[0], close_scope!) 
+     result = IfNode.new(val[0], val[1]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 94)
   def _reduce_42(val, _values, result)
-     result = IfNode.new(val[0], close_scope!) 
+     result = IfNode.new(val[0], val[2]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 95)
   def _reduce_43(val, _values, result)
-     result = IfNode.new(val[0], val[1], close_scope!) 
+     result = IfNode.new(val[0], val[1], val[3]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 96)
   def _reduce_44(val, _values, result)
-     result = IfNode.new(val[0], val[2], close_scope!) 
+     result = IfNode.new(val[0], val[2], val[3]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cadenza.y', 97)
   def _reduce_45(val, _values, result)
-     result = IfNode.new(val[0], val[2], close_scope!) 
+     result = IfNode.new(val[0], val[2], val[4]) 
     result
   end
 .,.,

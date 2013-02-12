@@ -86,16 +86,16 @@ rule
     ;
 
   end_if_tag
-    : STMT_OPEN ENDIF STMT_CLOSE
-    | STMT_OPEN ENDUNLESS STMT_CLOSE
+    : STMT_OPEN ENDIF STMT_CLOSE { result = close_scope! }
+    | STMT_OPEN ENDUNLESS STMT_CLOSE { result = close_scope! }
     ;
 
   if_block
-    : if_tag end_if_tag { result = IfNode.new(val[0], close_scope!) }
-    | if_tag document end_if_tag { result = IfNode.new(val[0], close_scope!) }
-    | if_tag else_tag document end_if_tag { result = IfNode.new(val[0], val[1], close_scope!) }
-    | if_tag document else_tag end_if_tag { result = IfNode.new(val[0], val[2], close_scope!) }
-    | if_tag document else_tag document end_if_tag { result = IfNode.new(val[0], val[2], close_scope!) }
+    : if_tag end_if_tag { result = IfNode.new(val[0], val[1]) }
+    | if_tag document end_if_tag { result = IfNode.new(val[0], val[2]) }
+    | if_tag else_tag document end_if_tag { result = IfNode.new(val[0], val[1], val[3]) }
+    | if_tag document else_tag end_if_tag { result = IfNode.new(val[0], val[2], val[3]) }
+    | if_tag document else_tag document end_if_tag { result = IfNode.new(val[0], val[2], val[4]) }
     ;
 
   for_tag
