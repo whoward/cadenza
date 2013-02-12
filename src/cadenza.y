@@ -1,7 +1,7 @@
 class Cadenza::RaccParser
 
 /* expect this many shift/reduce conflicts */
-expect 38
+expect 37
 
 rule
   target
@@ -99,29 +99,17 @@ rule
     ;
 
   for_tag
-    : STMT_OPEN FOR IDENTIFIER IN filtered_expression STMT_CLOSE { result = [val[2].value, val[4]] }
+    : STMT_OPEN FOR IDENTIFIER IN filtered_expression STMT_CLOSE { open_scope!; result = [val[2].value, val[4]] }
     ;
 
   end_for_tag
-    : STMT_OPEN ENDFOR STMT_CLOSE
+    : STMT_OPEN ENDFOR STMT_CLOSE { result = close_scope! }
     ;
 
   /* this has a shift/reduce conflict but since Racc will shift in this case it is the correct behavior */
   for_block
-    : for_tag end_for_tag
-      {
-        iterator = VariableNode.new(val[0][0])
-        iterable = val[0][1]
-        
-        result = ForNode.new(iterator, iterable, [])      
-      }
-    | for_tag { open_scope! } document end_for_tag
-      {
-        iterator = VariableNode.new(val[0][0])
-        iterable = val[0][1]
-        
-        result = ForNode.new(iterator, iterable, close_scope!)
-      }
+    : for_tag end_for_tag { result = ForNode.new(VariableNode.new(val[0].first), val[0].last, val[1]) }
+    | for_tag document end_for_tag { result = ForNode.new(VariableNode.new(val[0].first), val[0].last, val[2]) }
     ;
 
   block_tag
@@ -134,7 +122,7 @@ rule
 
   /* this has a shift/reduce conflict but since Racc will shift in this case it is the correct behavior */
   block_block
-    : block_tag end_block_tag { result = BlockNode.new(val[0], []) }
+    : block_tag end_block_tag { result = BlockNode.new(val[0], val[1]) }
     | block_tag document end_block_tag { result = BlockNode.new(val[0], val[2]) }
     ;
 
