@@ -1,3 +1,4 @@
+require 'cadenza/block_hierarchy'
 require 'stringio'
 
 module Cadenza

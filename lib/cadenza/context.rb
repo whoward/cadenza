@@ -1,3 +1,5 @@
+require 'cadenza/context/stack'
+require 'cadenza/context/loaders'
 
 module Cadenza
    # The {Context} class is an essential class in Cadenza that contains all the
@@ -7,10 +9,9 @@ module Cadenza
    # (see {#blocks}), loaders (see {#loaders}) and configuration data as well 
    # as all the methods you should need to define and evaluate those.
    class Context
+      extend Cadenza::Library
+
       include Cadenza::Context::Stack
-      include Cadenza::Context::Filters
-      include Cadenza::Context::Blocks
-      include Cadenza::Context::FunctionalVariables
       include Cadenza::Context::Loaders
 
       # looks up the given identifier name on the given ruby object using
@@ -64,13 +65,24 @@ module Cadenza
          copy = super
          copy.instance_variable_set("@stack", stack.dup)
          copy.instance_variable_set("@loaders", loaders.dup)
-         copy.instance_variable_set("@filters", filters.dup)
-         copy.instance_variable_set("@functional_variables", functional_variables.dup)
-         copy.instance_variable_set("@blocks", blocks.dup)
-         
          copy
       end
 
+      def evaluate_filter(name, input, params=[])
+         self.class.evaluate_filter(name, input, params)
+      end
+
+      def evaluate_block(name, nodes, parameters)
+         self.class.evaluate_block(name, self, nodes, parameters)
+      end
+
+      def functional_variables
+         self.class.functional_variables
+      end
+
+      def evaluate_functional_variable(name, params=[])
+         self.class.evaluate_functional_variable(name, self, params)
+      end
    end
 
 end

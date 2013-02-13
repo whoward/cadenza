@@ -7,14 +7,6 @@ describe Cadenza::Context do
       Cadenza::Context.new.stack.should == [{}]
    end
 
-   it "should start with an empty filter map" do
-      Cadenza::Context.new.filters.should be_empty
-   end
-
-   it "should start with an empty functional variable map" do
-      Cadenza::Context.new.functional_variables.should be_empty
-   end
-
    it "should begin with whiny template loading disabled" do
       Cadenza::Context.new.whiny_template_loading.should == false
    end
@@ -31,16 +23,17 @@ describe Cadenza::Context do
    end
 
    context "#clone" do
-      let(:context) { Cadenza::Context.new(:foo => "bar") }
+      let(:context_class) do
+         klass = Class.new(Cadenza::Context)
+         klass.define_filter(:upcase) {|input, params| input.upcase }
+         klass.define_functional_variable(:assign) {|context, name, value| context.assign(name, value) }
+         klass
+      end
+
+      let(:context) { context_class.new(:foo => "bar") }
 
       before do
          context.add_loader Cadenza::FilesystemLoader.new(fixture_filename "templates")
-         context.define_filter(:upcase) {|input, params| input.upcase }
-         context.define_functional_variable(:assign) {|context, name, value| context.assign(name, value) }
-
-         context.loaders.should have(1).item
-         context.filters.should have(1).item
-         context.functional_variables.should have(1).item
       end
 
       it "should duplicate it's stack" do
@@ -52,24 +45,6 @@ describe Cadenza::Context do
          context.clone.stack.first[:foo].should equal context.stack.first[:foo]
       end
 
-      it "should duplicate it's filters" do
-         context.clone.filters.should_not equal context.filters
-         context.clone.filters.should == context.filters
-      end
-
-      it "should not duplicate the filter definitions" do
-         context.clone.filters[:upcase].should equal context.filters[:upcase]
-      end
-
-      it "should duplicate it's functional variables" do
-         context.clone.functional_variables.should_not equal context.functional_variables
-         context.clone.functional_variables.should == context.functional_variables
-      end
-
-      it "should not duplicate the functional variables definitions" do
-         context.clone.functional_variables[:assign].should equal context.functional_variables[:assign]
-      end
-
       it "should duplicate it's loader list" do
          context.clone.loaders.should_not equal context.loaders
          context.clone.loaders.should == context.loaders
@@ -78,25 +53,18 @@ describe Cadenza::Context do
       it "should not duplicate the loaders inside the list" do
          context.clone.loaders.first.should equal context.loaders.first
       end
-
-      it "should duplicate it's blocks list" do
-         context.clone.blocks.should_not equal context.blocks
-         context.clone.blocks.should == context.blocks
-      end
-
-      it "should not duplicate the blocks inside the list" do
-         context.clone.blocks.first.should equal context.blocks.first
-      end
    end
 
    context "#lookup" do
+      let(:context_class) do
+         klass = Class.new(Cadenza::Context)
+         klass.define_functional_variable(:assign, &assign)
+         klass
+      end
+
       let(:scope) { {:foo => {:bar => "baz"}, :abc => OpenStruct.new(:def => "ghi"), :alphabet => %w(a b c), :obj => TestContextObject.new} }
       let(:assign) { lambda {|context, name, value| context.assign(name, value) } }
-      let(:context) { Cadenza::Context.new(scope) }
-
-      before do
-         context.define_functional_variable(:assign, &assign)
-      end
+      let(:context) { context_class.new(scope) }
 
       it "should retrieve the value of an identifier" do
          context.lookup("foo").should == {:bar => "baz"}
@@ -157,186 +125,6 @@ describe Cadenza::Context do
          lambda { context.assign(:foo, "bar") }.should_not change(context.stack, :length)
 
          context.lookup("foo").should == "bar"
-      end
-   end
-
-   context "#define_filter" do
-      let(:context) { Cadenza::Context.new }
-
-      before do
-         context.define_filter(:pluralize) {|input, params| "#{input}s" }
-      end
-
-      it "should allow defining a filter method" do
-         context.filters[:pluralize].should be_a(Proc)
-      end
-
-      it "should evaluate a filter" do         
-         context.evaluate_filter(:pluralize, "bar").should == "bars"
-      end
-
-      it "should raise a FilterNotDefinedError if the filter is not defined" do
-         lambda do
-            context.evaluate_filter(:foo, "bar")
-         end.should raise_error Cadenza::FilterNotDefinedError
-      end
-
-      context "#lookup_filter" do
-         it "returns the given filter" do
-            context.lookup_filter(:pluralize).should be_a Proc
-         end
-
-         it "raises a FilterNotDefinedError if the block is not defined" do
-            lambda do
-               context.lookup_filter(:fake)
-            end.should raise_error Cadenza::FilterNotDefinedError
-         end
-      end
-
-      context "#alias_filter" do
-         it "returns nil" do
-            context.alias_filter(:pluralize, :pluralizar).should be_nil
-         end
-
-         it "duplicates the filter block under a different name" do
-            context.alias_filter(:pluralize, :pluralizar) # alias it as the spanish form of pluralize
-
-            context.evaluate_filter(:pluralizar, "bar").should == "bars"
-         end
-
-         it "raises a FilterNotDefinedError if the source filter is not defined" do
-            lambda do
-               context.alias_filter(:fake, :something)
-            end.should raise_error Cadenza::FilterNotDefinedError
-         end
-      end
-   end
-
-   context "#define_functional_variable" do
-      let(:context) { Cadenza::Context.new }
-
-      before do
-         context.define_functional_variable(:assign) {|context, name, value| context.assign(name, value) }
-      end
-
-      it "should allow defining a functional variable" do
-         context.functional_variables[:assign].should be_a(Proc)
-      end
-
-      it "should evaluate a functional variable" do
-         context.lookup("foo").should be_nil
-         
-         context.evaluate_functional_variable(:assign, ["foo", 123])
-
-         context.lookup("foo").should == 123
-      end
-
-      it "should raise a FunctionalVariableNotDefinedError if the functional variable is not defined" do
-         lambda do
-            context.evaluate_functional_variable(:foo, [])
-         end.should raise_error Cadenza::FunctionalVariableNotDefinedError
-      end
-
-      context "#lookup_functional_variable" do
-         it "returns the given functional variable" do
-            context.lookup_functional_variable(:assign).should be_a Proc
-         end
-
-         it "raises a FunctionalVariableNotDefinedError if the block is not defined" do
-            lambda do
-               context.lookup_functional_variable(:fake)
-            end.should raise_error Cadenza::FunctionalVariableNotDefinedError
-         end
-      end
-
-      context "#alias_functional_variable" do
-         it "returns nil" do
-            context.alias_functional_variable(:assign, :set).should be_nil
-         end
-
-         it "duplicates the variable block under a different name" do
-            context.alias_functional_variable(:assign, :set)
-
-            context.evaluate_functional_variable(:set, ["foo", 123])
-
-            context.lookup("foo").should == 123
-         end
-
-         it "raises a FunctionalVariableNotDefinedError if the source variable is not defined" do
-            lambda do
-               context.alias_functional_variable(:fake, :something)
-            end.should raise_error Cadenza::FunctionalVariableNotDefinedError
-         end
-      end
-   end
-
-   context "#define_block" do
-      let(:context) { Cadenza::Context.new }
-      let(:escape) { Cadenza::VariableNode.new("escape") }
-
-      before do
-         context.define_filter(:escape) {|input, params| CGI.escapeHTML(input) }
-
-         context.define_block :filter do |context, nodes, parameters|
-            filter = parameters.first.identifier
-
-            nodes.inject("") do |output, child|
-               node_text = Cadenza::TextRenderer.render(child, context)
-               output << context.evaluate_filter(filter, node_text)
-            end
-         end
-      end
-
-      it "should define the block" do
-         context.blocks[:filter].should be_a Proc
-      end
-
-      it "should evaluate a block" do
-         text = Cadenza::TextNode.new("<h1>Hello World!</h1>")
-
-         output = context.evaluate_block(:filter, [text], [escape])
-
-         output.should == "&lt;h1&gt;Hello World!&lt;/h1&gt;"
-      end
-
-      it "should raise a BlockNotDefinedError if the block is not defined" do
-         lambda do
-            context.evaluate_block(:foo, [], [])
-         end.should raise_error Cadenza::BlockNotDefinedError
-      end
-      
-      context "#lookup_block" do
-         it "returns the given block" do
-            context.lookup_block(:filter).should be_a Proc
-         end
-
-         it "raises a BlockNotDefinedError if the block is not defined" do
-            lambda do
-               context.lookup_block(:fake)
-            end.should raise_error Cadenza::BlockNotDefinedError
-         end
-      end
-
-      context "#alias_block" do
-         it "returns nil" do
-            context.alias_block(:filter, :apply).should be_nil
-         end
-
-         it "duplicates the block under a different name" do
-            context.alias_block(:filter, :apply)
-
-            text = Cadenza::TextNode.new("<h1>Hello World!</h1>")
-
-            output = context.evaluate_block(:apply, [text], [escape])
-
-            output.should == "&lt;h1&gt;Hello World!&lt;/h1&gt;"
-         end
-
-         it "raises a BlockNotDefinedError if the source variable is not defined" do
-            lambda do
-               context.alias_block(:fake, :something)
-            end.should raise_error Cadenza::BlockNotDefinedError
-         end         
       end
    end
 

@@ -2,7 +2,7 @@
 module Cadenza
    BlockNotDefinedError = Class.new(Cadenza::Error)
 
-   class Context
+   module Library
       module Blocks
          
          # @!attribute [r] blocks
@@ -52,8 +52,8 @@ module Cadenza
          # @param [Array, []] params a list of parameters to pass to the block
          #                    when calling it.
          # @return [String] the result of evaluating the block
-         def evaluate_block(name, nodes, parameters)
-            lookup_block(name).call(self, nodes, parameters)
+         def evaluate_block(name, context, nodes, parameters)
+            lookup_block(name).call(context, nodes, parameters)
          end
       end
    end

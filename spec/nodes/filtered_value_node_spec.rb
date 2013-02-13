@@ -34,16 +34,18 @@ describe Cadenza::FilteredValueNode do
    end
 
    context "evaluation" do
-      let(:context)      { Cadenza::Context.new(:pi => 3.14159) }
+      let(:context_class) do
+         klass = Class.new(Cadenza::Context)
+         klass.define_filter(:floor) {|value,params| value.floor }
+         klass.define_filter(:add) {|value,params| value + params.first }
+         klass
+      end
+
+      let(:context)      { context_class.new(:pi => 3.14159) }
       let(:pi_node)      { Cadenza::VariableNode.new("pi") }
       let(:floor_node)   { Cadenza::FilterNode.new("floor") }
       let(:add_one_node) { Cadenza::FilterNode.new("add", [Cadenza::ConstantNode.new(1)]) }
       
-      before do
-         context.define_filter(:floor) {|value,params| value.floor }
-         context.define_filter(:add) {|value,params| value + params.first }
-      end
-
       it "evaluates to the value's evaluation passed through each chained filter" do
          subject.new(pi_node, [floor_node, add_one_node]).eval(context).should == 4
       end

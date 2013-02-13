@@ -7,18 +7,16 @@ require 'cadenza/lexer'
 require 'cadenza/racc_parser'
 require 'cadenza/parser'
 
-require 'cadenza/context/stack'
-require 'cadenza/context/filters'
-require 'cadenza/context/blocks'
-require 'cadenza/context/functional_variables'
-require 'cadenza/context/loaders'
+require 'cadenza/library'
+require 'cadenza/standard_library'
+
 require 'cadenza/context'
+require 'cadenza/base_context'
 
 require 'cadenza/context_object'
 
 require 'cadenza/base_renderer'
 require 'cadenza/text_renderer'
-require 'cadenza/block_hierarchy'
 require 'cadenza/source_renderer'
 
 require 'cadenza/filesystem_loader'
@@ -31,8 +29,6 @@ require 'stringio'
 Dir[File.join File.dirname(__FILE__), 'cadenza', 'nodes', '*.rb'].each {|f| require f }
 
 module Cadenza
-   BaseContext = Context.new
-
    # this utility method sets up the standard Cadenza lexer/parser/renderer 
    # stack and renders the given template text with the given variable scope
    # using the {BaseContext}.  the result of rendering is returned as a string.
@@ -40,8 +36,8 @@ module Cadenza
    # @param [String] template_text the content of the template to parse/render
    # @param [Hash] scope any variables to define as a new scope for {BaseContext}
    #               in this template.
-   def self.render(template_text, scope=nil)
-      context = create_context(scope)
+   def self.render(template_text, scope=nil, options={})
+      context = create_context(scope, options)
 
       do_render(Parser.new.parse(template_text), context)
    end
@@ -52,16 +48,16 @@ module Cadenza
    # @param [String] template_name the name of the template to load then parse and render
    # @param [Hash] scope any variables to define as a new scope for {BaseContext}
    #               in this template.
-   def self.render_template(template_name, scope=nil)
-      context = create_context(scope)
+   def self.render_template(template_name, scope=nil, options={})
+      context = create_context(scope, options)
 
       do_render(context.load_template(template_name), context)
    end
 
    private
 
-   def self.create_context(scope)
-      context = BaseContext.clone
+   def self.create_context(scope, options)
+      context = options.fetch(:context) { BaseContext.new }
 
       context.push(scope) if scope
 
@@ -75,16 +71,4 @@ module Cadenza
 
       output.string
    end
-end
-
-Dir[File.join File.dirname(__FILE__), 'cadenza', 'filters', '*.rb'].each do |filename|
-   Cadenza::BaseContext.instance_eval File.read(filename)
-end
-
-Dir[File.join File.dirname(__FILE__), 'cadenza', 'functional_variables', '*.rb'].each do |filename|
-   Cadenza::BaseContext.instance_eval File.read(filename)
-end
-
-Dir[File.join File.dirname(__FILE__), 'cadenza', 'blocks', '*.rb'].each do |filename|
-   Cadenza::BaseContext.instance_eval File.read(filename)
 end

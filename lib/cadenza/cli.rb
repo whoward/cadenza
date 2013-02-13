@@ -16,13 +16,15 @@ module Cadenza
           [Dir.pwd]
         end
 
+      context = Cadenza::BaseContext.new
+
       load_paths.each do |load_path|
-        Cadenza::BaseContext.add_load_path load_path
+        context.add_load_path load_path
       end
 
-      Cadenza::BaseContext.whiny_template_loading = true
+      context.whiny_template_loading = true
 
-      Cadenza.render_template path, options[:context]
+      Cadenza.render_template path, options[:context], {:context => context}
 
     end
 

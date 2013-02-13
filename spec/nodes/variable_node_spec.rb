@@ -33,14 +33,16 @@ describe Cadenza::VariableNode do
    end
 
    context "evaluation" do
-      let(:context)      { Cadenza::Context.new(:pi => 3.14159) }
+      let(:context_class) do
+         klass = Class.new(Cadenza::Context)
+         klass.define_functional_variable(:ctx) {|context| context.inspect } # output's the inspected context
+         klass.define_functional_variable(:load) {|context, template| template == "foo" ? "bar" : "baz" } # fake load method
+         klass
+      end
+
+      let(:context)      { context_class.new(:pi => 3.14159) }
       let(:pi_node)      { Cadenza::VariableNode.new("pi") }
       let(:ctx_node)     { Cadenza::VariableNode.new("ctx") }
-
-      before do
-         context.define_functional_variable(:ctx) {|context| context.inspect } # output's the inspected context
-         context.define_functional_variable(:load) {|context, template| template == "foo" ? "bar" : "baz" } # fake load method
-      end
 
       it "evaluates to the value looked up in the context" do
          Cadenza::VariableNode.new("pi").eval(context).should == 3.14159

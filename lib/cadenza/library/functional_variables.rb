@@ -2,7 +2,7 @@
 module Cadenza
    FunctionalVariableNotDefinedError = Class.new(Cadenza::Error)
 
-   class Context
+   module Library
       module FunctionalVariables
 
          # @!attribute [r] functional_variables
@@ -49,8 +49,8 @@ module Cadenza
          # @param [Array] params a list of parameters to pass to the variable
          #                block when calling it
          # @return [Object] the result of  evaluating the functional variable
-         def evaluate_functional_variable(name, params=[])
-            lookup_functional_variable(name).call([self] + params)
+         def evaluate_functional_variable(name, context, params=[])
+            lookup_functional_variable(name).call([context] + params)
          end
          
       end

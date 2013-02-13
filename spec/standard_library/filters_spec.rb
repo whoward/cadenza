@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Cadenza::BaseContext, 'standard filters' do
-   subject { Cadenza::BaseContext }
+describe Cadenza::StandardLibrary::Filters do
+   subject { Cadenza::StandardLibrary }
 
    context "addslashes" do
       it "should replace slashes with double slashes" do

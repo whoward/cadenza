@@ -2,7 +2,7 @@
 module Cadenza
    FilterNotDefinedError = Class.new(Cadenza::Error)
 
-   class Context
+   module Library
       module Filters
 
          # @!attribute [r] filters

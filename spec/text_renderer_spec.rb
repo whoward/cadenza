@@ -1,9 +1,26 @@
 require 'spec_helper'
 
 describe Cadenza::TextRenderer do
+   let(:context_class) do
+      klass = Class.new(Cadenza::Context)
+
+      klass.define_filter(:escape) {|input,params| CGI.escapeHTML(input) }
+
+      klass.define_block :filter do |context, nodes, parameters|
+         filter = parameters.first.identifier
+
+         nodes.inject("") do |output, child|
+            node_text = Cadenza::TextRenderer.render(child, context)
+            output << context.evaluate_filter(filter, node_text)
+         end
+      end
+
+      klass
+   end
+
    let(:output)   { StringIO.new }
    let(:renderer) { Cadenza::TextRenderer.new(output) }
-   let(:context)  { Cadenza::Context.new(:pi => 3.14159, :collection => %w(a b c)) }
+   let(:context)  { context_class.new(:pi => 3.14159, :collection => %w(a b c)) }
    let(:document) { Cadenza::DocumentNode.new }
 
    # some sample constant and variable nodes
@@ -91,10 +108,11 @@ describe Cadenza::TextRenderer do
    end
 
    it "should render the value of a inject node to the output" do
-      context = Cadenza::Context.new(:pi => 3.14159)
+      klass = Class.new(Cadenza::Context)
+      klass.define_filter(:floor) {|value,params| value.floor }
+      klass.define_filter(:add)   {|value,params| value + params.first }
 
-      context.define_filter(:floor) {|value,params| value.floor }
-      context.define_filter(:add)   {|value,params| value + params.first }
+      context = klass.new(:pi => 3.14159)
 
       floor = Cadenza::FilterNode.new("floor")
       add_one = Cadenza::FilterNode.new("add", [Cadenza::ConstantNode.new(1)])
@@ -207,19 +225,6 @@ describe Cadenza::TextRenderer do
    end
 
    context "generic block nodes" do
-      before do
-         context.define_filter(:escape) {|input,params| CGI.escapeHTML(input) }
-
-         context.define_block :filter do |context, nodes, parameters|
-            filter = parameters.first.identifier
-
-            nodes.inject("") do |output, child|
-               node_text = Cadenza::TextRenderer.render(child, context)
-               output << context.evaluate_filter(filter, node_text)
-            end
-         end
-      end
-
       it "should render the text with the block's logic applied" do
          text = Cadenza::TextNode.new("<h1>Hello World!</h1>")
          escape =  Cadenza::VariableNode.new("escape")
