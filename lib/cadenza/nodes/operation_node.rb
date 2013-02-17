@@ -2,6 +2,8 @@ module Cadenza
    # The {OperationNode} is a node which contains an evaluatable {#left} and 
    # {#right} subtree and an {#operator} with which to evaluate it.
   class OperationNode
+      include TreeNode
+
       # @return [VariableNode|ConstantNode|OperationNode|BooleanInverseNode] the
       #         root of the left subtree to evaluate for this operation.
       attr_accessor :left

@@ -2,6 +2,8 @@
    # The {GenericBlockNode} allows the end user of Cadenza to provide custom 
    # block rendering logic via a proc defined on {Context}.
    class GenericBlockNode
+      include TreeNode
+      
       # @return [String] the name of the block as defined in {Context}
       attr_accessor :identifier
 

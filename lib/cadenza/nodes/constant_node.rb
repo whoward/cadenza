@@ -2,6 +2,8 @@ module Cadenza
    # The {ConstantNode} holds a value which is not affected by any context given
    # to it, such as numbers or strings.
    class ConstantNode
+      include TreeNode
+      
       # @return [Object] the value of this node
       attr_accessor :value
 

@@ -4,6 +4,8 @@ module Cadenza
   # that affects the entire document, such as block definitions and the name of
   # any extended template.
   class DocumentNode
+    include TreeNode
+    
     # @return [String] the name of the template this document will inherit from
     attr_accessor :extends
 
@@ -44,6 +46,5 @@ module Cadenza
     def implied_globals
       @children.map(&:implied_globals).flatten.uniq
     end
-
   end
 end

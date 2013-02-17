@@ -3,6 +3,8 @@ module Cadenza
    # The {FilteredValueNode} applies a list of passed {FilterNode} to it's value
    # when evaluated.
    class FilteredValueNode
+      include TreeNode
+      
       # @return [Node] the value to be filtered
       attr_accessor :value
 

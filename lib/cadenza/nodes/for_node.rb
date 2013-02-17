@@ -2,6 +2,8 @@ module Cadenza
    # The {ForNode} describe a loop in the template code.  The loop should iterate
    # over all the elements of the iterable and render its children each time.
    class ForNode
+      include TreeNode
+      
       # @return [VariableNode] the iterator object for the loop
       attr_accessor :iterator
 

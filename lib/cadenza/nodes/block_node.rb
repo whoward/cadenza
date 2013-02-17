@@ -3,6 +3,8 @@ module Cadenza
    # Cadenza's template inheritance feature.  Blocks defined in a template will
    # override the definition of blocks defined in the parent template.
    class BlockNode
+      include TreeNode
+      
       # @return [String] the name of the node
       attr_accessor :name
 

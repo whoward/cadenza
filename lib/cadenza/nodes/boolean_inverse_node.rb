@@ -3,6 +3,8 @@ module Cadenza
    # of that expression so any expression that evaluates to true will return false
    # and vice versa.
    class BooleanInverseNode
+      include TreeNode
+      
       # @return [OperationNode] an evaluatable expression node
       attr_accessor :expression
 

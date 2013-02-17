@@ -2,6 +2,8 @@ module Cadenza
    # The {VariableNode} holds a variable name (identifier) which it can render
    # the value of given a {Context} with the name defined in it's variable stack.
    class VariableNode
+      include TreeNode
+      
       # @return [String] the name given to this variable
       attr_accessor :identifier
 

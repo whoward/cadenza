@@ -2,6 +2,8 @@
    # The {TextNode} is a very simple container for static text defined in your
    # template.
    class TextNode
+      include TreeNode
+      
       # @return [String] the content of the text in this node
       attr_accessor :text
 

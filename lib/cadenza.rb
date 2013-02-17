@@ -4,6 +4,8 @@ require 'cadenza/token'
 
 require 'cadenza/lexer'
 
+require 'cadenza/tree_node'
+
 require 'cadenza/racc_parser'
 require 'cadenza/parser'
 
@@ -18,6 +20,7 @@ require 'cadenza/context_object'
 require 'cadenza/base_renderer'
 require 'cadenza/text_renderer'
 require 'cadenza/source_renderer'
+require 'cadenza/source_tree_renderer'
 
 require 'cadenza/filesystem_loader'
 

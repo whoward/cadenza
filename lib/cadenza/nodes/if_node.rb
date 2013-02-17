@@ -2,6 +2,8 @@ module Cadenza
    # The {IfNode} is a structure for rendering one of it's two given blocks 
    # based on the evaluation of an expression in the current {Context}.
    class IfNode
+      include TreeNode
+      
       # @return [OperationNode|BooleanInverseNode] the evaluatable expression 
       #         used to determine which set of nodes to render.
       attr_accessor :expression

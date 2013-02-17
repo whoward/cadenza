@@ -3,6 +3,8 @@ module Cadenza
    # The {FilterNode} is a node which contains the definition for a variable 
    # filter along with any parameters it is defined with.
    class FilterNode
+      include TreeNode
+      
       # @return [String] the name of the filter
       attr_accessor :identifier
 

@@ -10,7 +10,7 @@ module Cadenza::Cli
       end
 
       def initialize(*args)
-        @options = {}
+        @options = {:action => :render}
         super
       end
 
@@ -38,6 +38,15 @@ module Cadenza::Cli
         end
         on("-I", "--load-path PATH", "Add a path for the filesystem loader") do |path|
           add_load_path(path)
+        end
+        on("--tokenize", "only tokenize the input and dump it, do not parse or render") do
+          @options[:action] = :tokenize
+        end
+        on("--parse", "only parse the input and dump it, do not render") do
+          @options[:action] = :parse
+        end
+        on("--render", "tokenize, parse and render the input (default)") do
+          @options[:action] = :render
         end
 
       end
