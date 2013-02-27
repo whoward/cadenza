@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/cadenza.png)](http://badge.fury.io/rb/cadenza)
 [![Build Status](https://secure.travis-ci.org/whoward/cadenza.png?branch=master)](http://travis-ci.org/whoward/cadenza)
 [![Code Climate](https://codeclimate.com/github/whoward/cadenza.png)](https://codeclimate.com/github/whoward/cadenza)
 
