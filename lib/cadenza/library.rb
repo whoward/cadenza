@@ -1,9 +1,11 @@
 require 'cadenza/library/filters'
 require 'cadenza/library/blocks'
 require 'cadenza/library/functional_variables'
+require 'cadenza/library/expectation'
 
 module Cadenza
    module Library
+
       def self.build(&block)
          __build(nil, &block)
       end
@@ -30,6 +32,11 @@ module Cadenza
                library.functional_variables.merge!(self.functional_variables)
             end
          end
+      end
+
+   protected
+      def expect(params)
+         Expectation.new(params)
       end
 
    private
