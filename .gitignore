@@ -7,3 +7,4 @@ doc/.yardb/*
 .rvmrc
 .ruby-gemset
 .ruby-version
+.bundle

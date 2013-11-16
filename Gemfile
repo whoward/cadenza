@@ -3,7 +3,8 @@ gemspec
 
 group :test do
    gem 'rspec', '~> 2.6.0'
-   gem 'nokogiri-diff', "~> 0.1.0"
+   gem 'nokogiri-diff', "~> 0.2.0"
+   gem 'nokogiri', '~> 1.5.0'
 end
 
 group :development do
