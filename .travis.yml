@@ -15,3 +15,6 @@ matrix:
    allow_failures:
       - rvm: rbx-18mode
       - rvm: rbx-19mode
+
+bundler_args: "--without=development"
+script: "bundle exec rspec spec"
