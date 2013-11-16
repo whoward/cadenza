@@ -5,3 +5,5 @@ doc/.yardb/*
 .yardoc
 .rbx
 .rvmrc
+.ruby-gemset
+.ruby-version
