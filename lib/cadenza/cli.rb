@@ -28,11 +28,11 @@ module Cadenza
     def tokenize(path, options)
       lexer = Cadenza::Lexer.new
       lexer.source = context.load_source!(path)
-      STDOUT.puts lexer.remaining_tokens.map(&:inspect).join("\n")
+      $stdout.puts lexer.remaining_tokens.map(&:inspect).join("\n")
     end
 
     def parse(path, options)
-      STDOUT.puts context.load_template!(path).to_tree
+      $stdout.puts context.load_template!(path).to_tree
     end
 
     def render(path, options)
