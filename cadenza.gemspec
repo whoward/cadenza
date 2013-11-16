@@ -21,15 +21,5 @@ Gem::Specification.new do |s|
   s.test_files = Dir.glob("test/**/*.rb")
 
   s.add_dependency "multi_json", ">= 1.3.0"
-
-  s.add_development_dependency "rake", "~> 0.9.2"
-  s.add_development_dependency "rspec", "~> 2.6.0"
-  s.add_development_dependency "racc", "~> 1.4.6" if RUBY_PLATFORM != "java"
-  s.add_development_dependency "nokogiri-diff", "~> 0.1.0"
-  s.add_development_dependency "yard"
-
-  # to make testing more fun (if only it needed less configuration)
-  s.add_development_dependency "guard-rspec"
-  s.add_development_dependency "guard-shell"
 end
 
