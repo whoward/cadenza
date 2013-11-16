@@ -9,7 +9,7 @@ describe Cadenza::Library do
       subject.build do
          define_filter(:foo) {}
          define_block(:foo) {}
-         define_functional_variable(:foo) {}
+         define_function(:foo) {}
       end
    end
 
@@ -23,7 +23,7 @@ describe Cadenza::Library do
       end
 
       it "extends the module with Cadenza::Library::FunctionalVariables" do
-         library.should be_a Cadenza::Library::FunctionalVariables
+         library.should be_a Cadenza::Library::Functions
       end
    end
 
@@ -41,9 +41,9 @@ describe Cadenza::Library do
       end
 
       it "copies all defined functions into the included class" do
-         library.should have(0).functional_variables
+         library.should have(0).functions
          library.send(:include, standard_library)
-         library.should have(1).functional_variables
+         library.should have(1).functions
       end
    end
 
@@ -54,7 +54,7 @@ describe Cadenza::Library do
          klass.send(:include, standard_library)
          klass.define_filter(:bar) {}
          klass.define_block(:bar) {}
-         klass.define_functional_variable(:bar) {}
+         klass.define_function(:bar) {}
          klass
       end
 
@@ -69,7 +69,7 @@ describe Cadenza::Library do
       end
 
       it "has all the functions the superclass does" do
-         subclass.should have(2).functional_variables
+         subclass.should have(2).functions
       end
    end
 
@@ -98,12 +98,12 @@ describe Cadenza::Library do
          extra_standard_library = standard_library.enhance do
             define_filter(:bar) {}
             define_block(:bar) {}
-            define_functional_variable(:bar) {}
+            define_function(:bar) {}
          end
 
          extra_standard_library.should have(2).filters
          extra_standard_library.should have(2).blocks
-         extra_standard_library.should have(2).functional_variables
+         extra_standard_library.should have(2).functions
       end
    end
 end

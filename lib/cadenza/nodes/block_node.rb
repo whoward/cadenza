@@ -29,7 +29,7 @@ module Cadenza
       # @return [Boolean] true if the given {BlockNode} is equivalent to the this
       #                   node by value.
       def ==(rhs)
-         @name == rhs.name and
+         @name == rhs.name &&
          @children == rhs.children
       end
   end

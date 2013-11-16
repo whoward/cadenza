@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Cadenza::Library::FunctionalVariables do
+describe Cadenza::Library::Functions do
    let(:library) do
       Cadenza::Library.build do
          define_filter(:escape) {|input, params| CGI.escapeHTML(input) }

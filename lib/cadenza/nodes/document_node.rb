@@ -28,8 +28,8 @@ module Cadenza
     # @param [DocumentNode] rhs
     # @return [Boolean] if the given {DocumentNode} is equivalent by value to this one.
     def ==(rhs)
-      @children == rhs.children and
-      @extends == rhs.extends and
+      @children == rhs.children &&
+      @extends == rhs.extends &&
       @blocks == rhs.blocks
     end
 

@@ -23,7 +23,7 @@ module Cadenza
       # @return [Boolean] true if the given filter node is equivalent by value to
       #                   this node.
       def ==(rhs)
-         @identifier == rhs.identifier and
+         @identifier == rhs.identifier &&
          @parameters == rhs.parameters
       end
 

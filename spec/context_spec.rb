@@ -26,7 +26,7 @@ describe Cadenza::Context do
       let(:context_class) do
          klass = Class.new(Cadenza::Context)
          klass.define_filter(:upcase) {|input, params| input.upcase }
-         klass.define_functional_variable(:assign) {|context, name, value| context.assign(name, value) }
+         klass.define_function(:assign) {|context, name, value| context.assign(name, value) }
          klass
       end
 
@@ -58,7 +58,7 @@ describe Cadenza::Context do
    context "#lookup" do
       let(:context_class) do
          klass = Class.new(Cadenza::Context)
-         klass.define_functional_variable(:assign, &assign)
+         klass.define_function(:assign, &assign)
          klass
       end
 
@@ -98,11 +98,11 @@ describe Cadenza::Context do
          context.lookup("alphabet.1").should == "b"
       end
 
-      it "should look up a functional variable by it's name" do
+      it "should look up a function by it's name" do
          context.lookup("assign").should == assign
       end
 
-      it "should look up a functional variable instead of a variable of the same name" do
+      it "should look up a function instead of a variable of the same name" do
          context.push(:assign => "foo")
          context.lookup("assign").should == assign
       end

@@ -3,8 +3,8 @@ require 'cgi'
 module Cadenza; end
 module Cadenza::StandardLibrary; end
 
-Cadenza::StandardLibrary::FunctionalVariables = Cadenza::Library.build do
-   define_functional_variable :load do |context, template|
+Cadenza::StandardLibrary::Functions = Cadenza::Library.build do
+   define_function :load do |context, template|
       params = [template].compact
 
       expect(params).argc(1).first(:is_a => String)
@@ -12,7 +12,7 @@ Cadenza::StandardLibrary::FunctionalVariables = Cadenza::Library.build do
       context.load_source(template)
    end
 
-   define_functional_variable :render do |context, template|
+   define_function :render do |context, template|
       params = [template].compact
 
       expect(params).argc(1).first(:is_a => String)

@@ -1,6 +1,6 @@
 require 'cadenza/library/filters'
 require 'cadenza/library/blocks'
-require 'cadenza/library/functional_variables'
+require 'cadenza/library/functions'
 require 'cadenza/library/expectation'
 
 module Cadenza
@@ -13,13 +13,13 @@ module Cadenza
       def self.extended(base)
          base.extend Cadenza::Library::Filters
          base.extend Cadenza::Library::Blocks
-         base.extend Cadenza::Library::FunctionalVariables
+         base.extend Cadenza::Library::Functions
 
          if base.is_a?(Class)
             def base.inherited(base)
                base.filters.merge!(self.filters)
                base.blocks.merge!(self.blocks)
-               base.functional_variables.merge!(self.functional_variables)
+               base.functions.merge!(self.functions)
             end
          else
             def base.enhance(&block)
@@ -29,7 +29,7 @@ module Cadenza
             def base.included(library)
                library.filters.merge!(self.filters)
                library.blocks.merge!(self.blocks)
-               library.functional_variables.merge!(self.functional_variables)
+               library.functions.merge!(self.functions)
             end
          end
       end

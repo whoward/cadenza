@@ -36,8 +36,8 @@
       # @return [Boolean] true if the given node is equivalent by value to the
       #                   current node.
       def ==(rhs)
-         @identifier == rhs.identifier and
-         @children == rhs.children and
+         @identifier == rhs.identifier &&
+         @children == rhs.children &&
          @parameters == rhs.parameters
       end
    end

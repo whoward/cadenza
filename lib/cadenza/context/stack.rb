@@ -18,8 +18,8 @@ module Cadenza
          def lookup(identifier)
             sym_identifier = identifier.to_sym
 
-            # if a functional variable is defined matching the identifier name then return that
-            return functional_variables[sym_identifier] if functional_variables.has_key?(sym_identifier)
+            # if a function is defined matching the identifier name then return that
+            return functions[sym_identifier] if functions.has_key?(sym_identifier)
 
             stack.reverse_each do |scope|
                value = lookup_identifier(scope, identifier)

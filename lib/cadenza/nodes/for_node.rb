@@ -46,8 +46,8 @@ module Cadenza
       # @return [Boolean] true if the given {ForNode} is equivalent by value to
       #                   this node.
       def ==(rhs)
-         @iterator == rhs.iterator and
-         @iterable == rhs.iterable and
+         @iterator == rhs.iterator &&
+         @iterable == rhs.iterable &&
          @children == rhs.children
       end
 

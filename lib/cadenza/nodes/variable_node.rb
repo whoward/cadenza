@@ -8,7 +8,7 @@ module Cadenza
       attr_accessor :identifier
 
       # @return [Array] a list of Node objects passed to the {#value} for use in a
-      #         functional variable.  See {Context#define_functional_variable}.
+      #         function variable.  See {Context#define_function}.
       attr_accessor :parameters
 
       # creates a new {VariableNode} with the name given.

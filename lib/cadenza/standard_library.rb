@@ -1,6 +1,6 @@
 require 'cadenza/standard_library/filters'
 require 'cadenza/standard_library/blocks'
-require 'cadenza/standard_library/functional_variables'
+require 'cadenza/standard_library/functions'
 
 module Cadenza
    module StandardLibrary
@@ -8,6 +8,6 @@ module Cadenza
 
       include Cadenza::StandardLibrary::Filters
       include Cadenza::StandardLibrary::Blocks
-      include Cadenza::StandardLibrary::FunctionalVariables
+      include Cadenza::StandardLibrary::Functions
    end
 end

@@ -5,9 +5,9 @@ module Cadenza
    # The {Context} class is an essential class in Cadenza that contains all the
    # data necessary to render a template to it's output.  The context holds all
    # defined variable names (see {#stack}), filters (see {#filters}), 
-   # functional variables (see {#functional_variables}), generic blocks 
-   # (see {#blocks}), loaders (see {#loaders}) and configuration data as well 
-   # as all the methods you should need to define and evaluate those.
+   # functions (see {#functions}), generic blocks (see {#blocks}), loaders 
+   # (see {#loaders}) and configuration data as well as all the methods you 
+   # should need to define and evaluate those.
    class Context
       extend Cadenza::Library
 
@@ -47,8 +47,8 @@ module Cadenza
          nil
       end
 
-      # creates a new context object with an empty stack, filter list, functional
-      # variable list, block list, loaders list and default configuration options.
+      # creates a new context object with an empty stack, filter list, function
+      # list, block list, loaders list and default configuration options.
       #
       # When created you can push an optional scope onto as the initial stack
       #
@@ -58,7 +58,7 @@ module Cadenza
       end
 
       # creates a new instance of the context with the stack, loaders, filters,
-      # functional variables and blocks shallow copied.
+      # functions and blocks shallow copied.
       #
       # @return [Context] the cloned context
       def clone
@@ -77,11 +77,21 @@ module Cadenza
       end
 
       def functional_variables
-         self.class.functional_variables
+         warn "`#functional_variables` has been deprecated.  Use `#functions` instead."
+         functions
+      end
+
+      def functions
+         self.class.functions
       end
 
       def evaluate_functional_variable(name, params=[])
-         self.class.evaluate_functional_variable(name, self, params)
+         warn "`#evaluate_functional_variable` has been deprecated.  Use `#evaluate_function` instead."
+         evaluate_function(name, params)
+      end
+
+      def evaluate_function(name, params=[])
+         self.class.evaluate_function(name, self, params)
       end
    end
 
