@@ -15,6 +15,8 @@ describe Cadenza::TextRenderer do
          end
       end
 
+      klass.define_function(:raise) {|context, template| raise StandardError.new('test error') }
+
       klass
    end
 
@@ -277,5 +279,39 @@ describe Cadenza::TextRenderer do
          renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/nested_blocks/scoping.html")
       end
 
+   end
+
+   context "#error_handling" do
+      let(:template) { Cadenza::Parser.new.parse("{{raise}}") }
+
+      it "returns empty data by default" do
+         renderer = Cadenza::TextRenderer.new(output)
+         renderer.render(template, context)
+         renderer.output.string.should == ""
+      end
+
+      it "raises an error with the :raise handler" do
+         renderer = Cadenza::TextRenderer.new(output, :error_handler => :raise)
+         lambda { renderer.render(template, context) }.should raise_error(Cadenza::RenderError)
+      end
+
+      it "dumps the error backtrace with the :dump handler" do
+         renderer = Cadenza::TextRenderer.new(output, :error_handler => :dump)
+         renderer.render(template, context)
+         renderer.output.string.should_not == ""
+      end
+
+      it "calls the given callable object and outputs it's return value" do
+         handler = lambda {|err| "OH NOES! #{err.class.name}" }
+
+         renderer = Cadenza::TextRenderer.new(output, :error_handler => handler)
+         renderer.render(template, context)
+         renderer.output.string.should == "OH NOES! StandardError"
+      end
+
+      it "raises an error if the handler is something unexpected" do
+         renderer = Cadenza::TextRenderer.new(output, :error_handler => :wtfzzz)
+         lambda { renderer.render(template, context) }.should raise_error(Cadenza::Error)
+      end
    end
 end

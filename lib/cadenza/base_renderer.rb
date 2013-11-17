@@ -1,4 +1,13 @@
 module Cadenza
+
+   class RenderError < Cadenza::Error
+      attr_reader :inner_error
+      def initialize(err)
+         super()
+         @inner_error = err
+      end
+   end
+
    # BaseRenderer is a class you can use to more easily and cleanly implement 
    # your own rendering class.  To use this then subclass {BaseRenderer} and 
    # implement the appropriate render_xyz methods (see {#render} for details).
@@ -6,10 +15,30 @@ module Cadenza
       # @return [IO] the io object that is being written to
       attr_reader :output
 
+      # @return [Symbol|Proc] the error handler behavior. See {#initialize}
+      attr_accessor :error_handler
+
       # creates a new renderer and assigns the given output io object to it
       # @param [IO] output_io the IO object which will be written to
-      def initialize(output_io)
+      # @param [Hash] options the options to create the renderer with
+      # @option options [Symbol|Proc] :error_handler (:suppress) the behavior
+      #         the renderer should take when rendering a node results in an
+      #         exception being raised.  The value may be any of:
+      #
+      #         - <b>:raise</b>
+      #             re-raises the exception and passes it up (wrap it in a Cadenza::Error instance)
+      #
+      #         - <b>:dump</b>
+      #              dumps the error's backtrace to the output, useful for debugging but inappropriate for production.
+      #
+      #         - <b>:suppress</b>
+      #              returns immediately and provides no output (appropriate for production)
+      #
+      #         - <b>callable object</b> (ex. lambda, Proc or any other object that responds to #call)
+      #              calls the object with the error instance passed as an argument and outputs the return value to the template
+      def initialize(output_io, options={})
          @output = output_io
+         @error_handler = options.fetch(:error_handler, :suppress)
       end
       
       # renders the given document node to the output stream given in the 
@@ -28,7 +57,21 @@ module Cadenza
 
          node_name = underscore(node_type).gsub!(/_node$/, '')
 
-         send("render_#{node_name}", node, context, blocks)
+         begin
+            send("render_#{node_name}", node, context, blocks)
+         rescue Exception => e
+            if error_handler == :suppress
+               # do nothing
+            elsif error_handler == :raise
+               raise Cadenza::RenderError.new(e)
+            elsif error_handler == :dump
+               output << "<code>#{e.backtrace.join("\n")}</code>"
+            elsif error_handler.respond_to?(:call)
+               output << error_handler.call(e)
+            else
+               raise Cadenza::Error.new("undefined error handler: #{error_handler.inspect}")
+            end
+         end
       end
 
    private
