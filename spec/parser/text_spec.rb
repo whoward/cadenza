@@ -4,6 +4,6 @@ describe Cadenza::Parser, 'text nodes' do
    let(:parser) { Cadenza::Parser.new }
 
    it "should parse text nodes" do
-      parser.parse("abc{{def}}ghi").should have_an_identical_syntax_tree_to "text/basic.yml"
+      expect_parsing("abc{{def}}ghi").to equal_syntax_tree "text/basic.yml"
    end
 end

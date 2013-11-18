@@ -1,19 +1,18 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Cadenza::Parser, 'block parsing' do
-   let(:parser) { Cadenza::Parser.new }
 
    it "should parse block blocks" do
-      parser.parse("{% block foo %}bar{% endblock %}").should have_an_identical_syntax_tree_to "block/basic.yml"
+      expect_parsing("{% block foo %}bar{% endblock %}").to equal_syntax_tree "block/basic.yml"
    end
 
    it "should parse a block with no content" do
-      parser.parse("{% block foo %}{% endblock %}").should have_an_identical_syntax_tree_to "block/empty.yml"
+      expect_parsing("{% block foo %}{% endblock %}").to equal_syntax_tree "block/empty.yml"
    end
 
    it "should prefix nested block names with their parent's name joined by a period" do
       template = "{% block parent %}{% block child %}{% endblock %}{% endblock %}"
 
-      parser.parse(template).should have_an_identical_syntax_tree_to "block/nested.yml"
+      expect_parsing(template).to equal_syntax_tree "block/nested.yml"
    end
 end

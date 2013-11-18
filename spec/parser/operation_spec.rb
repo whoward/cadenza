@@ -1,66 +1,65 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Cadenza::Parser, 'operation parsing' do
-   let(:parser) { Cadenza::Parser.new }
 
    it "should parse an equivalency expression" do
-      parser.parse("{{ foo == 1 }}").should have_an_identical_syntax_tree_to "operation/equivalency.yml"
+      expect_parsing("{{ foo == 1 }}").to equal_syntax_tree "operation/equivalency.yml"
    end
 
    it "should parse an inequivalency expression" do
-      parser.parse("{{ foo != 1 }}").should have_an_identical_syntax_tree_to "operation/inequivalency.yml"
+      expect_parsing("{{ foo != 1 }}").to equal_syntax_tree "operation/inequivalency.yml"
    end
 
    it "should parse a greater than inequivalency expression" do
-      parser.parse("{{ foo > 1 }}").should have_an_identical_syntax_tree_to "operation/greater.yml"
+      expect_parsing("{{ foo > 1 }}").to equal_syntax_tree "operation/greater.yml"
    end
 
    it "should parse a less than inequivalency expression" do
-      parser.parse("{{ foo < 1 }}").should have_an_identical_syntax_tree_to "operation/less.yml"
+      expect_parsing("{{ foo < 1 }}").to equal_syntax_tree "operation/less.yml"
    end
 
    it "should parse a less than or equal to inequivalency expression" do
-      parser.parse("{{ foo <= 1 }}").should have_an_identical_syntax_tree_to "operation/less_than_or_equal_to.yml"
+      expect_parsing("{{ foo <= 1 }}").to equal_syntax_tree "operation/less_than_or_equal_to.yml"
    end
 
    it "should parse a greater than or equal to inequivalency expression" do
-      parser.parse("{{ foo >= 1 }}").should have_an_identical_syntax_tree_to "operation/greater_than_or_equal_to.yml"
+      expect_parsing("{{ foo >= 1 }}").to equal_syntax_tree "operation/greater_than_or_equal_to.yml"
    end
 
    it "should parse an 'and' conjunction" do
-      parser.parse("{{ foo == 1 and bar > 3 }}").should have_an_identical_syntax_tree_to "operation/and.yml"
+      expect_parsing("{{ foo == 1 and bar > 3 }}").to equal_syntax_tree "operation/and.yml"
    end
 
    it "should parse an 'or' conjunction" do
-      parser.parse("{{ foo == 1 or bar > 3 }}").should have_an_identical_syntax_tree_to "operation/or.yml"
+      expect_parsing("{{ foo == 1 or bar > 3 }}").to equal_syntax_tree "operation/or.yml"
    end
 
 
    it "should parse a additive expression" do
-      parser.parse("{{ x + 1 }}").should have_an_identical_syntax_tree_to "operation/additive.yml"
+      expect_parsing("{{ x + 1 }}").to equal_syntax_tree "operation/additive.yml"
    end
 
    it "should parse multiple additive terms, ordered for evaluation left to right" do
-      parser.parse("{{ a + b + c }}").should have_an_identical_syntax_tree_to "operation/multiple_additive.yml"
+      expect_parsing("{{ a + b + c }}").to equal_syntax_tree "operation/multiple_additive.yml"
    end
 
    it "should parse a subtractive expression" do
-      parser.parse("{{ a - b }}").should have_an_identical_syntax_tree_to "operation/subtractive.yml"
+      expect_parsing("{{ a - b }}").to equal_syntax_tree "operation/subtractive.yml"
    end
 
    it "should parse a multiplicative expression" do
-      parser.parse("{{ a * b }}").should have_an_identical_syntax_tree_to "operation/multiplicative.yml"
+      expect_parsing("{{ a * b }}").to equal_syntax_tree "operation/multiplicative.yml"
    end
 
    it 'should parse a division expression' do
-      parser.parse("{{ a / b }}").should have_an_identical_syntax_tree_to "operation/division.yml"
+      expect_parsing("{{ a / b }}").to equal_syntax_tree "operation/division.yml"
    end
 
    it 'should parse a complex boolean expression using proper order of operations without brackets' do
-      parser.parse("{{ a + b * c }}").should have_an_identical_syntax_tree_to "operation/complex.yml"
+      expect_parsing("{{ a + b * c }}").to equal_syntax_tree "operation/complex.yml"
    end
 
    it 'should give precedence to brackets' do
-      parser.parse("{{ (a + b) * c }}").should have_an_identical_syntax_tree_to "operation/brackets.yml"
+      expect_parsing("{{ (a + b) * c }}").to equal_syntax_tree "operation/brackets.yml"
    end
 end

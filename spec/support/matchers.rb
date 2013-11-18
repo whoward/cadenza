@@ -34,7 +34,7 @@ RSpec::Matchers.define :be_html_equivalent_to do |expected|
 end
 
 
-RSpec::Matchers.define :have_an_identical_syntax_tree_to do |expected|
+RSpec::Matchers.define :equal_syntax_tree do |expected|
   match do |actual|
     @tree = FixtureSyntaxTree.new(expected)
     @tree.equals(actual)

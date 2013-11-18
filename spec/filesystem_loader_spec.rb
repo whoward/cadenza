@@ -8,7 +8,7 @@ describe Cadenza::FilesystemLoader do
          template = loader.load_template("test.html.cadenza")
 
          template.should_not be_nil
-         template.should have_an_identical_syntax_tree_to "templates/test.parse.yml"
+         template.should equal_syntax_tree "templates/test.parse.yml"
       end
 
    end

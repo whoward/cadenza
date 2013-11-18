@@ -4,13 +4,11 @@ describe Cadenza::Parser, 'generic block statements' do
    let(:parser) { Cadenza::Parser.new }
 
    it "should parse a generic block" do
-      ast = parser.parse("{% example %}foobar{% end %}")
-      ast.should have_an_identical_syntax_tree_to "generic/basic.yml"
+      expect_parsing("{% example %}foobar{% end %}").to equal_syntax_tree "generic/basic.yml"
    end
 
    it "should parse a generic block with parameters" do
-      ast = parser.parse("{% filter escape %}<h1>Hello World!</h1>{% end %}")
-      ast.should have_an_identical_syntax_tree_to "generic/with-params.yml"
+      expect_parsing("{% filter escape %}<h1>Hello World!</h1>{% end %}").to equal_syntax_tree "generic/with-params.yml"
    end
 
 end
