@@ -33,7 +33,7 @@ describe Cadenza::TextRenderer do
    let(:false_boolean_expression) { Cadenza::OperationNode.new pi, "<", one }
 
    before do
-      context.add_loader Cadenza::FilesystemLoader.new(fixture_filename "templates")
+      context.add_loader Cadenza::FilesystemLoader.new(Fixture.filename("templates"))
    end
 
    it "should render a text node's content" do
@@ -69,11 +69,11 @@ describe Cadenza::TextRenderer do
    end
 
    context "if nodes" do
-      let(:if_blocks_template) { fixture_filename "templates/if_node/blocks.html.cadenza" }
-      let(:if_blocks_output)   { fixture_filename "templates/if_node/blocks.html" }
+      let(:if_blocks_template) { Fixture.read("templates/if_node/blocks.html.cadenza") }
+      let(:if_blocks_output)   { Fixture.read("templates/if_node/blocks.html") }
 
-      let(:custom_if_blocks_template) { fixture_filename "templates/if_node/custom_blocks.html.cadenza" }
-      let(:custom_if_blocks_output)   { fixture_filename "templates/if_node/custom_blocks.html" }
+      let(:custom_if_blocks_template) { Fixture.read("templates/if_node/custom_blocks.html.cadenza") }
+      let(:custom_if_blocks_output)   { Fixture.read("templates/if_node/custom_blocks.html") }
    
       it "should render the stringified result of a boolean node's value" do
          document.children.push true_boolean_expression
@@ -95,17 +95,17 @@ describe Cadenza::TextRenderer do
       end
 
       it "renders default blocks in it's child nodes" do
-         index = Cadenza::Parser.new.parse(File.read if_blocks_template)
+         index = Cadenza::Parser.new.parse(if_blocks_template)
 
          renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to File.read(if_blocks_output)
+         renderer.output.string.should be_html_equivalent_to if_blocks_output
       end
 
       it "renders overriden blocks in it's child nodes" do
-         index = Cadenza::Parser.new.parse(File.read custom_if_blocks_template)
+         index = Cadenza::Parser.new.parse(custom_if_blocks_template)
 
          renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to File.read(custom_if_blocks_output)
+         renderer.output.string.should be_html_equivalent_to custom_if_blocks_output
       end
    end
 
@@ -129,24 +129,24 @@ describe Cadenza::TextRenderer do
    end
 
    context "nested blocks" do
-     let(:nested_block_template) { fixture_filename "templates/nested_blocks/child.html.cadenza" }
-     let(:nested_block_output) { fixture_filename "templates/nested_blocks/child.html"}
+     let(:nested_block_template) { Fixture.read("templates/nested_blocks/child.html.cadenza") }
+     let(:nested_block_output) { Fixture.read("templates/nested_blocks/child.html") }
 
      it "renders content nested within nested layouts" do
 
-       index = Cadenza::Parser.new.parse(File.read nested_block_template)
+       index = Cadenza::Parser.new.parse(nested_block_template)
 
        renderer.render(index, context)
-       renderer.output.string.should be_html_equivalent_to File.read(nested_block_output)
+       renderer.output.string.should be_html_equivalent_to nested_block_output
      end
    end
 
    context "for nodes" do
-      let(:standard_list_template) { fixture_filename "templates/standard_list.html.cadenza" }
-      let(:standard_list_output)   { fixture_filename "templates/standard_list.html" }
+      let(:standard_list_template) { Fixture.read("templates/standard_list.html.cadenza") }
+      let(:standard_list_output)   { Fixture.read("templates/standard_list.html") }
 
-      let(:customized_list_template) { fixture_filename "templates/customized_list.html.cadenza" }
-      let(:customized_list_output)   { fixture_filename "templates/customized_list.html" }
+      let(:customized_list_template) { Fixture.read("templates/customized_list.html.cadenza") }
+      let(:customized_list_output)   { Fixture.read("templates/customized_list.html") }
 
       it "should render a for-block's children once for each iterated object" do
          iterable = Cadenza::VariableNode.new("alphabet")
@@ -165,17 +165,17 @@ describe Cadenza::TextRenderer do
       end
 
       it "should render default blocks in it's children" do
-         index = Cadenza::Parser.new.parse(File.read standard_list_template)
+         index = Cadenza::Parser.new.parse(standard_list_template)
 
          renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to File.read(standard_list_output)
+         renderer.output.string.should be_html_equivalent_to standard_list_output
       end
 
       it "should render overriden blocks in it's children" do
-         index = Cadenza::Parser.new.parse(File.read customized_list_template)
+         index = Cadenza::Parser.new.parse(customized_list_template)
 
          renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to File.read(customized_list_output)
+         renderer.output.string.should be_html_equivalent_to customized_list_output
       end
    end
 
@@ -239,44 +239,44 @@ describe Cadenza::TextRenderer do
    end
 
    context "extension nodes" do
-      index_file     = File.read(fixture_filename "templates/index.html.cadenza")
-      index_two_file = File.read(fixture_filename "templates/index_two.html.cadenza")
-      super_file     = File.read(fixture_filename "templates/super.html.cadenza")
-      nested_super_file = File.read(fixture_filename "templates/nested_blocks/super.html.cadenza")
+      index_file     = Fixture.read("templates/index.html.cadenza")
+      index_two_file = Fixture.read("templates/index_two.html.cadenza")
+      super_file     = Fixture.read("templates/super.html.cadenza")
+      nested_super_file = Fixture.read("templates/nested_blocks/super.html.cadenza")
 
       it "renders the extended template with the blocks from the base template" do
          index = Cadenza::Parser.new.parse(index_file)
          
          renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/index.html")
+         renderer.output.string.should be_html_equivalent_to Fixture.read("templates/index.html")
       end
 
       it "renders a multi level layout" do
          index = Cadenza::Parser.new.parse(index_two_file)
 
          renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/index_two.html")
+         renderer.output.string.should be_html_equivalent_to Fixture.read("templates/index_two.html")
       end
 
       it "renders multiple levels of super calls" do
          index = Cadenza::Parser.new.parse(super_file)
 
          renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/super.html")
+         renderer.output.string.should be_html_equivalent_to Fixture.read("templates/super.html")
       end
 
       it "renders super calls within blocks" do
         index = Cadenza::Parser.new.parse(nested_super_file)
 
         renderer.render(index, context)
-        renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/nested_blocks/super.html")
+        renderer.output.string.should be_html_equivalent_to Fixture.read("templates/nested_blocks/super.html")
       end
 
       it "renders nested blocks in a separate scope" do
-         index = Cadenza::Parser.new.parse File.read(fixture_filename "templates/nested_blocks/scoping.html.cadenza")
+         index = Cadenza::Parser.new.parse Fixture.read("templates/nested_blocks/scoping.html.cadenza")
 
          renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to File.read(fixture_filename "templates/nested_blocks/scoping.html")
+         renderer.output.string.should be_html_equivalent_to Fixture.read("templates/nested_blocks/scoping.html")
       end
 
    end

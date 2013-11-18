@@ -33,7 +33,7 @@ describe Cadenza::Context do
       let(:context) { context_class.new(:foo => "bar") }
 
       before do
-         context.add_loader Cadenza::FilesystemLoader.new(fixture_filename "templates")
+         context.add_loader Cadenza::FilesystemLoader.new(Fixture.filename("templates"))
       end
 
       it "should duplicate it's stack" do
@@ -130,7 +130,7 @@ describe Cadenza::Context do
 
    context "loaders" do
       let(:context) { Cadenza::Context.new }
-      let(:template_path) { fixture_filename("templates/fake") }
+      let(:template_path) { Fixture.filename("templates/fake") }
       let(:filesystem_loader) { Cadenza::FilesystemLoader.new(template_path) }
       let(:template) { FixtureSyntaxTree.new("text/basic.yml").document }
 
@@ -144,7 +144,7 @@ describe Cadenza::Context do
       end
 
       it "should allow adding a load path" do
-         path = fixture_filename("foo")
+         path = Fixture.filename("foo")
          context.add_load_path(path)
 
          context.loaders.should have(1).item

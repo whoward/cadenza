@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Cadenza::FilesystemLoader do
-   let(:loader) { Cadenza::FilesystemLoader.new(fixture_filename "templates") }
+   let(:loader) { Cadenza::FilesystemLoader.new(Fixture.filename("templates")) }
 
    context "#load_template" do
       it "should return the parsed template tree if the file exists" do
@@ -15,7 +15,7 @@ describe Cadenza::FilesystemLoader do
 
    context "#load_source" do
       it "should return the source if the file is a file symlink" do
-         loader.load_source("test.html.cadenza").should == File.read(fixture_filename "templates/test.html.cadenza")
+         loader.load_source("test.html.cadenza").should == Fixture.read("templates/test.html.cadenza")
       end
 
       it "should return nil if the file does not exist" do
@@ -31,11 +31,11 @@ describe Cadenza::FilesystemLoader do
       end
 
       it "should return the source if the file is a file symlink" do
-         loader.load_source("test-file-symlink").should == File.read(fixture_filename "templates/test.html.cadenza")
+         loader.load_source("test-file-symlink").should == Fixture.read("templates/test.html.cadenza")
       end
 
       it "should return the parsed template tree if the file is in a subdirectory" do
-         loader.load_source("test-directory/test.html.cadenza").should == File.read(fixture_filename "templates/test-directory/test.html.cadenza")
+         loader.load_source("test-directory/test.html.cadenza").should == Fixture.read("templates/test-directory/test.html.cadenza")
       end
 
    end

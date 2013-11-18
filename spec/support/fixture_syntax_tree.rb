@@ -4,7 +4,7 @@ class FixtureSyntaxTree
   attr_reader :document
   
   def initialize(filename)
-    @document = parse_fixture("DocumentNode", YAML.load_file(fixture_filename filename)["DocumentNode"])
+    @document = parse_fixture("DocumentNode", YAML.load_file(Fixture.filename(filename))["DocumentNode"])
   end
 
   def equals(document)

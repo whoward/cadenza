@@ -5,12 +5,12 @@ describe Cadenza::StandardLibrary::Functions do
 
    let(:context) { Cadenza::BaseContext.new }
 
-   before { context.add_loader Cadenza::FilesystemLoader.new(fixture_filename "templates") }
+   before { context.add_loader Cadenza::FilesystemLoader.new(Fixture.filename("templates")) }
    after  { context.clear_loaders }
 
    context "load" do
       it "should return the source of the given file without parsing it" do
-         subject.evaluate_function(:load, context, ["index.html.cadenza"]).should == File.read(fixture_filename "templates/index.html.cadenza")
+         subject.evaluate_function(:load, context, ["index.html.cadenza"]).should == Fixture.read("templates/index.html.cadenza")
       end
 
       it "should return nil if the given file does not exist" do
