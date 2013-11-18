@@ -20,52 +20,27 @@ describe Cadenza::TextRenderer do
       klass
    end
 
-   let(:output)   { StringIO.new }
-   let(:renderer) { Cadenza::TextRenderer.new(output) }
    let(:context)  { context_class.new(:pi => 3.14159, :collection => %w(a b c)) }
    let(:document) { Cadenza::DocumentNode.new }
-
-   # some sample constant and variable nodes
-   let(:pi)  { Cadenza::VariableNode.new("pi") }
-   let(:one) { Cadenza::ConstantNode.new(1) }
-   
-   let(:true_boolean_expression) { Cadenza::OperationNode.new pi, ">", one }
-   let(:false_boolean_expression) { Cadenza::OperationNode.new pi, "<", one }
 
    before do
       context.add_loader Cadenza::FilesystemLoader.new(Fixture.filename("templates"))
    end
 
    it "should render a text node's content" do
-      document.children.push Cadenza::TextNode.new "foo"
-
-      renderer.render(document, context)
-
-      renderer.output.string.should == "foo"
+      expect_rendering("foo", context).to eq "foo"
    end
 
    it "should render a constant node's string value" do
-      document.children.push Cadenza::ConstantNode.new 3.14159
-
-      renderer.render(document, context)
-
-      renderer.output.string.should == "3.14159"
+      expect_rendering("{{ 3.14159 }}", context).to eq "3.14159"
    end
 
    it "should render a variable node's value based on the value in the context" do
-      document.children.push(pi)
-
-      renderer.render(document, context)
-
-      renderer.output.string.should == "3.14159"
+      expect_rendering("{{ pi }}", context).to eq "3.14159"
    end
 
    it "should render the stringified result of an arithmetic node's value" do
-      document.children.push Cadenza::OperationNode.new pi, "+", one
-
-      renderer.render(document, context)
-
-      renderer.output.string.should == "4.14159"
+      expect_rendering("{{ pi + 1 }}", context).to eq "4.14159"
    end
 
    context "if nodes" do
@@ -76,36 +51,19 @@ describe Cadenza::TextRenderer do
       let(:custom_if_blocks_output)   { Fixture.read("templates/if_node/custom_blocks.html") }
    
       it "should render the stringified result of a boolean node's value" do
-         document.children.push true_boolean_expression
-
-         renderer.render(document, context)
-
-         renderer.output.string.should == "true"
+         expect_rendering("{{ pi > 1 }}", context).to eq "true"
       end
 
       it "should render the appropriate block of the if node" do
-         yup = Cadenza::TextNode.new "yup"
-         nope = Cadenza::TextNode.new "nope"
-
-         document.children.push Cadenza::IfNode.new(true_boolean_expression, [yup], [nope])
-
-         renderer.render(document, context)
-
-         renderer.output.string.should == "yup"
+         expect_rendering("{% if pi > 1 %}yup{% else %}nope{% endif %}", context).to eq "yup"
       end
 
       it "renders default blocks in it's child nodes" do
-         index = Cadenza::Parser.new.parse(if_blocks_template)
-
-         renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to if_blocks_output
+         expect_rendering(if_blocks_template, context).to be_html_equivalent_to if_blocks_output
       end
 
       it "renders overriden blocks in it's child nodes" do
-         index = Cadenza::Parser.new.parse(custom_if_blocks_template)
-
-         renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to custom_if_blocks_output
+         expect_rendering(custom_if_blocks_template, context).to be_html_equivalent_to custom_if_blocks_output
       end
    end
 
@@ -116,29 +74,16 @@ describe Cadenza::TextRenderer do
 
       context = klass.new(:pi => 3.14159)
 
-      floor = Cadenza::FilterNode.new("floor")
-      add_one = Cadenza::FilterNode.new("add", [Cadenza::ConstantNode.new(1)])
-      
-      pi = Cadenza::VariableNode.new("pi")
-
-      document.children.push Cadenza::FilteredValueNode.new(pi, [floor, add_one])
-
-      renderer.render(document, context)
-
-      renderer.output.string.should == "4"
+      expect_rendering("{{ pi | floor | add: 1 }}", context).to eq "4"
    end
 
    context "nested blocks" do
-     let(:nested_block_template) { Fixture.read("templates/nested_blocks/child.html.cadenza") }
-     let(:nested_block_output) { Fixture.read("templates/nested_blocks/child.html") }
+      let(:nested_block_template) { Fixture.read("templates/nested_blocks/child.html.cadenza") }
+      let(:nested_block_output) { Fixture.read("templates/nested_blocks/child.html") }
 
-     it "renders content nested within nested layouts" do
-
-       index = Cadenza::Parser.new.parse(nested_block_template)
-
-       renderer.render(index, context)
-       renderer.output.string.should be_html_equivalent_to nested_block_output
-     end
+      it "renders content nested within nested layouts" do
+         expect_rendering(nested_block_template, context).to be_html_equivalent_to nested_block_output
+      end
    end
 
    context "for nodes" do
@@ -149,59 +94,32 @@ describe Cadenza::TextRenderer do
       let(:customized_list_output)   { Fixture.read("templates/customized_list.html") }
 
       it "should render a for-block's children once for each iterated object" do
-         iterable = Cadenza::VariableNode.new("alphabet")
-         iterator = Cadenza::VariableNode.new("x")
-         counter  = Cadenza::VariableNode.new("forloop.counter")
+         context = Cadenza::Context.new(:alphabet => %w(a b c))
 
-         children = [counter, Cadenza::TextNode.new(": "), iterator, Cadenza::TextNode.new("\n")]
-
-         context = Cadenza::Context.new({:alphabet => %w(a b c)})
-
-         document.children.push Cadenza::ForNode.new(iterator, iterable, children)
-
-         renderer.render(document, context)
-
-         renderer.output.string.should == "1: a\n2: b\n3: c\n"
+         expect_rendering("{% for x in alphabet %}{{ forloop.counter }}: {{ x }}\n{% endfor %}", context).to eq "1: a\n2: b\n3: c\n"
       end
 
       it "should render default blocks in it's children" do
-         index = Cadenza::Parser.new.parse(standard_list_template)
-
-         renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to standard_list_output
+         expect_rendering(standard_list_template, context).to be_html_equivalent_to standard_list_output
       end
 
       it "should render overriden blocks in it's children" do
-         index = Cadenza::Parser.new.parse(customized_list_template)
-
-         renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to customized_list_output
+         expect_rendering(customized_list_template, context).to be_html_equivalent_to customized_list_output
       end
    end
 
    context "block nodes" do
       it "should render it's children if the document has no layout file" do
-         text = Cadenza::TextNode.new("Lorem Ipsum")
-         block = Cadenza::BlockNode.new("test", [text])
-
-         document.extends = nil
-         document.add_block(block)
-         document.children.push block
-
-         renderer.render(document, context)
-         renderer.output.string.should == "Lorem Ipsum"
+         expect_rendering("{% block test %}Lorem Ipsum{% endblock %}", context).to eq "Lorem Ipsum"
       end
 
       it "should not render it's children if the document has a layout file" do
-         text = Cadenza::TextNode.new("Lorem Ipsum")
-         block = Cadenza::BlockNode.new("test", [text])
+         template = <<-EOS
+            {% extends 'empty.html.cadenza' %}
+            {% block test %}Lorem Ipsum{% endblock %}
+         EOS
 
-         document.extends = "empty.html.cadenza"
-         document.add_block(block)
-         document.children.push block
-
-         renderer.render(document, context)
-         renderer.output.string.should == ""
+         expect_rendering(template, context).to eq ""
       end
 
       it "should render the overriden block if it is given" do
@@ -221,73 +139,62 @@ describe Cadenza::TextRenderer do
 
          context.stub(:load_template).and_return(layout)
 
-         renderer.render(document, context)
-         renderer.output.string.should == "Hello World"
+         expect_rendering(document, context).to eq "Hello World"
       end
    end
 
    context "generic block nodes" do
       it "should render the text with the block's logic applied" do
-         text = Cadenza::TextNode.new("<h1>Hello World!</h1>")
-         escape =  Cadenza::VariableNode.new("escape")
+         template = "{% filter escape %}<h1>Hello World!</h1>{% end %}"
 
-         document.children.push(Cadenza::GenericBlockNode.new("filter", [text], [escape]))
-
-         renderer.render(document, context)
-         renderer.output.string.should == "&lt;h1&gt;Hello World!&lt;/h1&gt;"
+         expect_rendering(template, context).to eq "&lt;h1&gt;Hello World!&lt;/h1&gt;"
       end
    end
 
    context "extension nodes" do
-      index_file     = Fixture.read("templates/index.html.cadenza")
-      index_two_file = Fixture.read("templates/index_two.html.cadenza")
-      super_file     = Fixture.read("templates/super.html.cadenza")
-      nested_super_file = Fixture.read("templates/nested_blocks/super.html.cadenza")
+      index = Fixture.read("templates/index.html.cadenza")
+      index_output = Fixture.read("templates/index.html")
+
+      index_two = Fixture.read("templates/index_two.html.cadenza")
+      index_two_output = Fixture.read("templates/index_two.html")
+
+      supr = Fixture.read("templates/super.html.cadenza")
+      supr_output = Fixture.read("templates/super.html")
+
+      nested_super = Fixture.read("templates/nested_blocks/super.html.cadenza")
+      nested_super_output = Fixture.read("templates/nested_blocks/super.html")
+
+      scoping = Fixture.read("templates/nested_blocks/scoping.html.cadenza")
+      scoping_output   = Fixture.read("templates/nested_blocks/scoping.html")
 
       it "renders the extended template with the blocks from the base template" do
-         index = Cadenza::Parser.new.parse(index_file)
-         
-         renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to Fixture.read("templates/index.html")
+         expect_rendering(index, context).to be_html_equivalent_to index_output
       end
 
       it "renders a multi level layout" do
-         index = Cadenza::Parser.new.parse(index_two_file)
-
-         renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to Fixture.read("templates/index_two.html")
+         expect_rendering(index_two, context).to be_html_equivalent_to index_two_output
       end
 
       it "renders multiple levels of super calls" do
-         index = Cadenza::Parser.new.parse(super_file)
-
-         renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to Fixture.read("templates/super.html")
+         expect_rendering(supr, context).to be_html_equivalent_to supr_output
       end
 
       it "renders super calls within blocks" do
-        index = Cadenza::Parser.new.parse(nested_super_file)
-
-        renderer.render(index, context)
-        renderer.output.string.should be_html_equivalent_to Fixture.read("templates/nested_blocks/super.html")
+         expect_rendering(nested_super, context).to be_html_equivalent_to nested_super_output
       end
 
       it "renders nested blocks in a separate scope" do
-         index = Cadenza::Parser.new.parse Fixture.read("templates/nested_blocks/scoping.html.cadenza")
-
-         renderer.render(index, context)
-         renderer.output.string.should be_html_equivalent_to Fixture.read("templates/nested_blocks/scoping.html")
+         expect_rendering(scoping, context).to be_html_equivalent_to scoping_output
       end
-
    end
 
    context "#error_handling" do
+      let(:output)   { StringIO.new }
+      let(:renderer) { Cadenza::TextRenderer.new(output) }
       let(:template) { Cadenza::Parser.new.parse("{{raise}}") }
 
       it "returns empty data by default" do
-         renderer = Cadenza::TextRenderer.new(output)
-         renderer.render(template, context)
-         renderer.output.string.should == ""
+         expect_rendering(template, context).to eq ""
       end
 
       it "raises an error with the :raise handler" do
@@ -297,16 +204,16 @@ describe Cadenza::TextRenderer do
 
       it "dumps the error backtrace with the :dump handler" do
          renderer = Cadenza::TextRenderer.new(output, :error_handler => :dump)
-         renderer.render(template, context)
-         renderer.output.string.should_not == ""
+
+         expect_rendering(template, context, :renderer => renderer).to_not eq ""
       end
 
       it "calls the given callable object and outputs it's return value" do
          handler = lambda {|err| "OH NOES! #{err.class.name}" }
 
          renderer = Cadenza::TextRenderer.new(output, :error_handler => handler)
-         renderer.render(template, context)
-         renderer.output.string.should == "OH NOES! StandardError"
+
+         expect_rendering(template, context, :renderer => renderer).to eq "OH NOES! StandardError"
       end
 
       it "raises an error if the handler is something unexpected" do
