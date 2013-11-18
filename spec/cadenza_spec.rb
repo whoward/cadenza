@@ -11,7 +11,7 @@ describe Cadenza do
       template = Fixture.read("templates/index.html.cadenza")
       expected = Fixture.read("templates/index.html")
 
-      Cadenza.render(template, {}, :context => context).should be_html_equivalent_to expected
+      Cadenza.render(template, {}, :context => context).should equal_html expected
    end
 
    it "should allow passing a scope" do
@@ -24,7 +24,7 @@ describe Cadenza do
    it "should define a render function to load a template off the context's load system and render a string" do
       expected = Fixture.read("templates/index.html")
 
-      Cadenza.render_template("index.html.cadenza", {}, {:context => context}).should be_html_equivalent_to expected
+      Cadenza.render_template("index.html.cadenza", {}, {:context => context}).should equal_html expected
    end
 
    it "should allow passing a scope" do

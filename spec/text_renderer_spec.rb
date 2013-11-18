@@ -59,11 +59,11 @@ describe Cadenza::TextRenderer do
       end
 
       it "renders default blocks in it's child nodes" do
-         expect_rendering(if_blocks_template, context).to be_html_equivalent_to if_blocks_output
+         expect_rendering(if_blocks_template, context).to equal_html if_blocks_output
       end
 
       it "renders overriden blocks in it's child nodes" do
-         expect_rendering(custom_if_blocks_template, context).to be_html_equivalent_to custom_if_blocks_output
+         expect_rendering(custom_if_blocks_template, context).to equal_html custom_if_blocks_output
       end
    end
 
@@ -82,7 +82,7 @@ describe Cadenza::TextRenderer do
       let(:nested_block_output) { Fixture.read("templates/nested_blocks/child.html") }
 
       it "renders content nested within nested layouts" do
-         expect_rendering(nested_block_template, context).to be_html_equivalent_to nested_block_output
+         expect_rendering(nested_block_template, context).to equal_html nested_block_output
       end
    end
 
@@ -100,11 +100,11 @@ describe Cadenza::TextRenderer do
       end
 
       it "should render default blocks in it's children" do
-         expect_rendering(standard_list_template, context).to be_html_equivalent_to standard_list_output
+         expect_rendering(standard_list_template, context).to equal_html standard_list_output
       end
 
       it "should render overriden blocks in it's children" do
-         expect_rendering(customized_list_template, context).to be_html_equivalent_to customized_list_output
+         expect_rendering(customized_list_template, context).to equal_html customized_list_output
       end
    end
 
@@ -168,23 +168,23 @@ describe Cadenza::TextRenderer do
       scoping_output   = Fixture.read("templates/nested_blocks/scoping.html")
 
       it "renders the extended template with the blocks from the base template" do
-         expect_rendering(index, context).to be_html_equivalent_to index_output
+         expect_rendering(index, context).to equal_html index_output
       end
 
       it "renders a multi level layout" do
-         expect_rendering(index_two, context).to be_html_equivalent_to index_two_output
+         expect_rendering(index_two, context).to equal_html index_two_output
       end
 
       it "renders multiple levels of super calls" do
-         expect_rendering(supr, context).to be_html_equivalent_to supr_output
+         expect_rendering(supr, context).to equal_html supr_output
       end
 
       it "renders super calls within blocks" do
-         expect_rendering(nested_super, context).to be_html_equivalent_to nested_super_output
+         expect_rendering(nested_super, context).to equal_html nested_super_output
       end
 
       it "renders nested blocks in a separate scope" do
-         expect_rendering(scoping, context).to be_html_equivalent_to scoping_output
+         expect_rendering(scoping, context).to equal_html scoping_output
       end
    end
 

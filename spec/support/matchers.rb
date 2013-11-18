@@ -1,6 +1,6 @@
 require 'nokogiri/diff'
 
-RSpec::Matchers.define :be_html_equivalent_to do |expected|
+RSpec::Matchers.define :equal_html do |expected|
   match do |actual|
     expected_doc = Nokogiri::HTML(expected)
     actual_doc   = Nokogiri::HTML(actual)
