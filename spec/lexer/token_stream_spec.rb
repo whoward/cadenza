@@ -67,7 +67,7 @@ describe Cadenza::Lexer, 'token parsing' do
     tokenize('{{ "\n" }}').at(1).should      == [:STRING, "\n"]
     tokenize('{{ "\t" }}').at(1).should      == [:STRING, "\t"]
     tokenize('{{ "\\\\" }}').at(1).should    == [:STRING, "\\"]
-    tokenize('{{ "\\u03A9" }}').at(1).should == [:STRING, "Ω"]
+    tokenize('{{ "\\u03A9" }}').at(1).should == [:STRING, "\u03A9"]
 
     tokenize(%q[{{ '\"' }}]).at(1).should == [:STRING, '\"']
   end
