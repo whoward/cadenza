@@ -6,9 +6,17 @@ describe Cadenza::Lexer, 'token parsing' do
     @lexer = Cadenza::Lexer.new
   end
 
-  def tokens_for(string)
+  def tokenize(string)
     @lexer.source = string
-    @lexer.remaining_tokens.map(&:first)
+    @lexer.remaining_tokens.map {|type, token| [type, token.is_a?(Cadenza::Token) ? token.value : token] }
+  end
+
+  def tokens_for(string)
+    tokenize(string).map(&:first)
+  end
+
+  def values_for(string)
+    tokenize(string).map(&:last)
   end
 
   it "should return a end token for an empty string" do
@@ -51,6 +59,17 @@ describe Cadenza::Lexer, 'token parsing' do
 
     tokens_for("{{'3'}}").should ==   [:VAR_OPEN, :STRING,  :VAR_CLOSE, false]
     tokens_for("{{\"3\"}}").should == [:VAR_OPEN, :STRING,  :VAR_CLOSE, false]
+  end
+
+  it "should parse string escapes inside double quotes only" do
+    tokenize('{{ "\"" }}').at(1).should      == [:STRING, '"']
+    tokenize('{{ "\r" }}').at(1).should      == [:STRING, "\r"]
+    tokenize('{{ "\n" }}').at(1).should      == [:STRING, "\n"]
+    tokenize('{{ "\t" }}').at(1).should      == [:STRING, "\t"]
+    tokenize('{{ "\\\\" }}').at(1).should    == [:STRING, "\\"]
+    tokenize('{{ "\\u03A9" }}').at(1).should == [:STRING, "Ω"]
+
+    tokenize(%q[{{ '\"' }}]).at(1).should == [:STRING, '\"']
   end
 
   it "should scan identifiers" do

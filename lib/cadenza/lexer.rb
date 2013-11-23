@@ -223,7 +223,16 @@ module Cadenza
         when text = @scanner.scan(/[+\-]?[1-9][0-9]*|0/)
           token(:INTEGER, text)
         
-        when text = @scanner.scan(/['][^']*[']|["][^"]*["]/)
+        when text = @scanner.scan(/'[^']*'/)
+          token(:STRING, text)
+
+        when text = @scanner.scan(/"(?:[^\\"]|\\.)*"/)
+          text.gsub!(/\\"/)               { '"' }
+          text.gsub!(/\\r/)               { "\r" }
+          text.gsub!(/\\n/)               { "\n" }
+          text.gsub!(/\\t/)               { "\t" }
+          text.gsub!(/\\\\/)              { "\\" }
+          text.gsub!(/\\u([0-9a-fA-F]+)/) {|m| [m[2..-1].hex].pack("U") }
           token(:STRING, text)
 
         when text = @scanner.scan(/[A-Za-z_][A-Za-z0-9_\.]*/)
