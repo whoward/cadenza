@@ -95,6 +95,10 @@ describe Cadenza::Lexer, 'token parsing' do
     tokens_for("{%endunless%}").should == [:STMT_OPEN, :ENDUNLESS, :STMT_CLOSE, false]
   end
 
+  it "scans any identifier starting with END as an END token with the value of the full keyword" do
+    tokenize('{% endfilter %}').at(1).should == [:END, 'ENDFILTER']
+  end
+
   it "should ignore whitespace inside of statements" do
     tokens_for("{{ 3 }}").should == [:VAR_OPEN, :INTEGER, :VAR_CLOSE, false]
     tokens_for("{% 3.14 %}").should == [:STMT_OPEN, :REAL, :STMT_CLOSE, false]

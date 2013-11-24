@@ -217,6 +217,9 @@ module Cadenza
 
           token(keyword.upcase.to_sym, keyword)
 
+        when text = @scanner.scan(/(end[a-zA-Z]+)/)
+          token(:END, text.upcase)
+
         when text = @scanner.scan(/[+\-]?[0-9]+\.[0-9]+/)
           token(:REAL, text)
 
