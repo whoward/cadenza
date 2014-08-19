@@ -23,7 +23,7 @@ In addition to the usual template language features, Cadenza features:
 # Usage
 
 To learn how to both write Cadenza templates and use Cadenza in your Ruby 
-projects have a look at the [Cadenza Manual](http://cadenza-manual.heroku.com/)
+projects have a look at the [Cadenza Manual](http://cadenza-manual.herokuapp.com/)
 
 To learn how to extend Cadenza with custom Lexers, Parsers, Loaders and Renderers
 visit the [Yard Documentation](http://rubydoc.info/github/whoward/Cadenza/)
