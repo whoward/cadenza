@@ -14,3 +14,7 @@ group :development do
    gem 'guard-rspec'
    gem 'guard-shell'
 end
+
+group :development, :test do
+   gem 'coveralls', require: false
+end

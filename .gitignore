@@ -1,6 +1,7 @@
 Gemfile.lock
 doc/plugin/*
 doc/.yardb/*
+coverage/*
 .rspec
 .yardoc
 .rbx
