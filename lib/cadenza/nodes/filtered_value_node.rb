@@ -13,7 +13,7 @@ module Cadenza
       attr_accessor :filters
 
       # creates a new {FilteredValueNode}.
-      # @param [String] identifier see {#identifier}
+      # @param [String] value see {#value}
       # @param [Array] filters see {#filters}
       def initialize(value, filters=[])
          @value = value

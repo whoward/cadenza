@@ -16,7 +16,9 @@ module Cadenza
          merge(data) if data
       end
 
-      # @return [Array] the inheritance chain for the given block name
+      # fetches the inheritance chain for the given block name.  if the block 
+      # name is undefined then an empty array is returned.
+      # @return [Array] the inheritance chain
       def fetch(block_name)
          @names[block_name.to_s] || []
       end

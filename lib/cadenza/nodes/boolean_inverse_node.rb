@@ -9,7 +9,7 @@ module Cadenza
       attr_accessor :expression
 
       # creates a new {BooleanInverseNode} with the given expression
-      # @param [OperationNode] the node this one will invert
+      # @param [OperationNode] expression the node this one will invert
       def initialize(expression)
          @expression = expression
       end
