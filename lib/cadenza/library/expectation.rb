@@ -41,8 +41,13 @@ module Cadenza
          def eighth(e);  nth(7, e); end
          def ninth(e);   nth(8, e); end
          def tenth(e);   nth(9, e); end
-         # if anyone really expects more than 10 parameters they will just have to use the #nth function
 
+         # evaluates the given expectations against the indexed parameter
+         #
+         # @raise [InvalidArgumentTypeError] if a argument type expectation is passed but not satisfied
+         # @param [Fixnum] idx the index of the parameter to evaluate against
+         # @param [Hash] e
+         # @option e [Class] :is_a a class expectation that will fail if the argument passed is not an instance of the class
          def nth(idx, e)
             # do no validations if insufficient parameters are given (the argc validation is used for that)
             return if idx > (params.length - 1)

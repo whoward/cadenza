@@ -39,6 +39,10 @@ module Cadenza
    # @param [String] template_text the content of the template to parse/render
    # @param [Hash] scope any variables to define as a new scope for {BaseContext}
    #               in this template.
+   # @param [Hash] options
+   # @option options [Cadenza::Context] :context (Cadenza::BaseContext.new) the 
+   #               context with which to render the template
+   # @return [String] the output of the template rendered with the given context
    def self.render(template_text, scope=nil, options={})
       context = create_context(scope, options)
 
@@ -51,6 +55,10 @@ module Cadenza
    # @param [String] template_name the name of the template to load then parse and render
    # @param [Hash] scope any variables to define as a new scope for {BaseContext}
    #               in this template.
+   # @param [Hash] options
+   # @option options [Cadenza::Context] :context (Cadenza::BaseContext.new) the 
+   #               context with which to render the template
+   # @return [String] the output of the template rendered with the given context
    def self.render_template(template_name, scope=nil, options={})
       context = create_context(scope, options)
 

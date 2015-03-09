@@ -20,6 +20,7 @@ module Cadenza
          @expression == rhs.expression
       end
 
+      # evaluates the {#expression} and returns the inverted result
       # @param [Context] context
       # @return the value of this node evaluated with the data in the given {Context}
       def eval(context)
