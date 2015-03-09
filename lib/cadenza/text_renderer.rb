@@ -9,8 +9,10 @@ module Cadenza
 
       # Renders the document given with the given context directly to a string 
       # returns.
+      # @todo move this to a module
       # @param [DocumentNode] document_node the root of the AST you want to render.
       # @param [Context] context the context object to render the document with
+      # @return [String] the rendered template in the given context
       def self.render(document_node, context)
          io = StringIO.new
          new(io).render(document_node, context)

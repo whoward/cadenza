@@ -3,7 +3,12 @@ require 'stringio'
 module Cadenza
    class SourceTreeRenderer < BaseRenderer
 
-      #TODO: move this to a module
+      # Renders the given AST root node as a source tree (helpful for debugging)
+      # @todo move this to a module
+      # @see Cadenza::TreeNode#to_tree
+      # @param [DocumentNode] document_node the root of the AST you want to render.
+      # @param [Context] context the context object to render the document with
+      # @return [String] the rendered source tree
       def self.render(document_node, context={})
          io = StringIO.new
          new(io).render(document_node, context)

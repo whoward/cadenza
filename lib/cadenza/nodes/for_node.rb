@@ -17,6 +17,9 @@ module Cadenza
 
       # constructs a new {ForNode} with the given iterator, iterable and child
       # nodes.
+      # @param [VariableNode] iterator the iterator object for the loop
+      # @param [VariableNode] iterable the iterable object for the loop
+      # @param [Array] children the list of children associated with this loop
       def initialize(iterator, iterable, children)
          @iterator = iterator
          @iterable = iterable

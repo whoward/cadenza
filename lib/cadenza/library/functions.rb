@@ -2,7 +2,9 @@
 module Cadenza
    FunctionNotDefinedError = Class.new(Cadenza::Error)
 
-   #TODO: remove in v0.9.x
+   # Returns {FunctionNotDefinedError} when the deprecated {FunctionalVariableNotDefinedError} is requested
+   # @private
+   # @todo remove in v0.9.x
    def self.const_missing(const_name)
       super unless const_name == :FunctionalVariableNotDefinedError
       warn "`Cadenza::FunctionalVariableNotDefinedError` has been deprecated. Use `Cadenza::FunctionNotDefinedError` instead."
