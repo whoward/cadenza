@@ -1,0 +1,3 @@
+files:
+   excluded:
+      - lib/cadenza/racc_parser.rb # generated from cadenza.y
