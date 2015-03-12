@@ -1,1 +1,1 @@
-Check out our changelog hosted on [Revision.io](http://revision.io/cadenza)
+See the changelog for each version on our [releases](https://github.com/whoward/cadenza/releases) page
