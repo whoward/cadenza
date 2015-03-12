@@ -30,8 +30,9 @@ To learn how to extend Cadenza with custom Lexers, Parsers, Loaders and Renderer
 visit the [Yard Documentation](http://rubydoc.info/github/whoward/Cadenza/)
 
 # Roadmap
+See: [Waffle](https://waffle.io/whoward/cadenza)
 
-See: [Pivotal Tracker Project](https://www.pivotaltracker.com/projects/211737)
+(OLD: see [Pivotal Tracker Project](https://www.pivotaltracker.com/projects/211737))
 
 If you have any ideas or suggestions please let me know! I love ideas. You can open an Issue to discuss it.
 
