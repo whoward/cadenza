@@ -6,10 +6,19 @@ require 'cadenza/library/expectation'
 module Cadenza
    module Library
 
+      # Instantiates a new library module and calls the passed block in the
+      # context of the new module.  This makes the block build the library in the
+      # form of a DSL.
+      #
+      # The new module will always extend the following modules:
+      # - {Cadenza::Library::Filters}
+      # - {Cadenza::Library::Blocks}
+      # - {Cadenza::Library::Functions}
       def self.build(&block)
          __build(nil, &block)
       end
 
+      # @private
       def self.extended(base)
          base.extend Cadenza::Library::Filters
          base.extend Cadenza::Library::Blocks
