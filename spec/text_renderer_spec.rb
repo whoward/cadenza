@@ -43,6 +43,16 @@ describe Cadenza::TextRenderer do
       expect_rendering("{{ pi + 1 }}", context).to eq "4.14159"
    end
 
+   it "should render the value of a inject node to the output" do
+      klass = Class.new(Cadenza::Context)
+      klass.define_filter(:floor) {|value,params| value.floor }
+      klass.define_filter(:add)   {|value,params| value + params.first }
+
+      context = klass.new(:pi => 3.14159)
+
+      expect_rendering("{{ pi | floor | add: 1 }}", context).to eq "4"
+   end
+
    context "if nodes" do
       let(:if_blocks_template) { Fixture.read("templates/if_node/blocks.html.cadenza") }
       let(:if_blocks_output)   { Fixture.read("templates/if_node/blocks.html") }
@@ -65,16 +75,6 @@ describe Cadenza::TextRenderer do
       it "renders overriden blocks in it's child nodes" do
          expect_rendering(custom_if_blocks_template, context).to equal_html custom_if_blocks_output
       end
-   end
-
-   it "should render the value of a inject node to the output" do
-      klass = Class.new(Cadenza::Context)
-      klass.define_filter(:floor) {|value,params| value.floor }
-      klass.define_filter(:add)   {|value,params| value + params.first }
-
-      context = klass.new(:pi => 3.14159)
-
-      expect_rendering("{{ pi | floor | add: 1 }}", context).to eq "4"
    end
 
    context "nested blocks" do
@@ -190,11 +190,12 @@ describe Cadenza::TextRenderer do
 
    context "#error_handling" do
       let(:output)   { StringIO.new }
-      let(:renderer) { Cadenza::TextRenderer.new(output) }
+      let(:renderer) { Cadenza::TextRenderer.new(output, :error_handler => lambda {|e| raise e }) }
       let(:template) { Cadenza::Parser.new.parse("{{raise}}") }
 
       it "returns empty data by default" do
-         expect_rendering(template, context).to eq ""
+         renderer = Cadenza::TextRenderer.new(output)
+         expect_rendering(template, context, :renderer => renderer).to eq ""
       end
 
       it "raises an error with the :raise handler" do
