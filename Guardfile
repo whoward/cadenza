@@ -31,7 +31,7 @@ if RUBY_PLATFORM =~ /mswin32/i
    suggested_load "rb-notifu"
 end
 
-guard 'rspec', :version => 2, :cli => "--color" do
+guard 'rspec', cmd: 'rspec --color' do
   watch(%r{^spec/.+$}) { Dir.glob("spec/**/*_spec.rb") }
   watch(%r{^lib/.+}) { Dir.glob("spec/**/*_spec.rb") }
 end
