@@ -60,25 +60,34 @@ module Cadenza
          begin
             send("render_#{node_name}", node, context, blocks)
          rescue Exception => e
-            if error_handler == :suppress
-               # do nothing
-            elsif error_handler == :raise
-               raise Cadenza::RenderError.new(e)
-            elsif error_handler == :dump
-               output << "<code>#{e.backtrace.join("\n")}</code>"
-            elsif error_handler.respond_to?(:call)
-               output << error_handler.call(e)
-            else
-               raise Cadenza::Error.new("undefined error handler: #{error_handler.inspect}")
-            end
+            handle_exception(e)
          end
       end
 
-   private
-
+      private
+      
       # very stripped down form of ActiveSupport's underscore method
       def underscore(word)
          word.gsub!(/([a-z\d])([A-Z])/,'\1_\2').downcase!
+      end
+      
+      def handle_exception(e)
+         case error_handler
+         
+         when :suppress then nil # do nothing
+         
+         when :raise then fail Cadenza::RenderError, e
+         
+         when :dump 
+            output << "<code>#{e.backtrace.join("\n")}</code>"
+            
+         when proc { |h| h.respond_to?(:call) }
+            output << error_handler.call(e)
+            
+         else
+            fail Cadenza::Error, "undefined error handler: #{error_handler.inspect}"
+         
+         end
       end
    end
 end
