@@ -64,11 +64,9 @@ module Cadenza
                break if source
             end
 
-            if source.nil? and whiny_template_loading
-               raise TemplateNotFoundError.new(template_name)
-            else
-               return source
-            end
+            fail TemplateNotFoundError, template_name if source.nil? && whiny_template_loading
+            
+            source
          end
 
          # loads and returns the given template but does not parse it
@@ -95,11 +93,9 @@ module Cadenza
                break if template
             end
             
-            if template.nil? and whiny_template_loading
-               raise TemplateNotFoundError.new(template_name)
-            else
-               return template
-            end
+            fail TemplateNotFoundError, template_name if template.nil? && whiny_template_loading
+            
+            template
          end
 
          # loads, parses and returns the given template

@@ -68,11 +68,12 @@ module Cadenza
             render_children(node.true_children, context, blocks)
             output << "\n" if node.false_children.any?
          end
-
-         if node.false_children.any?
-            output << "\u2503 False Block:\n"
-            render_children(node.false_children, context, blocks)
-         end
+         
+         return unless node.false_children.any?
+         
+         output << "\u2503 False Block:\n"
+         
+         render_children(node.false_children, context, blocks)
       end
 
       def render_for(node, context, blocks)
