@@ -39,23 +39,10 @@ module Cadenza
       #         a list of nodes which should be rendered based on the result of
       #         that evaluation.
       def evaluate_expression_for_children(context)
-         value = @expression.eval(context)
-
-         if value == true
-            return @true_children
-
-         elsif value == false
-            return @false_children
-
-         elsif value.is_a?(String)
-            return value.length == 0 || value =~ /\s+/ ? @false_children : @true_children
-
-         elsif value.is_a?(Float) or value.is_a?(Fixnum)
-            return value == 0 ? @false_children : @true_children
-
+         if truthyness_for_value(@expression.eval(context))
+            @true_children
          else
-            return !!value ? @true_children : @false_children
-            
+            @false_children
          end
       end
 
@@ -65,6 +52,17 @@ module Cadenza
          @expression == rhs.expression &&
          @true_children == rhs.true_children &&
          @false_children == rhs.false_children
+      end
+      
+      private
+      
+      # @return [Boolean] returns the truthyness of the value given
+      def truthyness_for_value(value)
+         case value
+         when Float, Fixnum then value != 0 # non-zero numbers are truthy
+         when String then value.strip.length > 0 # non-blank strings are truthy
+         else !!value # everything else is coerced to a boolean (booleans are coerced to themselves)
+         end
       end
    end
 end
