@@ -65,7 +65,7 @@ module Cadenza
       do_render(context.load_template(template_name), context)
    end
 
-   private
+   private_class_method
 
    def self.create_context(scope, options)
       context = options.fetch(:context) { BaseContext.new }

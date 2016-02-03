@@ -43,12 +43,11 @@ module Cadenza
          end
       end
 
-   protected
+      protected
+   
       def expect(params)
          Expectation.new(params)
       end
-
-   private
 
       def self.__build(super_module, &block)
          mod = Module.new
@@ -57,6 +56,7 @@ module Cadenza
          mod.instance_eval(&block) if block
          mod
       end
+      private_class_method :__build
 
    end
 end
