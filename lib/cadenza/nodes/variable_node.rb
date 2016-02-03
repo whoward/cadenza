@@ -45,5 +45,5 @@ module Cadenza
       def ==(rhs)
          self.identifier == rhs.identifier && self.parameters == rhs.parameters
       end
-  end
+   end
 end

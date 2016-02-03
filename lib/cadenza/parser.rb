@@ -91,10 +91,11 @@ module Cadenza
       # message as possible for us to raise.
       #
       # To contributors: if you get an uninformative error message please let me know so I can improve this!
-      msg = case token
+      msg = 
+        case token
         when "$end" then "unexpected end of input"
         else "unexpected token #{value.source.inspect} at line #{line.inspect}, column #{column.inspect}"
-      end
+        end
 
       raise ParseError, msg
     end

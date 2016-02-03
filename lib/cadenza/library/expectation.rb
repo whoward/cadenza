@@ -37,10 +37,11 @@ module Cadenza
          #        the number of parameters be included in the range (inclusive)
          # @return [Expectation] returns the 'self' object to facilitate chaining
          def argc(expected)
-            pass = case expected
-               when Fixnum then params.length == expected
-               when Range then expected.include?(params.length)
-            end
+            pass = 
+              case expected
+              when Fixnum then params.length == expected
+              when Range then expected.include?(params.length)
+              end
 
             raise InvalidArgumentCountError.new(expected, params.length) unless pass
 

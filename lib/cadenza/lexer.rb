@@ -111,12 +111,13 @@ module Cadenza
     # the type of the token.
     #
     def token(type, text)
-      value = case type
+      value = 
+        case type
         when :INTEGER then text.to_i
         when :REAL then text.to_f
         when :STRING then text[1..-2]
         else text
-      end
+        end
 
       token = Token.new(value, text, @line, @column)
 

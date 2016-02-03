@@ -32,5 +32,5 @@ module Cadenza
          @name == rhs.name &&
          @children == rhs.children
       end
-  end
+   end
 end
