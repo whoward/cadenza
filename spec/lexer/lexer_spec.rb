@@ -11,29 +11,29 @@ describe Cadenza::Lexer do
   end
 
   it 'should report the counter position at (0, 0) until the parser is given something to parse' do
-    @lexer.position.should == [0, 0]
+    expect(@lexer.position).to eq([0, 0])
   end
 
   it 'should not raise an error if nil is passed as the data' do
-    lambda do
+    expect do
       @lexer.source = nil
-    end.should_not raise_error
+    end.not_to raise_error
   end
 
   it 'should assign a integer value of an integer constant token' do
-    token_values('{{ 123 }}').should == ['{{', 123, '}}', false]
+    expect(token_values('{{ 123 }}')).to eq(['{{', 123, '}}', false])
   end
 
   it 'should assign a real value of a real constant token' do
-    token_values('{{ 123.45 }}').should == ['{{', 123.45, '}}', false]
+    expect(token_values('{{ 123.45 }}')).to eq(['{{', 123.45, '}}', false])
   end
 
   it 'should assign a string value of a string constant token' do
-    token_values("{{ 'foo' }}").should == ['{{', 'foo', '}}', false]
-    token_values('{{ "foo" }}').should == ['{{', 'foo', '}}', false]
+    expect(token_values("{{ 'foo' }}")).to eq(['{{', 'foo', '}}', false])
+    expect(token_values('{{ "foo" }}')).to eq(['{{', 'foo', '}}', false])
   end
 
   it "should assign a identifier's name as the value of an identifier token" do
-    token_values('{{ foo.bar }}').should == ['{{', 'foo.bar', '}}', false]
+    expect(token_values('{{ foo.bar }}')).to eq(['{{', 'foo.bar', '}}', false])
   end
 end

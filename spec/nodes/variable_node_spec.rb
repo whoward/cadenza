@@ -5,30 +5,30 @@ describe Cadenza::VariableNode do
 
   context 'equivalence' do
     it 'equals a node with the same name' do
-      Cadenza::VariableNode.new('foo').should == Cadenza::VariableNode.new('foo')
+      expect(Cadenza::VariableNode.new('foo')).to eq(Cadenza::VariableNode.new('foo'))
     end
 
     it "doesn't equal a node with a different name" do
-      Cadenza::VariableNode.new('foo').should_not == Cadenza::VariableNode.new('bar')
+      expect(Cadenza::VariableNode.new('foo')).not_to eq(Cadenza::VariableNode.new('bar'))
     end
 
     it "doesn't equal a node with different parameters" do
       var_a = Cadenza::VariableNode.new('load', [Cadenza::ConstantNode.new('mytemplate')])
       var_b = Cadenza::VariableNode.new('load', [Cadenza::ConstantNode.new('foo')])
 
-      var_a.should_not == var_b
+      expect(var_a).not_to eq(var_b)
     end
   end
 
   context '#implied_globals' do
     it 'returns a list containing the identifier name' do
-      Cadenza::VariableNode.new('foo').implied_globals.should == %w(foo)
+      expect(Cadenza::VariableNode.new('foo').implied_globals).to eq(%w(foo))
     end
 
     it "returns the parameters' implied globals as well" do
       x = Cadenza::VariableNode.new('x')
 
-      Cadenza::VariableNode.new('foo', [x, x]).implied_globals.should == %w(foo x)
+      expect(Cadenza::VariableNode.new('foo', [x, x]).implied_globals).to eq(%w(foo x))
     end
   end
 
@@ -45,19 +45,19 @@ describe Cadenza::VariableNode do
     let(:ctx_node)     { Cadenza::VariableNode.new('ctx') }
 
     it 'evaluates to the value looked up in the context' do
-      Cadenza::VariableNode.new('pi').eval(context).should == 3.14159
+      expect(Cadenza::VariableNode.new('pi').eval(context)).to eq(3.14159)
     end
 
     it "evaluates a functional variables's value" do
-      Cadenza::VariableNode.new('ctx').eval(context).should == context.inspect
+      expect(Cadenza::VariableNode.new('ctx').eval(context)).to eq(context.inspect)
     end
 
     it "evaluates a functional variable's value given parameters" do
       template_a = Cadenza::ConstantNode.new('foo')
       template_b = Cadenza::ConstantNode.new('abc')
 
-      Cadenza::VariableNode.new('load', [template_a]).eval(context).should == 'bar'
-      Cadenza::VariableNode.new('load', [template_b]).eval(context).should == 'baz'
+      expect(Cadenza::VariableNode.new('load', [template_a]).eval(context)).to eq('bar')
+      expect(Cadenza::VariableNode.new('load', [template_b]).eval(context)).to eq('baz')
     end
   end
 end

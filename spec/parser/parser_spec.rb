@@ -21,24 +21,24 @@ describe Cadenza::Parser do
 
   it 'should assign a default lexer, which is an instance of Cadenza::Lexer' do
     parser = Cadenza::Parser.new
-    parser.lexer.should be_an_instance_of Cadenza::Lexer
+    expect(parser.lexer).to be_an_instance_of Cadenza::Lexer
   end
 
   it 'should allow overriding the default lexer in the initializer' do
     parser = Cadenza::Parser.new(lexer: AnotherLexer.new)
-    parser.lexer.should be_an_instance_of AnotherLexer
+    expect(parser.lexer).to be_an_instance_of AnotherLexer
   end
 
   it 'should raise an exception if the lexer does not have next_token defined' do
-    lambda do
+    expect do
       Cadenza::Parser.new(lexer: FakeLexer.new)
-    end.should raise_error 'Lexers passed to the parser must define next_token'
+    end.to raise_error 'Lexers passed to the parser must define next_token'
   end
 
   it 'should raise an exception if the lexer does not have source= defined' do
-    lambda do
+    expect do
       Cadenza::Parser.new(lexer: PartialLexer.new)
-    end.should raise_error 'Lexers passed to the parser must define source='
+    end.to raise_error 'Lexers passed to the parser must define source='
   end
 
   it 'should parse an empty stream as an empty document node' do
@@ -48,8 +48,8 @@ describe Cadenza::Parser do
   it 'should raise a Cadenza::ParseError when attempting to parse an invalid template' do
     parser = Cadenza::Parser.new
 
-    lambda do
+    expect do
       parser.parse 'foo {{ bar'
-    end.should raise_error Cadenza::ParseError
+    end.to raise_error Cadenza::ParseError
   end
 end

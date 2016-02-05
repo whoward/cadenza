@@ -18,15 +18,15 @@ describe Cadenza::SourceTreeRenderer do
 
   context 'constant nodes' do
     it 'renders constants as Constant("value")' do
-      render(Cadenza::ConstantNode.new('abc')).should == 'Constant("abc")'
-      render(Cadenza::ConstantNode.new(123)).should == 'Constant(123)'
-      render(Cadenza::ConstantNode.new(123.45)).should == 'Constant(123.45)'
+      expect(render(Cadenza::ConstantNode.new('abc'))).to eq('Constant("abc")')
+      expect(render(Cadenza::ConstantNode.new(123))).to eq('Constant(123)')
+      expect(render(Cadenza::ConstantNode.new(123.45))).to eq('Constant(123.45)')
     end
   end
 
   context 'variable nodes' do
     it 'renders variables as Variable(x)' do
-      render(Cadenza::VariableNode.new('x')).should == 'Variable(x)'
+      expect(render(Cadenza::VariableNode.new('x'))).to eq('Variable(x)')
     end
 
     it 'renders parameters as Variable(x[a, b, c])' do
@@ -36,26 +36,26 @@ describe Cadenza::SourceTreeRenderer do
 
       node = Cadenza::VariableNode.new('x', [a, b, c])
 
-      render(node).should == 'Variable(x[Variable(a), Constant(123), Constant("foo")])'
+      expect(render(node)).to eq('Variable(x[Variable(a), Constant(123), Constant("foo")])')
     end
   end
 
   context 'text nodes' do
     it 'renders text as Text("abc\\n123")' do
-      render(Cadenza::TextNode.new("abc\n123")).should == 'Text("abc\n123")'
+      expect(render(Cadenza::TextNode.new("abc\n123"))).to eq('Text("abc\n123")')
     end
   end
 
   context 'filter nodes' do
     it 'renders the node' do
-      render(Cadenza::FilterNode.new('escape')).should == 'Filter(escape)'
+      expect(render(Cadenza::FilterNode.new('escape'))).to eq('Filter(escape)')
     end
 
     it 'renders parameters to the filter' do
       five = Cadenza::ConstantNode.new(5)
       three = Cadenza::ConstantNode.new(3)
       node = Cadenza::FilterNode.new('cut', [five, three])
-      render(node).should == 'Filter(cut[Constant(5), Constant(3)])'
+      expect(render(node)).to eq('Filter(cut[Constant(5), Constant(3)])')
     end
   end
 
@@ -70,7 +70,7 @@ describe Cadenza::SourceTreeRenderer do
                  "+---Text(\"abc\")\n" \
                  '`---Variable(x)'
 
-      render(node).should == treeify(expected)
+      expect(render(node)).to eq(treeify(expected))
     end
 
     it 'renders the extends name' do
@@ -84,7 +84,7 @@ describe Cadenza::SourceTreeRenderer do
                  "+---Text(\"abc\")\n" \
                  '`---Variable(x)'
 
-      render(node).should == treeify(expected)
+      expect(render(node)).to eq(treeify(expected))
     end
   end
 
@@ -97,7 +97,7 @@ describe Cadenza::SourceTreeRenderer do
                  "+---Text(\"abc\")\n" \
                  '`---Variable(x)'
 
-      render(Cadenza::OperationNode.new(text, '*', variable)).should == treeify(expected)
+      expect(render(Cadenza::OperationNode.new(text, '*', variable))).to eq(treeify(expected))
     end
   end
 
@@ -114,7 +114,7 @@ describe Cadenza::SourceTreeRenderer do
                  "| False Block:\n" \
                  '`---Text("no")'
 
-      render(Cadenza::IfNode.new(expr, [yes], [no])).should == treeify(expected)
+      expect(render(Cadenza::IfNode.new(expr, [yes], [no]))).to eq(treeify(expected))
     end
 
     it "doesn't render the true block if it is empty" do
@@ -124,7 +124,7 @@ describe Cadenza::SourceTreeRenderer do
                  "| False Block:\n" \
                  '`---Text("no")'
 
-      render(Cadenza::IfNode.new(expr, [], [no])).should == treeify(expected)
+      expect(render(Cadenza::IfNode.new(expr, [], [no]))).to eq(treeify(expected))
     end
 
     it "doesn't render the false block if it is empty" do
@@ -134,7 +134,7 @@ describe Cadenza::SourceTreeRenderer do
                  "| True Block:\n" \
                  '`---Text("yes")'
 
-      render(Cadenza::IfNode.new(expr, [yes], [])).should == treeify(expected)
+      expect(render(Cadenza::IfNode.new(expr, [yes], []))).to eq(treeify(expected))
     end
   end
 
@@ -149,7 +149,7 @@ describe Cadenza::SourceTreeRenderer do
       expected = "For(iterator: i, iterable: elements)\n"\
                  '`---Text("foo")'
 
-      render(node).should == treeify(expected)
+      expect(render(node)).to eq(treeify(expected))
     end
   end
 
@@ -161,7 +161,7 @@ describe Cadenza::SourceTreeRenderer do
       expected = "GenericBlock(escape)\n"\
                  '`---Text("<h1>hello!</h1>")'
 
-      render(node).should == treeify(expected)
+      expect(render(node)).to eq(treeify(expected))
     end
 
     it 'renders parameters to the block' do
@@ -173,7 +173,7 @@ describe Cadenza::SourceTreeRenderer do
       expected = "GenericBlock(filter[Variable(escape), Constant(123)])\n"\
                  '`---Text("<h1>hello!</h1>")'
 
-      render(node).should == treeify(expected)
+      expect(render(node)).to eq(treeify(expected))
     end
   end
 
@@ -189,7 +189,7 @@ describe Cadenza::SourceTreeRenderer do
       expected = "FilteredValue[Filter(escape), Filter(cut[Constant(3)])]\n"\
                  '`---Variable(x)'
 
-      render(node).should == treeify(expected)
+      expect(render(node)).to eq(treeify(expected))
     end
   end
 
@@ -201,7 +201,7 @@ describe Cadenza::SourceTreeRenderer do
       expected = "BooleanInverse\n"\
                  '`---Variable(x)'
 
-      render(node).should == treeify(expected)
+      expect(render(node)).to eq(treeify(expected))
     end
   end
 
@@ -213,7 +213,7 @@ describe Cadenza::SourceTreeRenderer do
       expected = "Block(content)\n"\
                  '`---Text("<h1>Hello World!</h1>")'
 
-      render(node).should == treeify(expected)
+      expect(render(node)).to eq(treeify(expected))
     end
   end
 
@@ -229,7 +229,7 @@ describe Cadenza::SourceTreeRenderer do
                  "|   `---Variable(y)\n" \
                  '`---Text("</h1>")'
 
-      render(ast).should == treeify(expected)
+      expect(render(ast)).to eq(treeify(expected))
     end
   end
 end

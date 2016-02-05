@@ -4,35 +4,35 @@ describe Cadenza::FilterNode do
   it 'should take an identifier' do
     filter = Cadenza::FilterNode.new('trim')
 
-    filter.identifier.should == 'trim'
+    expect(filter.identifier).to eq('trim')
   end
 
   it 'should be equal to another filter with the same name' do
     filter_a = Cadenza::FilterNode.new('trim')
     filter_b = Cadenza::FilterNode.new('trim')
 
-    filter_a.should == filter_b
+    expect(filter_a).to eq(filter_b)
   end
 
   it 'should not equal another node with a different name' do
     filter_a = Cadenza::FilterNode.new('trim')
     filter_b = Cadenza::FilterNode.new('cut')
 
-    filter_a.should_not == filter_b
+    expect(filter_a).not_to eq(filter_b)
   end
 
   it 'should equal a node with the same parameters' do
     filter_a = Cadenza::FilterNode.new('trim', [Cadenza::ConstantNode.new(10)])
     filter_b = Cadenza::FilterNode.new('trim', [Cadenza::ConstantNode.new(10)])
 
-    filter_a.should == filter_b
+    expect(filter_a).to eq(filter_b)
   end
 
   it 'should not equal a node with different parameters' do
     filter_a = Cadenza::FilterNode.new('trim', [Cadenza::ConstantNode.new(10)])
     filter_b = Cadenza::FilterNode.new('trim', [Cadenza::ConstantNode.new(30)])
 
-    filter_a.should_not == filter_b
+    expect(filter_a).not_to eq(filter_b)
   end
 
   it 'should take a list of parameter nodes' do
@@ -40,8 +40,8 @@ describe Cadenza::FilterNode do
 
     filter = Cadenza::FilterNode.new('cut', [constant_a])
 
-    filter.identifier.should == 'cut'
-    filter.parameters.should == [constant_a]
+    expect(filter.identifier).to eq('cut')
+    expect(filter.parameters).to eq([constant_a])
   end
 
   it "should return a list of it's parameters implied globals (unique)" do
@@ -50,7 +50,7 @@ describe Cadenza::FilterNode do
 
     filter = Cadenza::FilterNode.new('cut', [constant, variable, variable])
 
-    filter.implied_globals.should == %w(x)
+    expect(filter.implied_globals).to eq(%w(x))
   end
 
   it 'should evaluate the filter on a value given a context' do
@@ -61,7 +61,7 @@ describe Cadenza::FilterNode do
 
     filter = Cadenza::FilterNode.new('floor')
 
-    filter.evaluate(context, 3.14159).should == 3
+    expect(filter.evaluate(context, 3.14159)).to eq(3)
   end
 
   it 'should pass parameters to the filter function when evaluating' do
@@ -72,6 +72,6 @@ describe Cadenza::FilterNode do
 
     filter = Cadenza::FilterNode.new('add', [Cadenza::ConstantNode.new(1)])
 
-    filter.evaluate(context, 3.14159).should == 4.14159
+    expect(filter.evaluate(context, 3.14159)).to eq(4.14159)
   end
 end

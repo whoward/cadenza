@@ -9,7 +9,7 @@ describe Cadenza::ForNode do
     for_a = Cadenza::ForNode.new(iterator, iterable, [text])
     for_b = Cadenza::ForNode.new(iterator, iterable, [text])
 
-    for_a.should == for_b
+    expect(for_a).to eq(for_b)
   end
 
   it 'should not equal another node with a different iterator' do
@@ -21,7 +21,7 @@ describe Cadenza::ForNode do
     for_a = Cadenza::ForNode.new(iterator_a, iterable, [text])
     for_b = Cadenza::ForNode.new(iterator_b, iterable, [text])
 
-    for_a.should_not == for_b
+    expect(for_a).not_to eq(for_b)
   end
 
   it 'should not equal another node with a different iterable' do
@@ -33,7 +33,7 @@ describe Cadenza::ForNode do
     for_a = Cadenza::ForNode.new(iterator, iterable_a, [text])
     for_b = Cadenza::ForNode.new(iterator, iterable_b, [text])
 
-    for_a.should_not == for_b
+    expect(for_a).not_to eq(for_b)
   end
 
   it 'should not equal another node with different children' do
@@ -45,7 +45,7 @@ describe Cadenza::ForNode do
     for_a = Cadenza::ForNode.new(iterator, iterable, [text_a])
     for_b = Cadenza::ForNode.new(iterator, iterable, [text_b])
 
-    for_a.should_not == for_b
+    expect(for_a).not_to eq(for_b)
   end
 
   context 'implied globals' do
@@ -57,13 +57,13 @@ describe Cadenza::ForNode do
 
       for_node = Cadenza::ForNode.new(iterator, iterable, [variable])
 
-      for_node.implied_globals.should == %w(bars waz)
+      expect(for_node.implied_globals).to eq(%w(bars waz))
     end
 
     it "should not return the iterator if found in the children's implied globals" do
       for_node = Cadenza::ForNode.new(iterator, iterable, [iterator])
 
-      for_node.implied_globals.should == %w(bars)
+      expect(for_node.implied_globals).to eq(%w(bars))
     end
 
     it 'should not return magic locals assigned to the inner scope' do
@@ -77,10 +77,10 @@ describe Cadenza::ForNode do
       for_node_c = Cadenza::ForNode.new(iterator, iterable, [first])
       for_node_d = Cadenza::ForNode.new(iterator, iterable, [last])
 
-      for_node_a.implied_globals.should == %w(bars)
-      for_node_b.implied_globals.should == %w(bars)
-      for_node_c.implied_globals.should == %w(bars)
-      for_node_d.implied_globals.should == %w(bars)
+      expect(for_node_a.implied_globals).to eq(%w(bars))
+      expect(for_node_b.implied_globals).to eq(%w(bars))
+      expect(for_node_c.implied_globals).to eq(%w(bars))
+      expect(for_node_d.implied_globals).to eq(%w(bars))
     end
 
     it "should rewrite dot notations of the iterator in terms of the iterable's identifier" do
@@ -88,7 +88,7 @@ describe Cadenza::ForNode do
 
       for_node = Cadenza::ForNode.new(iterator, iterable, [dot_notation])
 
-      for_node.implied_globals.should == %w(bars bars.baz)
+      expect(for_node.implied_globals).to eq(%w(bars bars.baz))
     end
   end
 end

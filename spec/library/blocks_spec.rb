@@ -28,7 +28,7 @@ describe Cadenza::Library::Functions do
 
   context '#define_block' do
     it 'should define the block' do
-      library.blocks[:filter].should be_a Proc
+      expect(library.blocks[:filter]).to be_a Proc
     end
 
     it 'should evaluate a block' do
@@ -36,31 +36,31 @@ describe Cadenza::Library::Functions do
 
       output = library.evaluate_block(:filter, context, [text], [escape])
 
-      output.should == '&lt;h1&gt;Hello World!&lt;/h1&gt;'
+      expect(output).to eq('&lt;h1&gt;Hello World!&lt;/h1&gt;')
     end
 
     it 'should raise a BlockNotDefinedError if the block is not defined' do
-      lambda do
+      expect do
         library.evaluate_block(:foo, context, [], [])
-      end.should raise_error Cadenza::BlockNotDefinedError
+      end.to raise_error Cadenza::BlockNotDefinedError
     end
   end
 
   context '#lookup_block' do
     it 'returns the given block' do
-      library.lookup_block(:filter).should be_a Proc
+      expect(library.lookup_block(:filter)).to be_a Proc
     end
 
     it 'raises a BlockNotDefinedError if the block is not defined' do
-      lambda do
+      expect do
         library.lookup_block(:fake)
-      end.should raise_error Cadenza::BlockNotDefinedError
+      end.to raise_error Cadenza::BlockNotDefinedError
     end
   end
 
   context '#alias_block' do
     it 'returns nil' do
-      library.alias_block(:filter, :apply).should be_nil
+      expect(library.alias_block(:filter, :apply)).to be_nil
     end
 
     it 'duplicates the block under a different name' do
@@ -70,13 +70,13 @@ describe Cadenza::Library::Functions do
 
       output = library.evaluate_block(:apply, context, [text], [escape])
 
-      output.should == '&lt;h1&gt;Hello World!&lt;/h1&gt;'
+      expect(output).to eq('&lt;h1&gt;Hello World!&lt;/h1&gt;')
     end
 
     it 'raises a BlockNotDefinedError if the source variable is not defined' do
-      lambda do
+      expect do
         library.alias_block(:fake, :something)
-      end.should raise_error Cadenza::BlockNotDefinedError
+      end.to raise_error Cadenza::BlockNotDefinedError
     end
   end
 end

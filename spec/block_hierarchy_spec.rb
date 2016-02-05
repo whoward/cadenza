@@ -11,17 +11,17 @@ describe Cadenza::BlockHierarchy do
 
   context '#initialize' do
     it 'begins with a empty block hierarchy' do
-      subject.new['foo'].should == []
+      expect(subject.new['foo']).to eq([])
     end
 
     it 'allows passing an optional hash to become the initial data' do
-      subject.new(foo: foo_block_a)['foo'].should == [foo_block_a]
+      expect(subject.new(foo: foo_block_a)['foo']).to eq([foo_block_a])
     end
   end
 
   context '#[]' do
     it 'returns an empty array for an undefined block' do
-      hierarchy['foo'].should == []
+      expect(hierarchy['foo']).to eq([])
     end
 
     it 'returns the whole chain from lowest to highest ancestor' do
@@ -33,9 +33,9 @@ describe Cadenza::BlockHierarchy do
 
   context '#push' do
     it 'assigns the block to the end of the hierarchy chain' do
-      hierarchy['foo'].should == []
+      expect(hierarchy['foo']).to eq([])
       hierarchy << foo_block_a
-      hierarchy['foo'].should == [foo_block_a]
+      expect(hierarchy['foo']).to eq([foo_block_a])
     end
   end
 
@@ -43,7 +43,7 @@ describe Cadenza::BlockHierarchy do
     it 'pushes each block in the passed hash onto the end of the chain' do
       hierarchy << foo_block_a
       hierarchy.merge(foo: foo_block_b)
-      hierarchy['foo'].should == [foo_block_a, foo_block_b]
+      expect(hierarchy['foo']).to eq([foo_block_a, foo_block_b])
     end
   end
 end

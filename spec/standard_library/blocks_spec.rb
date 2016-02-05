@@ -9,19 +9,19 @@ describe Cadenza::StandardLibrary::Blocks do
     let(:context) { Cadenza::BaseContext.new }
 
     it 'should render the children to text and html escape the result' do
-      context.evaluate_block(:filter, [text], [escape]).should == '&lt;h1&gt;Hello World!&lt;/h1&gt;'
+      expect(context.evaluate_block(:filter, [text], [escape])).to eq('&lt;h1&gt;Hello World!&lt;/h1&gt;')
     end
 
     it 'raises an error if there is not exactly 1 argument' do
-      lambda do
+      expect do
         context.evaluate_block(:filter, [text], [])
-      end.should raise_error Cadenza::InvalidArgumentCountError
+      end.to raise_error Cadenza::InvalidArgumentCountError
     end
 
     it 'raises an error if the first argument is not a variable' do
-      lambda do
+      expect do
         context.evaluate_block(:filter, [text], [123])
-      end.should raise_error Cadenza::InvalidArgumentTypeError
+      end.to raise_error Cadenza::InvalidArgumentTypeError
     end
   end
 end

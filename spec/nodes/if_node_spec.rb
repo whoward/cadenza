@@ -12,7 +12,7 @@ describe Cadenza::IfNode do
     node_a = Cadenza::IfNode.new(expression, [text_a], [text_b])
     node_b = Cadenza::IfNode.new(expression, [text_a], [text_b])
 
-    node_a.should == node_b
+    expect(node_a).to eq(node_b)
   end
 
   it 'should not be equivalent to another node with a different expression' do
@@ -28,7 +28,7 @@ describe Cadenza::IfNode do
     node_a = Cadenza::IfNode.new(expression_a, [text_a], [text_b])
     node_b = Cadenza::IfNode.new(expression_b, [text_a], [text_b])
 
-    node_a.should_not == node_b
+    expect(node_a).not_to eq(node_b)
   end
 
   it 'should not be equivalent to another node with different true children' do
@@ -43,7 +43,7 @@ describe Cadenza::IfNode do
     node_a = Cadenza::IfNode.new(expression, [text_a], text_b)
     node_b = Cadenza::IfNode.new(expression, [text_c], [text_b])
 
-    node_a.should_not == node_b
+    expect(node_a).not_to eq(node_b)
   end
 
   it 'should not be equivalent to another node with different false children' do
@@ -58,7 +58,7 @@ describe Cadenza::IfNode do
     node_a = Cadenza::IfNode.new(expression, [text_a], [text_b])
     node_b = Cadenza::IfNode.new(expression, [text_a], [text_c])
 
-    node_a.should_not == node_b
+    expect(node_a).not_to eq(node_b)
   end
 
   it 'should assign an empty array to the children if not defined' do
@@ -68,8 +68,8 @@ describe Cadenza::IfNode do
 
     node = Cadenza::IfNode.new(expression)
 
-    node.true_children.should == []
-    node.false_children.should == []
+    expect(node.true_children).to eq([])
+    expect(node.false_children).to eq([])
   end
 
   it "should use the union of the expression's, true children's and false children's implied globals for it's own implied globals" do
@@ -81,7 +81,7 @@ describe Cadenza::IfNode do
 
     if_statement = Cadenza::IfNode.new(expression, [variable_c], [variable_a, variable_b, variable_c])
 
-    if_statement.implied_globals.should == %w(x y z)
+    expect(if_statement.implied_globals).to eq(%w(x y z))
   end
 
   context 'expression evaluation to retrieve correct children list' do
@@ -96,49 +96,49 @@ describe Cadenza::IfNode do
     it 'should return the true children if the expression evaluates to true' do
       node = Cadenza::IfNode.new(Cadenza::OperationNode.new(pi, '>', one), [yup], [nope])
 
-      node.evaluate_expression_for_children(context).should == [yup]
+      expect(node.evaluate_expression_for_children(context)).to eq([yup])
     end
 
     it 'should return the false children if the expression evaluates to false' do
       node = Cadenza::IfNode.new(Cadenza::OperationNode.new(pi, '<', one), [yup], [nope])
 
-      node.evaluate_expression_for_children(context).should == [nope]
+      expect(node.evaluate_expression_for_children(context)).to eq([nope])
     end
 
     it 'should return the true children if the expression evaluates to a non-blank string' do
       node = Cadenza::IfNode.new(Cadenza::ConstantNode.new('foo'), [yup], [nope])
 
-      node.evaluate_expression_for_children(context).should == [yup]
+      expect(node.evaluate_expression_for_children(context)).to eq([yup])
     end
 
     it 'should return the false children if the expression evaluates to an empty string' do
       node = Cadenza::IfNode.new(Cadenza::ConstantNode.new(''), [yup], [nope])
 
-      node.evaluate_expression_for_children(context).should == [nope]
+      expect(node.evaluate_expression_for_children(context)).to eq([nope])
     end
 
     it 'should return the false children if the expression evaluates to a whitespace string' do
       node = Cadenza::IfNode.new(Cadenza::ConstantNode.new("\t\n   "), [yup], [nope])
 
-      node.evaluate_expression_for_children(context).should == [nope]
+      expect(node.evaluate_expression_for_children(context)).to eq([nope])
     end
 
     it 'should return the true children if the expression evaluates to a nonzero number' do
       node = Cadenza::IfNode.new(Cadenza::ConstantNode.new(10), [yup], [nope])
 
-      node.evaluate_expression_for_children(context).should == [yup]
+      expect(node.evaluate_expression_for_children(context)).to eq([yup])
     end
 
     it 'should return the false children if the expression evaluates to a zero number' do
       node = Cadenza::IfNode.new(Cadenza::ConstantNode.new(0), [yup], [nope])
 
-      node.evaluate_expression_for_children(context).should == [nope]
+      expect(node.evaluate_expression_for_children(context)).to eq([nope])
     end
 
     it 'should return the appropriate children for the expression coerced to a boolean' do
       node = Cadenza::IfNode.new(Cadenza::ConstantNode.new(nil), [yup], [nope])
 
-      node.evaluate_expression_for_children(context).should == [nope]
+      expect(node.evaluate_expression_for_children(context)).to eq([nope])
     end
   end
 end

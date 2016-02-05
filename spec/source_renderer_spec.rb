@@ -15,101 +15,101 @@ describe Cadenza::SourceRenderer do
 
   context 'state machine' do
     it 'starts in the text context' do
-      renderer.state.should == :text
+      expect(renderer.state).to eq(:text)
     end
 
     it 'raises a IllegalStateError when trying to transition to a state which is not :text, :var or :tag' do
-      lambda do
+      expect do
         renderer.state = :foo
-      end.should raise_error(Cadenza::SourceRenderer::IllegalStateError)
+      end.to raise_error(Cadenza::SourceRenderer::IllegalStateError)
     end
 
     it 'appends {{ when transitioning from :text to :var' do
       renderer.state = :var
-      renderer.output.string.should == '{{ '
-      renderer.state.should == :var
+      expect(renderer.output.string).to eq('{{ ')
+      expect(renderer.state).to eq(:var)
     end
 
     it 'appends {% when transitioning from :text to :tag' do
       renderer.state = :tag
-      renderer.output.string.should == '{% '
-      renderer.state.should == :tag
+      expect(renderer.output.string).to eq('{% ')
+      expect(renderer.state).to eq(:tag)
     end
 
     it 'appends }} when transitioning from :var to :text' do
       renderer.state = :var
       renderer.state = :text
-      renderer.output.string.should == '{{  }}'
-      renderer.state.should == :text
+      expect(renderer.output.string).to eq('{{  }}')
+      expect(renderer.state).to eq(:text)
     end
 
     it 'appends %} when transitioning from :tag to :text' do
       renderer.state = :tag
       renderer.state = :text
-      renderer.output.string.should == '{%  %}'
-      renderer.state.should == :text
+      expect(renderer.output.string).to eq('{%  %}')
+      expect(renderer.state).to eq(:text)
     end
 
     it 'raises an IllegalStateTransitionError when trying to transition from :var to :tag' do
       renderer.state = :var
-      lambda do
+      expect do
         renderer.state = :tag
-      end.should raise_error(Cadenza::SourceRenderer::IllegalStateTransitionError)
+      end.to raise_error(Cadenza::SourceRenderer::IllegalStateTransitionError)
     end
 
     it 'raises an IllegalStateTransitionError when trying to transition from :tag to :var' do
       renderer.state = :tag
-      lambda do
+      expect do
         renderer.state = :var
-      end.should raise_error(Cadenza::SourceRenderer::IllegalStateTransitionError)
+      end.to raise_error(Cadenza::SourceRenderer::IllegalStateTransitionError)
     end
   end
 
   context '#render' do
     it 'returns to the :text state if it transitions to another state while rendering' do
-      renderer.state.should == :text
-      render(Cadenza::ConstantNode.new(123)).should == '{{ 123 }}'
-      renderer.state.should == :text
+      expect(renderer.state).to eq(:text)
+      expect(render(Cadenza::ConstantNode.new(123))).to eq('{{ 123 }}')
+      expect(renderer.state).to eq(:text)
     end
   end
 
   context 'text nodes' do
     it 'renders text source' do
-      render(Cadenza::TextNode.new('abc')).should == 'abc'
+      expect(render(Cadenza::TextNode.new('abc'))).to eq('abc')
     end
 
     it 'transitions to the text state before rendering' do
       text = Cadenza::TextNode.new('abc')
       pi = Cadenza::VariableNode.new('pi')
 
-      render(pi, text).should == '{{ pi }}abc'
+      expect(render(pi, text)).to eq('{{ pi }}abc')
     end
   end
 
   context 'constant nodes' do
     it "renders a fixnum to it's literal value" do
-      render(Cadenza::ConstantNode.new(123)).should == '{{ 123 }}'
+      expect(render(Cadenza::ConstantNode.new(123))).to eq('{{ 123 }}')
     end
 
     it "renders a float to it's literal value" do
-      render(Cadenza::ConstantNode.new(123.45)).should == '{{ 123.45 }}'
+      expect(render(Cadenza::ConstantNode.new(123.45))).to eq('{{ 123.45 }}')
     end
 
     it "renders a string to it's literal value" do
-      render(Cadenza::ConstantNode.new('hello')).should == '{{ "hello" }}'
+      expect(render(Cadenza::ConstantNode.new('hello'))).to eq('{{ "hello" }}')
     end
   end
 
   context 'variable nodes' do
     it 'renders the identifier' do
-      render(Cadenza::VariableNode.new('pi')).should == '{{ pi }}'
+      expect(render(Cadenza::VariableNode.new('pi'))).to eq('{{ pi }}')
     end
 
     it 'renders parameters to the identifier' do
       template = Cadenza::ConstantNode.new('template.cadenza')
       load = Cadenza::VariableNode.new('load', [template])
 
-      render(load).should == '{{ load "template.cadenza" }}'
+      expect(render(load)).to eq('{{ load "template.cadenza" }}')
     end
 
     it 'renders multiple parameters to the identifier' do
@@ -118,7 +118,7 @@ describe Cadenza::SourceRenderer do
 
       load = Cadenza::VariableNode.new('load', [template_a, template_b])
 
-      render(load).should == '{{ load "template.cadenza", "blah.cadenza" }}'
+      expect(render(load)).to eq('{{ load "template.cadenza", "blah.cadenza" }}')
     end
   end
 
@@ -129,7 +129,7 @@ describe Cadenza::SourceRenderer do
 
       filtered_node = Cadenza::FilteredValueNode.new(value, [upper])
 
-      render(filtered_node).should == '{{ x | upper }}'
+      expect(render(filtered_node)).to eq('{{ x | upper }}')
     end
 
     it 'renders multiple filters' do
@@ -139,7 +139,7 @@ describe Cadenza::SourceRenderer do
 
       filtered_node = Cadenza::FilteredValueNode.new(value, [upper, lower])
 
-      render(filtered_node).should == '{{ x | upper | lower }}'
+      expect(render(filtered_node)).to eq('{{ x | upper | lower }}')
     end
 
     it 'renders filters with parameters' do
@@ -148,7 +148,7 @@ describe Cadenza::SourceRenderer do
 
       filtered_node = Cadenza::FilteredValueNode.new(value, [limit])
 
-      render(filtered_node).should == '{{ x | limit: 3 }}'
+      expect(render(filtered_node)).to eq('{{ x | limit: 3 }}')
     end
 
     it 'renders filters with multiple parameters' do
@@ -157,7 +157,7 @@ describe Cadenza::SourceRenderer do
 
       filtered_node = Cadenza::FilteredValueNode.new(value, [range])
 
-      render(filtered_node).should == '{{ x | in_range: 3, 5 }}'
+      expect(render(filtered_node)).to eq('{{ x | in_range: 3, 5 }}')
     end
   end
 
@@ -170,21 +170,21 @@ describe Cadenza::SourceRenderer do
       one = Cadenza::ConstantNode.new(1)
       op = Cadenza::OperationNode.new(x, '+', one)
 
-      render(op).should == '{{ x + 1 }}'
+      expect(render(op)).to eq('{{ x + 1 }}')
     end
 
     it 'wraps the left node in brackets if it is lower precedence' do
       brak = Cadenza::OperationNode.new(x, '+', y)
       node = Cadenza::OperationNode.new(brak, '*', z)
 
-      render(node).should == '{{ (x + y) * z }}'
+      expect(render(node)).to eq('{{ (x + y) * z }}')
     end
 
     it 'wraps the right node in brackets if it is lower precedence' do
       brak = Cadenza::OperationNode.new(y, '+', z)
       node = Cadenza::OperationNode.new(x, '*', brak)
 
-      render(node).should == '{{ x * (y + z) }}'
+      expect(render(node)).to eq('{{ x * (y + z) }}')
     end
 
     # I don't think wrapping the left subtree in brackets matters because
@@ -196,7 +196,7 @@ describe Cadenza::SourceRenderer do
       rhs = Cadenza::OperationNode.new(y, '/', z)
       node = Cadenza::OperationNode.new(x, '*', rhs)
 
-      render(node).should == '{{ x * (y / z) }}'
+      expect(render(node)).to eq('{{ x * (y / z) }}')
     end
 
     it 'does not wrap the right node in brackets if it has the same operator and precedence' do
@@ -204,7 +204,7 @@ describe Cadenza::SourceRenderer do
       rhs = Cadenza::OperationNode.new(y, '*', z)
       node = Cadenza::OperationNode.new(x, '*', rhs)
 
-      render(node).should == '{{ x * y * z }}'
+      expect(render(node)).to eq('{{ x * y * z }}')
     end
   end
 
@@ -215,7 +215,7 @@ describe Cadenza::SourceRenderer do
 
       if_node = Cadenza::IfNode.new(expression, [abc])
 
-      render(if_node).should == '{% if x > 1 %}abc{% endif %}'
+      expect(render(if_node)).to eq('{% if x > 1 %}abc{% endif %}')
     end
 
     it 'renders the else block if there are given children' do
@@ -224,7 +224,7 @@ describe Cadenza::SourceRenderer do
 
       if_node = Cadenza::IfNode.new(expression, [abc])
 
-      render(if_node).should == '{% if x > 1 %}abc{% endif %}'
+      expect(render(if_node)).to eq('{% if x > 1 %}abc{% endif %}')
     end
   end
 
@@ -236,7 +236,7 @@ describe Cadenza::SourceRenderer do
 
       for_node = Cadenza::ForNode.new(iterator, iterable, [abc])
 
-      render(for_node).should == '{% for item in items %}abc{% endfor %}'
+      expect(render(for_node)).to eq('{% for item in items %}abc{% endfor %}')
     end
   end
 
@@ -244,7 +244,7 @@ describe Cadenza::SourceRenderer do
     it "renders the wrapping tags and it's children" do
       block_node = Cadenza::BlockNode.new('content', [Cadenza::TextNode.new('abc')])
 
-      render(block_node).should == '{% block content %}abc{% endblock %}'
+      expect(render(block_node)).to eq('{% block content %}abc{% endblock %}')
     end
   end
 
@@ -254,7 +254,7 @@ describe Cadenza::SourceRenderer do
 
       block_node = Cadenza::GenericBlockNode.new('escape', [text])
 
-      render(block_node).should == '{% escape %}<h1>Hello World!</h1>{% end %}'
+      expect(render(block_node)).to eq('{% escape %}<h1>Hello World!</h1>{% end %}')
     end
 
     it 'renders a parameter given' do
@@ -263,7 +263,7 @@ describe Cadenza::SourceRenderer do
 
       block_node = Cadenza::GenericBlockNode.new('filter', [text], [escape])
 
-      render(block_node).should == '{% filter escape %}<h1>Hello World!</h1>{% end %}'
+      expect(render(block_node)).to eq('{% filter escape %}<h1>Hello World!</h1>{% end %}')
     end
 
     it 'renders multiple parameters' do
@@ -273,7 +273,7 @@ describe Cadenza::SourceRenderer do
 
       block_node = Cadenza::GenericBlockNode.new('filter', [text], [escape, upcase])
 
-      render(block_node).should == '{% filter escape, upcase %}<h1>Hello World!</h1>{% end %}'
+      expect(render(block_node)).to eq('{% filter escape, upcase %}<h1>Hello World!</h1>{% end %}')
     end
   end
 
@@ -281,7 +281,7 @@ describe Cadenza::SourceRenderer do
     it 'renders the extension tag' do
       document.extends = 'parent.html.cadenza'
 
-      render.should == '{% extends "parent.html.cadenza" %}'
+      expect(render).to eq('{% extends "parent.html.cadenza" %}')
     end
 
     it 'renders the extension tag before any other children' do
@@ -289,7 +289,7 @@ describe Cadenza::SourceRenderer do
 
       document.extends = 'parent.html.cadenza'
 
-      render(text).should == '{% extends "parent.html.cadenza" %}abc'
+      expect(render(text)).to eq('{% extends "parent.html.cadenza" %}abc')
     end
   end
 end

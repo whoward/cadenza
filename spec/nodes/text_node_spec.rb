@@ -5,17 +5,17 @@ describe Cadenza::TextNode do
     text_a = Cadenza::TextNode.new('foo')
     text_b = Cadenza::TextNode.new('foo')
 
-    text_a.should == text_b
+    expect(text_a).to eq(text_b)
   end
 
   it 'should not equal another node with different content' do
     text_a = Cadenza::TextNode.new('foo')
     text_b = Cadenza::TextNode.new('bar')
 
-    text_a.should_not == text_b
+    expect(text_a).not_to eq(text_b)
   end
 
   it 'should return an empty list for implied globals' do
-    Cadenza::TextNode.new('foo').implied_globals.should == []
+    expect(Cadenza::TextNode.new('foo').implied_globals).to eq([])
   end
 end

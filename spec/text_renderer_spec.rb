@@ -137,7 +137,7 @@ describe Cadenza::TextRenderer do
       layout.add_block(lorem_block)
       layout.children.push lorem_block
 
-      context.stub(:load_template).and_return(layout)
+      allow(context).to receive(:load_template).and_return(layout)
 
       expect_rendering(document, context).to eq 'Hello World'
     end
@@ -200,7 +200,7 @@ describe Cadenza::TextRenderer do
 
     it 'raises an error with the :raise handler' do
       renderer = Cadenza::TextRenderer.new(output, error_handler: :raise)
-      -> { renderer.render(template, context) }.should raise_error(Cadenza::RenderError)
+      expect { renderer.render(template, context) }.to raise_error(Cadenza::RenderError)
     end
 
     it 'dumps the error backtrace with the :dump handler' do
@@ -219,7 +219,7 @@ describe Cadenza::TextRenderer do
 
     it 'raises an error if the handler is something unexpected' do
       renderer = Cadenza::TextRenderer.new(output, error_handler: :wtfzzz)
-      -> { renderer.render(template, context) }.should raise_error(Cadenza::Error)
+      expect { renderer.render(template, context) }.to raise_error(Cadenza::Error)
     end
   end
 end

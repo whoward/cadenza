@@ -11,39 +11,39 @@ describe Cadenza::Library::Functions do
 
   context '#define_function' do
     it 'should allow defining a function' do
-      library.functions[:assign].should be_a(Proc)
+      expect(library.functions[:assign]).to be_a(Proc)
     end
 
     it 'should evaluate a function' do
-      context.lookup('foo').should be_nil
+      expect(context.lookup('foo')).to be_nil
 
       library.evaluate_function(:assign, context, ['foo', 123])
 
-      context.lookup('foo').should == 123
+      expect(context.lookup('foo')).to eq(123)
     end
 
     it 'should raise a FunctionNotDefinedError if the function is not defined' do
-      lambda do
+      expect do
         library.evaluate_function(:foo, [])
-      end.should raise_error Cadenza::FunctionNotDefinedError
+      end.to raise_error Cadenza::FunctionNotDefinedError
     end
   end
 
   context '#lookup_function' do
     it 'returns the given function' do
-      library.lookup_function(:assign).should be_a Proc
+      expect(library.lookup_function(:assign)).to be_a Proc
     end
 
     it 'raises a FunctionNotDefinedError if the block is not defined' do
-      lambda do
+      expect do
         library.lookup_function(:fake)
-      end.should raise_error Cadenza::FunctionNotDefinedError
+      end.to raise_error Cadenza::FunctionNotDefinedError
     end
   end
 
   context '#alias_function' do
     it 'returns nil' do
-      library.alias_function(:assign, :set).should be_nil
+      expect(library.alias_function(:assign, :set)).to be_nil
     end
 
     it 'duplicates the variable block under a different name' do
@@ -51,49 +51,49 @@ describe Cadenza::Library::Functions do
 
       library.evaluate_function(:set, context, ['foo', 123])
 
-      context.lookup('foo').should == 123
+      expect(context.lookup('foo')).to eq(123)
     end
 
     it 'raises a FunctionNotDefinedError if the source variable is not defined' do
-      lambda do
+      expect do
         library.alias_function(:fake, :something)
-      end.should raise_error Cadenza::FunctionNotDefinedError
+      end.to raise_error Cadenza::FunctionNotDefinedError
     end
   end
 
   context 'deprecated functions' do
-    before { library.should_receive(:warn) }
+    before { expect(library).to receive(:warn) }
 
     it 'has deprecated #functional_variables' do
-      library.should_receive(:functions)
+      expect(library).to receive(:functions)
       library.functional_variables
     end
 
     it 'has deprecated #lookup_functional_variable' do
-      library.should_receive(:lookup_function)
+      expect(library).to receive(:lookup_function)
       library.lookup_functional_variable(:assign)
     end
 
     it 'has deprecated #define_functional_variable' do
-      library.should_receive(:define_function)
+      expect(library).to receive(:define_function)
       library.define_functional_variable(:zomg) {}
     end
 
     it 'has deprecated #alias_functional_variable' do
-      library.should_receive(:alias_function)
+      expect(library).to receive(:alias_function)
       library.alias_functional_variable(:assign, :zomg)
     end
 
     it 'has deprecated #evaluate_functional_variable' do
-      library.should_receive(:evaluate_function)
+      expect(library).to receive(:evaluate_function)
       library.evaluate_functional_variable(:assign, context, ['foo', 123])
     end
   end
 
   context 'deprecated constants' do
     it 'has deprecated FunctionalVariableNotDefinedError' do
-      Cadenza.should_receive(:warn)
-      Cadenza::FunctionalVariableNotDefinedError.should == Cadenza::FunctionNotDefinedError
+      expect(Cadenza).to receive(:warn)
+      expect(Cadenza::FunctionalVariableNotDefinedError).to eq(Cadenza::FunctionNotDefinedError)
     end
   end
 end

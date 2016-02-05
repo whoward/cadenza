@@ -6,14 +6,14 @@ describe Cadenza::BooleanInverseNode do
       node_a = Cadenza::BooleanInverseNode.new(Cadenza::VariableNode.new('x'))
       node_b = Cadenza::BooleanInverseNode.new(Cadenza::VariableNode.new('x'))
 
-      node_a.should == node_b
+      expect(node_a).to eq(node_b)
     end
 
     it 'should not equal a node with  different expression' do
       node_a = Cadenza::BooleanInverseNode.new(Cadenza::VariableNode.new('x'))
       node_b = Cadenza::BooleanInverseNode.new(Cadenza::VariableNode.new('y'))
 
-      node_a.should_not == node_b
+      expect(node_a).not_to eq(node_b)
     end
   end
 
@@ -27,8 +27,8 @@ describe Cadenza::BooleanInverseNode do
       true_condition = Cadenza::OperationNode.new(number, '==', three)
       false_condition = Cadenza::OperationNode.new(number, '!=', three)
 
-      Cadenza::BooleanInverseNode.new(true_condition).eval(context).should be_false
-      Cadenza::BooleanInverseNode.new(false_condition).eval(context).should be_true
+      expect(Cadenza::BooleanInverseNode.new(true_condition).eval(context)).to be_false
+      expect(Cadenza::BooleanInverseNode.new(false_condition).eval(context)).to be_true
     end
   end
 end

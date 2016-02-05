@@ -12,14 +12,14 @@ describe Cadenza::GenericBlockNode do
       node_a = Cadenza::GenericBlockNode.new(filter, [text], [escape])
       node_b = Cadenza::GenericBlockNode.new(filter, [text], [escape])
 
-      node_a.should == node_b
+      expect(node_a).to eq(node_b)
     end
 
     it 'should not equal a node with a different identifier' do
       node_a = Cadenza::GenericBlockNode.new(escape, [text], [])
       node_b = Cadenza::GenericBlockNode.new(filter, [text], [])
 
-      node_a.should_not == node_b
+      expect(node_a).not_to eq(node_b)
     end
 
     it 'should not equal a node with different children' do
@@ -28,7 +28,7 @@ describe Cadenza::GenericBlockNode do
       node_a = Cadenza::GenericBlockNode.new(filter, [text], [escape])
       node_b = Cadenza::GenericBlockNode.new(filter, [text_b], [escape])
 
-      node_a.should_not == node_b
+      expect(node_a).not_to eq(node_b)
     end
 
     it 'should not equal a node with different parameters' do
@@ -37,7 +37,7 @@ describe Cadenza::GenericBlockNode do
       node_a = Cadenza::GenericBlockNode.new(filter, [text], [escape])
       node_b = Cadenza::GenericBlockNode.new(filter, [text], [upcase])
 
-      node_a.should_not == node_b
+      expect(node_a).not_to eq(node_b)
     end
   end
 end
