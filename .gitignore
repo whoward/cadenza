@@ -9,3 +9,4 @@ coverage/*
 .ruby-gemset
 .ruby-version
 .bundle
+.rubocop/

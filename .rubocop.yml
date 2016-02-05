@@ -1,0 +1,11 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  CacheRootDirectory: '.rubocop'
+  Exclude:
+    - 'lib/cadenza/racc_parser.rb' # this file is auto-generated and shouldn't be verified
+    - 'perf/**/*'
+    
+# 80 is way too conservative - 120 is more fair
+#Metrics/LineLength:
+# Max: 120
