@@ -39,12 +39,5 @@ module Cadenza
     def add_block(block)
       @blocks[block.name] = block
     end
-
-    # returns a list of any global variable names implied by examining the children
-    # of this node.
-    # @return [Array]
-    def implied_globals
-      @children.map(&:implied_globals).flatten.uniq
-    end
   end
 end

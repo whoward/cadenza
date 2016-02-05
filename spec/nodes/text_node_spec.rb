@@ -14,8 +14,4 @@ describe Cadenza::TextNode do
 
     expect(text_a).not_to eq(text_b)
   end
-
-  it 'should return an empty list for implied globals' do
-    expect(Cadenza::TextNode.new('foo').implied_globals).to eq([])
-  end
 end

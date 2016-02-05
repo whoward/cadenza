@@ -112,7 +112,8 @@ module Cadenza
       # @raise [InvalidArgumentTypeError] if a argument type expectation is passed but not satisfied
       # @param [Fixnum] idx the index of the parameter to evaluate against
       # @param [Hash] e
-      # @option e [Class] :is_a a class expectation that will fail if the argument passed is not an instance of the class
+      # @option e [Class] :is_a a class expectation that will fail if the argument passed is not an
+      #                         instance of the class
       # @return [Expectation] returns the 'self' object to facilitate chaining
       def nth(idx, e)
         # do no validations if insufficient parameters are given (the argc validation is used for that)

@@ -28,15 +28,4 @@ describe Cadenza::BlockNode do
 
     expect(block_a).not_to eq(block_b)
   end
-
-  it "should return a list of its children's unique implied globals" do
-    inject_a = Cadenza::VariableNode.new('a')
-    inject_b = Cadenza::VariableNode.new('b')
-
-    block_a = Cadenza::BlockNode.new('foo', [inject_a, inject_b])
-    block_b = Cadenza::BlockNode.new('foo', [inject_a, inject_a])
-
-    expect(block_a.implied_globals).to eq(%w(a b))
-    expect(block_b.implied_globals).to eq(%w(a))
-  end
 end

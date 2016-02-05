@@ -137,7 +137,8 @@ module Cadenza
       right_precedence = calculate_precedence(node.right)
 
       need_left_brackets = left_precedence < node_precedence
-      need_right_brackets = right_precedence <= node_precedence && !(node.right.is_a?(OperationNode) && node.right.operator == node.operator)
+      need_right_brackets = right_precedence <= node_precedence &&
+                            !(node.right.is_a?(OperationNode) && node.right.operator == node.operator)
 
       # render the left node, wrapping in brackets if it is lower precedence
       output << '(' if need_left_brackets

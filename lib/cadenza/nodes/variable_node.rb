@@ -19,12 +19,6 @@ module Cadenza
       @parameters = parameters
     end
 
-    # @return [Array] a list of names which are implied to be global variables
-    #                 from this node.
-    def implied_globals
-      ([identifier] + @parameters.map(&:implied_globals).flatten).uniq
-    end
-
     # @param [Context] context
     # @return [Object] looks up and returns the value of this variable in the
     #                  given {Context}

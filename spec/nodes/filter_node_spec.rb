@@ -44,15 +44,6 @@ describe Cadenza::FilterNode do
     expect(filter.parameters).to eq([constant_a])
   end
 
-  it "should return a list of it's parameters implied globals (unique)" do
-    constant = Cadenza::ConstantNode.new(10)
-    variable = Cadenza::VariableNode.new('x')
-
-    filter = Cadenza::FilterNode.new('cut', [constant, variable, variable])
-
-    expect(filter.implied_globals).to eq(%w(x))
-  end
-
   it 'should evaluate the filter on a value given a context' do
     klass = Class.new(Cadenza::Context)
     klass.define_filter(:floor) { |value, _params| value.floor }

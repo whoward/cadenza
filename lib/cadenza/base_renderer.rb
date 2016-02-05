@@ -34,7 +34,8 @@ module Cadenza
     #              returns immediately and provides no output (appropriate for production)
     #
     #         - <b>callable object</b> (ex. lambda, Proc or any other object that responds to #call)
-    #              calls the object with the error instance passed as an argument and outputs the return value to the template
+    #              calls the object with the error instance passed as an argument and outputs the return value to the
+    #              template
     def initialize(output_io, options = {})
       @output = output_io
       @error_handler = options.fetch(:error_handler, :suppress)

@@ -27,11 +27,6 @@ module Cadenza
         @parameters == other.parameters
     end
 
-    # @return [Array] a list of implied global variable names for this node
-    def implied_globals
-      @parameters.map(&:implied_globals).flatten.uniq
-    end
-
     # evaluates the filter with the given context and input value and returns
     # the output of the evaluation.
     #

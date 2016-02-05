@@ -14,10 +14,12 @@ describe Cadenza::Parser, 'filtered value nodes' do
   end
 
   it 'parses multiple params' do
-    expect_parsing("{{ name | somefilter: 'foo', 3.14159 }}").to equal_syntax_tree 'filtered_value/single_filter_with_multiple_params.yml'
+    expect_parsing("{{ name | somefilter: 'foo', 3.14159 }}").to
+    equal_syntax_tree 'filtered_value/single_filter_with_multiple_params.yml'
   end
 
   it 'parses multiple filters with multiple params' do
-    expect_parsing("{{ name | trim | somefilter: 'foo', 3.14159 }}").to equal_syntax_tree 'filtered_value/multiple_filters_with_params.yml'
+    expect_parsing("{{ name | trim | somefilter: 'foo', 3.14159 }}").to
+    equal_syntax_tree 'filtered_value/multiple_filters_with_params.yml'
   end
 end

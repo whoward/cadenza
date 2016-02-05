@@ -47,48 +47,4 @@ describe Cadenza::ForNode do
 
     expect(for_a).not_to eq(for_b)
   end
-
-  context 'implied globals' do
-    let(:iterable) { Cadenza::VariableNode.new('bars') }
-    let(:iterator) { Cadenza::VariableNode.new('foo') }
-
-    it "should return the children's implied globals minus locals defined (the iterator)" do
-      variable = Cadenza::VariableNode.new('waz')
-
-      for_node = Cadenza::ForNode.new(iterator, iterable, [variable])
-
-      expect(for_node.implied_globals).to eq(%w(bars waz))
-    end
-
-    it "should not return the iterator if found in the children's implied globals" do
-      for_node = Cadenza::ForNode.new(iterator, iterable, [iterator])
-
-      expect(for_node.implied_globals).to eq(%w(bars))
-    end
-
-    it 'should not return magic locals assigned to the inner scope' do
-      counter = Cadenza::VariableNode.new('forloop.counter')
-      counter0 = Cadenza::VariableNode.new('forloop.counter0')
-      first = Cadenza::VariableNode.new('forloop.first')
-      last = Cadenza::VariableNode.new('forloop.last')
-
-      for_node_a = Cadenza::ForNode.new(iterator, iterable, [counter])
-      for_node_b = Cadenza::ForNode.new(iterator, iterable, [counter0])
-      for_node_c = Cadenza::ForNode.new(iterator, iterable, [first])
-      for_node_d = Cadenza::ForNode.new(iterator, iterable, [last])
-
-      expect(for_node_a.implied_globals).to eq(%w(bars))
-      expect(for_node_b.implied_globals).to eq(%w(bars))
-      expect(for_node_c.implied_globals).to eq(%w(bars))
-      expect(for_node_d.implied_globals).to eq(%w(bars))
-    end
-
-    it "should rewrite dot notations of the iterator in terms of the iterable's identifier" do
-      dot_notation = Cadenza::VariableNode.new('foo.baz')
-
-      for_node = Cadenza::ForNode.new(iterator, iterable, [dot_notation])
-
-      expect(for_node.implied_globals).to eq(%w(bars bars.baz))
-    end
-  end
 end

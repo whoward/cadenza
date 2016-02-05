@@ -25,13 +25,6 @@ module Cadenza
       @parameters = parameters
     end
 
-    # @return [Array] a list of variable names implied to be globals in the node
-    # @note not yet implemented
-    def implied_globals
-      # TODO: implement me please, kthxbai
-      []
-    end
-
     # @param [GenericBlockNode] other
     # @return [Boolean] true if the given node is equivalent by value to the
     #                   current node.

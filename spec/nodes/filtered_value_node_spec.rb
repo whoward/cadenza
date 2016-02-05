@@ -23,16 +23,6 @@ describe Cadenza::FilteredValueNode do
     end
   end
 
-  context '#implied_globals' do
-    it "returns the implied globals of it's value" do
-      expect(subject.new(var_a).implied_globals).to eq(%w(foo))
-    end
-
-    it "returns the filters's implied globals as well, unique" do
-      expect(subject.new(var_a, [filter_a, filter_a]).implied_globals).to eq(%w(foo bar))
-    end
-  end
-
   context 'evaluation' do
     let(:context_class) do
       klass = Class.new(Cadenza::Context)

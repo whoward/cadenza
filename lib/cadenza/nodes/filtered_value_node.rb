@@ -20,12 +20,6 @@ module Cadenza
       @filters = filters
     end
 
-    # @return [Array] a list of names which are implied to be global variables
-    #                 from this node.
-    def implied_globals
-      (@value.implied_globals + @filters.map(&:implied_globals).flatten).uniq
-    end
-
     # @param [Context] context
     # @return [Object] gets the value and returns it after being passed
     #                  through all filters

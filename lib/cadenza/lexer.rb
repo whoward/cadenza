@@ -4,6 +4,8 @@ module Cadenza
   # The {Lexer} class accepts in input {IO} object which it will parse simple
   # {Token}s from for use in a {Parser} class.
   class Lexer
+    KEYWORDS = %w(if unless else endif endunless for in endfor block endblock extends end and or not).freeze
+
     # constructs a new parser and sets it to the position (0, 0)
     def initialize
       @line = 0
@@ -211,7 +213,7 @@ module Cadenza
       when text = @scanner.scan(/<=/)
         token(:OP_LEQ, text)
 
-      when text = @scanner.scan(/(if|unless|else|endif|endunless|for|in|endfor|block|endblock|extends|end|and|or|not)[\W]/)
+      when text = @scanner.scan(/(#{KEYWORDS.join('|')})[\W]/)
         keyword = text[0..-2]
         @scanner.pos -= 1
 

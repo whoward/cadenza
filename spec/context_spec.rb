@@ -62,8 +62,19 @@ describe Cadenza::Context do
       klass
     end
 
-    let(:scope) { { foo: { bar: 'baz' }, abc: OpenStruct.new(def: 'ghi'), alphabet: %w(a b c), obj: TestContextObject.new } }
+    let(:scope) do
+      {
+        foo: {
+          bar: 'baz'
+        },
+        abc: OpenStruct.new(def: 'ghi'),
+        alphabet: %w(a b c),
+        obj: TestContextObject.new
+      }
+    end
+
     let(:assign) { ->(context, name, value) { context.assign(name, value) } }
+
     let(:context) { context_class.new(scope) }
 
     it 'should retrieve the value of an identifier' do

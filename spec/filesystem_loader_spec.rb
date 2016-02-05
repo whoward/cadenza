@@ -34,7 +34,8 @@ describe Cadenza::FilesystemLoader do
     end
 
     it 'should return the parsed template tree if the file is in a subdirectory' do
-      expect(loader.load_source('test-directory/test.html.cadenza')).to eq(Fixture.read('templates/test-directory/test.html.cadenza'))
+      source = loader.load_source('test-directory/test.html.cadenza')
+      expect(source).to eq(Fixture.read('templates/test-directory/test.html.cadenza'))
     end
   end
 end

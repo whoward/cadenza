@@ -19,12 +19,6 @@ module Cadenza
       @children = children
     end
 
-    # @return [Array] a list of any implied global variable names defined by
-    #                 this block's children.
-    def implied_globals
-      @children.map(&:implied_globals).flatten.uniq
-    end
-
     # @param [BlockNode] other
     # @return [Boolean] true if the given {BlockNode} is equivalent to the this
     #                   node by value.

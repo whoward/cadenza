@@ -40,11 +40,6 @@ module Cadenza
       @operator = operator
     end
 
-    # @return [Array] a list of variable names implied to be global in this node
-    def implied_globals
-      @left.implied_globals | @right.implied_globals
-    end
-
     # Evalutes the left and right subtree in the given context and uses the
     # {#operator} to manipulate the two values into a single output value
     # which is then returned.

@@ -20,18 +20,6 @@ describe Cadenza::VariableNode do
     end
   end
 
-  context '#implied_globals' do
-    it 'returns a list containing the identifier name' do
-      expect(Cadenza::VariableNode.new('foo').implied_globals).to eq(%w(foo))
-    end
-
-    it "returns the parameters' implied globals as well" do
-      x = Cadenza::VariableNode.new('x')
-
-      expect(Cadenza::VariableNode.new('foo', [x, x]).implied_globals).to eq(%w(foo x))
-    end
-  end
-
   context 'evaluation' do
     let(:context_class) do
       klass = Class.new(Cadenza::Context)

@@ -10,7 +10,8 @@ describe Cadenza::StandardLibrary::Functions do
 
   context 'load' do
     it 'should return the source of the given file without parsing it' do
-      expect(subject.evaluate_function(:load, context, ['index.html.cadenza'])).to eq(Fixture.read('templates/index.html.cadenza'))
+      evaluated = subject.evaluate_function(:load, context, ['index.html.cadenza'])
+      expect(evaluated).to eq(Fixture.read('templates/index.html.cadenza'))
     end
 
     it 'should return nil if the given file does not exist' do

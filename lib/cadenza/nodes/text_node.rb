@@ -14,11 +14,6 @@ module Cadenza
       @text = text
     end
 
-    # @return [Array] a list of global variable names implied by this node (none).
-    def implied_globals
-      []
-    end
-
     # @param [TextNode] rhs
     # @return [Boolean] true if the given {TextNode} is equivalent by value to
     #         this node.

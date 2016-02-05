@@ -47,19 +47,6 @@ describe Cadenza::OperationNode do
     end
   end
 
-  context '#implied_globals' do
-    it "should use the union of it's left and right node's implied globals for it's own implied globals" do
-      variable_a = Cadenza::VariableNode.new('a')
-      variable_b = Cadenza::VariableNode.new('b')
-
-      boolean_a = subject.new(variable_a, '==', variable_b)
-      boolean_b = subject.new(variable_a, '==', variable_a)
-
-      expect(boolean_a.implied_globals).to eq(%w(a b))
-      expect(boolean_b.implied_globals).to eq(%w(a))
-    end
-  end
-
   context '#eval' do
     let(:ten)     { Cadenza::ConstantNode.new(10) }
     let(:twenty)  { Cadenza::ConstantNode.new(20) }

@@ -29,11 +29,6 @@ module Cadenza
       @false_children = false_children
     end
 
-    # @return [Array] a list of variable names implied to be global for this node.
-    def implied_globals
-      (@expression.implied_globals + true_children.map(&:implied_globals).flatten + false_children.map(&:implied_globals).flatten).uniq
-    end
-
     # @param [Context] context
     # @return [Array] evalutes the expression in the given context and returns
     #         a list of nodes which should be rendered based on the result of

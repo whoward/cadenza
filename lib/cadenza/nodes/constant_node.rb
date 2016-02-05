@@ -13,11 +13,6 @@ module Cadenza
       @value = value
     end
 
-    # @return [Array] any global variable applied to this node (none)
-    def implied_globals
-      []
-    end
-
     # @param [Context] context
     # @return [Object] the value of this node evaluated in the given context
     def eval(_context)

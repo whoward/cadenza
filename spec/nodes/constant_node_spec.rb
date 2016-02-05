@@ -9,10 +9,6 @@ describe Cadenza::ConstantNode do
     expect(Cadenza::ConstantNode.new(20)).not_to eq(Cadenza::ConstantNode.new(10))
   end
 
-  it 'should return an empty array for implied globals' do
-    expect(Cadenza::ConstantNode.new(20).implied_globals).to eq([])
-  end
-
   it "should evaluate to it's constant value" do
     expect(Cadenza::ConstantNode.new(3.14159).eval(Cadenza::Context.new)).to eq(3.14159)
   end

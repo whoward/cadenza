@@ -72,18 +72,6 @@ describe Cadenza::IfNode do
     expect(node.false_children).to eq([])
   end
 
-  it "should use the union of the expression's, true children's and false children's implied globals for it's own implied globals" do
-    variable_a = Cadenza::VariableNode.new('x')
-    variable_b = Cadenza::VariableNode.new('y')
-    variable_c = Cadenza::VariableNode.new('z')
-
-    expression = Cadenza::OperationNode.new(variable_a, '==', variable_b)
-
-    if_statement = Cadenza::IfNode.new(expression, [variable_c], [variable_a, variable_b, variable_c])
-
-    expect(if_statement.implied_globals).to eq(%w(x y z))
-  end
-
   context 'expression evaluation to retrieve correct children list' do
     let(:context) { Cadenza::Context.new }
 

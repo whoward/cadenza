@@ -11,5 +11,5 @@ Style/DoubleNegation:
   Enabled: false
 
 # 80 is way too conservative - 120 is more fair
-#Metrics/LineLength:
-# Max: 120
+Metrics/LineLength:
+  Max: 120

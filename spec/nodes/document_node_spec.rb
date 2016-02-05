@@ -37,15 +37,4 @@ describe Cadenza::DocumentNode do
 
     expect(@document_a).not_to eq(@document_b)
   end
-
-  it "should use it's children's implied globals (unique) for its own implied_globals" do
-    @inject_a = Cadenza::VariableNode.new('x')
-    @inject_b = Cadenza::VariableNode.new('y')
-
-    @document_a = Cadenza::DocumentNode.new([@inject_a, @inject_b])
-    @document_b = Cadenza::DocumentNode.new([@inject_a, @inject_a])
-
-    expect(@document_a.implied_globals).to eq(%w(x y))
-    expect(@document_b.implied_globals).to eq(%w(x))
-  end
 end

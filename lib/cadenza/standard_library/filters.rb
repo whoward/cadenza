@@ -192,7 +192,9 @@ Cadenza::StandardLibrary::Filters = Cadenza::Library.build do
     identifier = params.first
 
     if identifier
-      input.sort { |a, b| Cadenza::Context.lookup_on_object(identifier, a) <=> Cadenza::Context.lookup_on_object(identifier, b) }
+      input.sort do |a, b|
+        Cadenza::Context.lookup_on_object(identifier, a) <=> Cadenza::Context.lookup_on_object(identifier, b)
+      end
     else
       input.sort
     end

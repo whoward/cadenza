@@ -7,7 +7,8 @@ module Cadenza
   # @todo remove in v0.9.x
   def self.const_missing(const_name)
     super unless const_name == :FunctionalVariableNotDefinedError
-    warn '`Cadenza::FunctionalVariableNotDefinedError` has been deprecated. Use `Cadenza::FunctionNotDefinedError` instead.'
+    warn '`Cadenza::FunctionalVariableNotDefinedError` has been deprecated. ' \
+         'Use `Cadenza::FunctionNotDefinedError` instead.'
     FunctionNotDefinedError
   end
 
