@@ -42,8 +42,3 @@ Metrics/PerceivedComplexity:
 # Offense count: 24
 Style/Documentation:
   Enabled: false
-
-# Offense count: 1
-Style/DoubleNegation:
-  Exclude:
-    - 'lib/cadenza/nodes/if_node.rb'

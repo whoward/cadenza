@@ -5,7 +5,11 @@ AllCops:
   Exclude:
     - 'lib/cadenza/racc_parser.rb' # this file is auto-generated and shouldn't be verified
     - 'perf/**/*'
-    
+
+# Double negation isn't that bad, especially since ruby doesn't really provide a better alternative
+Style/DoubleNegation:
+  Enabled: false
+
 # 80 is way too conservative - 120 is more fair
 #Metrics/LineLength:
 # Max: 120
