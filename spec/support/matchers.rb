@@ -10,20 +10,20 @@ RSpec::Matchers.define :equal_html do |expected|
     # reject any diffs which have no change or are text nodes containing only whitespace
     # finally group each diff by it's XML path
     @diff = full_diff.reject do |change, node|
-      change == " " or (node.text? and node.to_html =~ /^\s*$/)
-    end.group_by {|_change, node| node.path }
+      change == ' ' || (node.text? && node.to_html =~ /^\s*$/)
+    end.group_by { |_change, node| node.path }
 
     @diff.empty?
   end
 
   failure_message_for_should do |_actual|
-    result = ""
+    result = ''
 
     @diff.each do |path, diffs|
       result << path << "\n"
 
       diffs.each do |change, node|
-        result << change << " " << node.to_html.inspect << "\n"
+        result << change << ' ' << node.to_html.inspect << "\n"
       end
 
       result << "\n"
@@ -32,7 +32,6 @@ RSpec::Matchers.define :equal_html do |expected|
     result
   end
 end
-
 
 RSpec::Matchers.define :equal_syntax_tree do |expected|
   match do |actual|

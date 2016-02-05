@@ -6,7 +6,7 @@ module Cadenza
   module Cli
     extend self
 
-    def run!(path, options={})
+    def run!(path, options = {})
       # set up the load paths
       if options[:root]
         load_paths.push(options[:root])
@@ -25,21 +25,21 @@ module Cadenza
       send(options[:action], path, options)
     end
 
-    def tokenize(path, options)
+    def tokenize(path, _options)
       lexer = Cadenza::Lexer.new
       lexer.source = context.load_source!(path)
       $stdout.puts lexer.remaining_tokens.map(&:inspect).join("\n")
     end
 
-    def parse(path, options)
+    def parse(path, _options)
       $stdout.puts context.load_template!(path).to_tree
     end
 
     def render(path, options)
-      Cadenza.render_template path, options[:context], {:context => context}
+      Cadenza.render_template path, options[:context], context: context
     end
 
-  private
+    private
 
     def load_paths
       @load_paths ||= []
@@ -52,6 +52,5 @@ module Cadenza
         context
       end
     end
-
   end
 end

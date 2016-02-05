@@ -4,7 +4,6 @@ module Cadenza
   # The {Lexer} class accepts in input {IO} object which it will parse simple
   # {Token}s from for use in a {Parser} class.
   class Lexer
-
     # constructs a new parser and sets it to the position (0, 0)
     def initialize
       @line = 0
@@ -15,7 +14,7 @@ module Cadenza
     # counters to (1, 1)
     # @param [String] source the string from which to parse tokens
     def source=(source)
-      @scanner = ::StringScanner.new(source || "")
+      @scanner = ::StringScanner.new(source || '')
 
       @line = 1
       @column = 1
@@ -88,7 +87,7 @@ module Cadenza
       result
     end
 
-  private
+    private
 
     #
     # Updates the line and column counters based on the given text.
@@ -107,11 +106,11 @@ module Cadenza
     #
     # Creates and returns a token with the line and column number from the end of
     # the previous token.  Afterwards updates the counter based on the contents
-    # of the text.  The value of the token is determined by the text given and 
+    # of the text.  The value of the token is determined by the text given and
     # the type of the token.
     #
     def token(type, text)
-      value = 
+      value =
         case type
         when :INTEGER then text.to_i
         when :REAL then text.to_f
@@ -133,46 +132,46 @@ module Cadenza
     #
     def scan_body
       case
-        when text = @scanner.scan(/\{\{/) 
-          @context = :statement
-          token(:VAR_OPEN, text)
+      when text = @scanner.scan(/\{\{/)
+        @context = :statement
+        token(:VAR_OPEN, text)
 
-        when text = @scanner.scan(/\{%/)
-          @context = :statement
-          token(:STMT_OPEN, text)
+      when text = @scanner.scan(/\{%/)
+        @context = :statement
+        token(:STMT_OPEN, text)
 
-        when text = @scanner.scan(/\{#/)
-          # scan until the end of the comment bracket, ignore the text for all
-          # purposes except for advancing the counters appropriately
-          comment = @scanner.scan_until(/#\}/)
+      when text = @scanner.scan(/\{#/)
+        # scan until the end of the comment bracket, ignore the text for all
+        # purposes except for advancing the counters appropriately
+        comment = @scanner.scan_until(/#\}/)
 
-          # increment the counters based on the content of the counter
-          update_counter(text + comment)
+        # increment the counters based on the content of the counter
+        update_counter(text + comment)
 
-          # scan in the body context again, since we're not actually returning a
-          # token from the comment.  Don't scan if we're at the end of the body,
-          # just return a terminator token.
-          if @scanner.eos?
-            [false, false]
-          else
-            scan_body
-          end
-
+        # scan in the body context again, since we're not actually returning a
+        # token from the comment.  Don't scan if we're at the end of the body,
+        # just return a terminator token.
+        if @scanner.eos?
+          [false, false]
         else
-          # scan ahead until we find a variable opening tag or a block opening tag
-          text = @scanner.scan_until(/\{[\{%#]/)
+          scan_body
+        end
 
-          # if there was no instance of an opening block then just take what remains 
-          # in the scanner otherwise return the pointer to before the block
-          if text
-            text = text[0..-3]
-            @scanner.pos -= 2
-          else
-            text = @scanner.rest
-            @scanner.terminate
-          end
+      else
+        # scan ahead until we find a variable opening tag or a block opening tag
+        text = @scanner.scan_until(/\{[\{%#]/)
 
-          token(:TEXT_BLOCK, text)
+        # if there was no instance of an opening block then just take what remains
+        # in the scanner otherwise return the pointer to before the block
+        if text
+          text = text[0..-3]
+          @scanner.pos -= 2
+        else
+          text = @scanner.rest
+          @scanner.terminate
+        end
+
+        token(:TEXT_BLOCK, text)
       end
     end
 
@@ -192,61 +191,60 @@ module Cadenza
 
       # look for matches
       case
-        when text = @scanner.scan(/\}\}/)
-          @context = :body
-          token(:VAR_CLOSE, text)
-        
-        when text = @scanner.scan(/%\}/)
-          @context = :body
-          token(:STMT_CLOSE, text)
+      when text = @scanner.scan(/\}\}/)
+        @context = :body
+        token(:VAR_CLOSE, text)
 
-        when text = @scanner.scan(/[=]=/) # i've added the square brackets because syntax highlighters dont like /=
-          token(:OP_EQ, text)
+      when text = @scanner.scan(/%\}/)
+        @context = :body
+        token(:STMT_CLOSE, text)
 
-        when text = @scanner.scan(/!=/)
-          token(:OP_NEQ, text)
+      when text = @scanner.scan(/[=]=/) # i've added the square brackets because syntax highlighters dont like /=
+        token(:OP_EQ, text)
 
-        when text = @scanner.scan(/>=/)
-          token(:OP_GEQ, text)
+      when text = @scanner.scan(/!=/)
+        token(:OP_NEQ, text)
 
-        when text = @scanner.scan(/<=/)
-          token(:OP_LEQ, text)
+      when text = @scanner.scan(/>=/)
+        token(:OP_GEQ, text)
 
-        when text = @scanner.scan(/(if|unless|else|endif|endunless|for|in|endfor|block|endblock|extends|end|and|or|not)[\W]/)
-          keyword = text[0..-2]
-          @scanner.pos -= 1
+      when text = @scanner.scan(/<=/)
+        token(:OP_LEQ, text)
 
-          token(keyword.upcase.to_sym, keyword)
+      when text = @scanner.scan(/(if|unless|else|endif|endunless|for|in|endfor|block|endblock|extends|end|and|or|not)[\W]/)
+        keyword = text[0..-2]
+        @scanner.pos -= 1
 
-        when text = @scanner.scan(/(end[a-zA-Z]+)/)
-          token(:END, text.upcase)
+        token(keyword.upcase.to_sym, keyword)
 
-        when text = @scanner.scan(/[+\-]?[0-9]+\.[0-9]+/)
-          token(:REAL, text)
+      when text = @scanner.scan(/(end[a-zA-Z]+)/)
+        token(:END, text.upcase)
 
-        when text = @scanner.scan(/[+\-]?[1-9][0-9]*|0/)
-          token(:INTEGER, text)
-        
-        when text = @scanner.scan(/'[^']*'/)
-          token(:STRING, text)
+      when text = @scanner.scan(/[+\-]?[0-9]+\.[0-9]+/)
+        token(:REAL, text)
 
-        when text = @scanner.scan(/"(?:[^\\"]|\\.)*"/)
-          text.gsub!(/\\"/)               { '"' }
-          text.gsub!(/\\r/)               { "\r" }
-          text.gsub!(/\\n/)               { "\n" }
-          text.gsub!(/\\t/)               { "\t" }
-          text.gsub!(/\\\\/)              { "\\" }
-          text.gsub!(/\\u([0-9a-fA-F]+)/) {|m| [m[2..-1].hex].pack("U") }
-          token(:STRING, text)
+      when text = @scanner.scan(/[+\-]?[1-9][0-9]*|0/)
+        token(:INTEGER, text)
 
-        when text = @scanner.scan(/[A-Za-z_][A-Za-z0-9_\.]*/)
-          token(:IDENTIFIER, text)
+      when text = @scanner.scan(/'[^']*'/)
+        token(:STRING, text)
 
-        else
-          next_character = @scanner.getch
-          token(next_character, next_character)
+      when text = @scanner.scan(/"(?:[^\\"]|\\.)*"/)
+        text.gsub!(/\\"/) { '"' }
+        text.gsub!(/\\r/)               { "\r" }
+        text.gsub!(/\\n/)               { "\n" }
+        text.gsub!(/\\t/)               { "\t" }
+        text.gsub!(/\\\\/)              { '\\' }
+        text.gsub!(/\\u([0-9a-fA-F]+)/) { |m| [m[2..-1].hex].pack('U') }
+        token(:STRING, text)
+
+      when text = @scanner.scan(/[A-Za-z_][A-Za-z0-9_\.]*/)
+        token(:IDENTIFIER, text)
+
+      else
+        next_character = @scanner.getch
+        token(next_character, next_character)
       end
     end
   end
-
 end

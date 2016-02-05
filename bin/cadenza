@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-$: << File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__) + '/../lib')
 
 require 'cadenza'
 require 'cadenza/cli'
@@ -8,11 +8,11 @@ options = Cadenza::Cli::Options.parse!
 path = ARGV[0]
 
 begin
-    $stdout.puts Cadenza::Cli.run!(path, options)
+  $stdout.puts Cadenza::Cli.run!(path, options)
 rescue Cadenza::TemplateNotFoundError => e
-    $stderr.puts "Couldn't find template - #{e.message}"
-    exit 66
+  $stderr.puts "Couldn't find template - #{e.message}"
+  exit 66
 rescue Cadenza::Error => e
-    $stderr.puts "#{e.backtrace}"
-    exit 1
+  $stderr.puts e.backtrace.to_s
+  exit 1
 end

@@ -17,12 +17,12 @@ module Cadenza
     # @option options [Lexer] :lexer (Cadenza::Lexer.new) the lexer you want this
     #         parser to retrieve tokens from.
     # @raise  [RuntimeError] if the given lexer doesn't respond to :next_token and :source=
-    def initialize(options={})
+    def initialize(options = {})
       @lexer = options.fetch(:lexer, Cadenza::Lexer.new)
 
-      raise "Lexers passed to the parser must define next_token" unless @lexer.respond_to?(:next_token)
+      fail 'Lexers passed to the parser must define next_token' unless @lexer.respond_to?(:next_token)
 
-      raise "Lexers passed to the parser must define source=" unless @lexer.respond_to?(:source=)
+      fail 'Lexers passed to the parser must define source=' unless @lexer.respond_to?(:source=)
     end
 
     # takes the given source object and parses tokens from it, the tokens are
@@ -43,7 +43,8 @@ module Cadenza
       @stack.first
     end
 
-  private
+    private
+
     def document
       @stack.first
     end
@@ -67,7 +68,7 @@ module Cadenza
     def open_block_scope!(name)
       @namespaces.push(name)
       open_scope!
-      @namespaces.join(".")
+      @namespaces.join('.')
     end
 
     def close_block_scope!
@@ -81,7 +82,7 @@ module Cadenza
     end
 
     # this is Racc's callback for a parse error
-    def on_error(error_token_id, error_value, value_stack)
+    def on_error(error_token_id, error_value, _value_stack)
       token = token_to_str(error_token_id)
       value = error_value
 
@@ -91,13 +92,13 @@ module Cadenza
       # message as possible for us to raise.
       #
       # To contributors: if you get an uninformative error message please let me know so I can improve this!
-      msg = 
+      msg =
         case token
-        when "$end" then "unexpected end of input"
+        when '$end' then 'unexpected end of input'
         else "unexpected token #{value.source.inspect} at line #{line.inspect}, column #{column.inspect}"
         end
 
-      raise ParseError, msg
+      fail ParseError, msg
     end
   end
 end

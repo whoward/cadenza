@@ -1,50 +1,47 @@
 
 module Cadenza
-   # The {FilteredValueNode} applies a list of passed {FilterNode} to it's value
-   # when evaluated.
-   class FilteredValueNode
-      include TreeNode
-      
-      # @return [Node] the value to be filtered
-      attr_accessor :value
+  # The {FilteredValueNode} applies a list of passed {FilterNode} to it's value
+  # when evaluated.
+  class FilteredValueNode
+    include TreeNode
 
-      # @return [Array] a list of {FilterNode} to evaluate the value with, once the
-      #                 value has itself been evaluated.
-      attr_accessor :filters
+    # @return [Node] the value to be filtered
+    attr_accessor :value
 
-      # creates a new {FilteredValueNode}.
-      # @param [String] value see {#value}
-      # @param [Array] filters see {#filters}
-      def initialize(value, filters=[])
-         @value = value
-         @filters = filters
-      end
-      
-      # @return [Array] a list of names which are implied to be global variables
-      #                 from this node.
-      def implied_globals
-         (@value.implied_globals + @filters.map(&:implied_globals).flatten).uniq
-      end
+    # @return [Array] a list of {FilterNode} to evaluate the value with, once the
+    #                 value has itself been evaluated.
+    attr_accessor :filters
 
-      # @param [Context] context
-      # @return [Object] gets the value and returns it after being passed 
-      #                  through all filters
-      def eval(context)
-         value = @value.eval(context)
+    # creates a new {FilteredValueNode}.
+    # @param [String] value see {#value}
+    # @param [Array] filters see {#filters}
+    def initialize(value, filters = [])
+      @value = value
+      @filters = filters
+    end
 
-         @filters.each {|filter| value = filter.evaluate(context, value) }
+    # @return [Array] a list of names which are implied to be global variables
+    #                 from this node.
+    def implied_globals
+      (@value.implied_globals + @filters.map(&:implied_globals).flatten).uniq
+    end
 
-         value
-      end
+    # @param [Context] context
+    # @return [Object] gets the value and returns it after being passed
+    #                  through all filters
+    def eval(context)
+      value = @value.eval(context)
 
-      # @param [FilteredValueNode] rhs
-      # @return [Boolean] if the given {FilteredValueNode} is equivalent by 
-      #                   value to this node.
-      def ==(rhs)
-         self.value == rhs.value && self.filters == rhs.filters
-      end
+      @filters.each { |filter| value = filter.evaluate(context, value) }
 
+      value
+    end
 
-   end
-
+    # @param [FilteredValueNode] rhs
+    # @return [Boolean] if the given {FilteredValueNode} is equivalent by
+    #                   value to this node.
+    def ==(rhs)
+      value == rhs.value && filters == rhs.filters
+    end
+  end
 end
