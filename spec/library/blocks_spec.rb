@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Cadenza::Library::Functions do
    let(:library) do
       Cadenza::Library.build do
-         define_filter(:escape) {|input, params| CGI.escapeHTML(input) }
+         define_filter(:escape) {|input, _params| CGI.escapeHTML(input) }
 
          define_block :filter do |context, nodes, parameters|
             filter = parameters.first.identifier

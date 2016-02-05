@@ -46,7 +46,7 @@ module Cadenza
          # not to mutate the block hierarchy's internals
          chain = blocks[node.name].dup << node
          
-         super_fn = lambda do |params|
+         super_fn = lambda do |_params|
             parent_node = chain.shift
 
             parent_node.children.each {|x| render(x, context, blocks) } if parent_node

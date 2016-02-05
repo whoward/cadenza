@@ -38,7 +38,7 @@ module Cadenza
       # inheritance chain
       # @param [Hash] hash
       def merge(hash)
-         hash.each {|k,v| self << v }
+         hash.each {|_k,v| self << v }
       end
    end
 end

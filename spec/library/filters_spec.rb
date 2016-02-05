@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Cadenza::Library::Filters do
    let(:library) do
       Cadenza::Library.build do
-         define_filter(:pluralize) {|input, params| "#{input}s" }
+         define_filter(:pluralize) {|input, _params| "#{input}s" }
       end
    end
 

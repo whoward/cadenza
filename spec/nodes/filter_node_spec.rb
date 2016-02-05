@@ -55,7 +55,7 @@ describe Cadenza::FilterNode do
 
   it "should evaluate the filter on a value given a context" do
     klass = Class.new(Cadenza::Context)
-    klass.define_filter(:floor) {|value, params| value.floor }
+    klass.define_filter(:floor) {|value, _params| value.floor }
 
     context = klass.new
 

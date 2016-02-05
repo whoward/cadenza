@@ -25,7 +25,7 @@ describe Cadenza::Context do
    context "#clone" do
       let(:context_class) do
          klass = Class.new(Cadenza::Context)
-         klass.define_filter(:upcase) {|input, params| input.upcase }
+         klass.define_filter(:upcase) {|input, _params| input.upcase }
          klass.define_function(:assign) {|context, name, value| context.assign(name, value) }
          klass
       end

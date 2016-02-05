@@ -59,7 +59,7 @@ module Cadenza
 
          begin
             send("render_#{node_name}", node, context, blocks)
-         rescue Exception => e
+         rescue StandardError => e
             handle_exception(e)
          end
       end

@@ -36,7 +36,7 @@ describe Cadenza::VariableNode do
       let(:context_class) do
          klass = Class.new(Cadenza::Context)
          klass.define_function(:ctx) {|context| context.inspect } # output's the inspected context
-         klass.define_function(:load) {|context, template| template == "foo" ? "bar" : "baz" } # fake load method
+         klass.define_function(:load) {|_context, template| template == "foo" ? "bar" : "baz" } # fake load method
          klass
       end
 

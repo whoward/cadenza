@@ -4,7 +4,7 @@ describe Cadenza::TextRenderer do
    let(:context_class) do
       klass = Class.new(Cadenza::Context)
 
-      klass.define_filter(:escape) {|input,params| CGI.escapeHTML(input) }
+      klass.define_filter(:escape) {|input,_params| CGI.escapeHTML(input) }
 
       klass.define_block :filter do |context, nodes, parameters|
          filter = parameters.first.identifier
@@ -15,7 +15,7 @@ describe Cadenza::TextRenderer do
          end
       end
 
-      klass.define_function(:raise) {|context, template| raise StandardError.new('test error') }
+      klass.define_function(:raise) {|_context, _template| raise StandardError.new('test error') }
 
       klass
    end
@@ -45,7 +45,7 @@ describe Cadenza::TextRenderer do
 
    it "should render the value of a inject node to the output" do
       klass = Class.new(Cadenza::Context)
-      klass.define_filter(:floor) {|value,params| value.floor }
+      klass.define_filter(:floor) {|value,_params| value.floor }
       klass.define_filter(:add)   {|value,params| value + params.first }
 
       context = klass.new(:pi => 3.14159)

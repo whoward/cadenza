@@ -36,7 +36,7 @@ describe Cadenza::FilteredValueNode do
    context "evaluation" do
       let(:context_class) do
          klass = Class.new(Cadenza::Context)
-         klass.define_filter(:floor) {|value,params| value.floor }
+         klass.define_filter(:floor) {|value,_params| value.floor }
          klass.define_filter(:add) {|value,params| value + params.first }
          klass
       end
