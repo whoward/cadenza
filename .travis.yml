@@ -16,3 +16,4 @@ matrix:
 
 bundler_args: "--without=development"
 script: "bundle exec rspec spec"
+sudo: false
