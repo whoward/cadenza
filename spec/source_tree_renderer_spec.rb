@@ -8,7 +8,7 @@ describe Cadenza::SourceTreeRenderer do
   def render(document)
     output.reopen
     renderer.render(document, context)
-    result = renderer.output.string
+    renderer.output.string
   end
 
   # replace easy ascii characters with their UTF drawing character equivalents

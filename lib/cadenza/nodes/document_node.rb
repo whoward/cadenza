@@ -25,12 +25,12 @@ module Cadenza
       @blocks = {}
     end
 
-    # @param [DocumentNode] rhs
+    # @param [DocumentNode] other
     # @return [Boolean] if the given {DocumentNode} is equivalent by value to this one.
-    def ==(rhs)
-      @children == rhs.children &&
-        @extends == rhs.extends &&
-        @blocks == rhs.blocks
+    def ==(other)
+      @children == other.children &&
+        @extends == other.extends &&
+        @blocks == other.blocks
     end
 
     # adds the given {BlockNode} to this document replacing any existing definition

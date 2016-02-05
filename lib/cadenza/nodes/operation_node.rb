@@ -96,13 +96,13 @@ module Cadenza
       end
     end
 
-    # @param [OperationNode] rhs
+    # @param [OperationNode] other
     # @return [Boolean] true if the given {OperationNode} is equivalent by value
     #         to this node.
-    def ==(rhs)
-      @operator == rhs.operator &&
-        @left == rhs.left &&
-        @right == rhs.right
+    def ==(other)
+      @operator == other.operator &&
+        @left == other.left &&
+        @right == other.right
     end
   end
 end

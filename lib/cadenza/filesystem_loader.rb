@@ -45,11 +45,7 @@ module Cadenza
     def load_template(template)
       source = load_source(template)
 
-      if source
-        return Cadenza::Parser.new.parse(source)
-      else
-        return nil
-      end
+      Cadenza::Parser.new.parse(source) if source
     end
   end
 end

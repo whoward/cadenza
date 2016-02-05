@@ -51,7 +51,7 @@ module Cadenza
     #        one state to another which is not allowed
     def state=(new_state)
       # if trying to transition to a new state raise an exception
-      fail IllegalStateError.new(new_state) unless ValidStates.include?(new_state)
+      fail IllegalStateError, new_state unless ValidStates.include?(new_state)
 
       # no special transition for the same state
       return if @state == new_state

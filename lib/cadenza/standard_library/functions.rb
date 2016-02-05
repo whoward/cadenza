@@ -1,8 +1,5 @@
 require 'cgi'
 
-module Cadenza; end
-module Cadenza::StandardLibrary; end
-
 Cadenza::StandardLibrary::Functions = Cadenza::Library.build do
   define_function :load do |context, template|
     params = [template].compact

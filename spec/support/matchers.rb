@@ -11,7 +11,9 @@ RSpec::Matchers.define :equal_html do |expected|
     # finally group each diff by it's XML path
     @diff = full_diff.reject do |change, node|
       change == ' ' || (node.text? && node.to_html =~ /^\s*$/)
-    end.group_by { |_change, node| node.path }
+    end
+
+    @diff = @diff.group_by { |_change, node| node.path }
 
     @diff.empty?
   end

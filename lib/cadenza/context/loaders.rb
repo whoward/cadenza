@@ -74,7 +74,7 @@ module Cadenza
       # @param [String] template_name the name of the template to load
       # @return [String] the template text
       def load_source!(template_name)
-        load_source(template_name) || fail(TemplateNotFoundError.new(template_name))
+        load_source(template_name) || fail(TemplateNotFoundError, template_name)
       end
 
       # loads, parses and returns the given template
@@ -103,7 +103,7 @@ module Cadenza
       # @param [String] template_name the name of the template ot load
       # @return [DocumentNode] the root of the parsed document
       def load_template!(template_name)
-        load_template(template_name) || fail(TemplateNotFoundError.new(template_name))
+        load_template(template_name) || fail(TemplateNotFoundError, template_name)
       end
     end
   end

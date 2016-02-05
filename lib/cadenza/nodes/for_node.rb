@@ -45,13 +45,13 @@ module Cadenza
       (iterable_globals | children_globals | iterator_children_globals) - MAGIC_LOCALS - iterator_globals
     end
 
-    # @param [ForNode] rhs
+    # @param [ForNode] other
     # @return [Boolean] true if the given {ForNode} is equivalent by value to
     #                   this node.
-    def ==(rhs)
-      @iterator == rhs.iterator &&
-        @iterable == rhs.iterable &&
-        @children == rhs.children
+    def ==(other)
+      @iterator == other.iterator &&
+        @iterable == other.iterable &&
+        @children == other.children
     end
   end
 end

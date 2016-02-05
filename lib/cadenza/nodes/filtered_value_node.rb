@@ -37,11 +37,11 @@ module Cadenza
       value
     end
 
-    # @param [FilteredValueNode] rhs
+    # @param [FilteredValueNode] other
     # @return [Boolean] if the given {FilteredValueNode} is equivalent by
     #                   value to this node.
-    def ==(rhs)
-      value == rhs.value && filters == rhs.filters
+    def ==(other)
+      value == other.value && filters == other.filters
     end
   end
 end

@@ -24,10 +24,10 @@ module Cadenza
       @value
     end
 
-    # @param [ConstantNode] rhs
+    # @param [ConstantNode] other
     # @return [Boolean] if this node and the given one are equivalent by value
-    def ==(rhs)
-      @value == rhs.value
+    def ==(other)
+      @value == other.value
     end
   end
 end

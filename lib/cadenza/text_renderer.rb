@@ -93,9 +93,6 @@ module Cadenza
 
         # pop the inner context off
         context.pop
-
-        # increment the counter
-        counter += 1
       end
     end
 

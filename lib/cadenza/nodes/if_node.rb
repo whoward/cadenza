@@ -46,12 +46,12 @@ module Cadenza
       end
     end
 
-    # @param [IfNode] rhs
+    # @param [IfNode] other
     # @return [Boolean] true if the given node is equivalent by value to this node.
-    def ==(rhs)
-      @expression == rhs.expression &&
-        @true_children == rhs.true_children &&
-        @false_children == rhs.false_children
+    def ==(other)
+      @expression == other.expression &&
+        @true_children == other.true_children &&
+        @false_children == other.false_children
     end
 
     private

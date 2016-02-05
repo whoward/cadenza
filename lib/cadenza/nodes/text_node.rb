@@ -22,8 +22,8 @@ module Cadenza
     # @param [TextNode] rhs
     # @return [Boolean] true if the given {TextNode} is equivalent by value to
     #         this node.
-    def ==(rhs)
-      @text == rhs.text
+    def ==(other)
+      @text == other.text
     end
   end
 end

@@ -14,10 +14,10 @@ module Cadenza
       @expression = expression
     end
 
-    # @param [BooleanInverseNode] rhs
+    # @param [BooleanInverseNode] other
     # @return [Boolean] if the given {BooleanInverseNode} is equivalent by value
-    def ==(rhs)
-      @expression == rhs.expression
+    def ==(other)
+      @expression == other.expression
     end
 
     # evaluates the {#expression} and returns the inverted result

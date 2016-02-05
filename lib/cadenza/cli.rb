@@ -4,7 +4,7 @@ require 'multi_json'
 
 module Cadenza
   module Cli
-    extend self
+    module_function
 
     def run!(path, options = {})
       # set up the load paths

@@ -3,7 +3,11 @@ require 'spec_helper'
 describe Cadenza::Library do
   subject { Cadenza::Library }
 
-  let(:library) { mod = Module.new; mod.extend(subject); mod }
+  let(:library) do
+    mod = Module.new
+    mod.extend(subject)
+    mod
+  end
 
   let(:standard_library) do
     subject.build do

@@ -15,7 +15,7 @@ describe Cadenza::TextRenderer do
       end
     end
 
-    klass.define_function(:raise) { |_context, _template| fail StandardError.new('test error') }
+    klass.define_function(:raise) { |_context, _template| fail StandardError, 'test error' }
 
     klass
   end

@@ -16,7 +16,7 @@ module Cadenza
       # @param [Symbol] name the name of the block to look up
       # @return [Proc] the block implementation
       def lookup_block(name)
-        blocks.fetch(name.to_sym) { fail BlockNotDefinedError.new("undefined block '#{name}'") }
+        blocks.fetch(name.to_sym) { fail BlockNotDefinedError, "undefined block '#{name}'" }
       end
 
       # defines a generic block proc with the given name

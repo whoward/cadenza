@@ -32,13 +32,13 @@ module Cadenza
       []
     end
 
-    # @param [GenericBlockNode] rhs
+    # @param [GenericBlockNode] other
     # @return [Boolean] true if the given node is equivalent by value to the
     #                   current node.
-    def ==(rhs)
-      @identifier == rhs.identifier &&
-        @children == rhs.children &&
-        @parameters == rhs.parameters
+    def ==(other)
+      @identifier == other.identifier &&
+        @children == other.children &&
+        @parameters == other.parameters
     end
   end
 end

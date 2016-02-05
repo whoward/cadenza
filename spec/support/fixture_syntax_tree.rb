@@ -116,8 +116,6 @@ class FixtureSyntaxTree
     Cadenza::BooleanInverseNode.new(expression)
   end
 
-  private
-
   def node_for_key(node, key)
     type = node[key].keys.first
     parse_fixture(type, node[key][type])

@@ -39,11 +39,11 @@ module Cadenza
       value
     end
 
-    # @param [VariableNode] rhs
+    # @param [VariableNode] other
     # @return [Boolean] if the given {VariableNode} is equivalent by value to
     #                   this node.
-    def ==(rhs)
-      identifier == rhs.identifier && parameters == rhs.parameters
+    def ==(other)
+      identifier == other.identifier && parameters == other.parameters
     end
   end
 end

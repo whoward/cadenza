@@ -1,8 +1,5 @@
 require 'cgi'
 
-module Cadenza; end
-module Cadenza::StandardLibrary; end
-
 Cadenza::StandardLibrary::Filters = Cadenza::Library.build do
   # adds slashes to \, ', and " characters in the given string
   define_filter :addslashes do |string, params|

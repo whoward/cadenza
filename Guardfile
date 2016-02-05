@@ -6,7 +6,7 @@ require 'rubygems'
 
 def suggested_load(gem)
   require(gem)
-rescue LoadError => e
+rescue LoadError
   puts("for better guard support you should install the #{gem} gem")
 end
 

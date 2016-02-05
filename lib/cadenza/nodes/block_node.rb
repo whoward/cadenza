@@ -25,12 +25,12 @@ module Cadenza
       @children.map(&:implied_globals).flatten.uniq
     end
 
-    # @param [BlockNode] rhs
+    # @param [BlockNode] other
     # @return [Boolean] true if the given {BlockNode} is equivalent to the this
     #                   node by value.
-    def ==(rhs)
-      @name == rhs.name &&
-        @children == rhs.children
+    def ==(other)
+      @name == other.name &&
+        @children == other.children
     end
   end
 end

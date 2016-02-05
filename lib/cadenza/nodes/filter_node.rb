@@ -19,12 +19,12 @@ module Cadenza
       @parameters = parameters
     end
 
-    # @param [FilterNode] rhs
+    # @param [FilterNode] other
     # @return [Boolean] true if the given filter node is equivalent by value to
     #                   this node.
-    def ==(rhs)
-      @identifier == rhs.identifier &&
-        @parameters == rhs.parameters
+    def ==(other)
+      @identifier == other.identifier &&
+        @parameters == other.parameters
     end
 
     # @return [Array] a list of implied global variable names for this node
