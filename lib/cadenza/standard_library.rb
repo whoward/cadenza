@@ -1,5 +1,6 @@
 
-module Cadenza
+module Cadenza\
+  # The Standard Library is a collection of all the standard filters, block and functions defined in Cadenza
   module StandardLibrary
     extend Cadenza::Library
 

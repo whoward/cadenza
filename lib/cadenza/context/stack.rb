@@ -1,6 +1,7 @@
 
 module Cadenza
   class Context
+    # This module contains all methods related to the variable stack
     module Stack
       # @!attribute [r] stack
       # @return [Array] the variable stack

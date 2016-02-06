@@ -1,8 +1,10 @@
 
 module Cadenza
+  # This exception is raised when a block is referred to but is not defined
   BlockNotDefinedError = Class.new(Cadenza::Error)
 
   module Library
+    # The logic for storing and calling blocks is found in this module
     module Blocks
       # @!attribute [r] blocks
       # @return [Hash] the block names mapped to their implementing procs

@@ -1,11 +1,13 @@
 
 module Cadenza
+  # This exception is raised when a function is called with an unexpected number of arguments
   class InvalidArgumentCountError < Cadenza::Error
     def initialize(expected_count, actual_count)
       super "wrong number of arguments (#{actual_count} for #{expected_count})"
     end
   end
 
+  # This exception is raised when an unexpected argument is passed to a function
   class InvalidArgumentTypeError < Cadenza::Error
     def initialize(expected, actual)
       super "expected #{expected} but got #{actual}"

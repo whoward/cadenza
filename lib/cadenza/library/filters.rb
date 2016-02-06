@@ -1,8 +1,10 @@
 
 module Cadenza
+  # This exception is raised when a filter is referred to but is not defined
   FilterNotDefinedError = Class.new(Cadenza::Error)
 
   module Library
+    # The logic for storing and calling filters is found in this module
     module Filters
       # @!attribute [r] filters
       # @return [Hash] the filter names mapped to their implementing procs

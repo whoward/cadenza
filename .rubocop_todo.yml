@@ -32,7 +32,3 @@ Metrics/MethodLength:
 # Offense count: 5
 Metrics/PerceivedComplexity:
   Max: 15
-
-# Offense count: 24
-Style/Documentation:
-  Enabled: false

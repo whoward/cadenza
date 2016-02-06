@@ -3,6 +3,7 @@ require 'cadenza/cli/options'
 require 'multi_json'
 
 module Cadenza
+  # The code for the command line interface is defined here
   module Cli
     module_function
 

@@ -1,5 +1,6 @@
 module Cadenza
   module Cli
+    # The parser for the command line options is defined here
     class Options < OptionParser
       attr_reader :options
 

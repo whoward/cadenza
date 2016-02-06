@@ -31,6 +31,7 @@ require 'stringio'
 # require all nodes
 Dir[File.join File.dirname(__FILE__), 'cadenza', 'nodes', '*.rb'].each { |f| require f }
 
+# The Cadenza module is the top level namespace for the cadenza gem
 module Cadenza
   # this utility method sets up the standard Cadenza lexer/parser/renderer
   # stack and renders the given template text with the given variable scope

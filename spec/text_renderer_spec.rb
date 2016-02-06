@@ -96,8 +96,8 @@ describe Cadenza::TextRenderer do
     it "should render a for-block's children once for each iterated object" do
       context = Cadenza::Context.new(alphabet: %w(a b c))
 
-      expect_rendering("{% for x in alphabet %}{{ forloop.counter }}: {{ x }}\n{% endfor %}", context).to
-      eq "1: a\n2: b\n3: c\n"
+      expect_rendering("{% for x in alphabet %}{{ forloop.counter }}: {{ x }}\n{% endfor %}", context).to \
+        eq "1: a\n2: b\n3: c\n"
     end
 
     it "should render default blocks in it's children" do

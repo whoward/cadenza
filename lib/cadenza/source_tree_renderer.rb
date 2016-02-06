@@ -1,6 +1,8 @@
 require 'stringio'
 
 module Cadenza
+  # This renderer will output a string representing the AST in a tree format.  It is intended to be used
+  # for debugging purposes.
   class SourceTreeRenderer < BaseRenderer
     # Renders the given AST root node as a source tree (helpful for debugging)
     # @todo move this to a module

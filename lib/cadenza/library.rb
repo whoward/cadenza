@@ -4,6 +4,7 @@ require 'cadenza/library/functions'
 require 'cadenza/library/expectation'
 
 module Cadenza
+  # Libraries provide a way to define a set of filters, blocks and functions which can be easily included into a context
   module Library
     # Instantiates a new library module and calls the passed block in the
     # context of the new module.  This makes the block build the library in the

@@ -1,8 +1,10 @@
 
 module Cadenza
+  # This exception is raised when a requested template cannot be loaded
   TemplateNotFoundError = Class.new(Cadenza::Error)
 
   class Context
+    # This module contains all methods related to the loaders
     module Loaders
       # @!attribute [rw] whiny_template_loading
       # @return [Boolean] true if a {TemplateNotFoundError} should still be

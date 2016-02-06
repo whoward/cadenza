@@ -1,18 +1,10 @@
 
 module Cadenza
+  # This exception is raised when a function is referred to but is not defined
   FunctionNotDefinedError = Class.new(Cadenza::Error)
 
-  # Returns {FunctionNotDefinedError} when the deprecated {FunctionalVariableNotDefinedError} is requested
-  # @private
-  # @todo remove in v0.9.x
-  def self.const_missing(const_name)
-    super unless const_name == :FunctionalVariableNotDefinedError
-    warn '`Cadenza::FunctionalVariableNotDefinedError` has been deprecated. ' \
-         'Use `Cadenza::FunctionNotDefinedError` instead.'
-    FunctionNotDefinedError
-  end
-
   module Library
+    # The logic for storing and calling functions is found in this module
     module Functions
       # @!attribute [r] functions
       # @return [Hash] the function names mapped to their implementing procs

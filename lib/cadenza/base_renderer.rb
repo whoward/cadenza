@@ -1,4 +1,6 @@
 module Cadenza
+  # This exception is raised when something exceptional occurs while rendering a
+  # template and the exception handler is set to :raise
   class RenderError < Cadenza::Error
     attr_reader :inner_error
     def initialize(err)
