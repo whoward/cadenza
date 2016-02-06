@@ -11,10 +11,9 @@ group :development do
   gem 'rake', '~> 0.9.2'
   gem 'racc', '~> 1.4.6' if RUBY_PLATFORM != 'java'
   gem 'yard'
-  gem 'guard-rspec'
-  gem 'guard-shell'
 end
 
 group :development, :test do
   gem 'coveralls', require: false
+  gem 'rubocop'
 end
