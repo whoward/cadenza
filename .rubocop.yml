@@ -1,6 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
+  TargetRubyVersion: 2.3
   CacheRootDirectory: '.rubocop'
   Exclude:
     - 'lib/cadenza/racc_parser.rb' # this file is auto-generated and shouldn't be verified

@@ -6,18 +6,19 @@ rvm:
    - 2.0.0
    - 2.1.0
    - 2.2.0
+   - 2.3.0
    - rbx-19mode
    - jruby-19mode
 
 matrix:
    allow_failures:
-      - rvm: rbx-18mode
       - rvm: rbx-19mode
+   include:
+      - rvm: 2.3.0
+        script: "bundle exec rubocop"
 
 bundler_args: "--without=development"
 
 sudo: false
 
-script:
-   - bundle exec rubocop
-   - bundle exec rspec
+script: "bundle exec rspec"
