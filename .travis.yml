@@ -15,5 +15,9 @@ matrix:
       - rvm: rbx-19mode
 
 bundler_args: "--without=development"
-script: "bundle exec rspec spec"
+
 sudo: false
+
+script:
+   - bundle exec rubocop
+   - bundle exec rspec
