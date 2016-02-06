@@ -17,7 +17,7 @@ module Cadenza
 
       def context_option(context)
         context = File.read(context) if File.exist?(context)
-        @options[:context] = MultiJson.load(context)
+        @options[:context] = JSON.parse(context)
       end
 
       def add_load_path(path)
