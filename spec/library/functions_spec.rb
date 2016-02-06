@@ -60,40 +60,4 @@ describe Cadenza::Library::Functions do
       end.to raise_error Cadenza::FunctionNotDefinedError
     end
   end
-
-  context 'deprecated functions' do
-    before { expect(library).to receive(:warn) }
-
-    it 'has deprecated #functional_variables' do
-      expect(library).to receive(:functions)
-      library.functional_variables
-    end
-
-    it 'has deprecated #lookup_functional_variable' do
-      expect(library).to receive(:lookup_function)
-      library.lookup_functional_variable(:assign)
-    end
-
-    it 'has deprecated #define_functional_variable' do
-      expect(library).to receive(:define_function)
-      library.define_functional_variable(:zomg) {}
-    end
-
-    it 'has deprecated #alias_functional_variable' do
-      expect(library).to receive(:alias_function)
-      library.alias_functional_variable(:assign, :zomg)
-    end
-
-    it 'has deprecated #evaluate_functional_variable' do
-      expect(library).to receive(:evaluate_function)
-      library.evaluate_functional_variable(:assign, context, ['foo', 123])
-    end
-  end
-
-  context 'deprecated constants' do
-    it 'has deprecated FunctionalVariableNotDefinedError' do
-      expect(Cadenza).to receive(:warn)
-      expect(Cadenza::FunctionalVariableNotDefinedError).to eq(Cadenza::FunctionNotDefinedError)
-    end
-  end
 end
