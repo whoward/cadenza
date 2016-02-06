@@ -27,7 +27,7 @@ class FixtureSyntaxTree
     when 'BlockNode' then parse_block_node(node)
     when 'GenericBlockNode' then parse_generic_block_node(node)
     when 'BooleanInverseNode' then parse_boolean_inverse_node(node)
-    else fail "unknown type: #{type}"
+    else raise "unknown type: #{type}"
     end
   end
 

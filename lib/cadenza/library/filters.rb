@@ -18,7 +18,7 @@ module Cadenza
       # @param [Symbol] name the name of the filter to look up
       # @return [Proc] the filter implementation
       def lookup_filter(name)
-        filters.fetch(name.to_sym) { fail FilterNotDefinedError, "undefined filter '#{name}'" }
+        filters.fetch(name.to_sym) { raise FilterNotDefinedError, "undefined filter '#{name}'" }
       end
 
       # defines a filter proc with the given name

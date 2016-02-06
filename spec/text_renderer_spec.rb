@@ -15,7 +15,7 @@ describe Cadenza::TextRenderer do
       end
     end
 
-    klass.define_function(:raise) { |_context, _template| fail StandardError, 'test error' }
+    klass.define_function(:raise) { |_context, _template| raise StandardError, 'test error' }
 
     klass
   end
@@ -191,7 +191,7 @@ describe Cadenza::TextRenderer do
 
   context '#error_handling' do
     let(:output) { StringIO.new }
-    let(:renderer) { Cadenza::TextRenderer.new(output, error_handler: ->(e) { fail e }) }
+    let(:renderer) { Cadenza::TextRenderer.new(output, error_handler: ->(e) { raise e }) }
     let(:template) { Cadenza::Parser.new.parse('{{raise}}') }
 
     it 'returns empty data by default' do

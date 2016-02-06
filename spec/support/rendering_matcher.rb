@@ -5,7 +5,7 @@ module RenderingMatcher
     output = StringIO.new
 
     parser = options.fetch(:parser, Cadenza::Parser.new)
-    renderer = options.fetch(:renderer, Cadenza::TextRenderer.new(output, error_handler: ->(e) { fail e }))
+    renderer = options.fetch(:renderer, Cadenza::TextRenderer.new(output, error_handler: ->(e) { raise e }))
 
     document = parser.parse(document) if document.is_a?(String)
 

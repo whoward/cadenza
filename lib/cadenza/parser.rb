@@ -20,9 +20,9 @@ module Cadenza
     def initialize(options = {})
       @lexer = options.fetch(:lexer, Cadenza::Lexer.new)
 
-      fail 'Lexers passed to the parser must define next_token' unless @lexer.respond_to?(:next_token)
+      raise 'Lexers passed to the parser must define next_token' unless @lexer.respond_to?(:next_token)
 
-      fail 'Lexers passed to the parser must define source=' unless @lexer.respond_to?(:source=)
+      raise 'Lexers passed to the parser must define source=' unless @lexer.respond_to?(:source=)
     end
 
     # takes the given source object and parses tokens from it, the tokens are
@@ -98,7 +98,7 @@ module Cadenza
         else "unexpected token #{value.source.inspect} at line #{line.inspect}, column #{column.inspect}"
         end
 
-      fail ParseError, msg
+      raise ParseError, msg
     end
   end
 end

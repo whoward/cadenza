@@ -18,7 +18,7 @@ module Cadenza
       # @param [Symbol] name the name of the function to look up
       # @return [Proc] the function implementation
       def lookup_function(name)
-        functions.fetch(name.to_sym) { fail FunctionNotDefinedError, "undefined function '#{name}'" }
+        functions.fetch(name.to_sym) { raise FunctionNotDefinedError, "undefined function '#{name}'" }
       end
 
       # defines a function proc with the given name

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Cadenza::SourceRenderer do
   let(:output) { StringIO.new }
-  let(:renderer) { Cadenza::SourceRenderer.new(output, error_handler: ->(e) { fail e }) }
+  let(:renderer) { Cadenza::SourceRenderer.new(output, error_handler: ->(e) { raise e }) }
   let(:context)  { Cadenza::Context.new }
   let(:document) { Cadenza::DocumentNode.new }
 

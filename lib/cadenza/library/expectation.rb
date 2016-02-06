@@ -43,7 +43,7 @@ module Cadenza
           when Range then expected.include?(params.length)
           end
 
-        fail InvalidArgumentCountError.new(expected, params.length) unless pass
+        raise InvalidArgumentCountError.new(expected, params.length) unless pass
 
         # return self to allow chaining
         self
@@ -123,7 +123,7 @@ module Cadenza
 
         val = params[idx]
 
-        fail InvalidArgumentTypeError.new(e[:is_a], val.class) if e.key?(:is_a) && !val.is_a?(e[:is_a])
+        raise InvalidArgumentTypeError.new(e[:is_a], val.class) if e.key?(:is_a) && !val.is_a?(e[:is_a])
 
         # return self to allow chaining
         self

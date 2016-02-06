@@ -51,7 +51,7 @@ module Cadenza
     #        one state to another which is not allowed
     def state=(new_state)
       # if trying to transition to a new state raise an exception
-      fail IllegalStateError, new_state unless ValidStates.include?(new_state)
+      raise IllegalStateError, new_state unless ValidStates.include?(new_state)
 
       # no special transition for the same state
       return if @state == new_state
@@ -63,10 +63,10 @@ module Cadenza
         output << '{% ' if new_state == :tag
       when :var
         output << ' }}' if new_state == :text
-        fail IllegalStateTransitionError if new_state == :tag
+        raise IllegalStateTransitionError if new_state == :tag
       when :tag
         output << ' %}' if new_state == :text
-        fail IllegalStateTransitionError if new_state == :var
+        raise IllegalStateTransitionError if new_state == :var
       end
 
       # update to the new state

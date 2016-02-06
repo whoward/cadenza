@@ -15,5 +15,5 @@ end
 
 group :development, :test do
   gem 'coveralls', require: false
-  gem 'rubocop'
+  gem 'rubocop', '0.37.0'
 end

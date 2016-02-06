@@ -78,7 +78,7 @@ module Cadenza
 
       when :suppress then nil # do nothing
 
-      when :raise then fail Cadenza::RenderError, e
+      when :raise then raise Cadenza::RenderError, e
 
       when :dump
         output << "<code>#{e.backtrace.join("\n")}</code>"
@@ -87,7 +87,7 @@ module Cadenza
         output << error_handler.call(e)
 
       else
-        fail Cadenza::Error, "undefined error handler: #{error_handler.inspect}"
+        raise Cadenza::Error, "undefined error handler: #{error_handler.inspect}"
 
       end
     end

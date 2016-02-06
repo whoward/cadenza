@@ -65,7 +65,7 @@ module Cadenza
           break if source
         end
 
-        fail TemplateNotFoundError, template_name if source.nil? && whiny_template_loading
+        raise TemplateNotFoundError, template_name if source.nil? && whiny_template_loading
 
         source
       end
@@ -76,7 +76,7 @@ module Cadenza
       # @param [String] template_name the name of the template to load
       # @return [String] the template text
       def load_source!(template_name)
-        load_source(template_name) || fail(TemplateNotFoundError, template_name)
+        load_source(template_name) || raise(TemplateNotFoundError, template_name)
       end
 
       # loads, parses and returns the given template
@@ -94,7 +94,7 @@ module Cadenza
           break if template
         end
 
-        fail TemplateNotFoundError, template_name if template.nil? && whiny_template_loading
+        raise TemplateNotFoundError, template_name if template.nil? && whiny_template_loading
 
         template
       end
@@ -105,7 +105,7 @@ module Cadenza
       # @param [String] template_name the name of the template ot load
       # @return [DocumentNode] the root of the parsed document
       def load_template!(template_name)
-        load_template(template_name) || fail(TemplateNotFoundError, template_name)
+        load_template(template_name) || raise(TemplateNotFoundError, template_name)
       end
     end
   end

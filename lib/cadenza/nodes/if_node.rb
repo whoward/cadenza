@@ -55,7 +55,7 @@ module Cadenza
     def truthyness_for_value(value)
       case value
       when Float, Fixnum then value != 0 # non-zero numbers are truthy
-      when String then value.strip.length > 0 # non-blank strings are truthy
+      when String then !value.strip.empty? # non-blank strings are truthy
       else !!value # everything else is coerced to a boolean (booleans are coerced to themselves)
       end
     end
