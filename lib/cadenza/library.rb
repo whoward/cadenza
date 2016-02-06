@@ -25,17 +25,17 @@ module Cadenza
       base.extend Cadenza::Library::Functions
 
       if base.is_a?(Class)
-        def base.inherited(base)
-          base.filters.merge!(filters)
-          base.blocks.merge!(blocks)
-          base.functions.merge!(functions)
+        base.define_singleton_method(:inherited) do |subclass|
+          subclass.filters.merge!(filters)
+          subclass.blocks.merge!(blocks)
+          subclass.functions.merge!(functions)
         end
       else
-        def base.enhance(&block)
+        base.define_singleton_method(:enhance) do |&block|
           Cadenza::Library.send(:__build, self, &block)
         end
 
-        def base.included(library)
+        base.define_singleton_method(:included) do |library|
           library.filters.merge!(filters)
           library.blocks.merge!(blocks)
           library.functions.merge!(functions)
