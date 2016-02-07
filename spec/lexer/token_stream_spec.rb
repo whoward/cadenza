@@ -1,129 +1,198 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Cadenza::Lexer, 'token parsing' do
-  before(:all) do
-    @lexer = Cadenza::Lexer.new
-  end
+  subject { tokens_for(input) }
+
+  let(:lexer) { Cadenza::Lexer.new }
 
   def tokenize(string)
-    @lexer.source = string
-    @lexer.remaining_tokens.map { |type, token| [type, token.is_a?(Cadenza::Token) ? token.value : token] }
+    lexer.source = string
+    lexer.remaining_tokens.map { |type, token| [type, token.is_a?(Cadenza::Token) ? token.value : token] }
   end
 
   def tokens_for(string)
     tokenize(string).map(&:first)
   end
 
-  def values_for(string)
-    tokenize(string).map(&:last)
+  context 'with an empty string' do
+    let(:input) { '' }
+    it { is_expected.to eq [false] }
   end
 
-  it 'should return a end token for an empty string' do
-    expect(tokens_for('')).to eq([false])
-    expect(tokens_for(nil)).to eq([false])
+  context 'with a nil input' do
+    let(:input) { nil }
+    it { is_expected.to eq [false] }
   end
 
-  it 'should parse blocks of text' do
-    expect(tokens_for('abc')).to eq([:TEXT_BLOCK, false])
+  context 'with a block of text' do
+    let(:input) { 'abc' }
+    it { is_expected.to eq [:TEXT_BLOCK, false] }
   end
 
-  it 'should parse an opening injection token' do
-    expect(tokens_for('{{')).to eq([:VAR_OPEN, false])
+  context 'with an opening injection token' do
+    let(:input) { '{{' }
+    it { is_expected.to eq [:VAR_OPEN, false] }
   end
 
-  it 'should parse an ending injection token' do
-    expect(tokens_for('{{}}')).to eq([:VAR_OPEN, :VAR_CLOSE, false])
+  context 'with an ending injection token' do
+    let(:input) { '{{ }}' }
+    it { is_expected.to eq [:VAR_OPEN, :VAR_CLOSE, false] }
   end
 
-  it 'should parse an opening statement token' do
-    expect(tokens_for('{%')).to eq([:STMT_OPEN, false])
+  context 'with an opening statement token' do
+    let(:input) { '{%' }
+    it { is_expected.to eq [:STMT_OPEN, false] }
   end
 
-  it 'should parse an ending statement token' do
-    expect(tokens_for('{%%}')).to eq([:STMT_OPEN, :STMT_CLOSE, false])
+  context 'with an ending statement token' do
+    let(:input) { '{% %}' }
+    it { is_expected.to eq [:STMT_OPEN, :STMT_CLOSE, false] }
   end
 
-  it 'should not parse comments' do
-    expect(tokens_for('{# hello #}')).to eq([false])
+  context 'with comments in the input' do
+    let(:input) { '{# hello #}' }
+    it { is_expected.to eq [false] }
   end
 
-  it 'should parse constants' do
-    expect(tokens_for('{{3}}')).to eq([:VAR_OPEN, :INTEGER, :VAR_CLOSE, false])
-    expect(tokens_for('{{+3}}')).to eq([:VAR_OPEN, :INTEGER, :VAR_CLOSE, false])
-    expect(tokens_for('{{-3}}')).to eq([:VAR_OPEN, :INTEGER, :VAR_CLOSE, false])
-
-    expect(tokens_for('{{3.14}}')).to eq([:VAR_OPEN, :REAL, :VAR_CLOSE, false])
-    expect(tokens_for('{{+3.14}}')).to eq([:VAR_OPEN, :REAL,    :VAR_CLOSE, false])
-    expect(tokens_for('{{-3.14}}')).to eq([:VAR_OPEN, :REAL,    :VAR_CLOSE, false])
-
-    expect(tokens_for("{{'3'}}")).to eq([:VAR_OPEN, :STRING, :VAR_CLOSE, false])
-    expect(tokens_for('{{"3"}}')).to eq([:VAR_OPEN, :STRING,  :VAR_CLOSE, false])
+  context 'with an unsigned integer literal' do
+    let(:input) { '{{ 3 }}' }
+    it { is_expected.to eq [:VAR_OPEN, :INTEGER, :VAR_CLOSE, false] }
   end
 
-  it 'should parse string escapes inside double quotes only' do
-    expect(tokenize('{{ "\"" }}').at(1)).to      eq([:STRING, '"'])
-    expect(tokenize('{{ "\r" }}').at(1)).to      eq([:STRING, "\r"])
-    expect(tokenize('{{ "\n" }}').at(1)).to      eq([:STRING, "\n"])
-    expect(tokenize('{{ "\t" }}').at(1)).to      eq([:STRING, "\t"])
-    expect(tokenize('{{ "\\\\" }}').at(1)).to    eq([:STRING, '\\'])
-    expect(tokenize('{{ "\\u03A9" }}').at(1)).to eq([:STRING, ['03A9'.to_i(16)].pack('U')])
-
-    expect(tokenize(%q({{ '\"' }})).at(1)).to eq([:STRING, '\"'])
+  context 'with a positive integer literal' do
+    let(:input) { '{{ +3 }}' }
+    it { is_expected.to eq [:VAR_OPEN, :INTEGER, :VAR_CLOSE, false] }
   end
 
-  it 'should scan identifiers' do
-    expect(tokens_for('{{foo}}')).to eq([:VAR_OPEN, :IDENTIFIER, :VAR_CLOSE, false])
-    expect(tokens_for('{{foo.bar}}')).to eq([:VAR_OPEN, :IDENTIFIER, :VAR_CLOSE, false])
+  context 'with a negative integer literal' do
+    let(:input) { '{{ -3 }}' }
+    it { is_expected.to eq [:VAR_OPEN, :INTEGER, :VAR_CLOSE, false] }
   end
 
-  it 'should scan keywords' do
-    expect(tokens_for('{%if%}')).to        eq([:STMT_OPEN, :IF, :STMT_CLOSE, false])
-    expect(tokens_for('{%else%}')).to      eq([:STMT_OPEN, :ELSE, :STMT_CLOSE, false])
-    expect(tokens_for('{%endif%}')).to     eq([:STMT_OPEN, :ENDIF, :STMT_CLOSE, false])
-    expect(tokens_for('{%for%}')).to       eq([:STMT_OPEN, :FOR, :STMT_CLOSE, false])
-    expect(tokens_for('{%in%}')).to        eq([:STMT_OPEN, :IN, :STMT_CLOSE, false])
-    expect(tokens_for('{%endfor%}')).to    eq([:STMT_OPEN, :ENDFOR, :STMT_CLOSE, false])
-    expect(tokens_for('{%block%}')).to     eq([:STMT_OPEN, :BLOCK, :STMT_CLOSE, false])
-    expect(tokens_for('{%endblock%}')).to  eq([:STMT_OPEN, :ENDBLOCK, :STMT_CLOSE, false])
-    expect(tokens_for('{%extends%}')).to   eq([:STMT_OPEN, :EXTENDS, :STMT_CLOSE, false])
-    expect(tokens_for('{%end%}')).to       eq([:STMT_OPEN, :END, :STMT_CLOSE, false])
-    expect(tokens_for('{%and%}')).to       eq([:STMT_OPEN, :AND, :STMT_CLOSE, false])
-    expect(tokens_for('{%or%}')).to        eq([:STMT_OPEN, :OR, :STMT_CLOSE, false])
-    expect(tokens_for('{%not%}')).to       eq([:STMT_OPEN, :NOT, :STMT_CLOSE, false])
-    expect(tokens_for('{%unless%}')).to    eq([:STMT_OPEN, :UNLESS, :STMT_CLOSE, false])
-    expect(tokens_for('{%endunless%}')).to eq([:STMT_OPEN, :ENDUNLESS, :STMT_CLOSE, false])
+  context 'with an unsigned real literal' do
+    let(:input) { '{{ 3.14 }}' }
+    it { is_expected.to eq [:VAR_OPEN, :REAL, :VAR_CLOSE, false] }
   end
 
-  it 'scans any identifier starting with END as an END token with the value of the full keyword' do
-    expect(tokenize('{% endfilter %}').at(1)).to eq([:END, 'ENDFILTER'])
+  context 'with a positive real literal' do
+    let(:input) { '{{ +3.14 }}' }
+    it { is_expected.to eq [:VAR_OPEN, :REAL, :VAR_CLOSE, false] }
   end
 
-  it 'should ignore whitespace inside of statements' do
-    expect(tokens_for('{{ 3 }}')).to eq([:VAR_OPEN, :INTEGER, :VAR_CLOSE, false])
-    expect(tokens_for('{% 3.14 %}')).to eq([:STMT_OPEN, :REAL, :STMT_CLOSE, false])
+  context 'with a single quoted string literal' do
+    let(:input) { "{{ '3' }}" }
+    it { is_expected.to eq [:VAR_OPEN, :STRING, :VAR_CLOSE, false] }
   end
 
-  it 'should scan identifiers that start with keywords as identifiers' do
-    expect(tokens_for('{{ forloop }}')).to eq([:VAR_OPEN, :IDENTIFIER, :VAR_CLOSE, false])
+  context 'with a double quoted string literal' do
+    let(:input) { '{{ "3" }}' }
+    it { is_expected.to eq [:VAR_OPEN, :STRING, :VAR_CLOSE, false] }
   end
 
-  it 'should scan the equivalence operator' do
-    expect(tokens_for('{% == %}')).to eq([:STMT_OPEN, :OP_EQ, :STMT_CLOSE, false])
+  describe 'string escapes' do
+    subject { tokenize(input).at(1) }
+
+    context 'with an escaped double quote' do
+      let(:input) { '{{ "\"" }}' }
+      it { is_expected.to eq [:STRING, '"'] }
+    end
+
+    context 'with an escaped carriage return' do
+      let(:input) { '{{ "\r" }}' }
+      it { is_expected.to eq [:STRING, "\r"] }
+    end
+
+    context 'with an escaped line feed' do
+      let(:input) { '{{ "\n" }}' }
+      it { is_expected.to eq [:STRING, "\n"] }
+    end
+
+    context 'with an escaped tab' do
+      let(:input) { '{{ "\t" }}' }
+      it { is_expected.to eq [:STRING, "\t"] }
+    end
+
+    context 'with a escaped slash' do
+      let(:input) { '{{ "\\\\" }}' }
+      it { is_expected.to eq [:STRING, '\\'] }
+    end
+
+    context 'with an escaped UTF code' do
+      let(:input) { '{{ "\\u03A9" }}' }
+      it { is_expected.to eq [:STRING, ['03A9'.to_i(16)].pack('U')] }
+    end
+
+    context 'with an escaped character inside a single quoted string' do
+      let(:input) { %q({{ '\"' }}) }
+      it { is_expected.to eq [:STRING, '\"'] }
+    end
   end
 
-  it 'should scan the inequivalence operator' do
-    expect(tokens_for('{% != %}')).to eq([:STMT_OPEN, :OP_NEQ, :STMT_CLOSE, false])
+  context 'with a single identifier' do
+    let(:input) { '{{ foo }}' }
+    it { is_expected.to eq [:VAR_OPEN, :IDENTIFIER, :VAR_CLOSE, false] }
   end
 
-  it 'should scan the greater than or equal to operator' do
-    expect(tokens_for('{% >= %}')).to eq([:STMT_OPEN, :OP_GEQ, :STMT_CLOSE, false])
+  context 'with an identifier with multiple dots in it' do
+    let(:input) { '{{ foo.bar }}' }
+    it { is_expected.to eq [:VAR_OPEN, :IDENTIFIER, :VAR_CLOSE, false] }
   end
 
-  it 'should scan the less than or equal to operator' do
-    expect(tokens_for('{% <= %}')).to eq([:STMT_OPEN, :OP_LEQ, :STMT_CLOSE, false])
+  Cadenza::Lexer::KEYWORDS.each do |keyword|
+    context "with the #{keyword.inspect} keyword" do
+      let(:input) { "{% #{keyword} %}" }
+      it { is_expected.to eq [:STMT_OPEN, keyword.upcase.to_sym, :STMT_CLOSE, false] }
+    end
   end
 
-  it 'should match individual characters inside of statements' do
-    expect(tokens_for('{% if foo > 0 %}')).to eq([:STMT_OPEN, :IF, :IDENTIFIER, '>', :INTEGER, :STMT_CLOSE, false])
+  context 'identifiers starting with END' do
+    subject { tokenize(input).at(1) }
+    let(:input) { '{% endfilter %}' }
+    it { is_expected.to eq [:END, 'ENDFILTER'] }
+  end
+
+  context 'with no whitespace inside of a inject' do
+    let(:input) { '{{3}}' }
+    it { is_expected.to eq [:VAR_OPEN, :INTEGER, :VAR_CLOSE, false] }
+  end
+
+  context 'with no whitespace inside of a statement' do
+    let(:input) { '{%3%}' }
+    it { is_expected.to eq [:STMT_OPEN, :INTEGER, :STMT_CLOSE, false] }
+  end
+
+  context 'with an identifier that starts with a keyword' do
+    let(:input) { '{{ forloop }}' }
+    it { is_expected.to eq [:VAR_OPEN, :IDENTIFIER, :VAR_CLOSE, false] }
+  end
+
+  context 'with the equivalence operator' do
+    let(:input) { '{% == %}' }
+    it { is_expected.to eq [:STMT_OPEN, :OP_EQ, :STMT_CLOSE, false] }
+  end
+
+  context 'with the inequivalence operator' do
+    let(:input) { '{% != %}' }
+    it { is_expected.to eq [:STMT_OPEN, :OP_NEQ, :STMT_CLOSE, false] }
+  end
+
+  context 'with the greater than or equal to operator' do
+    let(:input) { '{% >= %}' }
+    it { is_expected.to eq [:STMT_OPEN, :OP_GEQ, :STMT_CLOSE, false] }
+  end
+
+  context 'with the less than or equal to operator' do
+    let(:input) { '{% <= %}' }
+    it { is_expected.to eq [:STMT_OPEN, :OP_LEQ, :STMT_CLOSE, false] }
+  end
+
+  context 'with the greater than operator' do
+    let(:input) { '{% if foo > 0 %}' }
+    it { is_expected.to eq [:STMT_OPEN, :IF, :IDENTIFIER, '>', :INTEGER, :STMT_CLOSE, false] }
+  end
+
+  context 'with the less than operator' do
+    let(:input) { '{% if foo < 0 %}' }
+    it { is_expected.to eq [:STMT_OPEN, :IF, :IDENTIFIER, '<', :INTEGER, :STMT_CLOSE, false] }
   end
 end

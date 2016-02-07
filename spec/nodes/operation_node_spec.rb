@@ -56,51 +56,51 @@ describe Cadenza::OperationNode do
     let(:false_condition) { subject.new(twenty, '<', ten) }
 
     it 'should evaluate equality operators' do
-      expect(subject.new(ten, '==', twenty).eval(context)).to be_false
-      expect(subject.new(ten, '==', ten).eval(context)).to be_true
+      expect(subject.new(ten, '==', twenty).eval(context)).to eq false
+      expect(subject.new(ten, '==', ten).eval(context)).to eq true
     end
 
     it 'should evaluate inequality operators' do
-      expect(subject.new(ten, '!=', twenty).eval(context)).to be_true
-      expect(subject.new(ten, '!=', ten).eval(context)).to be_false
+      expect(subject.new(ten, '!=', twenty).eval(context)).to eq true
+      expect(subject.new(ten, '!=', ten).eval(context)).to eq false
     end
 
     it 'should evaluate greater than or equal to operators' do
-      expect(subject.new(ten,    '>=', twenty).eval(context)).to be_false
-      expect(subject.new(ten,    '>=', ten).eval(context)).to be_true
-      expect(subject.new(twenty, '>=', ten).eval(context)).to be_true
+      expect(subject.new(ten,    '>=', twenty).eval(context)).to eq false
+      expect(subject.new(ten,    '>=', ten).eval(context)).to eq true
+      expect(subject.new(twenty, '>=', ten).eval(context)).to eq true
     end
 
     it 'should evaluate less than or equal to operators' do
-      expect(subject.new(ten,    '<=', twenty).eval(context)).to be_true
-      expect(subject.new(ten,    '<=', ten).eval(context)).to be_true
-      expect(subject.new(twenty, '<=', ten).eval(context)).to be_false
+      expect(subject.new(ten,    '<=', twenty).eval(context)).to eq true
+      expect(subject.new(ten,    '<=', ten).eval(context)).to eq true
+      expect(subject.new(twenty, '<=', ten).eval(context)).to eq false
     end
 
     it 'should evaluate less than operators' do
-      expect(subject.new(ten,    '<', twenty).eval(context)).to be_true
-      expect(subject.new(ten,    '<', ten).eval(context)).to be_false
-      expect(subject.new(twenty, '<', ten).eval(context)).to be_false
+      expect(subject.new(ten,    '<', twenty).eval(context)).to eq true
+      expect(subject.new(ten,    '<', ten).eval(context)).to eq false
+      expect(subject.new(twenty, '<', ten).eval(context)).to eq false
     end
 
     it 'should evaluate greater than operators' do
-      expect(subject.new(ten,    '>', twenty).eval(context)).to be_false
-      expect(subject.new(ten,    '>', ten).eval(context)).to be_false
-      expect(subject.new(twenty, '>', ten).eval(context)).to be_true
+      expect(subject.new(ten,    '>', twenty).eval(context)).to eq false
+      expect(subject.new(ten,    '>', ten).eval(context)).to eq false
+      expect(subject.new(twenty, '>', ten).eval(context)).to eq true
     end
 
     it "should evaluate 'and' conjunctions" do
-      expect(subject.new(true_condition,  'and', true_condition).eval(context)).to be_true
-      expect(subject.new(true_condition,  'and', false_condition).eval(context)).to be_false
-      expect(subject.new(false_condition, 'and', true_condition).eval(context)).to  be_false
-      expect(subject.new(false_condition, 'and', false_condition).eval(context)).to be_false
+      expect(subject.new(true_condition,  'and', true_condition).eval(context)).to eq true
+      expect(subject.new(true_condition,  'and', false_condition).eval(context)).to eq false
+      expect(subject.new(false_condition, 'and', true_condition).eval(context)).to  eq false
+      expect(subject.new(false_condition, 'and', false_condition).eval(context)).to eq false
     end
 
     it "should evaluate 'or' conjunctions" do
-      expect(subject.new(true_condition,  'or', true_condition).eval(context)).to be_true
-      expect(subject.new(true_condition,  'or', false_condition).eval(context)).to be_true
-      expect(subject.new(false_condition, 'or', true_condition).eval(context)).to  be_true
-      expect(subject.new(false_condition, 'or', false_condition).eval(context)).to be_false
+      expect(subject.new(true_condition,  'or', true_condition).eval(context)).to eq true
+      expect(subject.new(true_condition,  'or', false_condition).eval(context)).to eq true
+      expect(subject.new(false_condition, 'or', true_condition).eval(context)).to  eq true
+      expect(subject.new(false_condition, 'or', false_condition).eval(context)).to eq false
     end
 
     it 'should evaluate plus operators' do
