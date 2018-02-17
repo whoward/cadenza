@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # The {FilterNode} is a node which contains the definition for a variable
   # filter along with any parameters it is defined with.

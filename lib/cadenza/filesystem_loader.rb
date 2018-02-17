@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # The {FilesystemLoader} is a very simple loader object which takes a given
   # "root" directory and loads templates using the filesystem.  Relative file

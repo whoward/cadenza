@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # This exception is raised when a function is called with an unexpected number of arguments
   class InvalidArgumentCountError < Cadenza::Error
@@ -39,7 +41,7 @@ module Cadenza
       def argc(expected)
         pass =
           case expected
-          when Fixnum then params.length == expected
+          when Integer then params.length == expected
           when Range then expected.include?(params.length)
           end
 

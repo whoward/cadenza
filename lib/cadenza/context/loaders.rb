@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # This exception is raised when a requested template cannot be loaded
   TemplateNotFoundError = Class.new(Cadenza::Error)

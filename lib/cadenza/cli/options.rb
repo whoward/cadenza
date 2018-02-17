@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   module Cli
     # The parser for the command line options is defined here

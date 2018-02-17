@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cadenza/library/filters'
 require 'cadenza/library/blocks'
 require 'cadenza/library/functions'

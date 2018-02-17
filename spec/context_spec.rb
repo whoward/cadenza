@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'ostruct'
 require 'cgi'
@@ -68,7 +70,7 @@ describe Cadenza::Context do
           bar: 'baz'
         },
         abc: OpenStruct.new(def: 'ghi'),
-        alphabet: %w(a b c),
+        alphabet: %w[a b c],
         obj: TestContextObject.new
       }
     end

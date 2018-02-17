@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {GenericBlockNode} allows the end user of Cadenza to provide custom
   # block rendering logic via a proc defined on {Context}.

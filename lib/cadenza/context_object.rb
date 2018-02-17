@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # ContextObject is a bare bones class which should become the superclass
   # of any object you wish to push onto the {Context::Stack#stack} of the
@@ -8,8 +10,9 @@ module Cadenza
   # any value to be looked up upon it when pushed onto the {Context::Stack#stack}
   # unless they are subclasses of {ContextObject}.  See {Context.lookup_on_object}
   # for specific details on how this is done.
-  class ContextObject < Object # intentionally declared, since we cannot
-    # subclass BasicObject in 1.8.7
+  class ContextObject < Object
+    # This class intentionally inherits from Object since we cannot subclass
+    # BasicObject in 1.8.7
 
     private
 

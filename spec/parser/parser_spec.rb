@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Cadenza::Parser do
@@ -15,8 +17,7 @@ describe Cadenza::Parser do
       [false, false]
     end
 
-    def source=(source)
-    end
+    def source=(source); end
   end
 
   it 'should assign a default lexer, which is an instance of Cadenza::Lexer' do

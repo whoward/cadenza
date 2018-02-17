@@ -1,7 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.1
   CacheRootDirectory: '.rubocop'
   Exclude:
     - 'lib/cadenza/racc_parser.rb' # this file is auto-generated and shouldn't be verified
@@ -14,3 +14,7 @@ Style/DoubleNegation:
 # 80 is way too conservative - 120 is more fair
 Metrics/LineLength:
   Max: 120
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

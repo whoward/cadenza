@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Cadenza::ContextObject do
@@ -32,7 +34,7 @@ describe Cadenza::ContextObject do
 
   context '#context_methods' do
     it 'returns only the public methods defined on it, not public methods of Object' do
-      expect(subject.send(:context_methods)).to eq(%w(public_visibility_method))
+      expect(subject.send(:context_methods)).to eq(%w[public_visibility_method])
     end
   end
 end

@@ -26,4 +26,4 @@ Metrics/MethodLength:
 
 # Offense count: 5
 Metrics/PerceivedComplexity:
-  Max: 15
+  Max: 16

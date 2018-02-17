@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module ParsingMatcher
   def expect_parsing(template, options = {})
     parser = options.fetch(:with, Cadenza::Parser.new)

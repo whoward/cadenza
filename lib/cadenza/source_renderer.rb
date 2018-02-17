@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # SourceRenderer is a rendering implementation that turns a Cadenza AST back
   # into Cadenza source code.
@@ -22,7 +24,7 @@ module Cadenza
     IllegalStateTransitionError = Class.new(RuntimeError)
 
     # A list of all valid states for the renderer
-    ValidStates = [:text, :var, :tag].freeze
+    VALID_STATES = %i[text var tag].freeze
 
     # returns the current state of the renderer (see {#ValidStates})
     attr_reader :state
@@ -51,7 +53,7 @@ module Cadenza
     #        one state to another which is not allowed
     def state=(new_state)
       # if trying to transition to a new state raise an exception
-      raise IllegalStateError, new_state unless ValidStates.include?(new_state)
+      raise IllegalStateError, new_state unless VALID_STATES.include?(new_state)
 
       # no special transition for the same state
       return if @state == new_state

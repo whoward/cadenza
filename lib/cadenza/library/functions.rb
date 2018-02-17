@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # This exception is raised when a function is referred to but is not defined
   FunctionNotDefinedError = Class.new(Cadenza::Error)

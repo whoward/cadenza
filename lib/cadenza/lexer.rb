@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'strscan'
 
 module Cadenza
   # The {Lexer} class accepts in input {IO} object which it will parse simple
   # {Token}s from for use in a {Parser} class.
   class Lexer
-    KEYWORDS = %w(if unless else endif endunless for in endfor block endblock extends end and or not).freeze
+    KEYWORDS = %w[if unless else endif endunless for in endfor block endblock extends end and or not].freeze
 
     # constructs a new parser and sets it to the position (0, 0)
     def initialize
@@ -133,16 +135,15 @@ module Cadenza
     # for statements.  Failing that it will parse a text block token.
     #
     def scan_body
-      case
-      when text = @scanner.scan(/\{\{/)
+      if (text = @scanner.scan(/\{\{/))
         @context = :statement
         token(:VAR_OPEN, text)
 
-      when text = @scanner.scan(/\{%/)
+      elsif (text = @scanner.scan(/\{%/))
         @context = :statement
         token(:STMT_OPEN, text)
 
-      when text = @scanner.scan(/\{#/)
+      elsif (text = @scanner.scan(/\{#/))
         # scan until the end of the comment bracket, ignore the text for all
         # purposes except for advancing the counters appropriately
         comment = @scanner.scan_until(/#\}/)
@@ -192,46 +193,45 @@ module Cadenza
       end
 
       # look for matches
-      case
-      when text = @scanner.scan(/\}\}/)
+      if (text = @scanner.scan(/\}\}/))
         @context = :body
         token(:VAR_CLOSE, text)
 
-      when text = @scanner.scan(/%\}/)
+      elsif (text = @scanner.scan(/%\}/))
         @context = :body
         token(:STMT_CLOSE, text)
 
-      when text = @scanner.scan(/[=]=/) # i've added the square brackets because syntax highlighters dont like /=
+      elsif (text = @scanner.scan(/[=]=/)) # i've added the square brackets because syntax highlighters dont like /=
         token(:OP_EQ, text)
 
-      when text = @scanner.scan(/!=/)
+      elsif (text = @scanner.scan(/!=/))
         token(:OP_NEQ, text)
 
-      when text = @scanner.scan(/>=/)
+      elsif (text = @scanner.scan(/>=/))
         token(:OP_GEQ, text)
 
-      when text = @scanner.scan(/<=/)
+      elsif (text = @scanner.scan(/<=/))
         token(:OP_LEQ, text)
 
-      when text = @scanner.scan(/(#{KEYWORDS.join('|')})[\W]/)
+      elsif (text = @scanner.scan(/(#{KEYWORDS.join('|')})[\W]/))
         keyword = text[0..-2]
         @scanner.pos -= 1
 
         token(keyword.upcase.to_sym, keyword)
 
-      when text = @scanner.scan(/(end[a-zA-Z]+)/)
+      elsif (text = @scanner.scan(/(end[a-zA-Z]+)/))
         token(:END, text.upcase)
 
-      when text = @scanner.scan(/[+\-]?[0-9]+\.[0-9]+/)
+      elsif (text = @scanner.scan(/[+\-]?[0-9]+\.[0-9]+/))
         token(:REAL, text)
 
-      when text = @scanner.scan(/[+\-]?[1-9][0-9]*|0/)
+      elsif (text = @scanner.scan(/[+\-]?[1-9][0-9]*|0/))
         token(:INTEGER, text)
 
-      when text = @scanner.scan(/'[^']*'/)
+      elsif (text = @scanner.scan(/'[^']*'/))
         token(:STRING, text)
 
-      when text = @scanner.scan(/"(?:[^\\"]|\\.)*"/)
+      elsif (text = @scanner.scan(/"(?:[^\\"]|\\.)*"/))
         text.gsub!(/\\"/) { '"' }
         text.gsub!(/\\r/)               { "\r" }
         text.gsub!(/\\n/)               { "\n" }
@@ -240,7 +240,7 @@ module Cadenza
         text.gsub!(/\\u([0-9a-fA-F]+)/) { |m| [m[2..-1].hex].pack('U') }
         token(:STRING, text)
 
-      when text = @scanner.scan(/[A-Za-z_][A-Za-z0-9_\.]*/)
+      elsif (text = @scanner.scan(/[A-Za-z_][A-Za-z0-9_\.]*/))
         token(:IDENTIFIER, text)
 
       else

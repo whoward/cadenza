@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {DocumentNode} is intended to be the root node of any parsed AST in
   # Cadenza. In addition to holding the primary children it also holds data

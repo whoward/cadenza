@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {Error} class is the base class of all types of errors Cadenza will
   # raise, this should make exception handling much simpler for you.
