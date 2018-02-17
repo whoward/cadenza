@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {ConstantNode} holds a value which is not affected by any context given
   # to it, such as numbers or strings.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cadenza/block_hierarchy'
 require 'stringio'
 
@@ -74,8 +76,8 @@ module Cadenza
       iterator = node.iterator.identifier
 
       values.each_with_index do |value, counter|
-        is_first = (counter == 0) ? true : false
-        is_last = (counter == values.length - 1) ? true : false
+        is_first = counter.zero?
+        is_last = counter == values.length - 1
 
         # push the inner context with the 'magic' variables
         context.push(

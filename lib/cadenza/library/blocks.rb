@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # This exception is raised when a block is referred to but is not defined
   BlockNotDefinedError = Class.new(Cadenza::Error)

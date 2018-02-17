@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # The {TextNode} is a very simple container for static text defined in your
   # template.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'nokogiri/diff'
 
 RSpec::Matchers.define :equal_html do |expected|

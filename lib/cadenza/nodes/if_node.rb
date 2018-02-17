@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {IfNode} is a structure for rendering one of it's two given blocks
   # based on the evaluation of an expression in the current {Context}.
@@ -54,7 +56,7 @@ module Cadenza
     # @return [Boolean] returns the truthyness of the value given
     def truthyness_for_value(value)
       case value
-      when Float, Fixnum then value != 0 # non-zero numbers are truthy
+      when Float, Integer then value != 0 # non-zero numbers are truthy
       when String then !value.strip.empty? # non-blank strings are truthy
       else !!value # everything else is coerced to a boolean (booleans are coerced to themselves)
       end

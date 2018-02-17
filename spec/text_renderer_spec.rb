@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Cadenza::TextRenderer do
@@ -11,7 +13,7 @@ describe Cadenza::TextRenderer do
 
       nodes.inject('') do |output, child|
         node_text = Cadenza::TextRenderer.render(child, context)
-        output << context.evaluate_filter(filter, node_text)
+        output + context.evaluate_filter(filter, node_text)
       end
     end
 
@@ -20,7 +22,7 @@ describe Cadenza::TextRenderer do
     klass
   end
 
-  let(:context)  { context_class.new(pi: 3.14159, collection: %w(a b c)) }
+  let(:context)  { context_class.new(pi: 3.14159, collection: %w[a b c]) }
   let(:document) { Cadenza::DocumentNode.new }
 
   before do
@@ -94,7 +96,7 @@ describe Cadenza::TextRenderer do
     let(:customized_list_output)   { Fixture.read('templates/customized_list.html') }
 
     it "should render a for-block's children once for each iterated object" do
-      context = Cadenza::Context.new(alphabet: %w(a b c))
+      context = Cadenza::Context.new(alphabet: %w[a b c])
 
       expect_rendering("{% for x in alphabet %}{{ forloop.counter }}: {{ x }}\n{% endfor %}", context).to \
         eq "1: a\n2: b\n3: c\n"
@@ -115,10 +117,10 @@ describe Cadenza::TextRenderer do
     end
 
     it "should not render it's children if the document has a layout file" do
-      template = <<-EOS
+      template = <<-TEMPLATE
             {% extends 'empty.html.cadenza' %}
             {% block test %}Lorem Ipsum{% endblock %}
-         EOS
+         TEMPLATE
 
       expect_rendering(template, context).to eq ''
     end

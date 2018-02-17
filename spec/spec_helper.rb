@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path(File.join('..', 'lib', 'cadenza'), File.dirname(__FILE__))
 
 require 'coveralls'

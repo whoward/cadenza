@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # This class is used to help implement the "super" magic variable which is
   # available when rendering blocks using the {TextRenderer}.  It is essentially
@@ -37,7 +39,7 @@ module Cadenza
     # inheritance chain
     # @param [Hash] hash
     def merge(hash)
-      hash.each { |_k, v| self << v }
+      hash.each_value { |v| self << v }
     end
   end
 end

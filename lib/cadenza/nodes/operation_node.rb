@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {OperationNode} is a node which contains an evaluatable {#left} and
   # {#right} subtree and an {#operator} with which to evaluate it.

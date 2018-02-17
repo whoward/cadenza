@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'cgi'
 
-Cadenza::StandardLibrary::Filters = Cadenza::Library.build do
+Cadenza::StandardLibrary::Filters = Cadenza::Library.build do # rubocop:disable Metrics/BlockLength
   # adds slashes to \, ', and " characters in the given string
   define_filter :addslashes do |string, params|
     expect(params).argc(0)
@@ -21,7 +23,7 @@ Cadenza::StandardLibrary::Filters = Cadenza::Library.build do
 
   # centers the string in a fixed width field with the given padding
   define_filter :center do |string, params|
-    expect(params).argc(1..2).first(is_a: Fixnum).second(is_a: String)
+    expect(params).argc(1..2).first(is_a: Integer).second(is_a: String)
 
     length = params[0]
     padding = params[1] || ' '
@@ -102,7 +104,7 @@ Cadenza::StandardLibrary::Filters = Cadenza::Library.build do
 
   # returns the string left justified with the given padding character
   define_filter :ljust do |input, params|
-    expect(params).argc(1..2).first(is_a: Fixnum).second(is_a: String)
+    expect(params).argc(1..2).first(is_a: Integer).second(is_a: String)
 
     length = params[0]
     padding = params[1] || ' '
@@ -111,7 +113,7 @@ Cadenza::StandardLibrary::Filters = Cadenza::Library.build do
 
   # returns the string right justified with the given padding character
   define_filter :rjust do |input, params|
-    expect(params).argc(1..2).first(is_a: Fixnum).second(is_a: String)
+    expect(params).argc(1..2).first(is_a: Integer).second(is_a: String)
 
     length = params[0]
     padding = params[1] || ' '
@@ -136,7 +138,7 @@ Cadenza::StandardLibrary::Filters = Cadenza::Library.build do
   # is done on word boundaries so that no word cutting is done.
   # source: http://www.java2s.com/Code/Ruby/String/WordwrappingLinesofText.htm
   define_filter :wordwrap do |input, params|
-    expect(params).argc(1..2).first(is_a: Fixnum).second(is_a: String)
+    expect(params).argc(1..2).first(is_a: Integer).second(is_a: String)
 
     length = params[0]
     linefeed = params[1] || "\n"
@@ -152,7 +154,7 @@ Cadenza::StandardLibrary::Filters = Cadenza::Library.build do
 
   # returns the string or array with the first +length+ items/characters contained
   define_filter :limit do |input, params|
-    expect(params).argc(1).first(is_a: Fixnum)
+    expect(params).argc(1).first(is_a: Integer)
 
     length = params.first
 
@@ -166,7 +168,7 @@ Cadenza::StandardLibrary::Filters = Cadenza::Library.build do
   # returns the string or array with all items/characters after the +index+
   # item/character (where 1 is the first index, not 0 as programmers are used to)
   define_filter :offset do |input, params|
-    expect(params).argc(1).first(is_a: Fixnum)
+    expect(params).argc(1).first(is_a: Integer)
 
     index = params.first
 

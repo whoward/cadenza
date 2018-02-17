@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {ForNode} describe a loop in the template code.  The loop should iterate
   # over all the elements of the iterable and render its children each time.

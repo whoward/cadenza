@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cadenza/context/stack'
 require 'cadenza/context/loaders'
 
@@ -32,9 +34,7 @@ module Cadenza
       sym_identifier = identifier.to_sym
 
       # allow looking up array indexes with dot notation, example: alphabet.0 => "a"
-      if object.respond_to?(:[]) && object.is_a?(Array) && identifier =~ /\A\d+\z/
-        return object[identifier.to_i]
-      end
+      return object[identifier.to_i] if object.respond_to?(:[]) && object.is_a?(Array) && identifier =~ /\A\d+\z/
 
       # otherwise if it's a hash look up the string or symbolized key
       if object.respond_to?(:[]) && object.is_a?(Hash) && (object.key?(identifier) || object.key?(sym_identifier))

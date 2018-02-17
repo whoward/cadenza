@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'stringio'
 
 module Cadenza
@@ -108,16 +110,16 @@ module Cadenza
     end
 
     def render_parameters(parameters, context, blocks)
-      if parameters.any?
-        output << '['
+      return if parameters.none?
 
-        parameters.each_with_index do |param, idx|
-          render(param, context, blocks)
-          output << ', ' unless idx == parameters.length - 1
-        end
+      output << '['
 
-        output << ']'
+      parameters.each_with_index do |param, idx|
+        render(param, context, blocks)
+        output << ', ' unless idx == parameters.length - 1
       end
+
+      output << ']'
     end
 
     def render_children(nodes, context, blocks)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cgi'
 
 Cadenza::StandardLibrary::Functions = Cadenza::Library.build do

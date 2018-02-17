@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {BlockNode} is a general container with a given name meant to implement
   # Cadenza's template inheritance feature.  Blocks defined in a template will

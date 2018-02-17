@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   # This exception is raised when a filter is referred to but is not defined
   FilterNotDefinedError = Class.new(Cadenza::Error)

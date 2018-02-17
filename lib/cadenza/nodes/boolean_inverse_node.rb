@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {BooleanInverseNode} takes an expression and evaluates the logical inverse
   # of that expression so any expression that evaluates to true will return false

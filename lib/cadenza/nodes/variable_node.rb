@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # The {VariableNode} holds a variable name (identifier) which it can render
   # the value of given a {Context} with the name defined in it's variable stack.

@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 namespace :gem do
   desc 'builds the gem'
   task :build do

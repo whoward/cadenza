@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 class TestContextObject < Cadenza::ContextObject
   def public_visibility_method
     123
@@ -12,14 +14,11 @@ class TestContextObject < Cadenza::ContextObject
 
   private
 
-  def before_method(method)
-  end
+  def before_method(method); end
 
-  def after_method(method)
-  end
+  def after_method(method); end
 
-  def missing_context_method(method)
-  end
+  def missing_context_method(method); end
 
   def private_visibility_method
     123

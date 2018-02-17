@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 class FixtureSyntaxTree
@@ -125,7 +127,7 @@ class FixtureSyntaxTree
     result = {}
     parent = node[key]
 
-    parent.keys.each do |name|
+    parent.each_key do |name|
       result[name] = node_for_key(parent, name)
     end
 

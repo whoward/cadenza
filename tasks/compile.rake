@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 namespace :compile do
   desc 'compile everything'
   task all: [:parser]

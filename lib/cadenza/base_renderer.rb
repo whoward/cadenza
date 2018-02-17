@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cadenza
   # This exception is raised when something exceptional occurs while rendering a
   # template and the exception handler is set to :raise

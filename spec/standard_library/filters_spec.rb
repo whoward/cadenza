@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Cadenza::StandardLibrary::Filters do
@@ -100,7 +102,7 @@ describe Cadenza::StandardLibrary::Filters do
 
     it 'raises an error if there is not exactly 1 argument' do
       expect do
-        subject.evaluate_filter(:date, time, %w(foo bar))
+        subject.evaluate_filter(:date, time, %w[foo bar])
       end.to raise_error Cadenza::InvalidArgumentCountError
     end
 
@@ -154,7 +156,7 @@ describe Cadenza::StandardLibrary::Filters do
   context 'first' do
     it 'should return the first element of an iterable' do
       expect(subject.evaluate_filter(:first, 'abc')).to eq('a')
-      expect(subject.evaluate_filter(:first, %w(def ghi jkl))).to eq('def')
+      expect(subject.evaluate_filter(:first, %w[def ghi jkl])).to eq('def')
     end
 
     it 'raises an error if there are any arguments' do
@@ -167,7 +169,7 @@ describe Cadenza::StandardLibrary::Filters do
   context 'last' do
     it 'should return the last element of an iterable' do
       expect(subject.evaluate_filter(:last, 'abc')).to eq('c')
-      expect(subject.evaluate_filter(:last, %w(def ghi jkl))).to eq('jkl')
+      expect(subject.evaluate_filter(:last, %w[def ghi jkl])).to eq('jkl')
     end
 
     it 'raises an error if there are any arguments' do
@@ -188,7 +190,7 @@ describe Cadenza::StandardLibrary::Filters do
 
     it 'raises an error of more than 1 argument is given' do
       expect do
-        subject.evaluate_filter(:join, [1, 2, 3], %w(abc def))
+        subject.evaluate_filter(:join, [1, 2, 3], %w[abc def])
       end.to raise_error Cadenza::InvalidArgumentCountError
     end
 
@@ -202,7 +204,7 @@ describe Cadenza::StandardLibrary::Filters do
   context 'length' do
     it 'should return the length of the object' do
       expect(subject.evaluate_filter(:length, 'abc')).to eq(3)
-      expect(subject.evaluate_filter(:length, %w(a b c d e f))).to eq(6)
+      expect(subject.evaluate_filter(:length, %w[a b c d e f])).to eq(6)
     end
 
     it 'raises an error if any arguments are given' do
@@ -360,7 +362,7 @@ describe Cadenza::StandardLibrary::Filters do
 
   context 'limit' do
     it 'returns an array with the first N items' do
-      expect(subject.evaluate_filter(:limit, %w(a b c), [2])).to eq(%w(a b))
+      expect(subject.evaluate_filter(:limit, %w[a b c], [2])).to eq(%w[a b])
     end
 
     it 'returns a string with the first N characters' do
@@ -368,7 +370,7 @@ describe Cadenza::StandardLibrary::Filters do
     end
 
     it 'returns an empty array if given an array and a length < 1' do
-      expect(subject.evaluate_filter(:limit, %w(a b c), [0])).to eq([])
+      expect(subject.evaluate_filter(:limit, %w[a b c], [0])).to eq([])
     end
 
     it 'returns an empty string if given a string and a length < 1' do
@@ -377,7 +379,7 @@ describe Cadenza::StandardLibrary::Filters do
 
     it 'raises an error if there is not exactly 1 argument' do
       expect do
-        subject.evaluate_filter(:limit, %w(a b c), [1, 2])
+        subject.evaluate_filter(:limit, %w[a b c], [1, 2])
       end.to raise_error Cadenza::InvalidArgumentCountError
     end
 
@@ -390,7 +392,7 @@ describe Cadenza::StandardLibrary::Filters do
 
   context 'offset' do
     it 'returns an array with the elements after the Nth item (1-based)' do
-      expect(subject.evaluate_filter(:offset, %w(a b c), [2])).to eq(%w(c))
+      expect(subject.evaluate_filter(:offset, %w[a b c], [2])).to eq(%w[c])
     end
 
     it 'returns a string with the characters after the Nth character (1-based)' do
@@ -398,7 +400,7 @@ describe Cadenza::StandardLibrary::Filters do
     end
 
     it 'returns an empty array if given an array and a N > length' do
-      expect(subject.evaluate_filter(:offset, %w(a b c), [3])).to eq([])
+      expect(subject.evaluate_filter(:offset, %w[a b c], [3])).to eq([])
     end
 
     it 'returns an empty string if given a string and a N > length' do
@@ -407,7 +409,7 @@ describe Cadenza::StandardLibrary::Filters do
 
     it 'raises an error if there is not exactly 1 argument' do
       expect do
-        subject.evaluate_filter(:offset, %w(a b c), [1, 2])
+        subject.evaluate_filter(:offset, %w[a b c], [1, 2])
       end.to raise_error Cadenza::InvalidArgumentCountError
     end
 
@@ -422,12 +424,12 @@ describe Cadenza::StandardLibrary::Filters do
     let(:objects) { [{ name: 'Mike' }, { name: 'Will' }, { name: 'Dave' }] }
 
     it 'returns an array with the collected property passed' do
-      expect(subject.evaluate_filter(:pluck, objects, ['name'])).to eq(%w(Mike Will Dave))
+      expect(subject.evaluate_filter(:pluck, objects, ['name'])).to eq(%w[Mike Will Dave])
     end
 
     it 'is also aliased as map and collect' do
-      expect(subject.evaluate_filter(:map, objects, ['name'])).to eq(%w(Mike Will Dave))
-      expect(subject.evaluate_filter(:collect, objects, ['name'])).to eq(%w(Mike Will Dave))
+      expect(subject.evaluate_filter(:map, objects, ['name'])).to eq(%w[Mike Will Dave])
+      expect(subject.evaluate_filter(:collect, objects, ['name'])).to eq(%w[Mike Will Dave])
     end
 
     it 'raises an error if there is not exactly 1 argument' do
@@ -447,16 +449,16 @@ describe Cadenza::StandardLibrary::Filters do
     let(:objects) { [{ name: 'Mike' }, { name: 'Will' }, { name: 'Dave' }] }
 
     it 'returns an array with the items sorted in ascending order' do
-      expect(subject.evaluate_filter(:sort, %w(b c a))).to eq(%w(a b c))
+      expect(subject.evaluate_filter(:sort, %w[b c a])).to eq(%w[a b c])
     end
 
     it 'returns an array with the items sorted in ascending order by a given property' do
-      expect(subject.evaluate_filter(:sort, objects, ['name'])).to eq(objects.sort { |a, b| a[:name] <=> b[:name] })
+      expect(subject.evaluate_filter(:sort, objects, ['name'])).to eq(objects.sort_by { |a| a[:name] })
     end
 
     it 'raises an error of more than 1 argument is given' do
       expect do
-        subject.evaluate_filter(:sort, objects, %w(name def))
+        subject.evaluate_filter(:sort, objects, %w[name def])
       end.to raise_error Cadenza::InvalidArgumentCountError
     end
 

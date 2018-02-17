@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Cadenza
   class Context
     # This module contains all methods related to the variable stack

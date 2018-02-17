@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 module Fixture
   module_function
 
