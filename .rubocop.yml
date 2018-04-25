@@ -5,7 +5,7 @@ AllCops:
   CacheRootDirectory: '.rubocop'
   Exclude:
     - 'lib/cadenza/racc_parser.rb' # this file is auto-generated and shouldn't be verified
-    - 'perf/**/*'
+    - 'benchmark/**/*'
 
 # Double negation isn't that bad, especially since ruby doesn't really provide a better alternative
 Style/DoubleNegation:

@@ -1,3 +1,15 @@
+#!/usr/bin/env ruby
+require_relative 'perf_helper'
+
+lexer = Cadenza::Lexer.new
+template = DATA.read.freeze
+
+10_000.times do
+   lexer.source = template
+   lexer.remaining_tokens
+end
+
+__END__
 <html>
    <head>
       <title>{{ title | upcase }}</title>
