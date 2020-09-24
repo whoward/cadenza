@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :test do
-  gem 'nokogiri', '1.8.2'
+  gem 'nokogiri', '>= 1.10.8'
   gem 'nokogiri-diff', '~> 0.2.0'
   gem 'rspec', '~> 3.4.0'
 end
